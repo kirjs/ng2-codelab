@@ -1,0 +1,32 @@
+h1 {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.exercises {
+  display: flex;
+}
+
+.exercise.selected {
+  background-color: #ff9900;
+  cursor: default;
+}
+.exercise.complete.selected {
+  background-color: #105635;
+}
+.exercise.complete {
+  background-color: #2ded91;
+  color: #fff;
+}
+
+.exercise {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #dddddd;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+}

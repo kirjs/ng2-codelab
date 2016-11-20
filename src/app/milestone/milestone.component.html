@@ -1,0 +1,13 @@
+<h1>{{config.title}}</h1>
+
+<div class="exercises">
+  <div *ngFor="let item of config.exercises; let i = index"
+       class="exercise {{config.selectedExerciseIndex === i ? 'selected' : ''}} {{exerciseComplete(item) ? 'complete' : ''}}"
+       (click)="state.selectExercise(i)"
+  >
+
+    {{i}}
+  </div>
+</div>
+
+<app-exercise [config]="config.exercises[config.selectedExerciseIndex]"></app-exercise>

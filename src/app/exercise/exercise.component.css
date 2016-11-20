@@ -1,0 +1,10 @@
+.side {
+  padding: 10px;
+}
+
+.next {
+  color: #fff;
+  background: #3e8e01;
+  padding: 10px;
+  cursor: pointer;
+}

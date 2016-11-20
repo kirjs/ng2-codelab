@@ -1,0 +1,52 @@
+.codelab {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background-color: #dddddd;
+  padding: 4px 10px;
+}
+.content {
+  padding: 0;
+  display: flex;
+  flex: 1;
+}
+
+.milestones {
+  box-shadow: #dddddd 2px 2px 2px;
+  padding: 10px;
+}
+.milestones.collapsed .title{
+  display: none;
+
+}
+
+.milestone {
+  display: flex;
+  line-height: 35px;
+  padding-bottom: 10px;
+}
+
+.index {
+  width: 35px;
+  color: #fff;
+  height: 35px;
+  text-align: center;
+  background-color: #777;
+  border-radius: 50%;
+}
+
+.title {
+  padding: 0 10px;
+}
+.milestone.selected .index {
+  background-color: #f90;
+}
+.collapse {
+  padding: 10px;
+}
+
+.codelab-milestone {
+  padding: 10px;
+}

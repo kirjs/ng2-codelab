@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: "Helvetica Neue", roboto, sans-serif;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+app-root, app-codelab {
+  height: 100%;
+  display: block;
+}
+
+
