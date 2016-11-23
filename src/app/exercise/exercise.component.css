@@ -8,3 +8,8 @@
   padding: 10px;
   cursor: pointer;
 }
+
+.description {
+  max-width: 500px;
+}
+

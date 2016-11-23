@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
-import {Observable, Subject} from "rxjs/Rx";
+import {Observable, BehaviorSubject} from "rxjs/Rx";
 import {CodelabConfig} from "./codelab-config";
 import {ActionInit} from "./action-init";
 import {Action} from "./action";
@@ -19,7 +19,7 @@ export function selectedExercise(state: CodelabConfig): ExerciseConfig {
   return milestone.exercises[milestone.selectedExerciseIndex];
 }
 
-export function exerciseComplete(exercise: ExerciseConfig){
+export function exerciseComplete(exercise: ExerciseConfig) {
   return exercise.tests && exercise.tests.every(test => test.pass);
 }
 
@@ -31,6 +31,9 @@ const actions: {[key: string]: (state: CodelabConfig, action: ActionInit)=>any} 
   },
   [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}){
     state.selectedMilestoneIndex = data;
+    return state;
+  },
+  [ActionTypes.PING](state: CodelabConfig){
     return state;
   },
   [ActionTypes.UPDATE_CODE](state: CodelabConfig, {data}: {data: {file: FileConfig, code: string}}){
@@ -64,8 +67,15 @@ const actions: {[key: string]: (state: CodelabConfig, action: ActionInit)=>any} 
   [ActionTypes.NEXT_EXERCISE](state: CodelabConfig, data){
     let milestone = selectedMilestone(state);
     let nextIndex = milestone.selectedExerciseIndex + 1;
+    // Check if we still have exercises left in the milestone.
     if (milestone.exercises.length > nextIndex) {
       return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
+    } else {
+      // Looks like we're at the end of the milestone, let's move on to the next one!
+      let nextMilestoneIndex = state.selectedMilestoneIndex + 1;
+      if(state.milestones.length > nextMilestoneIndex){
+        return this[ActionTypes.SELECT_MILESTONE](state, Object.assign({}, data, {data: nextMilestoneIndex}));
+      }
     }
     return state;
   },
@@ -99,7 +109,7 @@ const actions: {[key: string]: (state: CodelabConfig, action: ActionInit)=>any} 
 @Injectable()
 export class StateService {
   public readonly update: Observable<CodelabConfig>;
-  private readonly dispatch = new Subject();
+  private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
 
   constructor(private http: Http) {
     this.update = this.dispatch
@@ -117,7 +127,7 @@ export class StateService {
       .share();
 
     this.update.subscribe(() => {
-      console.log('next');
+      //console.log('next');
     }, (error) => {
       debugger
     });
@@ -160,5 +170,10 @@ export class StateService {
 
   updateSingleTestResult(test: any) {
     this.dispatchAction(ActionTypes.UPDATE_SINGLE_TEST_RESULT, test);
+  }
+
+  ping() {
+    // This is a hack. See http://jsbin.com/yuqeniqena/1/edit?js,output
+    this.dispatchAction(ActionTypes.PING);
   }
 }

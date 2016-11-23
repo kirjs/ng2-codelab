@@ -3,10 +3,12 @@
   display: flex;
   flex-direction: column;
 }
+
 .header {
   background-color: #dddddd;
   padding: 4px 10px;
 }
+
 .content {
   padding: 0;
   display: flex;
@@ -17,7 +19,8 @@
   box-shadow: #dddddd 2px 2px 2px;
   padding: 10px;
 }
-.milestones.collapsed .title{
+
+.milestones.collapsed .title {
   display: none;
 
 }
@@ -26,6 +29,7 @@
   display: flex;
   line-height: 35px;
   padding-bottom: 10px;
+  cursor: pointer;
 }
 
 .index {
@@ -40,9 +44,15 @@
 .title {
   padding: 0 10px;
 }
+
+.milestone.selected .title {
+  font-weight: bold;
+}
+
 .milestone.selected .index {
   background-color: #f90;
 }
+
 .collapse {
   padding: 10px;
 }

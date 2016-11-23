@@ -8,4 +8,5 @@ export interface ExerciseConfig {
   fileTemplates: Array<FileConfig>
   editedFiles?: Array<FileConfig>;
   tests?: Array<TestInfo>;
+  messageNext?: string
 }

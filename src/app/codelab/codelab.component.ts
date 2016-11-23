@@ -20,7 +20,6 @@ export class CodelabComponent implements OnInit {
       this.config = config;
     });
     state.init();
-
   }
 
   ngOnInit() {

@@ -6,12 +6,12 @@
         {{collapsePanel ? '>>': '<<'}}
       </div>
       <div
-        class="milestone {{config.selectedMilestone === i ?'selected':''}}"
+        class="milestone {{config.selectedMilestoneIndex === i ?'selected':''}}"
         *ngFor="let item of config.milestones; let i = index;"
         (click)="state.selectMilestone(i)"
       >
         <div class="index">{{i + 1}}</div>
-        <div class="title">{{item.title}}</div>
+        <div class="title">{{item.name}}</div>
       </div>
     </div>
     <div class="codelab-milestone">

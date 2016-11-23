@@ -71,7 +71,7 @@ function injectIframe(element: any, config: IframeConfig) {
             files.map((file) => {
               // Update module names
               let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
-                code = code.replace('__SOLUTION__', '');
+                code = code.replace(/__SOLUTION__/g, '');
                 code = code.replace('./' + moduleName, './' + moduleName + index);
                 return code;
               }, file.code);
@@ -85,6 +85,7 @@ function injectIframe(element: any, config: IframeConfig) {
               }
 
               const moduleName = file.moduleName + index;
+              // TODO(kirjs): Add source maps.
               return ts.transpileModule(code, {
                 compilerOptions: {
                   module: ts.ModuleKind.System,
@@ -97,6 +98,18 @@ function injectIframe(element: any, config: IframeConfig) {
               });
             }).map((compiled) => {
               runJs(compiled.outputText);
+              console.log(compiled);
+            });
+
+            (iframe.contentWindow as any).System.register('code', [], function (exports) {
+              return {
+                setters: [],
+                execute: function () {
+                  files.forEach((file) => {
+                    exports(file.moduleName + 'Code', file.code);
+                  });
+                }
+              }
             });
 
             files.filter((file) => file.bootstrap).map((file) => {
@@ -129,7 +142,8 @@ export class RunnerComponent implements AfterViewInit {
   @ViewChild('runner') element: ElementRef;
   runId = 0;
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private http: Http, state: StateService) {
+
+  constructor(private changeDetectionRef: ChangeDetectorRef, private http: Http, private state: StateService) {
     state.update
       .map(selectedExercise)
       .map(e => e.editedFiles)
@@ -138,8 +152,9 @@ export class RunnerComponent implements AfterViewInit {
       .distinctUntilChanged()
       .subscribe(() => {
         this.runCode()
+      }, () => {
+        debugger
       });
-
 
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
@@ -182,7 +197,7 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    this.state.ping();
   }
 
 }

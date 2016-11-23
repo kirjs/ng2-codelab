@@ -15,4 +15,6 @@ app-root, app-codelab {
   display: block;
 }
 
-
+.img {
+  width: 400px;
+}
