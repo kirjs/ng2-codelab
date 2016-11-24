@@ -79,7 +79,7 @@ export class EditorComponent implements AfterViewInit {
         typeDefinitions.filter(() => false).map(t => t.text()).map((definition, index) => {
 
           if (definition.indexOf('<html') >= 0) {
-
+            debugger
           }
 
           const name = typeSources[index] + '.d.ts';

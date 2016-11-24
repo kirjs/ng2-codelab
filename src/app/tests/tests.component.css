@@ -1,0 +1,21 @@
+.test:before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #dddddd;
+  content: "";
+  margin-right: 10px;
+}
+
+.test.pass:before {
+  background-color: #aaff30;
+}
+
+.test.fail:before {
+  background-color: #ff4d44;
+}
+
+.checklist {
+  padding: 10px;
+}

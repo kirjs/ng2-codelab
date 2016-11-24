@@ -13,7 +13,8 @@ import {EditorsComponent} from './editors/editors.component';
 import {CodelabComponent} from './codelab/codelab.component';
 import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from "./state.service";
-import { TestsComponent } from './tests/tests.component';
+import {TestsComponent} from './tests/tests.component';
+import {ReducersService} from "./reducers.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TestsComponent } from './tests/tests.component';
     HttpModule
   ],
   providers: [
-    StateService
+    StateService,
+    ReducersService
   ],
   bootstrap: [AppComponent]
 })

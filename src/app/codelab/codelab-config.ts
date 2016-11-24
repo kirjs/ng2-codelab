@@ -92,7 +92,8 @@ export const codelabConfig: CodelabConfig = {
         },
 
       ]
-    }, {
+    },
+    {
       name: 'Bootstrapping your app',
       selectedExerciseIndex: 0,
       exercises: [
@@ -147,9 +148,18 @@ export const codelabConfig: CodelabConfig = {
 
       ]
     }, {
+      name: 'Test',
       selectedExerciseIndex: 0,
-      name: 'Templates',
-      exercises: []
+      exercises: [{
+        name: 'Exercise',
+        description: 'Just testing things',
+        path: 'test',
+        fileTemplates: [
+          tsFile('Main'),
+          tsFile('Dog')
+        ],
+        tests: []
+      }]
     }]
 };
 
