@@ -12,6 +12,11 @@ function testFile() {
   };
 }
 
+function htmlFile(file: string, extensions?) {
+  return Object.assign({
+    filename: `${file}.html`, type: 'html'
+  }, extensions)
+}
 
 function tsFile(file, extensions?) {
   return Object.assign({
@@ -43,7 +48,7 @@ function appBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
-  selectedMilestoneIndex: 0,
+  selectedMilestoneIndex: 2,
   milestones: [
     {
       /**
@@ -137,16 +142,28 @@ export const codelabConfig: CodelabConfig = {
         {
           name: 'Bootstrapping your app',
           path: 'bootstrap/bootstrap',
-          description: `Now we got module and component ready, let's bootstrap it!`,
+          description: `Now we got module and component ready, let's bootstrap it!!!`,
           fileTemplates: [
-            appBootstrap({ui: false}),
+            appBootstrap(),
             appModule({readonly: true}),
             appComponent({readonly: true}),
             testFile()
           ]
-        },
-
+        }
       ]
+    }, {
+      name: 'Templates',
+      selectedExerciseIndex: 0,
+      exercises: [{
+        name: 'Exercise',
+        description: `Let's learn how to use templates.`,
+        path: 'templates',
+        fileTemplates: [
+          htmlFile('video'),
+          appBootstrap()
+        ],
+        tests: []
+      }]
     }, {
       name: 'Test',
       selectedExerciseIndex: 0,
@@ -155,6 +172,7 @@ export const codelabConfig: CodelabConfig = {
         description: 'Just testing things',
         path: 'test',
         fileTemplates: [
+
           tsFile('Main'),
           tsFile('Dog')
         ],

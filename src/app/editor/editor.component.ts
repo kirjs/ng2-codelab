@@ -11,6 +11,10 @@ import {FileConfig} from "../file-config";
 declare const monaco: any;
 declare const require: any;
 
+const languages = {
+  ts: 'typescript',
+  html: 'html'
+};
 
 @Component({
   selector: 'app-editor',
@@ -64,46 +68,60 @@ export class EditorComponent implements AfterViewInit {
     }
   }
 
+  static configureMonaco() {
+
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      experimentalDecorators: true,
+      allowNonTsExtensions: true
+    });
+
+
+    const core = `
+        declare module '@angular/core' {
+          export class Dog {
+            public bububu(): string;
+          }         
+        }                
+        `;
+
+    const pba = `    
+    import {Dog} from '@angular/core'
+    
+    declare module '@angular/platform-browser-dynamic' {
+          export class Platform {
+            public bootstrapModule(module: Dog): Dog
+          }
+          export declare const platformBrowserDynamic: (extraProviders?: any[]) => Platform;
+        }      `;
+
+    if (!monaco.languages.typescript.typescriptDefaults._extraLibs['Dog']) {
+
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(core, '@angular/core.d.ts');
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, '@angular/platform-browser-dynamic.d.ts');
+    }
+
+    // Only need to configure it once
+    EditorComponent.configureMonaco = () => {
+    };
+  }
+
   // Will be called once monaco library is available
   initMonaco() {
+    EditorComponent.configureMonaco();
 
-    const typeSources = [
-      'core/src/core',
-      'core/src/metadata',
-      'core/index'
-    ].map(a => 'assets/@angular/' + a + '.d.ts');
-    Observable.forkJoin(typeSources.map(a => this.http.get(a)))
-      .subscribe((typeDefinitions) => {
+    const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
-        // TODO: Remove filter
-        typeDefinitions.filter(() => false).map(t => t.text()).map((definition, index) => {
-
-          if (definition.indexOf('<html') >= 0) {
-            debugger
-          }
-
-          const name = typeSources[index] + '.d.ts';
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(definition, name);
-        });
-
-        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-          experimentalDecorators: true,
-          allowNonTsExtensions: true
-        });
-
-
-        const myDiv: HTMLDivElement = this.editorContent.nativeElement;
-        this._editor = monaco.editor.create(myDiv,
-          {
-            value: this.file.code,
-            language: this.language,
-            scrollBeyondLastLine: false,
-            readOnly: this.file.readonly
-          });
-        this._editor.getModel().onDidChangeContent((e) => {
-          this.updateValue(this._editor.getModel().getValue());
-        });
+    this._editor = monaco.editor.create(myDiv,
+      {
+        value: this.file.code,
+        language: languages[this.file.type],
+        scrollBeyondLastLine: false,
+        readOnly: this.file.readonly
       });
+
+    this._editor.getModel().onDidChangeContent(() => {
+      this.updateValue(this._editor.getModel().getValue());
+    });
 
   }
 

@@ -24,15 +24,25 @@ interface IframeConfig {
   id: string,
   url: string,
   restart?: boolean,
+  runId?: number,
   hidden?: boolean
 }
-function injectIframe(element: any, config: IframeConfig) {
-  if (!cachedIframes[config.id]) {
 
+function injectIframe(element: any, config: IframeConfig) {
+  if (config.restart && cachedIframes[config.id]) {
+    cachedIframes[config.id].then((sandbox) => {
+      sandbox.destroy();
+    });
+    delete cachedIframes[config.id];
+  }
+
+
+  if (!cachedIframes[config.id]) {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('src', config.url);
+    iframe.setAttribute('class', config.id);
     iframe.setAttribute('style', 'width: 600px; height: 600px' + (config.hidden ? ';display: none' : ''));
     element.appendChild(iframe);
 
@@ -64,11 +74,27 @@ function injectIframe(element: any, config: IframeConfig) {
         let index = 0;
 
         const sandbox = {
+          destroy: () => {
+            iframe.remove();
+          },
           setHtml: setHtml,
           runMultipleFiles: (files: Array<FileConfig>) => {
             index++;
 
-            files.map((file) => {
+            (iframe.contentWindow as any).System.register('code', [], function (exports) {
+              return {
+                setters: [],
+                execute: function () {
+                  files.forEach((file) => {
+                    console.log(file.moduleName + 'Code');
+                    exports(file.moduleName + 'Code', file.code);
+                  });
+                }
+              }
+            });
+
+
+            files.filter(file => file.type === 'ts').map((file) => {
               // Update module names
               let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
                 code = code.replace(/__SOLUTION__/g, '');
@@ -90,7 +116,10 @@ function injectIframe(element: any, config: IframeConfig) {
                 compilerOptions: {
                   module: ts.ModuleKind.System,
                   target: ts.ScriptTarget.ES5,
-                  experimentalDecorators: true
+                  experimentalDecorators: true,
+                  // TODO: figure out why this doesn't work
+                  // inlineSourceMap: true,
+                  // sourceMap: true
                 },
                 fileName: moduleName,
                 moduleName: moduleName,
@@ -98,19 +127,8 @@ function injectIframe(element: any, config: IframeConfig) {
               });
             }).map((compiled) => {
               runJs(compiled.outputText);
-              console.log(compiled);
             });
 
-            (iframe.contentWindow as any).System.register('code', [], function (exports) {
-              return {
-                setters: [],
-                execute: function () {
-                  files.forEach((file) => {
-                    exports(file.moduleName + 'Code', file.code);
-                  });
-                }
-              }
-            });
 
             files.filter((file) => file.bootstrap).map((file) => {
               const moduleName = file.moduleName + index;
@@ -179,11 +197,12 @@ export class RunnerComponent implements AfterViewInit {
   runCode() {
 
     injectIframe(this.element.nativeElement, {
-      id: 'testing' + this.runId++, 'url': 'assets/runner/tests.html', restart: true, hidden: false
+      id: 'testing', runId: this.runId++, 'url': 'assets/runner/tests.html', restart: true, hidden: false
     })
       .then((sandbox) => {
 
-        const testFiles = this.files.filter(file => !file.ui);
+        const testFiles = this.files
+          .filter(file => !file.ui);
         sandbox.runMultipleFiles(testFiles);
       });
 

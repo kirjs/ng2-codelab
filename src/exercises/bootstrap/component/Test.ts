@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {AppComponent, scope} from './__SOLUTION__AppComponent';
+import {AppComponent} from './__SOLUTION__AppComponent';
 import "reflect-metadata";
 
 let metadata;
@@ -13,12 +13,8 @@ describe('Component', () => {
   it('Create a class called AppComponent', () => {
     chai.expect(typeof AppComponent).equals('function');
   });
-  it('Add a Component annotation for the class', () => {
+  it('Add a Component decorator for the class', () => {
     chai.expect(metadata).is.not.undefined
-  });
-
-  it(`Don't forget the annotation`, () => {
-
   });
   it('Add selector to the component annotation config', () => {
     chai.expect(metadata[0].selector).equals('my-app');

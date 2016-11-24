@@ -1,3 +1,10 @@
-export class Dog{
-  constructor(a){}
+export class Dog {
+  constructor(a) {
+  }
+
+  bebebe() {
+  }
+
+  bububu() {
+  }
 }

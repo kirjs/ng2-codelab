@@ -1,11 +1,7 @@
-import './Bootstrap';
-
 describe('Component', () => {
   it('This should be pretty straightforard', () => {
-    window.setTimeout(()=>{
-      console.log(document.body)
-    }, 500);
-  });
 
+    chai.expect((window.parent.document.body.querySelector('iframe.preview') as HTMLIFrameElement).contentDocument.body.innerHTML).contains('Hello')
+  });
 });
 

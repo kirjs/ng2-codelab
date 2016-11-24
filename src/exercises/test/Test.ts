@@ -4,13 +4,12 @@
  * An exercise is just a folder with a bunch of files.
  *
  * the configuration is in app/codelab/codelab-config.ts.
- *
- *
- * There are
- *
  */
+
+
 /**
- * We don't really need TestBed here, but if we touch any angular components, we have to reset it before every test.
+ * Angular is being smart here, so we have to reset TestBed for every test even if there are no angular components.
+ * TODO(kirjs): move this to a global beforeEach
  */
 import {TestBed} from '@angular/core/testing';
 /**

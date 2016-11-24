@@ -7,11 +7,18 @@ import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 
+// TODO: Get a better hash
+function stupidHash(string) {
+  return string.split('').reduce((result, char) => {
+    return (result + char.charCodeAt(0)) % Number.MAX_SAFE_INTEGER;
+  }, 0);
+}
 
 @Injectable()
 export class ReducersService {
 
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
+
     let localState;// = JSON.parse(localStorage.getItem('state'));
     return localState ? localState : state;
   }
@@ -73,7 +80,6 @@ export class ReducersService {
 
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
-
     if (exerciseConfig.editedFiles) {
       state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
       return state;
@@ -87,7 +93,7 @@ export class ReducersService {
     return Observable.forkJoin(files.map(a => this.http.get(a))).map((responses) => {
       responses.forEach((response: {text: any}, index) => {
         exerciseConfig.fileTemplates[index].code = response.text();
-        exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.replace('.ts', '');
+        exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.split('.')[0];
         exerciseConfig.editedFiles[index] = Object.assign({}, exerciseConfig.fileTemplates[index]);
         state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
       });
