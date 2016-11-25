@@ -7,12 +7,6 @@ import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 
-// TODO: Get a better hash
-function stupidHash(string) {
-  return string.split('').reduce((result, char) => {
-    return (result + char.charCodeAt(0)) % Number.MAX_SAFE_INTEGER;
-  }, 0);
-}
 
 @Injectable()
 export class ReducersService {
@@ -92,7 +86,9 @@ export class ReducersService {
 
     return Observable.forkJoin(files.map(a => this.http.get(a))).map((responses) => {
       responses.forEach((response: {text: any}, index) => {
-        exerciseConfig.fileTemplates[index].code = response.text();
+        let code = response.text();
+        code = code.replace(/\.\/solution\//g, './');
+        exerciseConfig.fileTemplates[index].code = code;
         exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.split('.')[0];
         exerciseConfig.editedFiles[index] = Object.assign({}, exerciseConfig.fileTemplates[index]);
         state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
