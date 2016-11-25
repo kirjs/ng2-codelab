@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {VideoService} from "./VideoService";
-
 
 const FAKE_VIDEOS = [
   {
@@ -26,10 +24,7 @@ export class AppComponent {
   videos = [];
   title = "CatTube";
 
-  constructor(private v: VideoService) {
-  }
-
   search(value) {
-    this.videos = this.v.search(value);
+    this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(value) >= 0)
   }
 }

@@ -3,6 +3,7 @@ import {CodelabConfig} from "../codelab-config";
 function testFile() {
   return {
     filename: 'Test.ts',
+    type: 'ts',
     ui: false,
     test: true,
     bootstrap: true,
@@ -48,7 +49,7 @@ function appBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
-  selectedMilestoneIndex: 2,
+  selectedMilestoneIndex: 3,
   milestones: [
     {
       /**
@@ -154,17 +155,63 @@ export const codelabConfig: CodelabConfig = {
     }, {
       name: 'Templates',
       selectedExerciseIndex: 0,
+      exercises: [
+        {
+          name: 'Set up the page',
+          description: `Basic stuff`,
+          path: 'templates/header-input',
+          fileTemplates: [
+            htmlFile('videos'),
+            appComponent({readonly: true}),
+            appBootstrap({hidden: true}),
+            testFile()
+          ],
+          tests: []
+        }, {
+          name: 'Making search almost work',
+          description: `todo`,
+          path: 'templates/no-videos',
+          fileTemplates: [
+            htmlFile('videos'),
+            appComponent(),
+            appBootstrap({hidden: true}),
+            testFile()
+          ],
+          tests: []
+        }, {
+          name: 'Displaying all videos',
+          description: `todo`,
+          path: 'templates/all-videos',
+          fileTemplates: [
+            htmlFile('videos'),
+            appComponent(),
+            appBootstrap({hidden: true}),
+            testFile()
+          ],
+          tests: []
+        }
+      ]
+    },
+    {
+      name: 'Dependency Injection',
+      selectedExerciseIndex: 0,
       exercises: [{
-        name: 'Exercise',
-        description: `Let's learn how to use templates.`,
-        path: 'templates',
+        name: 'Service injection',
+        description: `let's inject our first service`,
+        path: 'dependency-injection',
         fileTemplates: [
-          htmlFile('video'),
-          appBootstrap()
+          tsFile('VideoService'),
+          tsFile('AppModule'),
+          tsFile('AppComponent'),
+          htmlFile('videos'),
+          tsFile('Api'),
+          appBootstrap(),
+          testFile()
         ],
         tests: []
       }]
-    }, {
+    },
+    {
       name: 'Test',
       selectedExerciseIndex: 0,
       exercises: [{
@@ -178,6 +225,7 @@ export const codelabConfig: CodelabConfig = {
         ],
         tests: []
       }]
-    }]
+    }
+  ]
 };
 

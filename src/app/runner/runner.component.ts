@@ -28,122 +28,123 @@ interface IframeConfig {
   hidden?: boolean
 }
 
-function injectIframe(element: any, config: IframeConfig) {
-  if (config.restart && cachedIframes[config.id]) {
-    cachedIframes[config.id].then((sandbox) => {
-      sandbox.destroy();
-    });
+
+function createIframe(config: IframeConfig) {
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+  iframe.setAttribute('frameBorder', '0');
+  iframe.setAttribute('src', config.url);
+  iframe.setAttribute('class', config.id);
+  iframe.setAttribute('style', 'width: 600px; height: 250px');
+  return iframe;
+}
+
+function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Function, runMultipleFiles: Function}> {
+  if (cachedIframes[config.id]) {
+    console.log('removing', config.id)
+    cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
   }
 
+  const iframe = createIframe(config);
+  cachedIframes[config.id] = iframe;
+  element.appendChild(iframe);
 
-  if (!cachedIframes[config.id]) {
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
-    iframe.setAttribute('frameBorder', '0');
-    iframe.setAttribute('src', config.url);
-    iframe.setAttribute('class', config.id);
-    iframe.setAttribute('style', 'width: 600px; height: 600px' + (config.hidden ? ';display: none' : ''));
-    element.appendChild(iframe);
+  const runJs = jsInjector(iframe);
 
 
-    const runJs = jsInjector(iframe);
+  let index = 0;
 
-    iframe.contentWindow.console.log = function () {
-      console.log.apply(console, arguments);
-    };
+  return new Promise((resolve, reject) => {
+    if (!iframe.contentWindow) {
+      return reject('iframe is gone');
+    }
+    iframe.contentWindow.onload = () => {
+      iframe.contentWindow.console.log = function () {
+        console.log.apply(console, arguments);
+      };
 
-    const setHtml = (html) => {
-      iframe.contentDocument.body.innerHTML = html;
-    };
-    const displayError = (error, location) => {
-      const escaped = (document.createElement('a').appendChild(
-        document.createTextNode(error)).parentNode as any).innerHTML;
-      setHtml(`<pre>${escaped}</pre>`);
-    };
+      const setHtml = (html) => {
+        iframe.contentDocument.body.innerHTML = html;
+      };
+      const displayError = (error, location) => {
+        const escaped = (document.createElement('a').appendChild(
+          document.createTextNode(error)).parentNode as any).innerHTML;
+        setHtml(`<pre>${escaped}</pre>`);
+      };
 
-    iframe.contentWindow.console.error = function (error, message) {
-      // handle angular error 1/3
-      displayError(error, 'Angular Error');
-      console.error.apply(console, arguments);
-    };
+      iframe.contentWindow.console.error = function (error, message) {
+        // handle angular error 1/3
+        displayError(error, 'Angular Error');
+        console.error.apply(console, arguments);
+      };
 
 
-    cachedIframes[config.id] = new Promise((resolve) => {
-      iframe.contentWindow.onload = () => {
-        let index = 0;
+      resolve({
+        setHtml: setHtml,
+        runMultipleFiles: (files: Array<FileConfig>) => {
+          index++;
 
-        const sandbox = {
-          destroy: () => {
-            iframe.remove();
-          },
-          setHtml: setHtml,
-          runMultipleFiles: (files: Array<FileConfig>) => {
-            index++;
 
-            (iframe.contentWindow as any).System.register('code', [], function (exports) {
-              return {
-                setters: [],
-                execute: function () {
-                  files.forEach((file) => {
-                    console.log(file.moduleName + 'Code');
-                    exports(file.moduleName + 'Code', file.code);
-                  });
-                }
+          (iframe.contentWindow as any).System.register('code', [], function (exports) {
+            return {
+              setters: [],
+              execute: function () {
+                files.forEach((file) => {
+                  console.log(file.moduleName + 'Code');
+                  exports(file.moduleName + 'Code', file.code);
+                });
               }
+            }
+          });
+
+
+          files.filter(file => file.type === 'ts').map((file) => {
+            // Update module names
+            let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
+              code = code.replace(/__SOLUTION__/g, '');
+              code = code.replace('./' + moduleName, './' + moduleName + index);
+              return code;
+            }, file.code);
+
+            if (file.before) {
+              code = file.before + ';\n' + code;
+            }
+
+            if (file.after) {
+              code = ';\n' + code + file.after;
+            }
+
+            const moduleName = file.moduleName + index;
+            // TODO(kirjs): Add source maps.
+            return ts.transpileModule(code, {
+              compilerOptions: {
+                module: ts.ModuleKind.System,
+                target: ts.ScriptTarget.ES5,
+                experimentalDecorators: true,
+                emitDecoratorMetadata: true,
+                noImplicitAny: true,
+                // TODO: figure out why this doesn't work
+                // inlineSourceMap: true,
+                // sourceMap: true
+              },
+              fileName: moduleName,
+              moduleName: moduleName,
+              reportDiagnostics: true
             });
+          }).map((compiled) => {
+            runJs(compiled.outputText);
+          });
 
 
-            files.filter(file => file.type === 'ts').map((file) => {
-              // Update module names
-              let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
-                code = code.replace(/__SOLUTION__/g, '');
-                code = code.replace('./' + moduleName, './' + moduleName + index);
-                return code;
-              }, file.code);
-
-              if (file.before) {
-                code = file.before + ';\n' + code;
-              }
-
-              if (file.after) {
-                code = ';\n' + code + file.after;
-              }
-
-              const moduleName = file.moduleName + index;
-              // TODO(kirjs): Add source maps.
-              return ts.transpileModule(code, {
-                compilerOptions: {
-                  module: ts.ModuleKind.System,
-                  target: ts.ScriptTarget.ES5,
-                  experimentalDecorators: true,
-                  // TODO: figure out why this doesn't work
-                  // inlineSourceMap: true,
-                  // sourceMap: true
-                },
-                fileName: moduleName,
-                moduleName: moduleName,
-                reportDiagnostics: true
-              });
-            }).map((compiled) => {
-              runJs(compiled.outputText);
-            });
-
-
-            files.filter((file) => file.bootstrap).map((file) => {
-              const moduleName = file.moduleName + index;
-              runJs(`System.import('${moduleName}')`);
-            });
-          }
-        };
-
-        resolve(sandbox)
-      }
-    });
-  }
-
-
-  return cachedIframes[config.id];
+          files.filter((file) => file.bootstrap).map((file) => {
+            const moduleName = file.moduleName + index;
+            runJs(`System.import('${moduleName}')`);
+          });
+        }
+      });
+    }
+  });
 }
 
 export interface RunnerConfig {
@@ -197,6 +198,13 @@ export class RunnerComponent implements AfterViewInit {
   runCode() {
 
     injectIframe(this.element.nativeElement, {
+      id: 'preview', 'url': 'assets/runner/index.html'
+    }).then((sandbox) => {
+      sandbox.setHtml(this.html);
+      sandbox.runMultipleFiles(this.files.filter(file => !file.test));
+    });
+
+    injectIframe(this.element.nativeElement, {
       id: 'testing', runId: this.runId++, 'url': 'assets/runner/tests.html', restart: true, hidden: false
     })
       .then((sandbox) => {
@@ -207,12 +215,6 @@ export class RunnerComponent implements AfterViewInit {
       });
 
 
-    injectIframe(this.element.nativeElement, {
-      id: 'preview', 'url': 'assets/runner/index.html'
-    }).then((sandbox) => {
-      sandbox.setHtml(this.html);
-      sandbox.runMultipleFiles(this.files.filter(file => !file.test));
-    });
   }
 
   ngAfterViewInit() {
