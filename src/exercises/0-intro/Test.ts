@@ -62,8 +62,14 @@ describe('Component', () => {
     chai.expect(DogCode.indexOf('constructor') > -1, `Your dog doesn't have constuctor`).is.true;
   });
 
-  it('Make constructor take a public parameter', () => {
+  it('Make constructor take a parameter "name"', () => {
     chai.expect(Dog.length, 'Dog constructor should take one parameter').equals(1);
+  });
+
+  it('Make it public', () => {
+    let parameterVal = "Snoopy";
+    const dog = new Dog(parameterVal);
+    chai.expect(dog.name).equals(parameterVal);
   });
 
   it('Create new method "bark"', () => {
