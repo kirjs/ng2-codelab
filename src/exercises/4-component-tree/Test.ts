@@ -25,8 +25,15 @@ beforeEach(() => {
   TestBed.compileComponents();
 });
 
-describe('Blabla', () => {
+describe('Component tree', () => {
   it(`VideoComponent.ts: return videoService.search(results instead of fake data)`, () => {
+    const metadata = Reflect.getMetadata("propMetadata", VideoComponent);
+    chai.expect(metadata, `VideoComponent doesn't have any @Input()'s`).is.not.undefined;
+    chai.expect(Object.keys(metadata).length, `VideoComponent doesn't have any @Input()'s`).equals(1);
+    chai.expect(metadata.video, `VideoComponent's @Input()' should be called video.`).is.not.undefined;
+  });
+
+  it(`Video.html: return videoService.search(results instead of fake data)`, () => {
     const metadata = Reflect.getMetadata("propMetadata", VideoComponent);
     chai.expect(metadata, `VideoComponent doesn't have any @Input()'s`).is.not.undefined;
     chai.expect(Object.keys(metadata).length, `VideoComponent doesn't have any @Input()'s`).equals(1);
