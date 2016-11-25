@@ -1,14 +1,10 @@
 import {Component, Input} from '@angular/core';
-
-interface Video {
-  title: string,
-  src: string
-}
+import {VideoItem} from "../../shared/VideoItem";
 
 @Component({
   selector: 'my-video',
   templateUrl: 'video.html'
 })
 export class VideoComponent {
-  @Input() video: Array<Video> = [];
+  @Input() video: VideoItem;
 }

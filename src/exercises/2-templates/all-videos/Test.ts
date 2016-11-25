@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {AppComponent} from './solution/AppComponent';
 import 'initTestBed';
-import {appCode} from './code';
+import {appCode} from '../../shared/code';
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -46,8 +46,8 @@ describe('Blabla', () => {
     fixture.detectChanges();
     const images = fixture.nativeElement.querySelectorAll('img');
     chai.expect(images.length).equals(2);
-    chai.expect(images[0].getAttribute('ng-reflect-src')).equals(fixture.componentInstance.videos[0].src);
     chai.expect(images[1].getAttribute('ng-reflect-src')).equals(fixture.componentInstance.videos[1].src);
+    chai.expect(images[0].getAttribute('ng-reflect-src')).equals(fixture.componentInstance.videos[0].src);
   });
 
   it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {

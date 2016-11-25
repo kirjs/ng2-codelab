@@ -1,0 +1,13 @@
+<div>
+  <h1>{{title}}</h1>
+  <input #searchString type="text">
+  <button (click)="search(searchString.value)">Search!</button>
+
+  <div *ngIf="!videos?.length">
+    No videos.
+  </div>
+  <div *ngFor="let video of videos">
+    <h2>{{video.title}}</h2>
+    <img [src]="video.src">
+  </div>
+</div>

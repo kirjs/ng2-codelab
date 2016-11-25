@@ -1,3 +1,5 @@
+import {VideoItem} from "./VideoItem";
+
 let FAKE_VIDEOS = [
   {
     title: "Cute kitten",
@@ -6,10 +8,10 @@ let FAKE_VIDEOS = [
   {
     title: "Kitten on the tree",
     src: "/assets/images/kitten2.jpg"
-  },{
+  }, {
     title: "More kitten",
     src: "/assets/images/kitten2.jpg"
-  },{
+  }, {
     title: "Another kitten",
     src: "/assets/images/kitten2.jpg"
   },
@@ -20,7 +22,7 @@ let FAKE_VIDEOS = [
 ];
 
 export const Api = {
-  fetch(searchString: string) {
+  fetch(searchString: string): Array<VideoItem> {
     return FAKE_VIDEOS.filter((video) =>
       video.title.indexOf(searchString) >= 0
     );

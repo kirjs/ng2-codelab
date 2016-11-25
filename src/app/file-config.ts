@@ -2,12 +2,12 @@ export interface FileConfig {
   /**
    * Only .ts is supported ATM.
    */
-  type?: string,
+    type?: string;
 
   /**
    * Source code of the file.
    */
-  code?: string,
+  code?: string;
 
   /**
    * TS code to run before running the file.
@@ -23,35 +23,40 @@ export interface FileConfig {
    * Usually the same as fileName without .ts postfix.
    * Currently gets inferred from filename.
    */
-  moduleName?: string,
+  moduleName?: string;
 
   /**
    * Actual filename.
    */
-  filename: string,
+  filename: string;
 
   /**
-   * If this is true, the file will be included in the preview iframe.
+   * If this is true; the file will be included in the preview iframe.
    */
-  ui?: boolean
+  ui?: boolean;
 
   /**
    * If this is true
    */
-  bootstrap?: boolean
+  bootstrap?: boolean;
 
   /**
-   * if this is true, the file will be displayed in read only mode.
+   * if this is true; the file will be displayed in read only mode.
    */
-  readonly?: boolean
+    readonly?: boolean;
 
   /**
    * If this is true the file will be included in the test iframe.
    */
-  test?: boolean,
+  test?: boolean;
 
   /**
-   * If this is true, the file will be hidden.
+   * If this is true; the file will be hidden.
    */
-  hidden?: boolean
+  hidden?: boolean;
+
+  /**
+   * Sometimes we want to reuse files from different exercises.
+   */
+  path?: string;
 }

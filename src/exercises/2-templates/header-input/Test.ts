@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {AppComponent} from './AppComponent';
 import 'initTestBed';
-import {appCode} from './code';
+import {appCode} from '../../shared/code';
 
 beforeEach(() => {
   TestBed.resetTestingModule();

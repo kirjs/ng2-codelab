@@ -37,6 +37,14 @@ function appModule(extensions?) {
   return tsFile('AppModule', extensions);
 }
 
+function sharedApiFile(extensions?) {
+  return tsFile('Api', Object.assign({path: 'shared'}, extensions));
+}
+function sharedVideoInterface(extensions?) {
+  return tsFile('VideoItem', Object.assign({path: 'shared'}, extensions));
+}
+
+
 function appBootstrap(extensions?) {
   return Object.assign(tsFile('AppModule'), {
     filename: 'Bootstrap.ts',
@@ -46,6 +54,9 @@ function appBootstrap(extensions?) {
   }, extensions)
 }
 
+function sharedAppBootstrap(extensions?) {
+  return Object.assign(appBootstrap(), {path: 'shared'}, extensions)
+}
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
@@ -213,23 +224,46 @@ export const codelabConfig: CodelabConfig = {
     }, {
       name: 'Component Tree',
       selectedExerciseIndex: 0,
-      exercises: [{
-        name: 'Service injection',
-        description: `let's inject our first service`,
-        path: '4-component-tree',
-        fileTemplates: [
-          htmlFile('video'),
-          tsFile('VideoComponent'),
-          htmlFile('app'),
-          tsFile('AppComponent'),
-          tsFile('AppModule'),
-          tsFile('VideoService', {hidden: true}),
-          tsFile('Api', {hidden: true}),
-          appBootstrap({hidden: true}),
-          testFile()
-        ],
-        tests: []
-      }]
+      exercises: [
+        {
+          // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
+          name: 'Create a separate component to display a video.',
+          description: `Todo`,
+          path: '4-component-tree/0-add-video-component',
+          fileTemplates: [
+            htmlFile('video'),
+            tsFile('VideoComponent'),
+            htmlFile('app', {hidden: true}),
+            tsFile('AppComponent', {hidden: true}),
+            tsFile('AppModule'),
+            tsFile('VideoService', {hidden: true}),
+            sharedApiFile({hidden: true}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            sharedVideoInterface()
+          ],
+          tests: []
+        },
+        {
+
+          name: 'Use the component you have just created.',
+          // TODO: Write the description
+          description: `Todo`,
+          path: '4-component-tree/1-use-video-component',
+          fileTemplates: [
+            htmlFile('app'),
+            htmlFile('video', {readonly: true}),
+            tsFile('AppModule'),
+            tsFile('VideoComponent', {readonly: true}),
+            tsFile('AppComponent', {hidden: true}),
+            tsFile('VideoService', {hidden: true}),
+            sharedApiFile({hidden: true}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            sharedVideoInterface()
+          ],
+          tests: []
+        }]
     },
     {
       name: 'Test',

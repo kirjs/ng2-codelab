@@ -80,14 +80,16 @@ export class ReducersService {
     }
 
     exerciseConfig.editedFiles = [];
-    const files = exerciseConfig.fileTemplates.map(file => file.filename)
-      .map(file => `exercises/${exerciseConfig.path}/${file}`);
+    const files = exerciseConfig
+      .fileTemplates.map(file => `exercises/${file.path || exerciseConfig.path}/${file.filename}`);
 
 
     return Observable.forkJoin(files.map(a => this.http.get(a))).map((responses) => {
       responses.forEach((response: {text: any}, index) => {
         let code = response.text();
         code = code.replace(/\.\/solution\//g, './');
+        code = code.replace(/(..\/)+shared\//g, './');
+
         exerciseConfig.fileTemplates[index].code = code;
         exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.split('.')[0];
         exerciseConfig.editedFiles[index] = Object.assign({}, exerciseConfig.fileTemplates[index]);

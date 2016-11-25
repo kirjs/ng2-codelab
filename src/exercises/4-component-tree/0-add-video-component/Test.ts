@@ -2,9 +2,10 @@ import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {AppComponent} from './solution/AppComponent';
 import {VideoService} from './VideoService';
-import {appCode, AppComponentCode, videoCode} from './code';
+import {appCode, videoCode} from '../../shared/code';
 import {AppModule} from "./AppModule";
 import {VideoComponent} from "./VideoComponent";
+import {VideoItem} from "../../shared/VideoItem";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -26,20 +27,37 @@ beforeEach(() => {
 });
 
 describe('Component tree', () => {
-  it(`VideoComponent.ts: return videoService.search(results instead of fake data)`, () => {
+  it(`VideoComponent.ts: Add a video @Input()`, () => {
     const metadata = Reflect.getMetadata("propMetadata", VideoComponent);
     chai.expect(metadata, `VideoComponent doesn't have any @Input()'s`).is.not.undefined;
     chai.expect(Object.keys(metadata).length, `VideoComponent doesn't have any @Input()'s`).equals(1);
     chai.expect(metadata.video, `VideoComponent's @Input()' should be called video.`).is.not.undefined;
   });
 
-  it(`Video.html: return videoService.search(results instead of fake data)`, () => {
-    const metadata = Reflect.getMetadata("propMetadata", VideoComponent);
-    chai.expect(metadata, `VideoComponent doesn't have any @Input()'s`).is.not.undefined;
-    chai.expect(Object.keys(metadata).length, `VideoComponent doesn't have any @Input()'s`).equals(1);
-    chai.expect(metadata.video, `VideoComponent's @Input()' should be called video.`).is.not.undefined;
+  it(`Video.html: Display video title`, () => {
+    let fixture = TestBed.createComponent(VideoComponent);
+    let video = {
+      title: 'Super cat',
+      src: 'super.png'
+    };
+    fixture.componentInstance.video = video;
+    fixture.detectChanges();
+
+    chai.expect(fixture.nativeElement.innerHTML, `can't find the video title`).contains(video.title);
   });
 
+  it(`Video.html: Display video thumbnail`, () => {
+    let fixture = TestBed.createComponent(VideoComponent);
+    let video: VideoItem = {
+      title: 'Super cat',
+      src: 'super.png'
+    };
+    fixture.componentInstance.video = video;
+    fixture.detectChanges();
 
+    const image = fixture.nativeElement.querySelector('img');
+    chai.expect(image, `Can't find the thumbnal`).is.not.null;
+    chai.expect(image.getAttribute('ng-reflect-src')).equals(video.src);
+  });
 });
 
