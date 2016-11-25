@@ -70,7 +70,7 @@ describe('Component', () => {
 
   });
 
-  it('Create new method', () => {
+  it('Create new method "bark"', () => {
     chai.expect(typeof (new Dog(new BarkTranslatingService()).bark)).equals('function');
   });
 
