@@ -1,4 +1,4 @@
-import {Api} from '../../shared/Api';
+import {Api} from './Api';
 import {Injectable} from '@angular/core';
 
 @Injectable()

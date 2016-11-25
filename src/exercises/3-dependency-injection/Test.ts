@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {AppComponent} from './solution/AppComponent';
 import {VideoService} from './VideoService';
-import {appCode, AppComponentCode} from './code';
+import {appCode, AppComponentCode} from '../shared/code';
 import {AppModule} from "./AppModule";
 
 beforeEach(() => {

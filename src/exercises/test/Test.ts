@@ -13,17 +13,22 @@
  */
 import {TestBed} from '@angular/core/testing';
 /**
- * solution/ prefix is used to let the test typechecked.
- * It will be stripped during runtime, and the Dog module
+ * `./solution/` prefix is used to make the test typecheck.
+ * It will be stripped during runtime, and the `./Dog` module
  * will be loaded.
  */
 import {Dog, evalJs} from './solution/Dog';
 /**
  * In the test we get the access to the actual sourcecode
- * I'd try not to overuse it
- * TODO(kirjs): Figure out how to actually typecheck.
+ * General recommendation here is not to overuse it.
  */
-import {DogCode} from './code';
+/**
+ * `(../)+shared/` prefix is used to make the test typecheck.
+ * It will be stripped during runtime, and the `./code` module
+ * will be loaded.
+ */
+
+import {DogCode} from '../shared/code';
 import {BarkTranslatingService} from "./BarkingBroadcastingService";
 
 beforeEach(() => {

@@ -38,8 +38,14 @@ function appModule(extensions?) {
 }
 
 function sharedApiFile(extensions?) {
-  return tsFile('Api', Object.assign({path: 'shared'}, extensions));
+  return sharedTsFile('Api', extensions);
 }
+
+function sharedTsFile(file, extensions?) {
+  return tsFile(file, Object.assign({path: 'shared'}, extensions));
+}
+
+
 function sharedVideoInterface(extensions?) {
   return tsFile('VideoItem', Object.assign({path: 'shared'}, extensions));
 }
@@ -236,7 +242,7 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('app', {hidden: true}),
             tsFile('AppComponent', {hidden: true}),
             tsFile('AppModule'),
-            tsFile('VideoService', {hidden: true}),
+            sharedTsFile('VideoService', {hidden: true}),
             sharedApiFile({hidden: true}),
             sharedAppBootstrap({hidden: true}),
             testFile(),
@@ -256,7 +262,7 @@ export const codelabConfig: CodelabConfig = {
             tsFile('AppModule'),
             tsFile('VideoComponent', {readonly: true}),
             tsFile('AppComponent', {hidden: true}),
-            tsFile('VideoService', {hidden: true}),
+            sharedTsFile('VideoService', {hidden: true}),
             sharedApiFile({hidden: true}),
             sharedAppBootstrap({hidden: true}),
             testFile(),

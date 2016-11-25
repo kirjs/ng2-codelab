@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {VideoService} from "./VideoService";
+import {VideoService} from "../../../shared/VideoService";
 import {VideoItem} from "../../../shared/VideoItem";
 
 
