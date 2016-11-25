@@ -62,12 +62,8 @@ describe('Component', () => {
     chai.expect(DogCode.indexOf('constructor') > -1, `Your dog doesn't have constuctor`).is.true;
   });
 
-  it('Make constructor take a parameter', () => {
+  it('Make constructor take a public parameter', () => {
     chai.expect(Dog.length, 'Dog constructor should take one parameter').equals(1);
-  });
-
-  it('Use accessor shortcut', () => {
-
   });
 
   it('Create new method "bark"', () => {
