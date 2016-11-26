@@ -33,11 +33,32 @@ describe('Component tree', () => {
     chai.expect(metadata[0].declarations, `Add TogglePanelComponent`).contains(TogglePanelComponent);
   });
 
-  it(`AppModule: Add the TogglePanelComponent to the AppModule declarations.`, () => {
+  it(`video.html: Use the TogglePanel component in the template`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     let panel = fixture.nativeElement.querySelector('my-toggle-panel');
     chai.expect(panel).is.not.null
+  });
+
+
+  it(`video.html: Add .description as TogglePanel's content`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    let panel = fixture.nativeElement.querySelector('my-toggle-panel');
+
+    chai.expect(panel.querySelector('.description')).is.not.null
+    chai.expect(panel.querySelector('.extra')).is.null
+  });
+
+  it(`video.html: Add .extra as TogglePanel's content`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    let panel = fixture.nativeElement.querySelector('my-toggle-panel');
+
+    panel.querySelector('button').click();
+    fixture.detectChanges();
+    chai.expect(panel.querySelector('.description')).is.null.null
+    chai.expect(panel.querySelector('.extra')).is.not.null
   });
 
 
