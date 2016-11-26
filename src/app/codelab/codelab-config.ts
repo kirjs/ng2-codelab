@@ -344,6 +344,20 @@ export const codelabConfig: CodelabConfig = {
         }]
     },
     {
+      name: 'Pipes',
+      selectedExerciseIndex: 0,
+      exercises: [{
+        name: 'Setup the pipe',
+        description: 'todo',
+        path: '7-pipes/0-create-pipe',
+        fileTemplates: [
+          tsFile('FuzzyPipe'),
+          testFile()
+        ],
+        tests: []
+      }]
+    },
+    {
       name: 'Test',
       selectedExerciseIndex: 0,
       exercises: [{
