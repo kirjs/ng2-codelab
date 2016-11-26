@@ -5,7 +5,8 @@ import {Component} from '@angular/core';
   template: '<h1>Hello {{title}}!</h1>'
 })
 export class AppComponent {
-  title = 'Angular 2';
+  title = 'CatTube';
 }
 
-
+// Pls ignore
+export function evalJs(s: string): any {}

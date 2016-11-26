@@ -30,7 +30,8 @@ describe('Blabla', () => {
     chai.expect(fixture.componentInstance.search.length, `Search should take one parameter`).equals(1);
   });
 
-  it(`app.html: Add click handler to the button, call 'search' method and pass input value `, () => {
+  it(`app.html: Add click handler to the button, call 'search' method and pass input value 
+      (it shouldn't search yet, just take the parameter)`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const input = fixture.nativeElement.querySelector('input');

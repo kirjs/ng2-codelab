@@ -45,11 +45,9 @@ function sharedTsFile(file, extensions?) {
   return tsFile(file, Object.assign({path: 'shared'}, extensions));
 }
 
-
 function sharedVideoInterface(extensions?) {
   return tsFile('VideoItem', Object.assign({path: 'shared'}, extensions));
 }
-
 
 function appBootstrap(extensions?) {
   return Object.assign(tsFile('AppModule'), {
@@ -198,35 +196,50 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           name: 'Set up the page',
-          description: `Basic stuff`,
-          path: '2-templates/header-input',
+          description: `Let's setup a header, a search box, and a search button for our component!`,
+          path: '2-templates/0-header-input',
           fileTemplates: [
             htmlFile('app'),
-            appComponent({readonly: true}),
-            appBootstrap({hidden: true}),
-            testFile()
+            appComponent({readonly: true, 'path': '1-bootstrap/0-component/solution'}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }, {
-          name: 'Making search almost work',
-          description: `todo`,
-          path: '2-templates/no-videos',
+          name: 'Add some dynamics',
+          description: `Now let's add search method and display a message when there are no videos.`,
+          path: '2-templates/1-no-videos',
           fileTemplates: [
             htmlFile('app'),
-            appComponent(),
-            appBootstrap({hidden: true}),
-            testFile()
+            appComponent({'path': '1-bootstrap/0-component/solution'}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }, {
-          name: 'Displaying all videos',
-          description: `todo`,
-          path: '2-templates/all-videos',
+          name: 'Display all videos',
+          description: `Finally let's iterate over the videos.`,
+          path: '2-templates/2-all-videos',
           fileTemplates: [
-            htmlFile('app'),
+            htmlFile('app', {path: '2-templates/1-no-videos/solution'}),
             appComponent(),
-            appBootstrap({hidden: true}),
-            testFile()
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }
@@ -237,15 +250,17 @@ export const codelabConfig: CodelabConfig = {
       selectedExerciseIndex: 0,
       exercises: [{
         name: 'Service injection',
-        description: `let's inject our first service`,
+        description: `
+          Now we're fetching the videos using a service instead of having them hardcoded.          
+        `,
         path: '3-dependency-injection',
         fileTemplates: [
           tsFile('VideoService'),
           tsFile('AppModule'),
-          tsFile('AppComponent'),
-          htmlFile('app'),
-          tsFile('Api'),
-          appBootstrap(),
+          tsFile('AppComponent', {path: '2-templates/2-all-videos/solution'}),
+          htmlFile('app', {path: '2-templates/2-all-videos/solution'}),
+          sharedApiFile('Api'),
+          sharedAppBootstrap({hidden: true}),
           testFile()
         ],
         tests: []
@@ -257,28 +272,30 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
-          name: 'Create a separate component to display a video.',
-          description: `Todo`,
+          name: 'Create VideoComponent',
+          description: `<p>Now instead of having the video html in the app component, we're going to have 
+            a separate component for the video info.</p>
+            <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
+  `,
           path: '4-component-tree/0-add-video-component',
           fileTemplates: [
             htmlFile('video'),
             tsFile('VideoComponent'),
-            htmlFile('app', {hidden: true}),
-            tsFile('AppComponent', {hidden: true}),
             tsFile('AppModule'),
+            tsFile('AppComponent', {hidden: true}),
             sharedTsFile('VideoService', {hidden: true}),
             sharedApiFile({hidden: true}),
             sharedAppBootstrap({hidden: true}),
-            testFile(),
-            sharedVideoInterface()
+            sharedVideoInterface(),
+            testFile()
           ],
           tests: []
         },
         {
 
-          name: 'Use the component you have just created.',
+          name: 'Use VideoComponent',
           // TODO: Write the description
-          description: `Todo`,
+          description: `All is left is to actually use the new video component in the app.`,
           path: '4-component-tree/1-use-video-component',
           fileTemplates: [
             htmlFile('app'),

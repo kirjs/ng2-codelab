@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 
+/** Just added this! */
 const FAKE_VIDEOS = [
   {
     title: "Cute kitten",
@@ -21,14 +22,9 @@ const FAKE_VIDEOS = [
   templateUrl: 'app.html'
 })
 export class AppComponent {
-  videos = [];
   title = "CatTube";
+  videos = [];
 
-  search(value) {
-    this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(value) >= 0)
-  }
-
-  ngOnInit(){
-    this.search('');
+  search(searchString: String) {
   }
 }

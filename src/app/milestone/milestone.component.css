@@ -15,6 +15,7 @@ h1 {
 
 .exercise.complete.selected {
   background-color: #105635;
+  font-weight: 600;
 }
 
 .exercise.complete {
