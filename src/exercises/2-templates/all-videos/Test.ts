@@ -53,5 +53,9 @@ describe('Blabla', () => {
   it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
     // TODO:
   });
+
+  it(`#Bonus app.html: When the component starts, search for empty string. `, () => {
+    // TODO:
+  });
 });
 
