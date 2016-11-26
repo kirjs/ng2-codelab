@@ -2,7 +2,7 @@
 import {BarkTranslatingService} from "./BarkingBroadcastingService";
 
 export class Dog {
-  constructor(public translation: BarkTranslatingService) {
+  constructor(public translation: BarkTranslatingService, public name: string) {
   }
 
   bark(content: string): string {
