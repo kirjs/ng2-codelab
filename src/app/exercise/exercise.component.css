@@ -11,12 +11,14 @@
 
 .description {
   max-width: 500px;
+  padding: 0 0 10px 0;
 }
 
 app-editors {
   width: 500px;
   display: flex;
 }
+
 .side {
   flex: 1;
 }

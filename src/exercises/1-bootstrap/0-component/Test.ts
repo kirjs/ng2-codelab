@@ -1,12 +1,18 @@
 import {TestBed} from '@angular/core/testing';
-import {AppComponent, evalJs} from './solution/AppComponent'; // Solution prefix will be stripped-out by the app
+// Solution prefix will be stripped-out by the app
+import {AppComponent, evalJs} from './solution/AppComponent';
 import "reflect-metadata";
 
 let metadata;
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({declarations: [AppComponent]});
-  metadata = Reflect.getMetadata("annotations", AppComponent);
+  try {
+    metadata = Reflect.getMetadata("annotations", AppComponent);
+  } catch (e) {
+    // Do nothing, we have assertions below for this case
+  }
+
 });
 
 describe('Component', () => {

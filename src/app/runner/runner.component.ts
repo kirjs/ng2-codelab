@@ -214,7 +214,7 @@ export class RunnerComponent implements AfterViewInit {
       .then((sandbox) => {
 
         const testFiles = this.files
-          .filter(file => !file.ui);
+          .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
 

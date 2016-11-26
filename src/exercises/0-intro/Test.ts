@@ -24,8 +24,8 @@ import {Dog, evalJs} from './solution/Dog';
  * I'd try not to overuse it
  * TODO(kirjs): Figure out how to actually typecheck.
  */
-import {DogCode} from './code';
-import {BarkTranslatingService} from "./BarkingBroadcastingService";
+import {DogCode} from '../shared/code';
+
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -73,7 +73,7 @@ describe('Component', () => {
   });
 
   it('Create new method "bark"', () => {
-    chai.expect(typeof (new Dog(new BarkTranslatingService()).bark)).equals('function');
+    chai.expect(typeof (new Dog('hello').bark)).equals('function');
   });
 
   it(`Let's debug the app! You'll need this if something goes wrong.

@@ -1,6 +1,4 @@
-<div>Checklist:</div>
-
 <div *ngFor="let test of tests">
   <div [class]="'test ' + (test.pass === true ?'pass': (test.pass === false ?'fail': ''))">{{test.title}}</div>
-  <div>{{test.result}}</div>
+  <div class="result">{{test.result}}</div>
 </div>
