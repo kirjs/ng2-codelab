@@ -6,10 +6,9 @@ export class CodelabPage {
     return browser.get('/');
   }
 
-  getMilestoneDescriptionText() {
+  getMilestoneText() {
     element(by.css('.milestone')).click();
-
-    return element(by.css('.description')).getText();
+    return element(by.css('.milestone')).getText();
   }
 
     getElementText(nameElement) {
