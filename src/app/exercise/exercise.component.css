@@ -13,3 +13,10 @@
   max-width: 500px;
 }
 
+app-editors {
+  width: 500px;
+  display: flex;
+}
+.side {
+  flex: 1;
+}

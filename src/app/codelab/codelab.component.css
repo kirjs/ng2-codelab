@@ -17,7 +17,6 @@
 
 .milestones {
   box-shadow: #dddddd 2px 2px 2px;
-  padding: 10px;
 }
 
 .milestones.collapsed .title {
@@ -27,22 +26,24 @@
 
 .milestone {
   display: flex;
-  line-height: 35px;
-  padding-bottom: 10px;
+  margin-bottom: 4px;
   cursor: pointer;
 }
 
 .index {
-  width: 35px;
-  color: #fff;
-  height: 35px;
+  color: #000;
+  padding: 4px 4px 4px 8px;
+  width: 20px;
   text-align: center;
-  background-color: #777;
-  border-radius: 50%;
 }
 
 .title {
-  padding: 0 10px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.milestone.selected {
+  background-color: #eee;
 }
 
 .milestone.selected .title {
@@ -54,9 +55,12 @@
 }
 
 .collapse {
-  padding: 10px;
+  text-align: center;
+  font-size: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .codelab-milestone {
-  padding: 10px;
+  padding: 4px;
 }
