@@ -9,6 +9,20 @@ beforeEach(() => {
   metadata = Reflect.getMetadata("annotations", FuzzyTime);
 });
 
+let timeConverter = (value:string) =>{
+    let date = new Date(value);
+    let dateNow = new Date();
+
+    let millisecondsDifference = dateNow.getTime() - date.getTime();
+    let differenceDays = Math.floor(millisecondsDifference / (1000 * 3600 * 24));
+    let differenceYears = Math.floor(differenceDays / 365);
+    
+    if(differenceDays < 365){
+        return  differenceDays + ' days ago';
+    }
+    return differenceYears + ' years ago';
+}
+
 describe('Pipe', () => {
   it('Create a pipe called FuzzyTime', () => {
     chai.expect(typeof evalJs('FuzzyTime')).equals('function');
@@ -19,12 +33,9 @@ describe('Pipe', () => {
 
   it('Make it work', () => {
     let fuzzyTime = new FuzzyTime();
-    jasmine.clock().install();
-    jasmine.clock().mockDate(new Date('2016-11-26'));
-    chai.expect(fuzzyTime.transform('2016-11-24')).equals('2 days ago');
-    chai.expect(fuzzyTime.transform('2012-11-25', )).equals('4 years ago');
-    chai.expect(fuzzyTime.transform('2010-11-25')).equals('6 years ago');
-    jasmine.clock().uninstall();
+    chai.expect(fuzzyTime.transform('2016-11-24')).equals(timeConverter('2016-11-24'));
+    chai.expect(fuzzyTime.transform('2012-11-25', )).equals(timeConverter('2012-11-25'));
+    chai.expect(fuzzyTime.transform('2010-11-25', )).equals(timeConverter('2010-11-25'));
   });
 
 });
