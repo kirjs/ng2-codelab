@@ -9,6 +9,10 @@ const FAKE_VIDEOS = [
     title: "Kitten on the tree",
     src: "/assets/images/kitten2.jpg"
   },
+  {
+    title: "Serouis cat",
+    src: "/assets/images/kitten2.jpg"
+  },
 ];
 
 
@@ -28,9 +32,7 @@ export class AppComponent {
     this.search('');
   }
 
-  enterPressed(key, value){
-    if(key === "Enter"){
-      this.search(value);
-    }
+  enterPressed(value){
+    this.search(value);
   }
 }

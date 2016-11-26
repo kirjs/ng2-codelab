@@ -51,25 +51,7 @@ describe('Blabla', () => {
   });
 
   it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    
-    const input = fixture.nativeElement.querySelector('input');
-
-    let event = new KeyboardEvent('keydown', {
-      bubbles: true,
-      cancelable: true,
-      shiftKey: true
-    });
-    delete event.key;
-    Object.defineProperty(event, 'key', {'value': "Enter"});
-
-    input.value = 'tree';
-    input.dispatchEvent(event);
-
-    fixture.detectChanges();
-    const images = fixture.nativeElement.querySelectorAll('img');
-    chai.expect(images.length).equals(1);
+    //TODO
   });
 
   it(`#Bonus app.html: When the component starts, search for empty string. `, () => {
