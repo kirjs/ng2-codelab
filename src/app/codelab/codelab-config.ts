@@ -66,7 +66,7 @@ function sharedAppBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
-  selectedMilestoneIndex: 5,
+  selectedMilestoneIndex: 6,
   milestones: [
     {
       /**
@@ -303,9 +303,37 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('video'),
             tsFile('VideoComponent', {readonly: true}),
             htmlFile('app', {hidden: true}),
-            tsFile('AppComponent', {hidden: true}),
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
+            tsFile('AppComponent', {hidden: true}),
+            sharedAppBootstrap({hidden: true}),
+            sharedVideoInterface({hidden: true}),
+            sharedTsFile('VideoService'),
+            sharedApiFile({hidden: true}),
+            testFile(),
+          ],
+          tests: []
+        }]
+    },
+    {
+      name: 'Parent-container',
+      selectedExerciseIndex: 0,
+      exercises: [
+        {
+          name: 'Create a separate component to display a video.',
+          description: `Todo`,
+          path: '6-children',
+          fileTemplates: [
+            tsFile('ContextComponent'),
+            htmlFile('context'),
+            htmlFile('video'),
+            tsFile('ContextService', {readonly: true}),
+            tsFile('AppModule'),
+            tsFile('VideoComponent', {readonly: true}),
+            htmlFile('app', {hidden: true}),
+            htmlFile('togglepanel', {hidden: true}),
+            sharedTsFile('TogglePanelComponent', {hidden: true}),
+            tsFile('AppComponent', {hidden: true}),
             sharedAppBootstrap({hidden: true}),
             sharedVideoInterface({hidden: true}),
             sharedTsFile('VideoService'),

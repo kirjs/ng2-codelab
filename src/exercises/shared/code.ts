@@ -4,3 +4,4 @@ export const AppComponentCode = '';
 export const DogCode = '';
 export const togglepanelCode = '';
 export const wrapperCode = '';
+export const contextCode = '';

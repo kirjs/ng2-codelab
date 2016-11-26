@@ -160,6 +160,7 @@ export class RunnerComponent implements AfterViewInit {
   html = `<my-app></my-app><!-- TODO(kirjs): I'm actually adding all possible components we could use here,
   but this should be done dynamically instead. -->
 <my-wrapper></my-wrapper>
+<my-ad></my-ad>
   `;
   @ViewChild('runner') element: ElementRef;
   runId = 0;
