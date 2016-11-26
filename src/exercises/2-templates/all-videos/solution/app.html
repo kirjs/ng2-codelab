@@ -1,6 +1,6 @@
 <div>
   <h1>{{title}}</h1>
-  <input #searchString type="text">
+  <input #searchString type="text" (keydown)="enterPressed($event.key, searchString.value)">
   <button (click)="search(searchString.value)">Search!</button>
 
   <div *ngIf="!videos?.length">

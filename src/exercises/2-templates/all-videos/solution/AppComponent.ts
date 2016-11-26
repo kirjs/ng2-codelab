@@ -23,4 +23,14 @@ export class AppComponent {
   search(value) {
     this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(value) >= 0)
   }
+
+  ngOnInit(){
+    this.search('');
+  }
+
+  enterPressed(key, value){
+    if(key === "Enter"){
+      this.search(value);
+    }
+  }
 }
