@@ -1,12 +1,9 @@
-//
-import {BarkTranslatingService} from "./BarkingBroadcastingService";
-
 export class Dog {
-  constructor(public translation: BarkTranslatingService) {
+  constructor(public name: string) {
   }
 
   bark(content: string): string {
-    return this.translation.translate(content);
+    return this.name;
   }
 }
 // TODO: This function get's added at run time, is needed for testing only,
