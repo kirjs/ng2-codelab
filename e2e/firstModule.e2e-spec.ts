@@ -1,8 +1,8 @@
 import { CodelabPage } from './app.po';
-import { browser, element, by } from 'protractor';
+import { browser } from 'protractor';
 
-describe('codelab App', function () {
-  let page:CodelabPage;
+describe('codelab App', function() {
+  let page: CodelabPage;
 
   beforeEach(() => {
     page = new CodelabPage();
@@ -10,17 +10,8 @@ describe('codelab App', function () {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    browser.ignoreSynchronization = true;
-    page.clickTo();
-    browser.manage().timeouts().pageLoadTimeout(10000);
-    page.clickElement('.next');
-    browser.ignoreSynchronization = true;
-    browser.sleep(2000);
-    page.clickElement('#editor');
-    browser.ignoreSynchronization = true;
-    page.sendKeysTo('#editor');
-    browser.sleep(2000)
-  }
-
-  );
+    page.clickElement('app-root .next');
+    page.clickElement('app-root index1');
+    browser.manage().timeouts().pageLoadTimeout(1000);
+  });
 });
