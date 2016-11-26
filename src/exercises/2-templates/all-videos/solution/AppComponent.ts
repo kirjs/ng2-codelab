@@ -9,6 +9,10 @@ const FAKE_VIDEOS = [
     title: "Kitten on the tree",
     src: "/assets/images/kitten2.jpg"
   },
+  {
+    title: "Serouis cat",
+    src: "/assets/images/kitten2.jpg"
+  },
 ];
 
 
@@ -22,5 +26,9 @@ export class AppComponent {
 
   search(value) {
     this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(value) >= 0)
+  }
+
+  ngOnInit(){
+    this.search('');
   }
 }

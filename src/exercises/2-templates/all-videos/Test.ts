@@ -16,8 +16,7 @@ beforeEach(() => {
 });
 
 describe('Blabla', () => {
-  it(`AppComponent.ts: When 'search' is called, FAKE_VIDEOS to leave with those whose 
-     title matches search string, and assign to videos prop.`, () => {
+  it(`AppComponent.ts: When 'search' is called, filter videos with the title matching the search string and assign them to the "videos" property of the component. Use FAKE_VIDEOS as data`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.search('itten');
     chai.expect(fixture.componentInstance.videos.length, 'Should have 2 kittens').equals(2);
@@ -50,12 +49,15 @@ describe('Blabla', () => {
     chai.expect(images[0].getAttribute('ng-reflect-src')).equals(fixture.componentInstance.videos[0].src);
   });
 
-  it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
-    // TODO:
-  });
+  // it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
+  //   //TODO
+  // });
 
   it(`#Bonus app.html: When the component starts, search for empty string. `, () => {
-    // TODO:
+    let fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const images = fixture.nativeElement.querySelectorAll('img');
+    chai.expect(images.length).equals(3);
   });
 });
 

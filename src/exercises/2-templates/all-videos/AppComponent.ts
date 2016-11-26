@@ -25,6 +25,6 @@ export class AppComponent {
   title = "CatTube";
 
   search(value) {
-    this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(value) >= 0)
+    
   }
 }
