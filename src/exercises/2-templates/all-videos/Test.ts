@@ -50,9 +50,9 @@ describe('Blabla', () => {
     chai.expect(images[0].getAttribute('ng-reflect-src')).equals(fixture.componentInstance.videos[0].src);
   });
 
-  it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
-    //TODO
-  });
+  // it(`#Bonus app.html: Make hitting enter work in the input trigger the search`, () => {
+  //   //TODO
+  // });
 
   it(`#Bonus app.html: When the component starts, search for empty string. `, () => {
     let fixture = TestBed.createComponent(AppComponent);
