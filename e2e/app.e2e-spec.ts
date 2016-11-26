@@ -10,6 +10,6 @@ describe('codelab App', function() {
   it('should display message saying app works', () => {
     page.navigateTo();
 
-    expect(page.getMilestoneText()).toEqual('1');
+    expect(page.getMilestoneDescriptionText()).toContain('Welcome to the typescript!');
   });
 });
