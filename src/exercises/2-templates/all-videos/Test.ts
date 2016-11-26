@@ -16,8 +16,7 @@ beforeEach(() => {
 });
 
 describe('Blabla', () => {
-  it(`AppComponent.ts: When 'search' is called, FAKE_VIDEOS to leave with those whose 
-     title matches search string, and assign to videos prop.`, () => {
+  it(`AppComponent.ts: When 'search' is called, filter videos with the title matching the search string and assign them to the "videos" property of the component. Use FAKE_VIDEOS as data`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.search('itten');
     chai.expect(fixture.componentInstance.videos.length, 'Should have 2 kittens').equals(2);

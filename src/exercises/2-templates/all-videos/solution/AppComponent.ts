@@ -31,8 +31,4 @@ export class AppComponent {
   ngOnInit(){
     this.search('');
   }
-
-  enterPressed(value){
-    this.search(value);
-  }
 }
