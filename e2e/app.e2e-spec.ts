@@ -1,4 +1,5 @@
 import { CodelabPage } from './app.po';
+import { browser } from 'protractor';
 
 describe('codelab App', function() {
   let page: CodelabPage;
@@ -9,7 +10,6 @@ describe('codelab App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-
-    expect(page.getMilestoneDescriptionText()).toContain('Welcome to the typescript!');
+    expect(page.getElementText('app-root .next')).toEqual('Good job! Go to the next exercise!');
   });
 });

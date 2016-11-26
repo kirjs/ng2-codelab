@@ -10,4 +10,13 @@ export class CodelabPage {
 
     return element(by.css('.description')).getText();
   }
+
+    getElementText(nameElement) {
+    return element(by.css(nameElement)).getText();
+  }
+     clickElement(nameElement) {
+    return element(by.css(nameElement)).click();
+  }
+
+
 }
