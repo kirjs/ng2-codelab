@@ -12,10 +12,10 @@ beforeEach(() => {
 
 describe('Component', () => {
   it('Create a class called AppComponent', () => {
-    chai.expect(typeof AppComponent).equals('function');
+    chai.expect(typeof evalJs('AppComponent')).equals('function');
   });
   it('Export the created class', () => {
-    chai.expect(typeof evalJs('AppComponent')).equals('function');
+    chai.expect(typeof AppComponent).equals('function');
   });
   it('Add a Component decorator for the class', () => {
     chai.expect(metadata).is.not.undefined
