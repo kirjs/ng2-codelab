@@ -3,21 +3,36 @@ import {VideoItem} from "./VideoItem";
 let FAKE_VIDEOS = [
   {
     title: "Cute kitten",
-    src: "/assets/images/kitten1.jpg"
+    src: "/assets/images/kitten1.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20
   },
   {
     title: "Kitten on the tree",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20
   }, {
     title: "More kitten",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20
   }, {
     title: "Another kitten",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20
   },
   {
     title: "Serouis cat",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20
   },
 ];
 

@@ -1,4 +1,7 @@
 export interface VideoItem {
   title: string,
-  src: string
+  src: string,
+  description: string,
+  views: number
+  likes: number
 }

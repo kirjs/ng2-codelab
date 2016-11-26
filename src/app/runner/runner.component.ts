@@ -157,7 +157,10 @@ export interface RunnerConfig {
 })
 export class RunnerComponent implements AfterViewInit {
   @Input() files: any;
-  html = '<my-app></my-app>';
+  html = `<my-app></my-app><!-- TODO(kirjs): I'm actually adding all possible components we could use here,
+  but this should be done dynamically instead. -->
+<my-wrapper></my-wrapper>
+  `;
   @ViewChild('runner') element: ElementRef;
   runId = 0;
 

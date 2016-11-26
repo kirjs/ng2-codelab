@@ -6,7 +6,11 @@ import {AppModule} from "./AppModule";
 
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {
-    return Promise.resolve(code[url.replace('.html', 'Code')]);
+    let template = code[url.replace('.html', 'Code')];
+    if (!template) {
+      debugger;
+    }
+    return Promise.resolve(template);
   };
 }
 

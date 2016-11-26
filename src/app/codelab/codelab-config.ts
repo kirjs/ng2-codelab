@@ -66,7 +66,7 @@ function sharedAppBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
-  selectedMilestoneIndex: 4,
+  selectedMilestoneIndex: 5,
   milestones: [
     {
       /**
@@ -227,7 +227,8 @@ export const codelabConfig: CodelabConfig = {
         ],
         tests: []
       }]
-    }, {
+    },
+    {
       name: 'Component Tree',
       selectedExerciseIndex: 0,
       exercises: [
@@ -270,6 +271,49 @@ export const codelabConfig: CodelabConfig = {
           ],
           tests: []
         }]
+    }, {
+      name: 'Content projection',
+      selectedExerciseIndex: 0,
+      exercises: [
+        {
+          // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
+          name: 'Create a separate component to display a video.',
+          description: `Todo`,
+          path: '5-content-projection/0-add-toggle-panel-component',
+          fileTemplates: [
+            // TODO: Figure out how to actually use dashes and periods in the component.
+            htmlFile('togglepanel'),
+            tsFile('TogglePanelComponent'),
+            tsFile('AppModule', {hidden: true}),
+            tsFile('WrapperComponent'),
+            sharedAppBootstrap({hidden: true}),
+            sharedVideoInterface({hidden: true}),
+            testFile(),
+          ],
+          tests: []
+        },
+        {
+          // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
+          name: 'Create a separate component to display a video.',
+          description: `Todo`,
+          path: '5-content-projection/1-use-toggle-panel',
+          fileTemplates: [
+            // TODO: Figure out how to actually use dashes and periods in the component.
+            tsFile('AppModule', {hidden: true}),
+            htmlFile('video'),
+            tsFile('VideoComponent', {readonly: true}),
+            htmlFile('app', {hidden: true}),
+            tsFile('AppComponent', {hidden: true}),
+            htmlFile('togglepanel'),
+            tsFile('TogglePanelComponent'),
+            sharedAppBootstrap({hidden: true}),
+            sharedVideoInterface({hidden: true}),
+            sharedTsFile('VideoService'),
+            sharedApiFile({hidden: true}),
+            testFile(),
+          ],
+          tests: []
+        }]
     },
     {
       name: 'Test',
@@ -279,7 +323,6 @@ export const codelabConfig: CodelabConfig = {
         description: 'Just testing things',
         path: 'test',
         fileTemplates: [
-
           tsFile('Main'),
           tsFile('Dog')
         ],

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './AppComponent';
-import {VideoService} from "./VideoService";
+import {VideoService} from "../../shared/VideoService";
 import {VideoComponent} from "./VideoComponent";
 
 @NgModule({

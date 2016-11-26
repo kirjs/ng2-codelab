@@ -9,15 +9,9 @@ import {ActionTypes} from "./action-types.enum";
 import {ExerciseConfig} from "./exercise-config";
 import {MilestoneConfig} from "./milestone-config";
 import {ReducersService} from "./reducers.service";
+import {assert} from "./utils";
 
-function assert(x) {
-  if (x !== undefined) {
-    return x;
-  } else {
-    debugger
-    throw new Error('Assertion failed');
-  }
-}
+
 
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
   return assert(state.milestones[state.selectedMilestoneIndex]);
