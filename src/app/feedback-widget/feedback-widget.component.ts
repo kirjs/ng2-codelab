@@ -14,7 +14,9 @@ export class FeedbackWidgetComponent implements OnInit {
   }
 
   send(comment, username){
-    this.state.sendFeedback({comment,username});
+    if (comment && username) {
+      this.state.sendFeedback({comment,username});
+    }    
   }
 
 }
