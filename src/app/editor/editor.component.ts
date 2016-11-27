@@ -18,8 +18,7 @@ const languages = {
 
 @Component({
   selector: 'app-editor',
-  template: `<div id='editor' #editor class="monaco-editor" 
-                style="width:600px;height:150px;border:1px solid grey"></div>`,
+  template: `<div #editor class="monaco-editor"></div>`,
   styleUrls: ['./editor.component.css'],
   providers: [
     {
@@ -36,6 +35,10 @@ export class EditorComponent implements AfterViewInit {
   @Input() language: string = "typescript";
   @Output() onCodeChange = new EventEmitter();
   editSub: Subject<String>;
+  height = 0;
+  calcHeight(lines){
+    return lines * 16;
+  }
 
 
   constructor(private http: Http, private applicationRef: ApplicationRef) {
@@ -122,10 +125,25 @@ export class EditorComponent implements AfterViewInit {
     this._editor.getModel().onDidChangeContent(() => {
       this.updateValue(this._editor.getModel().getValue());
     });
-
+    // TODO(kirjs): Actually use it.
+    const height = Math.max(100, this.calcHeight(this.file.code.split('\n').length));
+    this._editor.layout({height: 200, width: 500});
   }
 
+
   updateValue(value: string) {
+    /*
+    TODO(resize):
+     const height = this.calcHeight(value.split('\n').length );
+
+    if(this.height != height ){
+      this.height = height;
+      this.editorContent.nativeElement.style.height = height + 'px';
+      this.editorContent.nativeElement.parentElement.style.height = height + 'px';
+      this.editorContent.nativeElement.parentElement.parentElement.style.height = height + 'px';
+      this._editor.layout();
+    }
+*/
     this.editSub.next(value)
   }
 }

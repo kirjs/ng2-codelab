@@ -1,21 +1,10 @@
 import {Component} from '@angular/core';
-import {VideoService} from "../../shared/VideoService";
-import {VideoItem} from "../../shared/VideoItem";
-
+// This is a fake app component, it's needed to bootstrap the video component with the aproppriate params.
+import {Api} from '../../shared/Api';
 @Component({
   selector: 'my-app',
-  templateUrl: 'app.html'
+  template: '<my-video [video]="video"></my-video>'
 })
 export class AppComponent {
-  videos: Array<VideoItem> = [];
-  title = "CatTube";
-
-  constructor(private v: VideoService) {
-    // Display all cats right away!
-    this.search('');
-  }
-
-  search(value) {
-    this.videos = this.v.search(value);
-  }
+  video = Api.fetch('')[0];
 }

@@ -9,24 +9,28 @@ h1 {
 }
 
 .exercise.selected {
-  background-color: #ff9900;
+  background-color: rgba(83, 85, 87, 0.31);
   cursor: default;
 }
+
 .exercise.complete.selected {
   background-color: #105635;
+  font-weight: 600;
 }
+
 .exercise.complete {
-  background-color: #2ded91;
+  background-color: #33ed1a;
   color: #fff;
 }
 
+.exercise.milestone-title {
+  background: #fff;
+}
+
 .exercise {
-  width: 20px;
-  height: 20px;
+  padding: 0 4px;
   line-height: 20px;
-  text-align: center;
   background-color: #dddddd;
-  border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 4px;
   cursor: pointer;
 }

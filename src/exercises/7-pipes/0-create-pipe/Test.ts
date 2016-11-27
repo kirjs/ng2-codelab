@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {FuzzyTime, evalJs} from './FuzzyPipe'; // Solution prefix will be stripped-out by the app
+import {FuzzyTime, evalJs} from './FuzzyPipe';
 import "reflect-metadata";
 
 let metadata;

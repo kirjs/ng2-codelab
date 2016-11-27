@@ -6,6 +6,7 @@ import "reflect-metadata";
 let metadata;
 
 beforeEach(() => {
+
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({declarations: []});
   try {
@@ -17,6 +18,7 @@ beforeEach(() => {
 
 describe('Component', () => {
   it('Create a class called AppModule', () => {
+    debugger
     chai.expect(typeof AppModule).equals('function');
   });
   it('Add a Module annotation for the class', () => {

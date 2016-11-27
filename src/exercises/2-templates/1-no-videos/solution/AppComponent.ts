@@ -2,8 +2,12 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  templateUrl: 'app.html'
+  template: '<h1>Hello {{title}}!</h1>'
 })
 export class AppComponent {
-  title = "CatTube"
+  title = 'CatTube';
+  videos = [];
+
+  search(searchString) {
+  }
 }

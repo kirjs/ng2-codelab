@@ -4,7 +4,7 @@ function testFile() {
   return {
     filename: 'Test.ts',
     type: 'ts',
-    ui: false,
+    excludeFromTesting: false,
     test: true,
     bootstrap: true,
     before: 'mochaBefore();',
@@ -45,17 +45,15 @@ function sharedTsFile(file, extensions?) {
   return tsFile(file, Object.assign({path: 'shared'}, extensions));
 }
 
-
 function sharedVideoInterface(extensions?) {
   return tsFile('VideoItem', Object.assign({path: 'shared'}, extensions));
 }
-
 
 function appBootstrap(extensions?) {
   return Object.assign(tsFile('AppModule'), {
     filename: 'Bootstrap.ts',
     type: 'ts',
-    ui: true,
+    excludeFromTesting: true,
     bootstrap: true,
   }, extensions)
 }
@@ -76,12 +74,12 @@ export const codelabConfig: CodelabConfig = {
       selectedExerciseIndex: 0,
       exercises: [
         {
-          name: 'Intro to typescript',
+          name: 'Intro',
           path: '0-intro',
           description: `
-          <h1>This is an intro!!</h1>
+          <h1>Welcome to the typescript!</h1>
           <p>Intro to TypeScript</p>
-          <img src = "assets/images/puppy.jpg" class = "img" width = 400>
+          
          
         `,
           fileTemplates: [],
@@ -89,7 +87,7 @@ export const codelabConfig: CodelabConfig = {
           messageNext: `Let's start`
         },
         {
-          name: 'Basics of typescript',
+          name: 'Typescript',
           path: '0-intro',
           description: `
           Let's create our first typescript module. 
@@ -102,16 +100,14 @@ export const codelabConfig: CodelabConfig = {
           ]
         },
         {
-          name: `Congrats, now you know the basics of TypeScript, and you're ready to start the codelab`,
+          name: `Success`,
           path: '0-intro',
           description: `
-          <h1>All done</h1>
-          <p>Done done</p>
-          <img src = "assets/images/puppy.jpg" class = "img" width = 400>
+         You're done with the first milestone, and should now understand the basics of TypeScript!
         `,
           fileTemplates: [],
           tests: [],
-          messageNext: `You're done with the first milestone!`
+          messageNext: `Start on the app!`
         },
 
       ]
@@ -121,53 +117,78 @@ export const codelabConfig: CodelabConfig = {
       selectedExerciseIndex: 0,
       exercises: [
         {
-          name: 'Hello, welcome to milestone one.',
+          name: 'Intro',
           path: '1-bootstrap/intro',
           description: `
-          <h1>This is an intro!!</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque deleniti dicta eos est excepturi magnam, quia quos recusandae rem repudiandae similique? Iusto labore maiores nesciunt quasi quia tenetur ullam?</p>
-          <img src = "assets/images/puppy.jpg" class = "img" width = 400>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque deleniti dicta eos est excepturi magnam, quia quos recusandae rem repudiandae similique? Iusto labore maiores nesciunt quasi quia tenetur ullam?</p>
+          <h1>First Angular 2 app!</h1>
+          <p>This is how it's going to look like</p>
+          <img src = "assets/images/bootstrap.png" class = "img" width = 400 style = "border: 1px #ddd solid">
+          <p>3 simple steps: </p>
+          <ol>
+            <li>Create the component</li>
+            <li>Create the module</li>
+            <li>Bootstrap the module</li>
+          </ol>
         `,
           fileTemplates: [],
           tests: [],
-          messageNext: `Let's start`
+          messageNext: `I'm a ready, let's start!`
         },
         {
-          name: 'Creating your first component',
+          name: 'Create a component',
           path: '1-bootstrap/0-component',
           description: `
-        Let's create our first component!
-        For this exercise we'll create module and bootstrap everything. Just make sure the component looks right.`,
+            <p>Let's create our first component!</p>
+            <p>For this exercise we'll create module and bootstrap everything.
+             Just make sure the component looks right.</p>
+`,
           fileTemplates: [
             appComponent(),
-            appModule({hidden: true}),
-            appBootstrap({hidden: true}),
+            appModule({
+              hidden: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            }),
+            appBootstrap({hidden: true, path: '1-bootstrap/2-bootstrap/solution'}),
             testFile()
           ]
         }, {
-          name: 'Creating a module',
+          name: 'Create a module',
           path: '1-bootstrap/1-module',
           description: `
         Now we got the component, but we need to wrap it in a module. For this exercise we'll bootstrap the module for you.`,
           fileTemplates: [
             appModule(),
-            appComponent({readonly: true}),
-            appBootstrap({hidden: true}),
+            appComponent({readonly: true, path: '1-bootstrap/0-component/solution'}),
+            appBootstrap({hidden: true, path: '1-bootstrap/2-bootstrap/solution'}),
             testFile()
           ]
         },
         {
-          name: 'Bootstrapping your app',
+          name: 'Bootstrap the module',
           path: '1-bootstrap/2-bootstrap',
           description: `Now we got module and component ready, let's bootstrap it!!!`,
           fileTemplates: [
             appBootstrap(),
-            appModule({readonly: true}),
-            appComponent({readonly: true}),
+            appModule({
+              hidden: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            }),
+            appComponent({readonly: true, path: '1-bootstrap/0-component/solution'}),
             testFile()
           ]
-        }
+        },
+        {
+          name: 'success',
+          path: '1-bootstrap/outro',
+          description: `
+          <h1>Congrats on your first Angular2 app</h1>
+        `,
+          fileTemplates: [],
+          tests: [],
+          messageNext: `Let's learn the templates!`
+        },
       ]
     }, {
       name: 'Templates',
@@ -175,35 +196,50 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           name: 'Set up the page',
-          description: `Basic stuff`,
-          path: '2-templates/header-input',
+          description: `Let's setup a header, a search box, and a search button for our component!`,
+          path: '2-templates/0-header-input',
           fileTemplates: [
             htmlFile('app'),
-            appComponent({readonly: true}),
-            appBootstrap({hidden: true}),
-            testFile()
+            appComponent({readonly: true, 'path': '1-bootstrap/0-component/solution'}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }, {
-          name: 'Making search almost work',
-          description: `todo`,
-          path: '2-templates/no-videos',
+          name: 'Add some dynamics',
+          description: `Now let's add search method and display a message when there are no videos.`,
+          path: '2-templates/1-no-videos',
           fileTemplates: [
             htmlFile('app'),
-            appComponent(),
-            appBootstrap({hidden: true}),
-            testFile()
+            appComponent({'path': '1-bootstrap/0-component/solution'}),
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }, {
-          name: 'Displaying all videos',
-          description: `todo`,
-          path: '2-templates/all-videos',
+          name: 'Display all videos',
+          description: `Finally let's iterate over the videos.`,
+          path: '2-templates/2-all-videos',
           fileTemplates: [
-            htmlFile('app'),
+            htmlFile('app', {path: '2-templates/1-no-videos/solution'}),
             appComponent(),
-            appBootstrap({hidden: true}),
-            testFile()
+            sharedAppBootstrap({hidden: true}),
+            testFile(),
+            appModule({
+              readonly: true,
+              excludeFromTesting: true,
+              path: '1-bootstrap/1-module/solution'
+            })
           ],
           tests: []
         }
@@ -214,15 +250,17 @@ export const codelabConfig: CodelabConfig = {
       selectedExerciseIndex: 0,
       exercises: [{
         name: 'Service injection',
-        description: `let's inject our first service`,
+        description: `
+          Now we're fetching the videos using a service instead of having them hardcoded.          
+        `,
         path: '3-dependency-injection',
         fileTemplates: [
           tsFile('VideoService'),
           tsFile('AppModule'),
-          tsFile('AppComponent'),
-          htmlFile('app'),
-          tsFile('Api'),
-          appBootstrap(),
+          tsFile('AppComponent', {path: '2-templates/2-all-videos/solution'}),
+          htmlFile('app', {path: '2-templates/2-all-videos/solution'}),
+          sharedApiFile('Api'),
+          sharedAppBootstrap({hidden: true}),
           testFile()
         ],
         tests: []
@@ -234,28 +272,30 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
-          name: 'Create a separate component to display a video.',
-          description: `Todo`,
+          name: 'Create VideoComponent',
+          description: `<p>Now instead of having the video html in the app component, we're going to have 
+            a separate component for the video info.</p>
+            <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
+  `,
           path: '4-component-tree/0-add-video-component',
           fileTemplates: [
             htmlFile('video'),
             tsFile('VideoComponent'),
-            htmlFile('app', {hidden: true}),
-            tsFile('AppComponent', {hidden: true}),
             tsFile('AppModule'),
+            tsFile('AppComponent', {hidden: true}),
             sharedTsFile('VideoService', {hidden: true}),
             sharedApiFile({hidden: true}),
             sharedAppBootstrap({hidden: true}),
-            testFile(),
-            sharedVideoInterface()
+            sharedVideoInterface(),
+            testFile()
           ],
           tests: []
         },
         {
 
-          name: 'Use the component you have just created.',
+          name: 'Use VideoComponent',
           // TODO: Write the description
-          description: `Todo`,
+          description: `All is left is to actually use the new video component in the app.`,
           path: '4-component-tree/1-use-video-component',
           fileTemplates: [
             htmlFile('app'),

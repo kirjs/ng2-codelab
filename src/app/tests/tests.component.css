@@ -19,3 +19,9 @@
 .checklist {
   padding: 10px;
 }
+
+.result {
+  font-size: 70%;
+  color: #444;
+  padding-left: 20px;
+}

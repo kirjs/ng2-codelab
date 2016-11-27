@@ -5,7 +5,9 @@ export class CodelabPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getMilestoneDescriptionText() {
+    element(by.css('.milestone')).click();
+
+    return element(by.css('.description')).getText();
   }
 }

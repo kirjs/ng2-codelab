@@ -85,11 +85,20 @@ export class ReducersService {
 
 
     return Observable.forkJoin(files.map(a => this.http.get(a))).map((responses) => {
-      responses.forEach((response: {text: any}, index) => {
+      responses.forEach((response: {text: any, url: string}, index) => {
         let code = response.text();
-        code = code.replace(/\.\/solution\//g, './');
-        code = code.replace(/(..\/)+shared\//g, './');
 
+        if (code.indexOf('<!doctype html>') >= 0) {
+          console.log(response.url);
+          // Some file we tried to fetch does not exist.
+        }
+        // Just strip any folders from the imports.
+        // import {Component} from '@angular/core'; -> import {Component} from '@angular/core';
+        // import {A,B} from '../../blablabla/A'; -> import {A,B} from './A';
+        // This allows reusing components from different exercises (for typechecking) in
+        // a way that makes them look like they are in the same folder.
+
+        code = code.replace(/(import.*from.*["']((?!@angular|rxjs)))(.*\/)/g, "$1./");
         exerciseConfig.fileTemplates[index].code = code;
         exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.split('.')[0];
         exerciseConfig.editedFiles[index] = Object.assign({}, exerciseConfig.fileTemplates[index]);

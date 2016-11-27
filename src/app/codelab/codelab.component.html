@@ -3,7 +3,7 @@
   <div class="content">
     <div class="milestones {{collapsePanel ? 'collapsed': ''}}">
       <div (click)="collapsePanel = !collapsePanel" class="collapse">
-        {{collapsePanel ? '>>': '<<'}}
+        {{collapsePanel ? '▶': '◀'}}
       </div>
       <div
         class="milestone {{config.selectedMilestoneIndex === i ?'selected':''}}"

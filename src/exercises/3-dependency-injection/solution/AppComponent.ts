@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {VideoService} from "./VideoService";
 
 
@@ -15,5 +15,10 @@ export class AppComponent {
 
   search(value) {
     this.videos = this.v.search(value);
+  }
+
+
+  ngOnInit() {
+    this.search('');
   }
 }

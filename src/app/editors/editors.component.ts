@@ -10,4 +10,12 @@ import {Action} from "../action";
 export class EditorsComponent {
   @Output() public onCodeChange: EventEmitter<Action> = new EventEmitter<Action>();
   @Input() public files: Array<any>;
+
+  get visibleFiles() {
+    return this.files.filter(file => !file.hidden);
+  }
+
+  get hiddenFiles() {
+    return this.files.filter(file => !file.hidden);
+  }
 }

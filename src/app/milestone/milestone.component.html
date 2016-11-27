@@ -1,12 +1,10 @@
-<h1>{{config.title}}</h1>
-
 <div class="exercises">
+  <div class="milestone-title exercise">{{config.name}}</div>
   <div *ngFor="let item of config.exercises; let i = index"
        class="exercise {{config.selectedExerciseIndex === i ? 'selected' : ''}} {{exerciseComplete(item) ? 'complete' : ''}}"
        (click)="state.selectExercise(i)"
   >
-
-    {{i+1}}
+    {{item.name}}
   </div>
 </div>
 
