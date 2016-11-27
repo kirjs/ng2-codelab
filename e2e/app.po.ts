@@ -1,4 +1,5 @@
 import { browser, element, by } from 'protractor';
+import {By} from "protractor/built/index";
 
 export class CodelabPage {
   navigateTo() {
@@ -17,6 +18,14 @@ export class CodelabPage {
      clickElement(nameElement) {
     return element(by.css(nameElement)).click();
   }
+
+ clickTo(){
+   return  element(by.xpath(".//div[contains(@id, 'index1')]")).click();
+ }
+
+   sendKeysTo(nameElement){
+   return  element(by.css(nameElement)).sendKeys('njnj');
+ }
 
 
 }
