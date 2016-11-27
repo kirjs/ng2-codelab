@@ -1,4 +1,5 @@
 import {CodelabConfig} from "../codelab-config";
+import {FileConfig} from "../file-config";
 
 function testFile() {
   return {
@@ -13,13 +14,16 @@ function testFile() {
   };
 }
 
-function hide(...files) {
+function hidden(...files: FileConfig[]) : FileConfig[]{
   return files.map(file => Object.assign({}, file, {hidden: true}))
 }
-function readOnly(...files) {
+function readOnly(...files: FileConfig[]) : FileConfig[]{
   return files.map(file => Object.assign({}, file, {readonly: true}))
 }
-function collapsed(...files) {
+function justForReference(...files: FileConfig[]): FileConfig[] {
+  return collapsed(...readOnly(...files));
+}
+function collapsed(...files: FileConfig[]): FileConfig[] {
   return files.map(file => Object.assign({}, file, {collapsed: true}))
 }
 
@@ -218,14 +222,15 @@ export const codelabConfig: CodelabConfig = {
           path: '2-templates/0-header-input',
           fileTemplates: [
             htmlFile('app'),
-            appComponent({readonly: true, 'path': '1-bootstrap/0-component/solution'}),
-            sharedAppBootstrap({hidden: true}),
+            appComponent({readonly: true}),
             testFile(),
             appModule({
               readonly: true,
+              collapsed: true,
               excludeFromTesting: true,
-              path: '1-bootstrap/1-module/solution'
-            })
+              path: '1-bootstrap/1-module/solution',
+            }),
+            ...hidden(sharedAppBootstrap())
           ],
           tests: []
         }, {
@@ -234,11 +239,12 @@ export const codelabConfig: CodelabConfig = {
           path: '2-templates/1-no-videos',
           fileTemplates: [
             htmlFile('app'),
-            appComponent({'path': '1-bootstrap/0-component/solution'}),
+            appComponent({'path': '2-templates/0-header-input'}),
             sharedAppBootstrap({hidden: true}),
             testFile(),
             appModule({
               readonly: true,
+              collapsed: true,
               excludeFromTesting: true,
               path: '1-bootstrap/1-module/solution'
             })
@@ -256,6 +262,7 @@ export const codelabConfig: CodelabConfig = {
             appModule({
               readonly: true,
               excludeFromTesting: true,
+              collapsed: true,
               path: '1-bootstrap/1-module/solution'
             })
           ],
@@ -276,8 +283,10 @@ export const codelabConfig: CodelabConfig = {
           tsFile('VideoService'),
           tsFile('AppModule'),
           tsFile('AppComponent', {path: '2-templates/2-all-videos/solution'}),
-          htmlFile('app', {path: '2-templates/2-all-videos/solution'}),
-          sharedApiFile('Api'),
+          ...justForReference(
+            htmlFile('app', {path: '2-templates/2-all-videos/solution'}),
+            sharedApiFile('Api')
+          ),
           sharedAppBootstrap({hidden: true}),
           testFile()
         ],
@@ -300,11 +309,15 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('video'),
             tsFile('VideoComponent'),
             tsFile('AppModule'),
-            tsFile('AppComponent', {hidden: true}),
-            sharedTsFile('VideoService', {hidden: true}),
-            sharedApiFile({hidden: true}),
-            sharedAppBootstrap({hidden: true}),
-            sharedVideoInterface(),
+            ...justForReference(
+              sharedVideoInterface()
+            ),
+            ...hidden(
+              tsFile('AppComponent'),
+              sharedTsFile('VideoService'),
+              sharedApiFile(),
+              sharedAppBootstrap()
+            ),
             testFile()
           ],
           tests: []
@@ -318,14 +331,14 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('video', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
             tsFile('AppModule'),
             tsFile('VideoComponent', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
-            ...hide(
+            ...justForReference(sharedVideoInterface()),
+            ...hidden(
               tsFile('AppComponent'),
               sharedTsFile('VideoService'),
               sharedApiFile(),
               sharedAppBootstrap(),
             ),
-            testFile(),
-            sharedVideoInterface()
+            testFile()
           ],
           tests: []
         }]
@@ -343,7 +356,7 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
             tsFile('WrapperComponent'),
-            ...hide(
+            ...hidden(
               tsFile('AppModule'),
               sharedAppBootstrap(),
               sharedVideoInterface()
@@ -363,7 +376,7 @@ export const codelabConfig: CodelabConfig = {
             tsFile('VideoComponent', {readonly: true}),
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
-            ...hide(
+            ...hidden(
               tsFile('AppComponent'),
               tsFile('AppModule'),
               htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
@@ -396,7 +409,7 @@ export const codelabConfig: CodelabConfig = {
               tsFile('VideoComponent')
             ),
             htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-            ...hide(htmlFile('togglepanel'),
+            ...hidden(htmlFile('togglepanel'),
               sharedTsFile('TogglePanelComponent'),
               tsFile('AppComponent'),
               sharedAppBootstrap(),
@@ -430,7 +443,7 @@ export const codelabConfig: CodelabConfig = {
           tsFile('AppModule', {path: '6-children'}),
           tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
           testFile(),
-          ...hide(
+          ...hidden(
             tsFile('ContextComponent', {path: '6-children'}),
             htmlFile('context', {path: '6-children'}),
             tsFile('ContextService', {path: '6-children'}),

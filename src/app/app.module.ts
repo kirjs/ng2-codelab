@@ -4,9 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-
 import {ExerciseComponent} from './exercise/exercise.component';
-
 import {EditorComponent} from './editor/editor.component';
 import {RunnerComponent} from './runner/runner.component';
 import {EditorsComponent} from './editors/editors.component';
@@ -18,6 +16,7 @@ import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from "./reducers.service";
 import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.component';
 import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
+import {ExerciseService} from "./exercise.service";
 
 //configuration for firebase
 export const firebaseConfig = {
@@ -52,7 +51,8 @@ export const myFirebaseAuthConfig = {
   ],
   providers: [
     StateService,
-    ReducersService
+    ReducersService,
+    ExerciseService
   ],
   bootstrap: [AppComponent]
 })

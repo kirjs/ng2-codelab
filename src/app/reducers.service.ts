@@ -7,6 +7,7 @@ import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import {ExerciseService} from "./exercise.service";
 
 
 @Injectable()
@@ -100,7 +101,7 @@ export class ReducersService {
     }
     return state;
   }
-  
+
   [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
     let items = this.angularFire.database.list('/feedback');
     items.push({comment:feedback.data.comment, state:state, name: feedback.data.username});
@@ -117,17 +118,11 @@ export class ReducersService {
 
     exerciseConfig.editedFiles = [];
     const files = exerciseConfig
-      .fileTemplates.map(file => `exercises/${file.path || exerciseConfig.path}/${file.filename}`);
+      .fileTemplates.map(file => `${file.path || exerciseConfig.path}/${file.filename}`);
 
 
-    return Observable.forkJoin(files.map(a => this.http.get(a))).map((responses) => {
-      responses.forEach((response: {text: any, url: string}, index) => {
-        let code = response.text();
-
-        if (code.indexOf('<!doctype html>') >= 0) {
-          console.log(response.url);
-          // Some file we tried to fetch does not exist.
-        }
+    return Observable.forkJoin(files.map(a => this.exerciseService.fetch(a))).map((responses) => {
+      responses.forEach((code: string, index) => {
         // Just strip any folders from the imports.
         // import {Component} from '@angular/core'; -> import {Component} from '@angular/core';
         // import {A,B} from '../../blablabla/A'; -> import {A,B} from './A';
@@ -145,7 +140,7 @@ export class ReducersService {
     });
   }
 
-  constructor(private http: Http, private angularFire: AngularFire) {
+  constructor(private exerciseService: ExerciseService, private angularFire: AngularFire) {
   }
 
 }

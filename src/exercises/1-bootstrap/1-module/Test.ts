@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {AppModule} from './solution/AppModule';
 import {BrowserModule} from '@angular/platform-browser';
-import {AppComponent} from './AppComponent';
+import {AppComponent} from '../0-component/solution/AppComponent';
 import "reflect-metadata";
 let metadata;
 
@@ -21,11 +21,15 @@ describe('Component', () => {
     chai.expect(typeof AppModule).equals('function');
   });
 
-  it('Add a Module annotation for the class', () => {
+  // TODO: check if the module is exported
+  // See 1-bootstrap/0-component/Test.ts
+
+  it('Add a Module decorator for the class', () => {
     chai.expect(metadata).is.not.undefined
   });
 
-  it('Add imports to the module annotation config', () => {
+  it('Add imports to the module decorator config', () => {
+    // TODO: Figure out if this is actually needed
     chai.expect(metadata[0].imports[0]).equals(BrowserModule);
   });
 
