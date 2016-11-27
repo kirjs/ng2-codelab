@@ -7,7 +7,6 @@ h1 {
 .exercises {
   display: flex;
   background: #444;
-  height: 40px;
 }
 
 .exercise.selected {
