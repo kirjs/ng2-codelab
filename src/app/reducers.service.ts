@@ -18,13 +18,33 @@ export class ReducersService {
     return localState ? localState : state;
   }
 
+  [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
+    state.page = 'feedback';
+    return state;
+  }
+
+
   [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}) {
+    state.page = 'milestone';
     state.selectedMilestoneIndex = data;
     const nextIndex = selectedMilestone(state).selectedExerciseIndex;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
   }
 
   [ActionTypes.PING](state: CodelabConfig) {
+    return state;
+  }
+
+  [ActionTypes.TOGGLE_FILE](state: CodelabConfig, {data}: {data: FileConfig}) {
+    const milestone = state.milestones[state.selectedMilestoneIndex];
+    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+
+    exercise.editedFiles.forEach((file) => {
+      if (file === data) {
+        file.collapsed = !file.collapsed;
+      }
+    });
+
     return state;
   }
 

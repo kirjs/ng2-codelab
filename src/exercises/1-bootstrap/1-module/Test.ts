@@ -18,9 +18,9 @@ beforeEach(() => {
 
 describe('Component', () => {
   it('Create a class called AppModule', () => {
-    debugger
     chai.expect(typeof AppModule).equals('function');
   });
+
   it('Add a Module annotation for the class', () => {
     chai.expect(metadata).is.not.undefined
   });

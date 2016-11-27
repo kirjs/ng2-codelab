@@ -15,6 +15,24 @@ app-root, app-codelab {
   display: block;
 }
 
+.inBrowser {
+  border: 1px #ddd solid;
+  background: url(assets/images/browsertop.png) no-repeat;
+  width: 475px;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  padding: 60px 10px 10px 10px;
+  min-height: 250px;
+}
+
+.smaller {
+  zoom: .5;
+}
+
 .img {
   width: 400px;
+}
+
+iframe.testing {
+  display: none;
 }

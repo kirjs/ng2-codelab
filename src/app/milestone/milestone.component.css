@@ -6,31 +6,54 @@ h1 {
 
 .exercises {
   display: flex;
+  background: #444;
 }
 
 .exercise.selected {
-  background-color: rgba(83, 85, 87, 0.31);
+  background-color: #fff;
+  color: #000;
   cursor: default;
 }
 
 .exercise.complete.selected {
-  background-color: #105635;
-  font-weight: 600;
+
 }
 
 .exercise.complete {
-  background-color: #33ed1a;
-  color: #fff;
 }
 
 .exercise.milestone-title {
-  background: #fff;
+  background: transparent;
+  color: #ffffff;
+}
+
+.exercise.codelab-title {
+  background: #f90;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+.exercise.milestone-title {
+  margin-right: 20px;
 }
 
 .exercise {
-  padding: 0 4px;
+  padding: 4px 8px;
+  margin-top: 4px;
   line-height: 20px;
   background-color: #dddddd;
-  margin-right: 4px;
   cursor: pointer;
+  margin-right: 4px;
+}
+
+app-exercise {
+  padding: 8px;
+  display: block;
+}
+
+.header {
+  height: 25px;
 }

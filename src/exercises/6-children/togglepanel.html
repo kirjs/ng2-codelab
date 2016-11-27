@@ -1,8 +1,0 @@
-<div *ngIf="showDescription">
-  <ng-content select=".description"></ng-content>
-  <button (click)="showDescription=false">Show meta</button>
-</div>
-<div *ngIf="!showDescription">
-  <ng-content select=".extra"></ng-content>
-  <button (click)="showDescription=true">Show description</button>
-</div>

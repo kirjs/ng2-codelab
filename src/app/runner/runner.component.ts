@@ -35,13 +35,12 @@ function createIframe(config: IframeConfig) {
   iframe.setAttribute('frameBorder', '0');
   iframe.setAttribute('src', config.url);
   iframe.setAttribute('class', config.id);
-  iframe.setAttribute('style', 'width: 600px; height: 250px');
+  iframe.setAttribute('style', 'width: 600px; height: 100%');
   return iframe;
 }
 
 function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Function, runMultipleFiles: Function}> {
   if (cachedIframes[config.id]) {
-    console.log('removing', config.id)
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
   }
@@ -168,19 +167,7 @@ export class RunnerComponent implements AfterViewInit {
   runId = 0;
 
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private http: Http, private state: StateService) {
-    state.update
-      .map(selectedExercise)
-      .map(e => e.editedFiles)
-      // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
-      .map(a => JSON.stringify(a))
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.runCode()
-      }, () => {
-        debugger
-      });
-
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService) {
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
         return;
@@ -202,7 +189,6 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   runCode() {
-
     injectIframe(this.element.nativeElement, {
       id: 'preview', 'url': 'assets/runner/index.html'
     }).then((sandbox) => {
@@ -224,6 +210,18 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.state.update
+      .map(selectedExercise)
+      .map(e => e.editedFiles.map(f => f.code))
+      // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
+      .map(a => JSON.stringify(a))
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this.runCode()
+      }, () => {
+        debugger
+      });
+
     this.state.ping();
   }
 

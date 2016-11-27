@@ -62,5 +62,12 @@
 }
 
 .codelab-milestone {
-  padding: 4px;
+  width: 100%;
+}
+
+app-milestone {
+  display: flex;
+  flex-direction: column;
+
+
 }

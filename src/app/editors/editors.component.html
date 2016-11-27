@@ -1,7 +1,11 @@
 <div class="editors">
   <div *ngFor="let file of visibleFiles" class="editor">
-    <div class="filename">{{file.filename}} {{file.readonly?' (this file is read only) ': ''}}</div>
-    <app-editor [file]="file" (onCodeChange)="onCodeChange.emit({file: file, code: $event})">
+    <div class="filename" (click)="toggleFile(file)">
+      <span *ngIf="file.collapsed">▷</span>
+      <span *ngIf="!file.collapsed">▽</span>
+      {{file.filename}} {{file.readonly?' (this file is read only) ': ''}}
+    </div>
+    <app-editor [file]="file" *ngIf="!file.collapsed" (onCodeChange)="onCodeChange.emit({file: file, code: $event})">
     </app-editor>
   </div>
 </div>

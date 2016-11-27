@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {VideoItem} from "../../shared/VideoItem";
 
-@Component({
-})
+@Component({})
 export class VideoComponent {
 }

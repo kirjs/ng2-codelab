@@ -10,7 +10,7 @@ import {ExerciseConfig} from "./exercise-config";
 import {MilestoneConfig} from "./milestone-config";
 import {ReducersService} from "./reducers.service";
 import {assert} from "./utils";
-
+import {FileConfig} from "./file-config";
 
 
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
@@ -31,8 +31,10 @@ export class StateService {
   private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
 
   constructor(private reducers: ReducersService) {
+
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
+        console.log(action.type, action);
         if (reducers[action.type]) {
           const result = reducers[action.type](state, action);
           return result instanceof Observable ? result : Observable.of(result);
@@ -46,7 +48,8 @@ export class StateService {
         localStorage.setItem('state', JSON.stringify(state));
         return state;
       })
-      .share();
+      .publishReplay(1)
+      .refCount();
 
     this.update.subscribe(() => {
       //console.log('next');
@@ -75,15 +78,15 @@ export class StateService {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
   }
 
-  init() {
-    this.dispatchAction(ActionTypes.INIT_STATE);
+  openFeedback() {
+    this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
 
   updateCode(changes) {
     this.dispatchAction(ActionTypes.UPDATE_CODE, changes);
   }
 
-  sendFeedback(feedback){
+  sendFeedback(feedback) {
     this.dispatchAction(ActionTypes.SEND_FEEDBACK, feedback);
   }
 
@@ -98,5 +101,9 @@ export class StateService {
   ping() {
     // This is a hack. See http://jsbin.com/yuqeniqena/1/edit?js,output
     this.dispatchAction(ActionTypes.PING);
+  }
+
+  toggleFile(file: FileConfig) {
+    this.dispatchAction(ActionTypes.TOGGLE_FILE, file);
   }
 }

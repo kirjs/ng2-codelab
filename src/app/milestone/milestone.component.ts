@@ -13,6 +13,7 @@ import {StateService, exerciseComplete} from "../state.service";
 })
 export class MilestoneComponent {
   @Input() config: MilestoneConfig;
+  @Input() name: string;
 
   exerciseComplete(exercise: ExerciseConfig) {
     // TODO: Use pipe

@@ -9,4 +9,5 @@ export class AppComponent {
 }
 
 // Pls ignore
-export function evalJs(s: string): any {}
+export function evalJs(s: string): any {
+}
