@@ -1,5 +1,4 @@
 <div class="codelab">
-  <div class="header">{{config.title}}</div>
   <div class="content">
     <div class="milestones {{collapsePanel ? 'collapsed': ''}}">
       <div (click)="collapsePanel = !collapsePanel" class="collapse">
@@ -15,7 +14,7 @@
       </div>
     </div>
     <div class="codelab-milestone">
-      <app-milestone [config]="config.milestones[config.selectedMilestoneIndex]"></app-milestone>
+      <app-milestone [config]="config.milestones[config.selectedMilestoneIndex]" [name]="config.name"></app-milestone>
     </div>
 
   </div>

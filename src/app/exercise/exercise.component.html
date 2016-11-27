@@ -1,9 +1,9 @@
 <h2>{{config.title}}</h2>
-<div class="description" [innerHTML]="config.description" *ngIf="!config?.editedFiles?.length"></div>
+<div class="description main" [innerHTML]="config.description" *ngIf="!config?.editedFiles?.length"></div>
 <div *ngIf="allTestsPass()" class="next" (click)="state.nextExercise()">
   {{config.messageNext || 'Good job! Go to the next exercise!'}}
 </div>
-<div style="display: flex" *ngIf="config?.editedFiles?.length">
+<div class="exercise-panel" *ngIf="config?.editedFiles?.length">
   <app-editors [files]="config.editedFiles" (onCodeChange)="onCodeChange($event)"></app-editors>
   <div class="side">
     <div class="description" [innerHTML]="config.description"></div>

@@ -292,16 +292,14 @@ export const codelabConfig: CodelabConfig = {
           tests: []
         },
         {
-
           name: 'Use VideoComponent',
-          // TODO: Write the description
-          description: `All is left is to actually use the new video component in the app.`,
+          description: `Use VideoComponent in the app.`,
           path: '4-component-tree/1-use-video-component',
           fileTemplates: [
             htmlFile('app'),
-            htmlFile('video', {readonly: true}),
+            htmlFile('video', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
             tsFile('AppModule'),
-            tsFile('VideoComponent', {readonly: true}),
+            tsFile('VideoComponent', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
             tsFile('AppComponent', {hidden: true}),
             sharedTsFile('VideoService', {hidden: true}),
             sharedApiFile({hidden: true}),

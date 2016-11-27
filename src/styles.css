@@ -18,3 +18,7 @@ app-root, app-codelab {
 .img {
   width: 400px;
 }
+
+iframe.testing {
+  display: none;
+}

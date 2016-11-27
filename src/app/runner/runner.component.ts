@@ -35,13 +35,12 @@ function createIframe(config: IframeConfig) {
   iframe.setAttribute('frameBorder', '0');
   iframe.setAttribute('src', config.url);
   iframe.setAttribute('class', config.id);
-  iframe.setAttribute('style', 'width: 600px; height: 250px');
+  iframe.setAttribute('style', 'width: 600px; height: 100%');
   return iframe;
 }
 
 function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Function, runMultipleFiles: Function}> {
   if (cachedIframes[config.id]) {
-    console.log('removing', config.id)
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
   }
@@ -168,7 +167,7 @@ export class RunnerComponent implements AfterViewInit {
   runId = 0;
 
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private http: Http, private state: StateService) {
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService) {
     state.update
       .map(selectedExercise)
       .map(e => e.editedFiles)
