@@ -1,4 +1,4 @@
-import { browser, element, by } from 'protractor';
+import {browser, element, by} from 'protractor';
 import {By} from "protractor/built/index";
 
 export class CodelabPage {
@@ -12,20 +12,26 @@ export class CodelabPage {
     return element(by.css('.description')).getText();
   }
 
-    getElementText(nameElement) {
+  getElementText(nameElement) {
     return element(by.css(nameElement)).getText();
   }
-     clickElement(nameElement) {
-    return element(by.css(nameElement)).click();
+
+
+  openMilestone(index) {
+    return element(by.cssContainingText('.milestone', index)).click();
   }
 
- clickTo(){
-   return  element(by.xpath(".//div[contains(@id, 'index1')]")).click();
- }
+  openExercise(text) {
+    return element(by.cssContainingText('.exercise', text)).click();
+  }
 
-   sendKeysTo(nameElement){
-   return  element(by.css(nameElement)).sendKeys('njnj');
- }
+  sendKeysTo(nameElement) {
+    return element(by.css(nameElement)).sendKeys('njnj');
+  }
 
 
+  editCode(filename: string, code: string) {
+    return element(by.css('.monaco-editor-background textarea'))
+      .sendKeys('njnj');
+  }
 }

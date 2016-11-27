@@ -98,7 +98,7 @@ export const codelabConfig: CodelabConfig = {
           messageNext: `Let's start`
         },
         {
-          name: 'Typescript',
+          name: 'TypeScript',
           path: '0-intro',
           description: `
           Let's create our first typescript module. 

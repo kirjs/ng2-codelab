@@ -1,7 +1,7 @@
-import { CodelabPage } from './app.po';
-import { browser } from 'protractor';
+import {CodelabPage} from './app.po';
+import {browser, element, by} from 'protractor';
 
-describe('codelab App', function() {
+describe('codelab App', function () {
   let page: CodelabPage;
 
   beforeEach(() => {
@@ -9,9 +9,12 @@ describe('codelab App', function() {
   });
 
   it('should display message saying app works', () => {
-    page.navigateTo();
-    page.clickElement('app-root .next');
-    page.clickElement('app-root index1');
-    browser.manage().timeouts().pageLoadTimeout(1000);
-  });
+      page.navigateTo();
+      page.openMilestone(1);
+      page.openExercise('TypeScript');
+      browser.pause(2000);
+      page.editCode('Dog.ts', `HopHeyLalalay`);
+      browser.pause();
+    }
+  );
 });
