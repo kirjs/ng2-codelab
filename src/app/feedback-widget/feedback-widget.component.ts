@@ -11,8 +11,7 @@ export class FeedbackWidgetComponent implements OnInit {
   constructor(private state: StateService) { }
   username: string = '';
   ngOnInit() {
-    //TODO
-    //this.state.update.subscribe(state => this.username = state.user);
+    this.state.update.subscribe(state => this.username = state.user);
   }
   send(comment, username){
     if (comment && username) {
