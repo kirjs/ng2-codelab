@@ -1,3 +1,4 @@
-<p>Enter your name: <input type="text" #username/></p>
-<p>Enter your feedback: <textarea #feedbackInput></textarea> </p>
-<button class="btn" (click)="send(feedbackInput.value, username.value)">Send</button>
+<h2>Give us some feedback!</h2>
+<input type="text" #usernameInput placeholder="Enter your name" required/>  <br>
+<textarea #feedbackInput placeholder="Describe your issue or share your ideas" required></textarea> <br>
+<button class="btn" (click)="send(feedbackInput.value, usernameInput.value)">Send</button>
