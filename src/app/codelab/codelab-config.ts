@@ -64,6 +64,7 @@ function sharedAppBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
+  user:'',
   selectedMilestoneIndex: 6,
   milestones: [
     {

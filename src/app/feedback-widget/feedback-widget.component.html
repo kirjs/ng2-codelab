@@ -1,4 +1,4 @@
 <h2>Give us some feedback!</h2>
-<div><input type="text" #usernameInput placeholder="Enter your name" required/></div>
+<div><input type="text" #usernameInput placeholder="Enter your name" required [value]="username"/></div>
 <div><textarea #feedbackInput placeholder="Describe your issue or share your ideas" required></textarea> </div>
 <div><button (click)="send(feedbackInput.value, usernameInput.value)">Send</button></div>
