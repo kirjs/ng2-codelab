@@ -12,6 +12,7 @@ export class FeedbackPageComponent implements OnInit {
   constructor(public state: StateService, private angularFire: AngularFire) { }
 
   ngOnInit() {
+    //TODO: use auth property in the state to skip authentication proccess
     this.angularFire.auth.login().then(authState => {
       this.state.setAuth(authState.auth);
     });
