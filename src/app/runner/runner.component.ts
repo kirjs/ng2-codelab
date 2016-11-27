@@ -168,18 +168,6 @@ export class RunnerComponent implements AfterViewInit {
 
 
   constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService) {
-    state.update
-      .map(selectedExercise)
-      .map(e => e.editedFiles)
-      // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
-      .map(a => JSON.stringify(a))
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.runCode()
-      }, () => {
-        debugger
-      });
-
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
         return;
@@ -201,7 +189,6 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   runCode() {
-
     injectIframe(this.element.nativeElement, {
       id: 'preview', 'url': 'assets/runner/index.html'
     }).then((sandbox) => {
@@ -223,6 +210,18 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.state.update
+      .map(selectedExercise)
+      .map(e => e.editedFiles)
+      // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
+      .map(a => JSON.stringify(a))
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this.runCode()
+      }, () => {
+        debugger
+      });
+
     this.state.ping();
   }
 

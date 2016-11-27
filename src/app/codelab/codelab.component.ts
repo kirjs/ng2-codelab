@@ -19,7 +19,6 @@ export class CodelabComponent implements OnInit {
     state.update.subscribe((config)=>{
       this.config = config;
     });
-    state.init();
   }
 
   ngOnInit() {

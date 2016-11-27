@@ -12,7 +12,6 @@ import {ReducersService} from "./reducers.service";
 import {assert} from "./utils";
 
 
-
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
   return assert(state.milestones[state.selectedMilestoneIndex]);
 }
@@ -31,8 +30,10 @@ export class StateService {
   private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
 
   constructor(private reducers: ReducersService) {
+
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
+        console.log(action.type, action);
         if (reducers[action.type]) {
           const result = reducers[action.type](state, action);
           return result instanceof Observable ? result : Observable.of(result);
@@ -46,7 +47,8 @@ export class StateService {
         localStorage.setItem('state', JSON.stringify(state));
         return state;
       })
-      .share();
+      .publishReplay(1)
+      .refCount();
 
     this.update.subscribe(() => {
       //console.log('next');
@@ -73,10 +75,6 @@ export class StateService {
 
   nextExercise() {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
-  }
-
-  init() {
-    this.dispatchAction(ActionTypes.INIT_STATE);
   }
 
   updateCode(changes) {

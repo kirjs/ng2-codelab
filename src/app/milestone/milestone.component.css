@@ -7,6 +7,7 @@ h1 {
 .exercises {
   display: flex;
   background: #444;
+  height: 40px;
 }
 
 .exercise.selected {
@@ -30,7 +31,8 @@ h1 {
 .exercise.codelab-title {
   background: #f90;
   color: #fff;
-
+  font-weight: 400;
+  font-size: 20px;
   margin-top: 0;
   padding-top: 8px;
 }
@@ -49,6 +51,10 @@ h1 {
 }
 
 app-exercise {
-  height: 100%;
+  padding: 8px;
   display: block;
+}
+
+.header {
+  height: 25px;
 }
