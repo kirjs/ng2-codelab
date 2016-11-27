@@ -1,42 +1,41 @@
-import {TestBed} from '@angular/core/testing';
 import {FuzzyTime, evalJs} from './FuzzyPipe';
 import "reflect-metadata";
 
 let metadata;
 beforeEach(() => {
-  TestBed.resetTestingModule();
-  TestBed.configureTestingModule({declarations: [FuzzyTime]});
-  metadata = Reflect.getMetadata("annotations", FuzzyTime);
+  try {
+    metadata = Reflect.getMetadata("annotations", FuzzyTime);
+  } catch (e) {
+
+  }
 });
 
-let timeConverter = (value:string) =>{
-    let date = new Date(value);
-    let dateNow = new Date();
 
-    let millisecondsDifference = dateNow.getTime() - date.getTime();
-    let differenceDays = Math.floor(millisecondsDifference / (1000 * 3600 * 24));
-    let differenceYears = Math.floor(differenceDays / 365);
-    
-    if(differenceDays < 365){
-        return  differenceDays + ' days ago';
-    }
-    return differenceYears + ' years ago';
-}
+const d = new Date();
+d.setDate(d.getDate() - 2);
+const formattedDate = d.toISOString().slice(0, 10);
+
 
 describe('Pipe', () => {
-  it('Create a pipe called FuzzyTime', () => {
+  it('Create a class called FuzzyTime', () => {
     chai.expect(typeof evalJs('FuzzyTime')).equals('function');
   });
+
   it('Export it', () => {
     chai.expect(typeof FuzzyTime).equals('function');
   });
 
-  it('Make it work', () => {
-    let fuzzyTime = new FuzzyTime();
-    chai.expect(fuzzyTime.transform('2016-11-24')).equals(timeConverter('2016-11-24'));
-    chai.expect(fuzzyTime.transform('2012-11-25', )).equals(timeConverter('2012-11-25'));
-    chai.expect(fuzzyTime.transform('2010-11-25', )).equals(timeConverter('2010-11-25'));
+  it('Add a @Pipe() decorator', () => {
+    chai.expect(metadata).is.an('array')
   });
 
+  it('Set the name to fuzzy', () => {
+    chai.expect(metadata[0].name).equals('fuzzy');
+  });
+
+  it(`Make it return '2 days ago for '${formattedDate}'`, () => {
+    let fuzzyTime = new FuzzyTime();
+    chai.expect(fuzzyTime.transform(d.toISOString().slice(0, 10)).toLowerCase()).equals('2 days');
+  });
 });
 

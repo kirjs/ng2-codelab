@@ -1,22 +1,2 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({name: 'substring'})
-export class FuzzyTime implements PipeTransform {
-  transform(value: string){
-    let date = new Date(value);
-    let dateNow = new Date();
-
-    let millisecondsDifference = dateNow.getTime() - date.getTime();
-    let differenceDays = Math.floor(millisecondsDifference / (1000 * 3600 * 24));
-    let differenceYears = Math.floor(differenceDays / 365);
-    
-    if(differenceDays < 365){
-        return  differenceDays + ' days ago';
-    }
-    return differenceYears + ' years ago';
-  }
-}
-
-export function evalJs(string){
-
-}
