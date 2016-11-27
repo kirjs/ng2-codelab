@@ -4,9 +4,11 @@
   width: 100%;
 }
 
+.filename {
+  cursor: pointer;
+}
+
 .editor {
   width: 100%;
 }
 
-app-editor {
-}

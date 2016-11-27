@@ -23,7 +23,7 @@ describe('Blabla', () => {
     chai.expect(fixture.componentInstance.videos, `Videos property on the component is not an array.`).is.an('array');
   });
 
-  it(`AppComponent.ts: Add 'search' method on the component.`, () => {
+  it(`AppComponent.ts: Add 'search' method on the component, and make it take SearchString as a parameter.`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     chai.expect(fixture.componentInstance.search, `Search should be a function`).is.a('function');
