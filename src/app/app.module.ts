@@ -13,9 +13,18 @@ import {EditorsComponent} from './editors/editors.component';
 import {CodelabComponent} from './codelab/codelab.component';
 import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from "./state.service";
+import { AngularFireModule } from 'angularfire2';
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from "./reducers.service";
 import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.component';
+
+//configuration for firebase
+export const firebaseConfig = {
+  apiKey: "AIzaSyBDg_JEXDrn7iuvGR-xrcU1bmjWc-uxmgA",
+  authDomain: "ng2-codelab.firebaseapp.com",
+  databaseURL: "https://ng2-codelab.firebaseio.com",
+  storageBucket: "ng2-codelab.appspot.com"
+};
 
 @NgModule({
   declarations: [
@@ -32,7 +41,8 @@ import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.compo
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [
     StateService,
