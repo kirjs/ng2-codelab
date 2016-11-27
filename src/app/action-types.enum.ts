@@ -1,4 +1,5 @@
 export enum ActionTypes {
+  OPEN_FEEDBACK,
   PING,
   NEXT_EXERCISE,
   UPDATE_SINGLE_TEST_RESULT,

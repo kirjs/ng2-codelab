@@ -17,7 +17,14 @@ export class ReducersService {
     return localState ? localState : state;
   }
 
+  [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
+    state.page = 'feedback';
+    return state;
+  }
+
+
   [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}) {
+    state.page = 'milestone';
     state.selectedMilestoneIndex = data;
     const nextIndex = selectedMilestone(state).selectedExerciseIndex;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));

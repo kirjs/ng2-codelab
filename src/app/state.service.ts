@@ -77,11 +77,15 @@ export class StateService {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
   }
 
+  openFeedback() {
+    this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
+  }
+
   updateCode(changes) {
     this.dispatchAction(ActionTypes.UPDATE_CODE, changes);
   }
 
-  sendFeedback(feedback){
+  sendFeedback(feedback) {
     this.dispatchAction(ActionTypes.SEND_FEEDBACK, feedback);
   }
 

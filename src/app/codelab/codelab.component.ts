@@ -14,6 +14,7 @@ export class CodelabComponent implements OnInit {
   config: CodelabConfig;
   public collapsePanel = true;
   milestone: MilestoneConfig;
+  section: 'milestone';
 
   constructor(public state: StateService) {
     state.update.subscribe((config)=>{
