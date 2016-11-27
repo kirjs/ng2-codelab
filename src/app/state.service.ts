@@ -83,6 +83,10 @@ export class StateService {
     this.dispatchAction(ActionTypes.UPDATE_CODE, changes);
   }
 
+  sendFeedback(feedback){
+    this.dispatchAction(ActionTypes.SEND_FEEDBACK, feedback);
+  }
+
   setTestList(tests: Array<any>) {
     this.dispatchAction(ActionTypes.SET_TEST_LIST, tests);
   }

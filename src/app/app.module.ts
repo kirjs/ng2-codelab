@@ -15,6 +15,7 @@ import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from "./state.service";
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from "./reducers.service";
+import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {ReducersService} from "./reducers.service";
     CodelabComponent,
     MilestoneComponent,
     TestsComponent,
+    FeedbackWidgetComponent,
   ],
   imports: [
     BrowserModule,
