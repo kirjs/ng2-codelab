@@ -73,11 +73,8 @@ describe('Children', () => {
 
   it(`AppModule: Add the TogglePanelComponent to the AppModule declarations.`, () => {
     const fixture = TestBed.createComponent(VideoComponent);
-
     fixture.componentInstance.video = sampleVideo;
-
     fixture.detectChanges();
-
   });
 });
 

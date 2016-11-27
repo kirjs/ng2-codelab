@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'fuzzy'})
-export class FuzzyTime implements PipeTransform {
+export class FuzzyPipe implements PipeTransform {
   transform(value: string) {
     let date = new Date(value);
     let dateNow = new Date();

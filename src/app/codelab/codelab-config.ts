@@ -13,6 +13,10 @@ function testFile() {
   };
 }
 
+function hide(...files) {
+  return files.map(file => Object.assign({}, file, {hidden: true}))
+}
+
 function htmlFile(file: string, extensions?) {
   return Object.assign({
     filename: `${file}.html`, type: 'html'
@@ -358,8 +362,9 @@ export const codelabConfig: CodelabConfig = {
       selectedExerciseIndex: 0,
       exercises: [
         {
-          name: 'Create a separate component to display a video.',
-          description: `Todo`,
+          name: 'Inject parent component',
+          description: `Create a context-ad component, which will inject it's parent component, see what the
+            description, and display the value accordingly.`,
           path: '6-children',
           fileTemplates: [
             tsFile('ContextComponent'),
@@ -385,12 +390,40 @@ export const codelabConfig: CodelabConfig = {
       name: 'Pipes',
       selectedExerciseIndex: 0,
       exercises: [{
-        name: 'Setup the pipe',
-        description: 'todo',
+        name: 'Create a pipe',
+        description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
         path: '7-pipes/0-create-pipe',
         fileTemplates: [
           tsFile('FuzzyPipe'),
           testFile()
+        ],
+        tests: []
+      }, {
+        name: 'Use the pipe',
+        description: 'Now include the app in the module and use in the app.',
+        path: '7-pipes/1-use-pipe',
+        fileTemplates: [
+          htmlFile('video', {path: '6-children/solution'}),
+          tsFile('AppModule', {path: '6-children'}),
+          tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
+          testFile(),
+          ...hide(
+            tsFile('ContextComponent', {path: '6-children'}),
+            htmlFile('context', {path: '6-children'}),
+
+            tsFile('ContextService', {path: '6-children'}),
+            tsFile('VideoComponent', {path: '6-children'}),
+            htmlFile('app', {path: '6-children'}),
+            htmlFile('togglepanel', {path: '6-children'}),
+            sharedTsFile('TogglePanelComponent', {hidden: true}),
+            tsFile('AppComponent', {path: '6-children'}),
+            sharedAppBootstrap({hidden: true}),
+            sharedVideoInterface({hidden: true}),
+            sharedTsFile('VideoService', {hidden: true}),
+            sharedApiFile({hidden: true})
+          ),
+
+          testFile(),
         ],
         tests: []
       }]
