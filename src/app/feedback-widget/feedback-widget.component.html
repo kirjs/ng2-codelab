@@ -1,3 +1,3 @@
-<p>
-  feedback-widget works!
-</p>
+<p>Enter your name: <input type="text" #username/></p>
+<p>Enter your feedback: <textarea #feedbackInput></textarea> </p>
+<button class="btn" (click)="send(feedbackInput.value, username.value)">Send</button>

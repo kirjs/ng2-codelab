@@ -72,6 +72,13 @@ export class ReducersService {
     }
     return state;
   }
+  
+  [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
+    let items = this.angularFire.database.list('/feedback');
+    items.push({comment:feedback.data.comment, state:state, name: feedback.data.username});
+    state.user = feedback.data.username;
+    return state;
+  }
 
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];

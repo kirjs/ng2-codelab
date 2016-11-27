@@ -13,8 +13,8 @@ export class FeedbackWidgetComponent implements OnInit {
   ngOnInit() {
   }
 
-  send(comment){
-    this.state.sendFeedback(comment);
+  send(comment, username){
+    this.state.sendFeedback({comment,username});
   }
 
 }
