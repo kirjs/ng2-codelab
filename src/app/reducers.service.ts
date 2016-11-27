@@ -6,6 +6,7 @@ import {FileConfig} from "./file-config";
 import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 
 @Injectable()
@@ -20,6 +21,14 @@ export class ReducersService {
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
     state.page = 'feedback';
     return state;
+  }
+  [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
+    state.auth = data
+    return state;
+  }
+  [ActionTypes.SIMULATE_STATE](state: CodelabConfig, {data}: {data: CodelabConfig}) {
+    data.auth = state.auth;
+    return data;
   }
 
 
@@ -91,6 +100,13 @@ export class ReducersService {
     }
     return state;
   }
+  
+  [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
+    let items = this.angularFire.database.list('/feedback');
+    items.push({comment:feedback.data.comment, state:state, name: feedback.data.username});
+    state.user = feedback.data.username;
+    return state;
+  }
 
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
@@ -129,7 +145,7 @@ export class ReducersService {
     });
   }
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private angularFire: AngularFire) {
   }
 
 }

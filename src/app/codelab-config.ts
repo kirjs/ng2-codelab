@@ -4,5 +4,7 @@ export interface CodelabConfig {
   name: string,
   page: 'milestone'|'feedback',
   selectedMilestoneIndex: number,
-  milestones: Array<MilestoneConfig>
+  milestones: Array<MilestoneConfig>,
+  user: string,
+  auth:{}
 }

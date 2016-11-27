@@ -1,0 +1,26 @@
+textarea{
+    margin:10px 0;
+}
+input, textarea{
+    font-size:20px;
+    border-radius:3px;
+    padding:10px;
+    border:1px solid #2ecc71;
+    color: #2c3e50;
+    font-family: Arial;
+    width:100%;
+}
+h2{
+    color:#3498db;
+    font-size: 24px;
+}
+button{
+    padding: 10px;
+    font-size:20px;
+    width:100px;
+    background:#2ECC71;
+    border:solid 1px white;
+    border-radius:6px;
+    color:white;
+    font-family: Arial;
+}
