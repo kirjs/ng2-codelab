@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Comment</th>
+    <th>Milestone #</th>
+    <th>Exercise #</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let feedbackItem of feedbackList | async">
+    <td>{{feedbackItem.name}}</td>
+    <td>{{feedbackItem.comment}}</td>
+    <td>{{feedbackItem.state.selectedMilestoneIndex + 1}}</td>
+    <td>{{feedbackItem.state.milestones[feedbackItem.state.selectedMilestoneIndex].selectedExerciseIndex + 1}}</td>
+    <td><button (click)="simulate(feedbackItem.state)">Simulate</button></td>
+  </tr>
+</table>

@@ -82,6 +82,14 @@ export class StateService {
     this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
 
+  setAuth(auth){
+    this.dispatchAction(ActionTypes.SET_AUTH, auth);
+  }
+
+  simulateState(state){
+    this.dispatchAction(ActionTypes.SIMULATE_STATE, state);
+  }
+
   updateCode(changes) {
     this.dispatchAction(ActionTypes.UPDATE_CODE, changes);
   }

@@ -23,13 +23,7 @@
       <app-milestone [config]="config.milestones[config.selectedMilestoneIndex]" [name]="config.name"></app-milestone>
     </div>
     <div class="codelab-milestone" *ngIf="config.page === 'feedback'">
-      I should seriously consider using router for this.
-      <ul>
-        <li>Authentificate using google auth.</li>
-        <li>Make sure only certain users can reed the feedback</li>
-        <li>Actually display all feedbacks</li>
-        <li>Have each feedback a button to open a new window with the appropriate state.</li>
-      </ul>
+      <app-feedback-page></app-feedback-page>
     </div>
 
   </div>

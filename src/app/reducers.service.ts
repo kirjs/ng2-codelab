@@ -22,6 +22,14 @@ export class ReducersService {
     state.page = 'feedback';
     return state;
   }
+  [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
+    state.auth = data
+    return state;
+  }
+  [ActionTypes.SIMULATE_STATE](state: CodelabConfig, {data}: {data: CodelabConfig}) {
+    data.auth = state.auth;
+    return data;
+  }
 
 
   [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}) {

@@ -13,10 +13,11 @@ import {EditorsComponent} from './editors/editors.component';
 import {CodelabComponent} from './codelab/codelab.component';
 import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from "./state.service";
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods  } from 'angularfire2';
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from "./reducers.service";
 import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.component';
+import { FeedbackPageComponent } from './feedback-page/feedback-page.component';
 
 //configuration for firebase
 export const firebaseConfig = {
@@ -25,6 +26,10 @@ export const firebaseConfig = {
   databaseURL: "https://ng2-codelab.firebaseio.com",
   storageBucket: "ng2-codelab.appspot.com"
 };
+export const myFirebaseAuthConfig = {
+  provider: AuthProviders.Google,
+  method: AuthMethods.Popup
+}
 
 @NgModule({
   declarations: [
@@ -37,12 +42,13 @@ export const firebaseConfig = {
     MilestoneComponent,
     TestsComponent,
     FeedbackWidgetComponent,
+    FeedbackPageComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   providers: [
     StateService,

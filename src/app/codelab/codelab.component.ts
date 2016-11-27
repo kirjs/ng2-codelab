@@ -4,6 +4,7 @@ import {MilestoneConfig} from "../milestone-config";
 import {CodelabConfig} from "../codelab-config";
 import {StateService} from "../state.service";
 import {ActionTypes} from "../action-types.enum";
+import {FeedbackPageComponent} from '../feedback-page/feedback-page.component';
 
 @Component({
   selector: 'app-codelab',
@@ -15,6 +16,7 @@ export class CodelabComponent implements OnInit {
   public collapsePanel = true;
   milestone: MilestoneConfig;
   section: 'milestone';
+  feedbackList = [];
 
   constructor(public state: StateService) {
     state.update.subscribe((config)=>{
