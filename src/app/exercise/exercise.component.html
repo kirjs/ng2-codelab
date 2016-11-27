@@ -3,7 +3,9 @@
   {{config.messageNext || 'Good job! Go to the next exercise!'}}
 </div>
 <div class="exercise-panel" *ngIf="config?.editedFiles?.length">
-  <app-editors [files]="config.editedFiles" (onCodeChange)="onCodeChange($event)"></app-editors>
+  <app-editors [files]="config.editedFiles"
+               (onCodeChange)="onCodeChange($event)"
+               (onFileCollapsed)="onFileCollapsed($event)"></app-editors>
   <div class="side">
     <div class="description" [innerHTML]="config.description"></div>
     <app-tests [tests]="config.tests"></app-tests>

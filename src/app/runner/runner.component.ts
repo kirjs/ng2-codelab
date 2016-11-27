@@ -212,7 +212,7 @@ export class RunnerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.state.update
       .map(selectedExercise)
-      .map(e => e.editedFiles)
+      .map(e => e.editedFiles.map(f => f.code))
       // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
       .map(a => JSON.stringify(a))
       .distinctUntilChanged()

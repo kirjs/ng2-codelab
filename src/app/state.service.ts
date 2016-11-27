@@ -10,6 +10,7 @@ import {ExerciseConfig} from "./exercise-config";
 import {MilestoneConfig} from "./milestone-config";
 import {ReducersService} from "./reducers.service";
 import {assert} from "./utils";
+import {FileConfig} from "./file-config";
 
 
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
@@ -100,5 +101,9 @@ export class StateService {
   ping() {
     // This is a hack. See http://jsbin.com/yuqeniqena/1/edit?js,output
     this.dispatchAction(ActionTypes.PING);
+  }
+
+  toggleFile(file: FileConfig) {
+    this.dispatchAction(ActionTypes.TOGGLE_FILE, file);
   }
 }

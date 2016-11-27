@@ -1,4 +1,5 @@
 export enum ActionTypes {
+  TOGGLE_FILE,
   OPEN_FEEDBACK,
   PING,
   NEXT_EXERCISE,

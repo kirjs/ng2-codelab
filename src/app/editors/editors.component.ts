@@ -1,5 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Action} from "../action";
+import {FileConfig} from "../file-config";
+import {StateService} from "../state.service";
 
 
 @Component({
@@ -13,6 +15,13 @@ export class EditorsComponent {
 
   get visibleFiles() {
     return this.files.filter(file => !file.hidden);
+  }
+
+  constructor(private  state: StateService) {
+  }
+
+  toggleFile(file: FileConfig) {
+    this.state.toggleFile(file);
   }
 
   get hiddenFiles() {

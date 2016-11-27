@@ -21,4 +21,5 @@ export class ExerciseComponent {
   onCodeChange(changedFile) {
     this.state.updateCode(changedFile);
   }
+
 }

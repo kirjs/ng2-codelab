@@ -34,6 +34,19 @@ export class ReducersService {
     return state;
   }
 
+  [ActionTypes.TOGGLE_FILE](state: CodelabConfig, {data}: {data: FileConfig}) {
+    const milestone = state.milestones[state.selectedMilestoneIndex];
+    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+
+    exercise.editedFiles.forEach((file) => {
+      if (file === data) {
+        file.collapsed = !file.collapsed;
+      }
+    });
+
+    return state;
+  }
+
   [ActionTypes.UPDATE_CODE](state: CodelabConfig, {data}: {data: {file: FileConfig, code: string}}) {
     const milestone = state.milestones[state.selectedMilestoneIndex];
     let exercise = milestone.exercises[milestone.selectedExerciseIndex];

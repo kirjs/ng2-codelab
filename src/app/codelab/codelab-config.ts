@@ -16,6 +16,12 @@ function testFile() {
 function hide(...files) {
   return files.map(file => Object.assign({}, file, {hidden: true}))
 }
+function readOnly(...files) {
+  return files.map(file => Object.assign({}, file, {readonly: true}))
+}
+function collapsed(...files) {
+  return files.map(file => Object.assign({}, file, {collapsed: true}))
+}
 
 function htmlFile(file: string, extensions?) {
   return Object.assign({
@@ -127,7 +133,12 @@ export const codelabConfig: CodelabConfig = {
           description: `
           <h1>First Angular 2 app!</h1>
           <p>This is how it's going to look like</p>
-          <img src = "assets/images/bootstrap.png" class = "img" width = 400 style = "border: 1px #ddd solid">
+          
+          <div class = "inBrowser">
+            <div class="smaller">
+              <h1>Hello Angular 2!</h1>
+            </div>
+          </div>
           <p>3 simple steps: </p>
           <ol>
             <li>Create the component</li>
@@ -305,10 +316,12 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('video', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
             tsFile('AppModule'),
             tsFile('VideoComponent', {readonly: true, path: '4-component-tree/0-add-video-component/solution'}),
-            tsFile('AppComponent', {hidden: true}),
-            sharedTsFile('VideoService', {hidden: true}),
-            sharedApiFile({hidden: true}),
-            sharedAppBootstrap({hidden: true}),
+            ...hide(
+              tsFile('AppComponent'),
+              sharedTsFile('VideoService'),
+              sharedApiFile(),
+              sharedAppBootstrap(),
+            ),
             testFile(),
             sharedVideoInterface()
           ],
@@ -327,10 +340,12 @@ export const codelabConfig: CodelabConfig = {
             // TODO: Figure out how to actually use dashes and periods in the component.
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
-            tsFile('AppModule', {hidden: true}),
             tsFile('WrapperComponent'),
-            sharedAppBootstrap({hidden: true}),
-            sharedVideoInterface({hidden: true}),
+            ...hide(
+              tsFile('AppModule'),
+              sharedAppBootstrap(),
+              sharedVideoInterface()
+            ),
             testFile(),
           ],
           tests: []
@@ -342,17 +357,19 @@ export const codelabConfig: CodelabConfig = {
           path: '5-content-projection/1-use-toggle-panel',
           fileTemplates: [
             // TODO: Figure out how to actually use dashes and periods in the component.
-            tsFile('AppModule', {hidden: true}),
             htmlFile('video'),
             tsFile('VideoComponent', {readonly: true}),
-            htmlFile('app', {hidden: true}),
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
-            tsFile('AppComponent', {hidden: true}),
-            sharedAppBootstrap({hidden: true}),
-            sharedVideoInterface({hidden: true}),
-            sharedTsFile('VideoService'),
-            sharedApiFile({hidden: true}),
+            ...hide(
+              tsFile('AppComponent'),
+              tsFile('AppModule'),
+              htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+              sharedAppBootstrap(),
+              sharedVideoInterface(),
+              sharedTsFile('VideoService'),
+              sharedApiFile()
+            ),
             testFile(),
           ],
           tests: []
@@ -371,17 +388,20 @@ export const codelabConfig: CodelabConfig = {
             tsFile('ContextComponent'),
             htmlFile('context'),
             htmlFile('video'),
-            tsFile('ContextService', {readonly: true}),
             tsFile('AppModule'),
-            tsFile('VideoComponent', {readonly: true}),
-            htmlFile('app', {hidden: true}),
-            htmlFile('togglepanel', {hidden: true}),
-            sharedTsFile('TogglePanelComponent', {hidden: true}),
-            tsFile('AppComponent', {hidden: true}),
-            sharedAppBootstrap({hidden: true}),
-            sharedVideoInterface({hidden: true}),
-            sharedTsFile('VideoService'),
-            sharedApiFile({hidden: true}),
+            ...readOnly(
+              tsFile('ContextService'),
+              tsFile('VideoComponent')
+            ),
+            htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+            ...hide(htmlFile('togglepanel'),
+              sharedTsFile('TogglePanelComponent'),
+              tsFile('AppComponent'),
+              sharedAppBootstrap(),
+              sharedVideoInterface(),
+              sharedTsFile('VideoService'),
+              sharedApiFile(),
+            ),
             testFile(),
           ],
           tests: []
@@ -411,7 +431,6 @@ export const codelabConfig: CodelabConfig = {
           ...hide(
             tsFile('ContextComponent', {path: '6-children'}),
             htmlFile('context', {path: '6-children'}),
-
             tsFile('ContextService', {path: '6-children'}),
             tsFile('VideoComponent', {path: '6-children'}),
             htmlFile('app', {path: '6-children'}),
