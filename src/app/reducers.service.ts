@@ -6,6 +6,7 @@ import {FileConfig} from "./file-config";
 import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 
 @Injectable()
@@ -109,7 +110,7 @@ export class ReducersService {
     });
   }
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private angularFire: AngularFire) {
   }
 
 }

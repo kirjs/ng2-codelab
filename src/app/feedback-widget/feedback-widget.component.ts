@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {StateService} from "../state.service";
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Component({
   selector: 'app-feedback-widget',
@@ -9,7 +8,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 })
 export class FeedbackWidgetComponent implements OnInit {
 
-  constructor(private state: StateService, private angularFire: AngularFire) { }
+  constructor(private state: StateService) { }
 
   ngOnInit() {
   }
