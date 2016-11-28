@@ -400,11 +400,12 @@ export const codelabConfig: CodelabConfig = {
           path: '4-z-custom-events/1-use-thumb-component',
           fileTemplates: [
             htmlFile('video'),
+            tsFile('VideoComponent'),
             tsFile('AppModule'),
             ...justForReference(
               htmlFile('thumbs', {path: '4-z-custom-events/0-add-thumb-component/solution'}),
               tsFile('ThumbsComponent', {path: '4-z-custom-events/0-add-thumb-component/solution'}),
-              tsFile('VideoComponent'),
+
               sharedVideoInterface()),
             ...hidden(
               htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),

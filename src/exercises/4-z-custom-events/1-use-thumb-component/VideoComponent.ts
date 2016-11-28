@@ -9,4 +9,6 @@ import {Thumbs} from "../0-add-thumb-component/ThumbsComponent";
 export class VideoComponent {
   @Input() video: VideoItem;
 
+
+
 }
