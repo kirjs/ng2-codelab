@@ -9,13 +9,17 @@ import {StateService} from "../state.service";
 export class FeedbackWidgetComponent implements OnInit {
 
   constructor(private state: StateService) { }
-  username: string = '';
+  username: string = "";
+  comment: string = "";
   ngOnInit() {
     this.state.update.subscribe(state => this.username = state.user);
   }
-  send(comment, username){
-    if (comment && username) {
+  send(){
+    if (this.comment && this.username) {
+      let comment = this.comment;
+      let username = this.username;
       this.state.sendFeedback({comment,username});
+      this.comment = '';
     }
   }
 
