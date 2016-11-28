@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 describe('Content projection', () => {
-  it(`TogglePanelComponent.ts: We added template and selector for you, enjoy!`, () => {
+  it(`TogglePanelComponent.ts: We added the template and the selector for you, enjoy!`, () => {
   });
 
   it(`TogglePanelComponent.ts: Add a boolean flag on the component`, () => {

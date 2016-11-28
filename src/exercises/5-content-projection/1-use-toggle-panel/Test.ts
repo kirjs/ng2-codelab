@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {AppComponent} from './solution/AppComponent';
+import {AppComponent} from '../../4-component-tree/0-add-video-component/AppComponent';
 import {appCode, videoCode, togglepanelCode} from '../../shared/code';
-import {AppModule} from "./AppModule";
+import {AppModule} from "./solution/AppModule";
 import {VideoComponent} from "./VideoComponent";
 import {VideoService} from "../../shared/VideoService";
 import {TogglePanelComponent} from "../0-add-toggle-panel-component/TogglePanelComponent";
@@ -68,9 +68,5 @@ describe('Component tree', () => {
     chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should display likes`).contains(video.likes);
 
   });
-
-
-
-
 });
 

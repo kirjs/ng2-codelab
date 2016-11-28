@@ -49,7 +49,7 @@ describe('Component tree', () => {
 
     const myVideos = fixture.nativeElement.querySelectorAll('my-video');
     chai.expect(myVideos.length, `can't find any <my-video> elements in the app component`).is.greaterThan(0);
-    chai.expect(myVideos.length, `There should be one my-video element for each element`).equals(2);
+    chai.expect(myVideos.length, `There should be one my-video element for each element`).equals(fixture.componentInstance.videos.length);
   });
 
   it(`app.html: Pass the video property to the component (don't forget the square braces)`, () => {

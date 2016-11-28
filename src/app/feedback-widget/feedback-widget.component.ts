@@ -7,7 +7,7 @@ import {StateService} from "../state.service";
   styleUrls: ['./feedback-widget.component.css']
 })
 export class FeedbackWidgetComponent implements OnInit {
-
+  open: false;
   constructor(private state: StateService) { }
   username: string = "";
   comment: string = "";

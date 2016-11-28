@@ -8,6 +8,7 @@ import {VideoService} from "../shared/VideoService";
 import {TogglePanelComponent} from "../shared/TogglePanelComponent";
 import {ContextComponent} from "./solution/ContextComponent";
 import {ContextService} from "./ContextService";
+import {Api} from "../shared/Api";
 
 function objectValues(object) {
   return Object.keys(object).reduce((result, key) => {
@@ -15,14 +16,7 @@ function objectValues(object) {
     return result;
   }, []);
 }
-let sampleVideo = {
-  description: 'Ogogo',
-  likes: 1,
-  title: 'hi',
-  views: 1,
-  src: 'todo'
-};
-
+const sampleVideo = Api.fetch('')[0];
 function objectHasAn(object, Type) {
   return objectValues(object).some(val => val instanceof Type)
 }
@@ -72,8 +66,13 @@ describe('Children', () => {
   });
 
   it(`AppModule: Add the ContextComponent to the AppModule declarations (We did this for you).`, () => {
-    // TODO: Actually write a test
-    debugger
+    let metadata;
+    try {
+      metadata = Reflect.getMetadata("annotations", AppModule);
+    } catch (e) {
+      // Do nothing, we have assertions below for this case
+    }
+    chai.expect(metadata[0].declarations, `Video component not found`).contains(ContextComponent);
   });
 
   it(`video.html: Actually display the ad.`, () => {

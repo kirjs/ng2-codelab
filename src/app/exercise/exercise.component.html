@@ -1,5 +1,5 @@
 <div class="description main" [innerHTML]="config.description" *ngIf="!config?.editedFiles?.length"></div>
-<div *ngIf="allTestsPass()" class="next" (click)="state.nextExercise()">
+<div *ngIf="false" class="next" (click)="state.nextExercise()">
   {{config.messageNext || 'Good job! Go to the next exercise!'}}
 </div>
 <div class="exercise-panel" *ngIf="config?.editedFiles?.length">

@@ -1,6 +1,16 @@
-<h2>Give us some feedback!</h2>
-<form #f="ngForm">
-    <div><input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" placeholder="Enter your name" name="name"/></div>
-    <div><textarea [(ngModel)]="comment" placeholder="Describe your issue or share your ideas" name="comment"></textarea> </div>
-    <div><button (click)="send()" id="submit">Send</button></div>
+<button class="feedback-button" (click)="open = !open">Please share your feedback</button>
+<form #f="ngForm" *ngIf="open">
+  <div>
+    <input type="text"
+           [(ngModel)]="username"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Enter your name"
+           name="name"/>
+  </div>
+  <div>
+    <textarea [(ngModel)]="comment" placeholder="Describe your issue or share your ideas" name="comment"></textarea>
+  </div>
+  <div>
+    <button (click)="send()" id="submit">Send</button>
+  </div>
 </form>

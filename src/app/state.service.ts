@@ -34,12 +34,16 @@ export class StateService {
 
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
-        console.log(action.type, action);
-        if (reducers[action.type]) {
-          const result = reducers[action.type](state, action);
-          return result instanceof Observable ? result : Observable.of(result);
+        try {
+          if (reducers[action.type]) {
+            const result = reducers[action.type](state, action);
+            return result instanceof Observable ? result : Observable.of(result);
+          }
+          if (!state) {
+            debugger
+          }
         }
-        if (!state) {
+        catch (e) {
           debugger
         }
         return state;
@@ -82,11 +86,11 @@ export class StateService {
     this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
 
-  setAuth(auth){
+  setAuth(auth) {
     this.dispatchAction(ActionTypes.SET_AUTH, auth);
   }
 
-  simulateState(state){
+  simulateState(state) {
     this.dispatchAction(ActionTypes.SIMULATE_STATE, state);
   }
 

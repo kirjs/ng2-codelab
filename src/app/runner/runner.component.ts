@@ -1,9 +1,8 @@
 import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
-import {Http} from "@angular/http";
 import * as ts from "typescript";
 import {FileConfig} from "../file-config";
 import {StateService, selectedExercise} from "../state.service";
-import {CodelabConfig} from "../codelab-config";
+
 let cachedIframes = {};
 
 function jsInjector(iframe) {
@@ -69,7 +68,8 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
       const displayError = (error, location) => {
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
-        setHtml(`<pre>${escaped}</pre>`);
+        setHtml(`Check out your browser console to see the full error!
+            <pre>${escaped}</pre>`);
       };
 
       iframe.contentWindow.console.error = function (error, message) {
@@ -97,6 +97,9 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             }
           });
 
+          files.filter(file => file.filename.indexOf('index.html') >= 0).map((file => {
+            setHtml(file.code)
+          }));
 
           files.filter(file => file.type === 'ts').map((file) => {
             // Update module names
@@ -156,13 +159,7 @@ export interface RunnerConfig {
 })
 export class RunnerComponent implements AfterViewInit {
   @Input() files: any;
-  html = `
-<!-- TODO: That's a hack -->
-<my-app></my-app>
-<my-wrapper></my-wrapper>
-<my-ad></my-ad>
-<my-video></my-video>
-  `;
+  html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
   runId = 0;
 
