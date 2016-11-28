@@ -14,3 +14,9 @@
     <td><button (click)="simulate(feedbackItem.state)">Simulate</button></td>
   </tr>
 </table>
+
+<ul>
+  <li *ngFor="let feedbacker of listOfFeedbackers">
+    <b>{{feedbacker.name}}</b> Number Of feedback: {{feedbacker.numberOfFeedback}}
+  </li>
+</ul>
