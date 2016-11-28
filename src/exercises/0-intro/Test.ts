@@ -22,7 +22,10 @@ import {Meetup, evalJs} from './solution/Meetup';
  */
 import {MeetupCode} from '../shared/code';
 
-const anglars = [{name: 'me', rsvp: true}];
+const anglars = [
+  {name: 'me', rsvp: true},
+  {name: 'notme', rsvp: false},
+];
 
 describe('Component', () => {
   it(`Create a class called Meetup`, () => {
@@ -65,18 +68,23 @@ describe('Component', () => {
   });
 
   it('Create new method "getRsvp"', () => {
-    chai.expect(typeof (new Meetup(anglars).getRsvp())).equals('function');
+    chai.expect(typeof (new Meetup(anglars).getRsvp)).equals('function');
   });
 
-  it(`Let's debug the app! You'll need this if something goes wrong.
+  it(`Make sure retRsvp returns only people with 'rsvp' set to true.`, () => {
+    chai.expect(new Meetup(anglars).getRsvp().length).equals(1);
+  });
+
+  /*
+  xit(`Let's debug the app! You'll need this if something goes wrong.
    * Open the dev tools in your browser
    * Put in the new method add "debugger;"
-   * The app will stop, and you'll be able to inspect local variables. 
+   * The app will stop, and you'll be able to inspect local variables.
    * Get out using F8
    * We can't really test this, so this test is marked as passed
   `, () => {
 
   });
-
+*/
 });
 

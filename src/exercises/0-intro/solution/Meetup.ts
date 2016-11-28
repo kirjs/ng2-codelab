@@ -1,3 +1,4 @@
+// Interface
 import {Anglar} from "../Anglar";
 
 export class Meetup {
@@ -8,6 +9,5 @@ export class Meetup {
     return this.anglars.filter(anglar => anglar.rsvp);
   }
 }
-
 
 export function evalJs(str){}

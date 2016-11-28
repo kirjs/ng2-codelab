@@ -1,1 +1,2 @@
-// Write your code here
+// Interface
+import {Anglar} from "./Anglar";
