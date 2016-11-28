@@ -97,7 +97,7 @@ export const codelabConfig: CodelabConfig = {
           <h1>Welcome to the Angular 2 and TypeScript CodeLab!</h1>
           <p>In this codelab we're going to learn the basics of TypeScript and Angular2.</p>         
           <p>The slides for the codelab are available using 
-          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">this link</a></p>         
+          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a></p>         
           <p>Enjoy, and please leave your feedback.</p>         
           <p>List of known issues:</p>         
           <ul>
@@ -127,9 +127,12 @@ export const codelabConfig: CodelabConfig = {
           Let's create our first typescript module. 
         `,
           fileTemplates: [
-            tsFile('Dog'),
-            tsFile('BarkingBroadcastingService'),
-            tsFile('Main'),
+            tsFile('Meetup'),
+            ...justForReference(
+              tsFile('Anglar'),
+              tsFile('anglars'),
+              tsFile('Main')
+            ),
             testFile()
           ]
         },
@@ -399,8 +402,8 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('video'),
             tsFile('AppModule'),
             ...justForReference(
-              htmlFile('thumbs', { path: '4-z-custom-events/0-add-thumb-component/solution'}),
-              tsFile('ThumbsComponent', { path: '4-z-custom-events/0-add-thumb-component/solution'}),
+              htmlFile('thumbs', {path: '4-z-custom-events/0-add-thumb-component/solution'}),
+              tsFile('ThumbsComponent', {path: '4-z-custom-events/0-add-thumb-component/solution'}),
               tsFile('VideoComponent'),
               sharedVideoInterface()),
             ...hidden(

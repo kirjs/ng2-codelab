@@ -9,30 +9,23 @@
  * There are
  *
  */
-/**
- * We don't really need TestBed here, but if we touch any angular components, we have to reset it before every test.
- */
-import {TestBed} from '@angular/core/testing';
+
 /**
  * solution/ prefix is used to let the test typechecked.
- * It will be stripped during runtime, and the Dog module
+ * It will be stripped during runtime, and the Meetup module
  * will be loaded.
  */
-import {Dog, evalJs} from './solution/Dog';
+import {Meetup, evalJs} from './solution/Meetup';
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
- * TODO(kirjs): Figure out how to actually typecheck.
  */
-import {DogCode} from '../shared/code';
+import {MeetupCode} from '../shared/code';
 
-
-beforeEach(() => {
-  TestBed.resetTestingModule();
-});
+const anglars = [{name: 'me', rsvp: true}];
 
 describe('Component', () => {
-  it(`Create a class called Dog`, () => {
+  it(`Create a class called Meetup`, () => {
     /**
      * We can use evalJs to get into the scope of the user's file.
      * Currently evalJs has to be manually added to the `before`
@@ -44,14 +37,14 @@ describe('Component', () => {
      * e.g. if the user created teh class, but haven't exported it this
      * test will still pass.
      */
-    chai.expect(typeof evalJs('Dog')).equals('function');
+    chai.expect(typeof evalJs('Meetup')).equals('function');
   });
 
   it(`Export the class`, () => {
     /**
      * Require the class, assert it's a function (compile target is es5).
      */
-    chai.expect(typeof Dog).equals('function');
+    chai.expect(typeof Meetup).equals('function');
   });
 
   it('Add a constructor', () => {
@@ -59,21 +52,20 @@ describe('Component', () => {
      * Fancy: Require the actual source code, and search in it.
      *
      */
-    chai.expect(DogCode.indexOf('constructor') > -1, `Your dog doesn't have constuctor`).is.true;
+    chai.expect(MeetupCode.indexOf('constructor') > -1, `The meetup class doesn't have constuctor`).is.true;
   });
 
-  it('Make constructor take a parameter "name"', () => {
-    chai.expect(Dog.length, 'Dog constructor should take one parameter').equals(1);
+  it('Make constructor take a parameter "anglars"', () => {
+    chai.expect(Meetup.length, 'Meetup constructor should take one parameter called "anglars"').equals(1);
   });
 
-  it('Make it public', () => {
-    let parameterVal = "Snoopy";
-    const dog = new Dog(parameterVal);
-    chai.expect(dog.name).equals(parameterVal);
+  it('This parameter should be public', () => {
+    const meetup = new Meetup(anglars);
+    chai.expect(meetup.anglars).equals(anglars);
   });
 
-  it('Create new method "bark"', () => {
-    chai.expect(typeof (new Dog('hello').bark)).equals('function');
+  it('Create new method "getRsvp"', () => {
+    chai.expect(typeof (new Meetup(anglars).getRsvp())).equals('function');
   });
 
   it(`Let's debug the app! You'll need this if something goes wrong.
