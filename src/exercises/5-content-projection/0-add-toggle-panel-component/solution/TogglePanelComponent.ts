@@ -5,5 +5,5 @@ import {Component, Input} from '@angular/core';
   templateUrl: 'togglepanel.html'
 })
 export class TogglePanelComponent {
-  isExtra: boolean = true;
+  showDescription = true;
 }

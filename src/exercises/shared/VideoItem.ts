@@ -3,5 +3,6 @@ export interface VideoItem {
   src: string,
   description: string,
   views: number
-  likes: number
+  likes: number,
+  date: string
 }

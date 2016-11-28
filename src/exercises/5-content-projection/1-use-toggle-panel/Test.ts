@@ -5,8 +5,9 @@ import {appCode, videoCode, togglepanelCode} from '../../shared/code';
 import {AppModule} from "./AppModule";
 import {VideoComponent} from "./VideoComponent";
 import {VideoService} from "../../shared/VideoService";
-import {TogglePanelComponent} from "./TogglePanelComponent";
-
+import {TogglePanelComponent} from "../0-add-toggle-panel-component/TogglePanelComponent";
+import {Api} from '../../shared/Api'
+const video = Api.fetch('')[0];
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -48,6 +49,9 @@ describe('Component tree', () => {
 
     chai.expect(panel.querySelector('.description')).is.not.null
     chai.expect(panel.querySelector('.extra')).is.null
+
+    chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should display description text.`).contains(video.description);
+    chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should not display likes `).not.contains(video.likes);
   });
 
   it(`video.html: Add .extra as TogglePanel's content`, () => {
@@ -59,7 +63,13 @@ describe('Component tree', () => {
     fixture.detectChanges();
     chai.expect(panel.querySelector('.description')).is.null.null
     chai.expect(panel.querySelector('.extra')).is.not.null
+
+    chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should not description text.`).not.contains(video.description);
+    chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should display likes`).contains(video.likes);
+
   });
+
+
 
 
 });

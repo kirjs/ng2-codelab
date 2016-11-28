@@ -6,5 +6,5 @@ import {VideoItem} from "../../shared/VideoItem";
   templateUrl: 'togglepanel.html'
 })
 export class TogglePanelComponent {
-  showDescription = true;
+
 }

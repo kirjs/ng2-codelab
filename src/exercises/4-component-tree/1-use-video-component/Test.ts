@@ -1,10 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {AppComponent} from './solution/AppComponent';
-import {VideoService} from './VideoService';
+import {VideoService} from '../../shared/VideoService';
 import {appCode, videoCode} from '../../shared/code';
 import {AppModule} from "./AppModule";
-import {VideoComponent} from "./VideoComponent";
+import {VideoComponent} from "../0-add-video-component/VideoComponent";
+import {Api} from '../../shared/Api';
 
 
 beforeEach(() => {
@@ -40,13 +41,7 @@ describe('Component tree', () => {
 
   it(`app.html: Use the video component`, () => {
     let fixture = TestBed.createComponent(AppComponent);
-    fixture.componentInstance.videos = [{
-      title: 'Super cat',
-      src: 'super.png'
-    }, {
-      title: 'Other cat',
-      src: 'other.png'
-    }];
+    fixture.componentInstance.videos = Api.fetch('');
     // TODO: if the element is added, but the video prop is not present, this test will fail with
     // A useless message. Passing video prop should actually be tested in the next test, and this
     // Ane should pass.
@@ -60,13 +55,7 @@ describe('Component tree', () => {
   it(`app.html: Pass the video property to the component (don't forget the square braces)`, () => {
     let fixture = TestBed.createComponent(AppComponent);
 
-    fixture.componentInstance.videos = [{
-      title: 'Super cat',
-      src: 'super.png'
-    }, {
-      title: 'Other cat',
-      src: 'other.png'
-    }];
+    fixture.componentInstance.videos = Api.fetch('');
 
     fixture.detectChanges();
 

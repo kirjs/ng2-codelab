@@ -14,10 +14,10 @@ function testFile() {
   };
 }
 
-function hidden(...files: FileConfig[]) : FileConfig[]{
+function hidden(...files: FileConfig[]): FileConfig[] {
   return files.map(file => Object.assign({}, file, {hidden: true}))
 }
-function readOnly(...files: FileConfig[]) : FileConfig[]{
+function readOnly(...files: FileConfig[]): FileConfig[] {
   return files.map(file => Object.assign({}, file, {readonly: true}))
 }
 function justForReference(...files: FileConfig[]): FileConfig[] {
@@ -78,8 +78,8 @@ function sharedAppBootstrap(extensions?) {
 
 export const codelabConfig: CodelabConfig = {
   name: 'Angular2 codelab',
-  user:'',
-  auth:{},
+  user: '',
+  auth: {},
   page: 'milestone',
   selectedMilestoneIndex: 2,
   milestones: [
@@ -308,8 +308,8 @@ export const codelabConfig: CodelabConfig = {
           fileTemplates: [
             htmlFile('video'),
             tsFile('VideoComponent'),
-            tsFile('AppModule'),
             ...justForReference(
+              tsFile('AppModule', {path: '3-dependency-injection/solution'}),
               sharedVideoInterface()
             ),
             ...hidden(
@@ -348,16 +348,17 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
-          name: 'Create a separate component to display a video.',
+          name: 'Add TogglePanelComponent',
           description: `Todo`,
           path: '5-content-projection/0-add-toggle-panel-component',
           fileTemplates: [
-            // TODO: Figure out how to actually use dashes and periods in the component.
             htmlFile('togglepanel'),
             tsFile('TogglePanelComponent'),
-            tsFile('WrapperComponent'),
+            ...justForReference(
+              tsFile('WrapperComponent'),
+              tsFile('AppModule')
+            ),
             ...hidden(
-              tsFile('AppModule'),
               sharedAppBootstrap(),
               sharedVideoInterface()
             ),
@@ -367,18 +368,20 @@ export const codelabConfig: CodelabConfig = {
         },
         {
           // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
-          name: 'Create a separate component to display a video.',
+          name: 'Use TogglePanelComponent',
           description: `Todo`,
           path: '5-content-projection/1-use-toggle-panel',
           fileTemplates: [
             // TODO: Figure out how to actually use dashes and periods in the component.
-            htmlFile('video'),
-            tsFile('VideoComponent', {readonly: true}),
-            htmlFile('togglepanel'),
-            tsFile('TogglePanelComponent'),
+            htmlFile('video', {path: '4-component-tree/0-add-video-component/solution'}),
+            tsFile('AppModule'),
+            ...justForReference(
+              tsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+              htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+              tsFile('VideoComponent', {readonly: true})
+            ),
             ...hidden(
-              tsFile('AppComponent'),
-              tsFile('AppModule'),
+              tsFile('AppComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
               htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
               sharedAppBootstrap(),
               sharedVideoInterface(),
@@ -396,22 +399,24 @@ export const codelabConfig: CodelabConfig = {
       exercises: [
         {
           name: 'Inject parent component',
-          description: `Create a context-ad component, which will inject it's parent component, see what the
-            description, and display the value accordingly.`,
+          description: `<p>Create a Context(Ad)Component</p>
+            <p>which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
+            <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`,
           path: '6-children',
           fileTemplates: [
             tsFile('ContextComponent'),
             htmlFile('context'),
             htmlFile('video'),
-            tsFile('AppModule'),
-            ...readOnly(
+            ...justForReference(
+              tsFile('AppModule'),
               tsFile('ContextService'),
-              tsFile('VideoComponent')
+              tsFile('VideoComponent'),
+              htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
             ),
-            htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-            ...hidden(htmlFile('togglepanel'),
-              sharedTsFile('TogglePanelComponent'),
-              tsFile('AppComponent'),
+            ...hidden(
+              htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+              sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+              tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
               sharedAppBootstrap(),
               sharedVideoInterface(),
               sharedTsFile('VideoService'),
@@ -448,10 +453,10 @@ export const codelabConfig: CodelabConfig = {
             htmlFile('context', {path: '6-children'}),
             tsFile('ContextService', {path: '6-children'}),
             tsFile('VideoComponent', {path: '6-children'}),
-            htmlFile('app', {path: '6-children'}),
-            htmlFile('togglepanel', {path: '6-children'}),
-            sharedTsFile('TogglePanelComponent', {hidden: true}),
-            tsFile('AppComponent', {path: '6-children'}),
+            htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+            htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+            sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+            tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
             sharedAppBootstrap({hidden: true}),
             sharedVideoInterface({hidden: true}),
             sharedTsFile('VideoService', {hidden: true}),
@@ -464,16 +469,16 @@ export const codelabConfig: CodelabConfig = {
       }]
     },
     {
-      name: 'Test',
+      name: 'Survey',
       selectedExerciseIndex: 0,
       exercises: [{
-        name: 'Exercise',
-        description: 'Just testing things',
+        name: 'All done!',
+        description: `
+        Please fill out <a href = "https://docs.google.com/a/google.com/forms/d/1485qCxsL-Xopz-bCN-BhQlsFOOOkNGTOTycMNu2Xz4U/edit?ts=582caad2">The survey</a>
+        (which is different from the feedback form)
+`,
         path: 'test',
-        fileTemplates: [
-          tsFile('Main'),
-          tsFile('Dog')
-        ],
+        fileTemplates: [],
         tests: []
       }]
     }

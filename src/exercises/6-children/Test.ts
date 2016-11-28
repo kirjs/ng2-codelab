@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {AppComponent} from './solution/AppComponent';
+import {AppComponent} from '../4-component-tree/1-use-video-component/solution/AppComponent';
 import {appCode, videoCode, togglepanelCode, contextCode} from '../shared/code';
 import {AppModule} from "./AppModule";
 import {VideoComponent} from "./VideoComponent";
 import {VideoService} from "../shared/VideoService";
 import {TogglePanelComponent} from "../shared/TogglePanelComponent";
-import {ContextComponent} from "./ContextComponent";
+import {ContextComponent} from "./solution/ContextComponent";
 import {ContextService} from "./ContextService";
 
 function objectValues(object) {
@@ -56,7 +56,7 @@ describe('Children', () => {
     chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
   });
 
-  it(`ContextComponent: Set component description based on the service result.`, () => {
+  it(`ContextComponent: Call 'getAddText' on the service, and pass it the 'description' from parent component video. Set the result as a text property. `, () => {
     const fixture = TestBed.createComponent(ContextComponent);
     fixture.componentInstance.parent.video = sampleVideo;
     chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
@@ -71,10 +71,16 @@ describe('Children', () => {
     chai.expect(fixture.nativeElement.innerHTML).to.contain('Check out our web site');
   });
 
-  it(`AppModule: Add the TogglePanelComponent to the AppModule declarations.`, () => {
-    const fixture = TestBed.createComponent(VideoComponent);
-    fixture.componentInstance.video = sampleVideo;
+  it(`AppModule: Add the ContextComponent to the AppModule declarations (We did this for you).`, () => {
+    // TODO: Actually write a test
+    debugger
+  });
+
+  it(`video.html: Actually display the ad.`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
+    // TODO: Actually write a test
+    //chai.expect(fixture.nativeElement.querySelector('my-ad')).to.be.ok
   });
 });
 

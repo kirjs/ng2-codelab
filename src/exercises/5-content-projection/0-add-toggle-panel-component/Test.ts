@@ -20,15 +20,19 @@ beforeEach(() => {
 });
 
 describe('Content projection', () => {
+  it(`TogglePanelComponent.ts: We added template and selector for you, enjoy!`, () => {
+  });
+
   it(`TogglePanelComponent.ts: Add a boolean flag on the component`, () => {
     let fixture = TestBed.createComponent(TogglePanelComponent);
     // the intent is to let them come up with the property name, so we assume there will be one.
     const props = Object.keys(fixture.componentInstance);
+
     chai.expect(props.length, `Flag is not defined`).is.not.equal(0);
     chai.expect(props.length, `Too many properties`).is.not.greaterThan(1);
     const prop = props[0];
     chai.expect(fixture.componentInstance[prop], `Flag is not defined`).is.not.undefined;
-    chai.expect(fixture.componentInstance[prop], `Flag is not set to false`).is.a('boolean');
+    chai.expect(fixture.componentInstance[prop], `Flag has to have boolean value`).is.a('boolean');
   });
 
   it(`togglepanel.html: Use content projection to only display the content with the selector .description by default.`, () => {

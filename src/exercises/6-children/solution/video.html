@@ -1,0 +1,12 @@
+<h2>{{video.title}}</h2>
+<img [src]="video.src">
+<my-toggle-panel>
+  <div class="description">Description: {{video?.description}}</div>
+  <div class="extra">
+    <div class="views">Views: {{video?.views}}</div>
+    <div class="likes">Likes: {{video?.likes}}</div>
+  </div>
+</my-toggle-panel>
+<my-ad></my-ad>
+
+
