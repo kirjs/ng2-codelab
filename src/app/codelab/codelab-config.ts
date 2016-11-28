@@ -99,6 +99,21 @@ export const codelabConfig: CodelabConfig = {
           <p>The slides for the codelab are available using 
           <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">this link</a></p>         
           <p>Enjoy, and please leave your feedback.</p>         
+          <p>List of known issues:</p>         
+          <ul>
+            <li>There are no type definitions imported in the editor.</li>
+            <li>Mocha is used for testing instead of jasmine. </li>
+            <li>Forms/Routing milestone is missing.</li>
+            <li>File naming scheme with a dot should be used, e.g. "app.component.ts", not "AppComponent.ts".</li>
+            <li>The app is not as beautiful as it could have been.</li>
+          </ul>         
+             <p>Missing milestones/Topics for the advance course:</p>         
+          <ul>
+            <li>Angular-cli.</li>
+            <li>Data flows</li>
+            <li>Rxjs</li>
+            <li>CSS and styling</li>
+          </ul>         
           
         `,
           fileTemplates: [],
@@ -349,6 +364,57 @@ export const codelabConfig: CodelabConfig = {
           tests: []
         }]
     }, {
+      name: 'Custom events',
+      selectedExerciseIndex: 0,
+      exercises: [
+        {
+          name: 'Create VideoComponent',
+          description: `<p>Let's try some custom events now. </p>
+            <p>We'll create a thumbs component which will send thumbsUp/thumbsDown event </p>
+  `,
+          path: '4-z-custom-events/0-add-thumb-component',
+          fileTemplates: [
+            htmlFile('thumbs'),
+            tsFile('ThumbsComponent'),
+            ...justForReference(
+              tsFile('AppModule'),
+              tsFile('WrapperComponent'),
+            ),
+            ...hidden(
+              htmlFile('index'),
+              tsFile('AppComponent'),
+              sharedTsFile('VideoService'),
+              sharedApiFile(),
+              sharedAppBootstrap()
+            ),
+            testFile()
+          ],
+          tests: []
+        },
+        {
+          name: 'Use VideoComponent',
+          description: `Use VideoComponent in the app.`,
+          path: '4-z-custom-events/1-use-thumb-component',
+          fileTemplates: [
+            htmlFile('video'),
+            tsFile('AppModule'),
+            ...justForReference(
+              htmlFile('thumbs', { path: '4-z-custom-events/0-add-thumb-component/solution'}),
+              tsFile('ThumbsComponent', { path: '4-z-custom-events/0-add-thumb-component/solution'}),
+              tsFile('VideoComponent'),
+              sharedVideoInterface()),
+            ...hidden(
+              htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+              tsFile('AppComponent'),
+              sharedTsFile('VideoService'),
+              sharedApiFile(),
+              sharedAppBootstrap(),
+            ),
+            testFile()
+          ],
+          tests: []
+        }]
+    }, {
       name: 'Content projection',
       selectedExerciseIndex: 0,
       exercises: [
@@ -480,9 +546,9 @@ export const codelabConfig: CodelabConfig = {
       exercises: [{
         name: 'Sample tests',
         description: `
-        <p>In this milestone instead of changing the code to pass the test 
+        <p>In this milestone instead of changing the code to pass the test
             you'll have to change the test to pass the code. </p>
-            
+
         <p>This milestone is experimental and temporarily uses 'mocha' and 'chai' instead of jasmine.</p>
 `,
         path: '8-tests/0-test-component',
