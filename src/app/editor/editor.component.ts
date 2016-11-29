@@ -127,7 +127,7 @@ export class EditorComponent implements AfterViewInit {
     });
     // TODO(kirjs): Actually use it.
     const height = Math.max(100, this.calcHeight(this.file.code.split('\n').length));
-    this._editor.layout({height: 200, width: 700});
+    this._editor.layout({height: 300, width: 700});
   }
 
 
