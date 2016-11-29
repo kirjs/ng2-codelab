@@ -30,7 +30,6 @@ export class FeedbackPageComponent implements OnInit {
         countedFeedbackers.push(val.name);
       });
       this.listOfFeedbackers.sort((a,b) => {return b.numberOfFeedback - a.numberOfFeedback});
-      console.log(this.listOfFeedbackers);
     });
   }
 
