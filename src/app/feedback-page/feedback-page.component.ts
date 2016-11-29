@@ -20,10 +20,11 @@ export class FeedbackPageComponent implements OnInit {
 
     this.feedbackList.subscribe(list => {
       let countedFeedbackers = [];
+      this.listOfFeedbackers = [];
       list.forEach((val, index) => {
         if(countedFeedbackers.filter(x => x === val.name).length === 0){
           this.listOfFeedbackers.push(
-            {numberOfFeedback: list.filter(x => x.name == val.name && countedFeedbackers.filter(x => x == val.name).length == 0).length, name: val.name}
+            {numberOfFeedback: list.filter(x => x.name == val.name && countedFeedbackers.filter(x => x === val.name).length == 0).length, name: val.name}
           );
         }
         countedFeedbackers.push(val.name);
