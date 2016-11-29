@@ -585,7 +585,7 @@ export const codelabConfig: CodelabConfig = {
       exercises: [{
         name: 'All done!',
         description: `
-        Please fill out <a href = "https://docs.google.com/a/google.com/forms/d/1485qCxsL-Xopz-bCN-BhQlsFOOOkNGTOTycMNu2Xz4U/edit?ts=582caad2">The survey</a>
+        Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>
         (which is different from the feedback form)
 `,
         path: 'test',
