@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {ExerciseComponent} from './exercise/exercise.component';
+import { AutoRunControlComponent } from './exercise/autoruncontrol.component'
 import {EditorComponent} from './editor/editor.component';
 import {RunnerComponent} from './runner/runner.component';
 import {EditorsComponent} from './editors/editors.component';
@@ -42,6 +43,8 @@ export const myFirebaseAuthConfig = {
     TestsComponent,
     FeedbackWidgetComponent,
     FeedbackPageComponent,
+    AutoRunControlComponent
+
   ],
   imports: [
     BrowserModule,
