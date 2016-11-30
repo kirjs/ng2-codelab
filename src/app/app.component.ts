@@ -10,39 +10,43 @@ import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 
 export class AppComponent {
   user_progresses = this.angularFire.database.list('/user_progress');
   currentState = {};
-  auth;
+  remoteStateLoaded = false;
+  auth = {uid:''};
 
   constructor(private state: StateService, private angularFire: AngularFire) {
-   
-  }
-  ngOnInit() {
-    let initAuthObservable = this.angularFire.auth.subscribe((authState) => {
-      if (authState == null) {
+    this.state.update.debounceTime(500).subscribe((state) => {
+      this.currentState = state;
+      if(this.auth.uid && this.remoteStateLoaded){
+        console.log('setting state to firebase');
+        this.user_progresses.update(this.auth.uid, JSON.parse(JSON.stringify(state)));
+      }
+    });
+
+    let authObservable = this.angularFire.auth.subscribe((authState) => {
+      if (!authState) {
+        console.log('not authorized');
         this.angularFire.auth.login({ provider: AuthProviders.Anonymous, method: AuthMethods.Anonymous }).then(authData => {
+          console.log(authData.uid);
           this.auth = authData;
-          this.user_progresses.update(authData.uid, {});        
+          this.user_progresses.update(this.auth.uid, this.currentState);
+          this.remoteStateLoaded = true;
         });
       }
       else {
+        console.log('authorized');
         this.auth = authState;
-        let progressObservable = this.angularFire.database.object('/user_progress/' + this.auth.uid).subscribe((progress) => {
+        let progress = angularFire.database.object('/user_progress/' + this.auth.uid).subscribe((progress) => {
           if (progress) {
+            this.remoteStateLoaded = true;
             this.state.simulateState(progress);
-            progressObservable.unsubscribe();
           }
         });
       }
-      initAuthObservable.unsubscribe();
+      authObservable.unsubscribe();
     });
 
-
-    this.state.update.subscribe((newState) => {
-      this.currentState = newState;
-      if(this.auth){
-        let uid = this.auth.uid;
-        this.user_progresses.update(uid, JSON.parse(JSON.stringify(newState)));
-      }
-    });
+  }
+  ngOnInit() {
 
   }
 }
