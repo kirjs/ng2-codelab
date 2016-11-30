@@ -8,7 +8,7 @@ import {ThumbsComponent} from "../0-add-thumb-component/solution/ThumbsComponent
 
 @NgModule({
   imports: [BrowserModule],
-  declarations: [AppComponent, VideoComponent, ThumbsComponent],
+  declarations: [AppComponent, VideoComponent],
   providers: [VideoService],
   bootstrap: [AppComponent]
 })
