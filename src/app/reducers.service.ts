@@ -19,10 +19,16 @@ export class ReducersService {
     return localState ? localState : state;
   }
 
+  [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
+
+    return !state.autorun
+  }  
+
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
     state.page = 'feedback';
     return state;
   }
+
   [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
     state.auth = data
     return state;

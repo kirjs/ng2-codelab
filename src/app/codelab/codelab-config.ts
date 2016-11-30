@@ -82,6 +82,7 @@ export const codelabConfig: CodelabConfig = {
   auth: {},
   page: 'milestone',
   selectedMilestoneIndex: 0,
+  autorun:true,
   milestones: [
     {
       /**

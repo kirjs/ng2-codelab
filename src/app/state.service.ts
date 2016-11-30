@@ -82,6 +82,10 @@ export class StateService {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
   }
 
+  toggleAutorun() {
+    this.dispatchAction(ActionTypes.TOGGLE_AUTORUN);
+  }
+
   openFeedback() {
     this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
