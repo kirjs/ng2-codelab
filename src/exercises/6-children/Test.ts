@@ -16,10 +16,19 @@ function objectValues(object) {
     return result;
   }, []);
 }
-const sampleVideo = Api.fetch('')[0];
+
+function objectFindPropOfType(object, Type) {
+  return Object.keys(object).reduce((prop, key) => {
+    if (prop) return prop;
+    if (object[key] instanceof Type) return key;
+  }, undefined);
+}
+
 function objectHasAn(object, Type) {
   return objectValues(object).some(val => val instanceof Type)
 }
+
+const sampleVideo = Api.fetch('')[0];
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -35,12 +44,12 @@ beforeEach(() => {
 });
 
 describe('Children', () => {
-  it(`ContextComponent: Inject the ContextService into the constructor and save it in a variable`, () => {
+  it(`ContextComponent: Inject the ContextService into the constructor and store it as a property.`, () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(objectHasAn(fixture.componentInstance, ContextService)).to.be.true;
   });
 
-  it(`ContextComponent: Inject the parent component (VideoComponent) into the constructor and save it in a variable`, () => {
+  it(`ContextComponent: Inject the parent component (VideoComponent) into the constructor and store it as a property.`, () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(objectHasAn(fixture.componentInstance, VideoComponent)).to.be.true;
   });
@@ -50,17 +59,22 @@ describe('Children', () => {
     chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
   });
 
-  it(`ContextComponent: Call 'getAddText' on the service, and pass it the 'description' from parent component video. Set the result as a text property. `, () => {
+  it(`ContextComponent: Call 'getAdText' on the service, and pass it the video 'description' provided by the injected video component. Assign the result to the declared text property.`, () => {
     const fixture = TestBed.createComponent(ContextComponent);
-    fixture.componentInstance.parent.video = sampleVideo;
-    chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
-    fixture.componentInstance.parent.video.description = 'music';
-    fixture.componentInstance.ngOnInit();
+    let componentInstance = fixture.componentInstance;
+
+    let vcProp = objectFindPropOfType(componentInstance, VideoComponent);
+    chai.expect(vcProp, `"VideoComponent" was not injected.`).to.not.be.undefined;
+
+    componentInstance[vcProp].video = sampleVideo;
+    chai.expect(componentInstance.ngOnInit).is.a('function');
+    componentInstance[vcProp].video.description = 'music';
+    componentInstance.ngOnInit();
     fixture.detectChanges();
     chai.expect(fixture.nativeElement.innerHTML).to.contain('speakers');
 
-    fixture.componentInstance.parent.video.description = 'banana';
-    fixture.componentInstance.ngOnInit();
+    componentInstance[vcProp].video.description = 'banana';
+    componentInstance.ngOnInit();
     fixture.detectChanges();
     chai.expect(fixture.nativeElement.innerHTML).to.contain('Check out our web site');
   });

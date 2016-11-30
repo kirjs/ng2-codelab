@@ -39,7 +39,7 @@ describe('Component tree', () => {
     chai.expect(metadata[0].declarations, `Keep the app component`).contains(AppComponent);
   });
 
-  it(`app.html: Use the video component`, () => {
+  it(`app.html: Replace the video html with the video component`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.videos = Api.fetch('');
     // TODO: if the element is added, but the video prop is not present, this test will fail with
