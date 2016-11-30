@@ -10,39 +10,39 @@ import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 
 export class AppComponent {
   user_progresses = this.angularFire.database.list('/user_progress');
   currentState = {};
-  auth = {uid:''};
+  auth;
 
   constructor(private state: StateService, private angularFire: AngularFire) {
-    this.state.update.debounceTime(500).subscribe((state) => {
-      this.currentState = state;
-      if(this.auth.uid){
-        this.user_progresses.update(this.auth.uid, JSON.parse(JSON.stringify(state)));
-      }
-    });
-
-    this.angularFire.auth.subscribe((authState) => {
-      if (!authState) {
+   
+  }
+  ngOnInit() {
+    let initAuthObservable = this.angularFire.auth.subscribe((authState) => {
+      if (authState == null) {
         this.angularFire.auth.login({ provider: AuthProviders.Anonymous, method: AuthMethods.Anonymous }).then(authData => {
           this.auth = authData;
-          this.user_progresses.update(authData.uid, {});
+          this.user_progresses.update(authData.uid, {});        
         });
       }
       else {
         this.auth = authState;
-        let progress = angularFire.database.object('/user_progress/' + this.auth.uid).remove();
-        progress.then((progress) => {
+        let progressObservable = this.angularFire.database.object('/user_progress/' + this.auth.uid).subscribe((progress) => {
           if (progress) {
             this.state.simulateState(progress);
+            progressObservable.unsubscribe();
           }
-        }).catch(() => {
-          console.log(`can't recover progress`);
         });
       }
+      initAuthObservable.unsubscribe();
     });
 
 
-  }
-  ngOnInit() {
+    this.state.update.subscribe((newState) => {
+      this.currentState = newState;
+      if(this.auth){
+        let uid = this.auth.uid;
+        this.user_progresses.update(uid, JSON.parse(JSON.stringify(newState)));
+      }
+    });
 
   }
 }
