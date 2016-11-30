@@ -1,10 +1,10 @@
 <div class="header">
   <div class="exercises">
-    <div class="codelab-title exercise">{{name}}</div>
-    <div class="milestone-title exercise">{{config.name}}</div>
+    <div class="codelab-title header-item">{{name}}</div>
+    <div class="milestone-title header-item">{{config.name}}</div>
 
     <div *ngFor="let item of config.exercises; let i = index"
-         class="exercise {{config.selectedExerciseIndex === i ? 'selected' : ''}} {{exerciseComplete(item) ? 'complete' : ''}}"
+         class="exercise header-item {{config.selectedExerciseIndex === i ? 'selected' : ''}} {{exerciseComplete(item) ? 'complete' : ''}}"
          (click)="state.selectExercise(i)"
     >
       {{item.name}}

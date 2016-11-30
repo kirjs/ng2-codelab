@@ -18,6 +18,7 @@ beforeEach(() => {
 
 describe('Component', () => {
   it('Create a class called AppModule', () => {
+    debugger
     chai.expect(typeof AppModule).equals('function');
   });
 

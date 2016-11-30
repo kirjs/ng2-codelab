@@ -9,25 +9,25 @@ h1 {
   background: #444;
 }
 
-.exercise.selected {
+.header-item.selected {
   background-color: #fff;
   color: #000;
   cursor: default;
 }
 
-.exercise.complete.selected {
+.header-item.complete.selected {
 
 }
 
-.exercise.complete {
+.header-item.complete {
 }
 
-.exercise.milestone-title {
+.header-item.milestone-title {
   background: transparent;
   color: #ffffff;
 }
 
-.exercise.codelab-title {
+.header-item.codelab-title {
   background: #f90;
   color: #fff;
   font-weight: 400;
@@ -36,11 +36,11 @@ h1 {
   padding-top: 8px;
 }
 
-.exercise.milestone-title {
+.header-item.milestone-title {
   margin-right: 20px;
 }
 
-.exercise {
+.header-item {
   padding: 4px 8px;
   margin-top: 4px;
   line-height: 20px;
