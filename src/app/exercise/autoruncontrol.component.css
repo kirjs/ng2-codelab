@@ -1,6 +1,6 @@
 .autorun-off {background: orange; color: black;}
 .autorun-on {background: #f2f2f2; color: lightgray}
-hr.yoyo {
+hr.autorun-linebreak {
 
 	background-color: blue;
     border: lightgray solid 1px;
