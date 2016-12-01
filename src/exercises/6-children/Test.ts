@@ -54,12 +54,12 @@ describe('Children', () => {
     chai.expect(objectHasAn(fixture.componentInstance, VideoComponent)).to.be.true;
   });
 
-  it(`ContextComponent: Add an ngOnInit hook`, () => {
+  it(`ContextComponent: Add an ngOnInit method to the component. (It's a special method angular will call when the component is created).`, () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
   });
 
-  it(`ContextComponent: Call 'getAdText' on the service, and pass it the video 'description' provided by the injected video component. Assign the result to the declared text property.`, () => {
+  it(`ContextComponent: In the onOnInit method Call 'getAdText' on the service, and pass it the video 'description' provided by the injected video component. Assign the result to the declared text property.`, () => {
     const fixture = TestBed.createComponent(ContextComponent);
     let componentInstance = fixture.componentInstance;
 
@@ -71,6 +71,7 @@ describe('Children', () => {
     componentInstance[vcProp].video.description = 'music';
     componentInstance.ngOnInit();
     fixture.detectChanges();
+
     chai.expect(fixture.nativeElement.innerHTML).to.contain('speakers');
 
     componentInstance[vcProp].video.description = 'banana';

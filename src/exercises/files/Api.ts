@@ -13,7 +13,7 @@ export const Api = new Vcs(new TsBuilder('Api'))
     src: "/assets/images/kitten1.jpg",
     description: "todo",
     views: 100,
-    likes: 20,
+    likes: 49329,
     date: '2016-11-25'
   },
   {
@@ -38,6 +38,22 @@ export const Api = new Vcs(new TsBuilder('Api'))
     views: 100,
     likes: 20,
     date: '2016-09-02'
+  },
+  {
+    title: "Serouis cat",
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20,
+    date: '2016-08-02'
+  },
+  {
+    title: "Serouis cat",
+    src: "/assets/images/kitten2.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20,
+    date: '2016-08-02'
   },
   {
     title: "Serouis cat",

@@ -25,6 +25,11 @@ export const AppComponent = new Vcs(new TsBuilder('AppComponent'))
   .commit('withTitle', (builder: TsBuilder) => {
     (builder.find(TsClass) as TsClass).addProp(new TsVarDec('title'), new TsString('CatTube'))
   })
+  .commit('withTemplate', (builder: TsBuilder) => {
+    const decorator = builder.find(TsDecorator) as TsDecorator;
+    decorator.setValue('templateUrl', './app.html');
+    decorator.removeValue('template');
+  })
   .commit('withVideos', (builder: TsBuilder) => {
     (builder.find(TsClass) as TsClass).addProp(new TsVarDec('videos'), new TsArray());
     (builder.find(TsClass) as TsClass).addMethod(new TsMethod('search',

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'my-toggle-panel',
-  templateUrl: 'togglepanel.html'
+  templateUrl: './togglePanel.html'
 })
 export class TogglePanelComponent {
   showDescription = true;

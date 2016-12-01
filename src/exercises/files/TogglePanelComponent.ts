@@ -20,7 +20,7 @@ export const TogglePanelComponent = new Vcs(new TsBuilder('TogglePanelComponent'
 
 @Component({
   selector: 'my-toggle-panel',
-  template` + /*Angular is being smart at some point and wrap the value in require*/`Url:  'togglepanel.html'
+  template` + /*Angular is being smart at some point and wrap the value in require*/`Url:  'togglePanel.html'
 })
 export class TogglePanelComponent {`));
     builder.add(new TsPlainCode('', 'solution'));

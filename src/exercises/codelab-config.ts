@@ -58,6 +58,16 @@ function htmlFile(file: string, extensions?) {
   }, extensions)
 }
 
+
+function evaled(file) {
+  return Object.assign(file, {
+    after: `
+    export function evalJs( js ){
+      return eval(js);
+    }
+`
+  });
+}
 function tsFile(file, extensions?) {
   return Object.assign({
     filename: `${file}.ts`, type: 'ts', after: `
@@ -100,6 +110,7 @@ const files: {
     initial: FileConfig,
     solved: FileConfig,
     withTitle: FileConfig,
+    withTemplate: FileConfig,
     withVideos: FileConfig,
     file: JsFileConfig
     withNgInit: FileConfig
@@ -120,12 +131,14 @@ const files: {
     withThumbsComponent: JsFileConfig,
     withTogglePanelInjected: JsFileConfig,
     withTogglePanel: JsFileConfig,
+    withContextComponent: JsFileConfig,
     file: JsFileConfig,
   },
   bootstrap: {
     initial: FileConfig,
     solved: FileConfig,
-    file: JsFileConfig
+    file: JsFileConfig,
+    withTemplateLoader: FileConfig
   },
   thumbsHtml: {
     initial: FileConfig,
@@ -286,7 +299,7 @@ export const codelabConfig: CodelabConfig = {
             name: 'Intro',
             path: '1-bootstrap/intro',
             description: `
-          <h1>First Angular 2 app!</h1>
+          <h1>Let's build our first Angular 2 app!</h1>
           <p>This is how it's going to look like</p>
           
           <div class = "inBrowser">
@@ -313,18 +326,25 @@ export const codelabConfig: CodelabConfig = {
             <p>For this exercise we'll create module and bootstrap everything.
              Just make sure the component looks right.</p>
 `,
+            solutions: [
+              files.appComponent.solved
+            ],
             fileTemplates: [
-              files.appComponent.initial,
+              evaled(files.appComponent.initial),
               ...hidden(
                 files.appModule.solved,
                 files.bootstrap.solved
-              )
+              ),
+              testFile()
             ]
           }, {
             name: 'Create a module',
             path: '1-bootstrap/1-module',
             description: `
         Now we got the component, but we need to wrap it in a module. For this exercise we'll bootstrap the module for you.`,
+            solutions: [
+              files.appModule.solved
+            ],
             fileTemplates: [
               files.appModule.initial,
               ...justForReference(
@@ -332,7 +352,8 @@ export const codelabConfig: CodelabConfig = {
               ),
               ...hidden(
                 files.bootstrap.solved
-              )
+              ),
+              testFile()
             ]
           },
           {
@@ -340,10 +361,11 @@ export const codelabConfig: CodelabConfig = {
             path: '1-bootstrap/2-bootstrap',
             description: `
           <p>Now we got module and component ready, let's bootstrap it!</p>
-          <p>There's no really simple way to test it, so just make sure your app looks like this:</p>
-          <h1>Hello CatTube!</h1>`,
+          <p>There's no really simple way to test it, so just make sure your app displays: 'Hello CatTube!'</p>`,
+            solutions: [
+              files.bootstrap.solved
+            ],
             fileTemplates: [
-
               files.bootstrap.initial,
               ...justForReference(
                 files.appComponent.solved,
@@ -368,6 +390,37 @@ export const codelabConfig: CodelabConfig = {
         selectedExerciseIndex: 0,
         exercises: [
           {
+            name: 'Templates',
+            path: '1-bootstrap/intro',
+            description: `
+          <h1>Let's work with angular templates</h1>
+          <p>As a result we'll see our cats displayed.</p>
+          
+          <div class = "inBrowser">
+            <div class="smaller">
+              <my-app><div>
+                <h1>CatTube</h1>              
+                <button>Search!</button>
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">
+                </div><div>
+                  <h2>Kitten on the tree</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>Serouis cat</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div>
+              </div></my-app>
+            </div>
+          </div>
+        
+        `,
+            fileTemplates: [],
+            tests: [],
+            messageNext: `I'm a ready, let's start!`
+          },
+          {
             name: 'Set up the page',
             description: `Let's setup a header, a search box, and a search button for our component!`,
             path: '2-templates/0-header-input',
@@ -377,9 +430,9 @@ export const codelabConfig: CodelabConfig = {
             fileTemplates: [
               files.appHtml.initial,
               ...justForReference(
-                files.appComponent.withTitle,
+                files.appComponent.withTemplate,
                 files.appModule.solved,
-                files.bootstrap.solved,
+                files.bootstrap.withTemplateLoader,
               ),
               testFile(),
             ],
@@ -393,11 +446,11 @@ export const codelabConfig: CodelabConfig = {
               files.appComponent.withVideos,
             ],
             fileTemplates: [
-              files.appHtml.withSearchBox,
               files.appComponent.withTitle,
+              files.appHtml.withSearchBox,
               ...justForReference(
                 files.appModule.solved,
-                files.bootstrap.solved,
+                files.bootstrap.withTemplateLoader,
               ),
               testFile()
             ],
@@ -415,7 +468,7 @@ export const codelabConfig: CodelabConfig = {
               files.appComponent.withVideos,
               ...justForReference(
                 files.appModule.solved,
-                files.bootstrap.solved,
+                files.bootstrap.withTemplateLoader,
               ),
               testFile()
             ],
@@ -427,9 +480,52 @@ export const codelabConfig: CodelabConfig = {
         name: 'Dependency Injection',
         selectedExerciseIndex: 0,
         exercises: [{
+          name: 'Templates',
+          path: '1-bootstrap/intro',
+          description: `
+          <h1>Let's inject a service.</h1>
+          <p>Using a service is way better than hardcoded data. As a result we get even more cats.</p>
+          
+          <div class = "inBrowser">
+            <div class="smaller">
+              <my-app><div>
+                <h1>CatTube</h1>
+                <input placeholder="video" type="text">
+                <button>Search!</button>
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">
+                </div><div>
+                  <h2>Kitten on the tree</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>More kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>Another kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>Serouis cat</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>Serouis cat</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div><div>
+                  <h2>Serouis cat</h2>
+                  <img ng-reflect-src="/assets/images/kitten2.jpg" src="/assets/images/kitten2.jpg">
+                </div>
+              </div></my-app>
+            </div>
+          </div>
+        
+        `,
+          fileTemplates: [],
+          tests: [],
+          messageNext: `I'm a ready, let's start!`
+        }, {
           name: 'Service injection',
           description: `
-          Now we're fetching the videos using a service instead of having them hardcoded.          
+          Now we're fetching the videos using a service instead of having them hardcoded.
         `,
           path: '3-dependency-injection',
           solutions: [
@@ -445,7 +541,7 @@ export const codelabConfig: CodelabConfig = {
               files.appHtml.withAllVideos,
               files.videoItem.initial,
               files.api.initial,
-              files.bootstrap.solved
+              files.bootstrap.withTemplateLoader,
             ),
             testFile()
           ],
@@ -457,12 +553,38 @@ export const codelabConfig: CodelabConfig = {
         selectedExerciseIndex: 0,
         exercises: [
           {
-            // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
+            name: 'Intro',
+            path: '1-bootstrap/intro',
+            description: `
+          <h1>Let's create a Video component!</h1>
+          <p>Now instead of having the video html in the app component, we're going to have
+            a separate component for the video info.</p>
+          <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
+              
+            <div class = "inBrowser">
+              <div class="smaller">   
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">
+                  <div>Date 2016-11-25</div>
+                  <div>Views 100</div>
+                  <div>Likes 20</div>
+                  <div>Description todo</div>
+                </div>
+              </div>
+            </div>          
+        `,
+            fileTemplates: [],
+            tests: [],
+            messageNext: `I'm a ready, let's start!`
+          },
+          {
+
             name: 'Create VideoComponent',
             description: `<p>Now instead of having the video html in the app component, we're going to have 
             a separate component for the video info.</p>
             <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
-  `,
+            `,
             path: '4-component-tree/0-add-video-component',
             solutions: [
               files.videoHtml.withInfo,
@@ -472,14 +594,14 @@ export const codelabConfig: CodelabConfig = {
             fileTemplates: [
               files.videoComponent.initial,
               files.videoHtml.initial,
-              files.appModule.withVideoComponentInjected,
               ...justForReference(
+                files.appModule.withVideoComponentInjected,
                 files.videoService.injectable,
                 files.appHtml.withAllVideos,
                 files.appComponent.withVideoService,
                 files.videoItem.initial,
                 files.api.initial,
-                files.bootstrap.solved
+                files.bootstrap.withTemplateLoader,
               ),
               testFile()
             ],
@@ -503,7 +625,7 @@ export const codelabConfig: CodelabConfig = {
                 files.videoService.injectable,
                 files.videoItem.initial,
                 files.api.initial,
-                files.bootstrap.solved
+                files.bootstrap.withTemplateLoader
               ),
               testFile()
             ],
@@ -514,7 +636,33 @@ export const codelabConfig: CodelabConfig = {
         selectedExerciseIndex: 0,
         exercises: [
           {
-            name: 'Create VideoComponent',
+            name: 'Intro',
+            path: '1-bootstrap/intro',
+            description: `
+          <h1>Let's try  using custom events!</h1>
+          <p>We'll add a thumbs component which will emit 'onThumbs' event.  </p>
+          <p>Then in the video component we're going to listed to the event and change the amount of like accordingly.</p>
+              
+            <div class = "inBrowser">
+              <div class="smaller">   
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">
+                  <div>Date 2016-11-25</div>
+                  <div>Views 100</div>
+                  <div>Likes 20</div>
+                  <div>Description todo</div>
+                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                </div>
+              </div>
+            </div>          
+        `,
+            fileTemplates: [],
+            tests: [],
+            messageNext: `I'm a ready, let's start!`
+          },
+          {
+            name: 'Create ThumbsComponent',
             description: `<p>Let's try some custom events now. </p>
             <p>We'll create a thumbs component which will send thumbsUp/thumbsDown event </p>
   `,
@@ -529,14 +677,19 @@ export const codelabConfig: CodelabConfig = {
               ...justForReference(
                 files.api.initial,
                 files.appModule.thumbs,
-                files.bootstrap.solved
+                files.bootstrap.withTemplateLoader,
               ),
-              testFile()
+              testFile(),
+              ...hidden({
+                  filename: 'index.html',
+                  code: '<my-thumbs></my-thumbs>'
+                },
+              )
             ],
             tests: []
           },
           {
-            name: 'Use VideoComponent',
+            name: 'Use ThumbsComponent',
             description: `Use VideoComponent in the app.`,
             path: '4-z-custom-events/1-use-thumb-component',
             solutions: [
@@ -556,7 +709,7 @@ export const codelabConfig: CodelabConfig = {
                 files.videoService.injectable,
                 files.videoItem.initial,
                 files.api.initial,
-//                files.bootstrap.solved,
+                files.bootstrap.withTemplateLoader,
               ),
               testFile()
             ],
@@ -566,6 +719,48 @@ export const codelabConfig: CodelabConfig = {
         name: 'Content projection',
         selectedExerciseIndex: 0,
         exercises: [
+
+          {
+            name: 'Intro',
+            path: '1-bootstrap/intro',
+            description: `
+          <h1>Let's project some content!</h1>
+          <p>In this milestone we'll create a component called 'TogglePanel'</p>
+          <p>It will actually take 2 divs, but only display one at a time. </p>
+              
+            <div class = "inBrowser">
+              <div class="smaller">   
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">            
+                  <div>This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)</div>
+                  <div>[Show meta]</div>
+                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                </div>
+              </div>
+            </div>               
+              
+            <p>So when you click the 'Show meta button', description is gone, likes and views are displayed instead.</p>
+              
+            <div class = "inBrowser">
+              <div class="smaller">   
+                <div>
+                  <h2>Cute kitten</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">            
+                  <div>Likes: 1000</div>
+                  <div>Views: 1000000</div>
+                  <div>[Show description]</div>
+                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                </div>
+              </div>
+            </div>          
+        `,
+            fileTemplates: [],
+            tests: [],
+            messageNext: `I'm a ready, let's start!`
+
+
+          },
           {
             // TODO: See if we can maybe bootstrap only video component, not the whole app for this one.
             name: 'Add TogglePanelComponent',
@@ -582,8 +777,9 @@ export const codelabConfig: CodelabConfig = {
               files.appModule.wrapper,
               {
                 filename: 'index.html',
-                code: '<my-app></my-app>'
+                code: '<my-wrapper></my-wrapper>'
               },
+              files.bootstrap.withTemplateLoader,
               testFile()
             ],
             tests: []
@@ -597,10 +793,10 @@ export const codelabConfig: CodelabConfig = {
               files.videoHtml.withTogglePanel
             ],
             fileTemplates: [
-              files.videoHtml.withInfo,
-              files.videoComponent.withInput,
               files.appModule.withTogglePanelInjected,
+              files.videoHtml.withInfo,
               ...justForReference(
+                files.videoComponent.withInput,
                 files.togglePanelHtml.solved,
                 files.togglePanelComponent.solved,
                 files.appHtml.withVideoComponent,
@@ -610,7 +806,7 @@ export const codelabConfig: CodelabConfig = {
                 files.api.initial,
                 files.thumbsHtml.solved,
                 files.thumbsComponent.solved,
-                // files.bootstrap.solved
+                files.bootstrap.withTemplateLoader,
               ),
               testFile()
             ],
@@ -620,7 +816,46 @@ export const codelabConfig: CodelabConfig = {
       {
         name: 'Parent-container',
         selectedExerciseIndex: 0,
-        exercises: [
+        exercises: [{
+          name: 'Intro',
+          path: '1-bootstrap/intro',
+          description: `
+          <h1>Let's inject parent component!</h1>
+          <p>In this milestone we'll create create a ContextAdComponent. </p>
+          <p>This component will not use inputs. Instead it will require parent (Video) component and directly look at it's properties. </p>
+          <p>It will display different text depending of if there's a word 'music' in the description. </p>
+              
+            <div class = "inBrowser">
+              <div class="smaller">   
+                <div>
+                  <h2>Cute kitten dancing</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">            
+                  <div>Decription: music</div>
+                  <div>[Show meta]</div>
+                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <div>Context ad: Turn up your speakers</div>                  
+                </div>
+                <div>
+                  <h2>Cute kitten sleeping</h2>
+                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">            
+                  <div>Decription: sleeping</div>
+                  <div>[Show meta]</div>
+                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <div>Context ad: Check out our web site.</div>                  
+                </div>
+              </div>
+            </div>          
+                 
+             <p>Note, we are actually calling it ContextComponent, because when it was called ContextAdComponent, adblock blocked it, and I spent 2 hours debugging. </p>
+              
+                   
+        `,
+          fileTemplates: [],
+          tests: [],
+          messageNext: `I'm a ready, let's start!`
+
+
+        },
           {
             name: 'Inject parent component',
             description: `<p>Create a Context(Ad)Component</p>
@@ -632,16 +867,18 @@ export const codelabConfig: CodelabConfig = {
             ],
             fileTemplates: [
               files.contextComponent.initial,
-              files.contextService.initial,
+
               {
                 filename: 'context.html',
                 moduleName: 'context',
-                code: '{{description}}'
+                code: '{{text}}'
               },
               ...justForReference(
+                files.contextService.initial,
+                files.appModule.withContextComponent,
                 files.videoHtml.withInfo,
                 files.videoComponent.withInput,
-                files.appModule.withTogglePanelInjected,
+
                 files.togglePanelHtml.solved,
                 files.togglePanelComponent.solved,
                 files.appHtml.withVideoComponent,
@@ -679,81 +916,82 @@ export const codelabConfig: CodelabConfig = {
             tests: []
           }]
       },
-      {
-        name: 'Pipes',
-        selectedExerciseIndex: 0,
-        exercises: [{
-          name: 'Create a pipe',
-          description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
-          path: '7-pipes/0-create-pipe',
-          fileTemplates: [
-            tsFile('FuzzyPipe', {code: ``}),
-            testFile()
-          ],
-          tests: []
-        }, {
-          name: 'Use the pipe',
-          description: 'Now include the app in the module and use in the app.',
-          path: '7-pipes/1-use-pipe',
-          fileTemplates: [
-            htmlFile('video', {path: '6-children/solution'}),
-            tsFile('AppModule'),
-            tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
-            testFile(),
-            ...hidden(
-              tsFile('ContextComponent', {path: '6-children'}),
-              htmlFile('context', {path: '6-children'}),
-              tsFile('ContextService', {path: '6-children'}),
-              tsFile('VideoComponent', {path: '6-children'}),
-              htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-              htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-              sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-              tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
-              sharedAppBootstrap({hidden: true}),
-              sharedVideoInterface({hidden: true}),
-              sharedTsFile('VideoService', {hidden: true}),
-              sharedApiFile({hidden: true})
-            ),
-            testFile(),
-          ],
-          tests: []
-        }]
-      },
-      {
-        name: 'Tests',
-        selectedExerciseIndex: 0,
-        exercises: [{
-          name: 'Sample tests',
-          description: `
-        <p>In this milestone instead of changing the code to pass the test
-            you'll have to change the test to pass the code. </p>
+      /*
+       {
+       name: 'Pipes',
+       selectedExerciseIndex: 0,
+       exercises: [{
+       name: 'Create a pipe',
+       description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
+       path: '7-pipes/0-create-pipe',
+       fileTemplates: [
+       tsFile('FuzzyPipe', {code: ``}),
+       testFile()
+       ],
+       tests: []
+       }, {
+       name: 'Use the pipe',
+       description: 'Now include the app in the module and use in the app.',
+       path: '7-pipes/1-use-pipe',
+       fileTemplates: [
+       htmlFile('video', {path: '6-children/solution'}),
+       tsFile('AppModule'),
+       tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
+       testFile(),
+       ...hidden(
+       tsFile('ContextComponent', {path: '6-children'}),
+       htmlFile('context', {path: '6-children'}),
+       tsFile('ContextService', {path: '6-children'}),
+       tsFile('VideoComponent', {path: '6-children'}),
+       htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+       htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+       sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+       tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
+       sharedAppBootstrap({hidden: true}),
+       sharedVideoInterface({hidden: true}),
+       sharedTsFile('VideoService', {hidden: true}),
+       sharedApiFile({hidden: true})
+       ),
+       testFile(),
+       ],
+       tests: []
+       }]
+       },
+       {
+       name: 'Tests',
+       selectedExerciseIndex: 0,
+       exercises: [{
+       name: 'Sample tests',
+       description: `
+       <p>In this milestone instead of changing the code to pass the test
+       you'll have to change the test to pass the code. </p>
 
-        <p>This milestone is experimental and temporarily uses 'mocha' and 'chai' instead of jasmine.</p>
-`,
-          path: '8-tests/0-test-component',
-          fileTemplates: [
-            Object.assign(testFile(), {hidden: false}),
-            htmlFile('video', {path: '6-children/solution'}),
-            tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
-            testFile(),
-            ...hidden(
-              tsFile('ContextComponent', {path: '6-children'}),
-              htmlFile('context', {path: '6-children'}),
-              tsFile('ContextService', {path: '6-children'}),
-              tsFile('VideoComponent', {path: '6-children'}),
-              htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-              htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-              tsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-              tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
-              sharedAppBootstrap({hidden: true}),
-              sharedVideoInterface({hidden: true}),
-              sharedTsFile('VideoService', {hidden: true}),
-              sharedApiFile({hidden: true})
-            )
-          ],
-          tests: []
-        }]
-      },
+       <p>This milestone is experimental and temporarily uses 'mocha' and 'chai' instead of jasmine.</p>
+       `,
+       path: '8-tests/0-test-component',
+       fileTemplates: [
+       Object.assign(testFile(), {hidden: false}),
+       htmlFile('video', {path: '6-children/solution'}),
+       tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
+       testFile(),
+       ...hidden(
+       tsFile('ContextComponent', {path: '6-children'}),
+       htmlFile('context', {path: '6-children'}),
+       tsFile('ContextService', {path: '6-children'}),
+       tsFile('VideoComponent', {path: '6-children'}),
+       htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
+       htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+       tsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
+       tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
+       sharedAppBootstrap({hidden: true}),
+       sharedVideoInterface({hidden: true}),
+       sharedTsFile('VideoService', {hidden: true}),
+       sharedApiFile({hidden: true})
+       )
+       ],
+       tests: []
+       }]
+       },*/
       {
         name: 'Survey',
         selectedExerciseIndex: 0,

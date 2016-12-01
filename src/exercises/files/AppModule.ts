@@ -9,6 +9,7 @@ import {VideoComponent} from "./VideoComponent";
 import {ThumbsComponent} from "./ThumbsComponent";
 import {WrapperComponent} from "./WrapperComponent";
 import {TogglePanelComponent} from "./TogglePanelComponent";
+import {ContextComponent} from "./ContextComponent";
 
 export const AppModule = new Vcs(new TsBuilder('AppModule'))
   .commit('initial', (builder: TsBuilder) => {
@@ -87,5 +88,10 @@ export const AppModule = new Vcs(new TsBuilder('AppModule'))
   .commit('withTogglePanel', (builder: TsBuilder) => {
     const decorator = builder.find(TsDecorator) as TsDecorator;
     decorator.pushValue('declarations', 'TogglePanelComponent');
+  })
+  .commit('withContextComponent', (builder: TsBuilder) => {
+    builder.addImport(ContextComponent.file);
+    const decorator = builder.find(TsDecorator) as TsDecorator;
+    decorator.pushValue('declarations', 'ContextComponent');
   })
   .build();

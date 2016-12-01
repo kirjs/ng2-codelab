@@ -43,7 +43,11 @@ export class TsDecorator implements TsStatement {
     }).join(',\n  ');
   }
 
-  removeValue(key: string, value: string) {
+  removeValue(key: string, value?: string) {
+    if (!value) {
+      delete this.props[key];
+      return;
+    }
     this.props[key] = this.props[key].filter(prop => prop !== value);
   }
 }

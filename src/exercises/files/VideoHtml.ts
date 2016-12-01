@@ -14,6 +14,7 @@ export const VideoHtml = new Vcs(new HtmlBuilder('video'))
       .html(new ClHtmlTextNode(''))
       .append(new ClHtmlTextNode('<h2>{{video.title}}</h2>', 'header'))
       .append(new ClHtmlTextNode('<img [src]="video.src">', 'image'))
+      .append(new ClHtmlTextNode('<div>Date {{video.date}}</div>', 'date'))
       .append(new ClHtmlTextNode(
         `<div>Views {{video.views}}</div>
 <div>Likes {{video.likes}}</div>

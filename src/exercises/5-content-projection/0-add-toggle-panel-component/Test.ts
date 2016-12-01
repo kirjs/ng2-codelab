@@ -37,21 +37,21 @@ describe('Content projection', () => {
     chai.expect(fixture.componentInstance[prop], `Property "${prop}" must have a default value`).is.not.undefined;
   });
 
-  it(`togglepanel.html: Use content projection to only display the content with the selector .description by default.`, () => {
+  it(`togglePanel.html: Use content projection to only display the content with the selector .description by default.`, () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null
     chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null
   });
 
-  it(`togglepanel.html: Add a button to show extra information`, () => {
+  it(`togglePanel.html: Add a button to show extra information`, () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     let buttons = fixture.nativeElement.querySelectorAll('button');
     chai.expect(buttons.length, `Should show exactly one button`).to.equals(1);
   });
 
-  it(`togglepanel.html: When the button is pressed, switch the flag and only display the content with the '.extra' selector.`, () => {
+  it(`togglePanel.html: When the button is pressed, switch the flag and only display the content with the '.extra' selector.`, () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     let button = fixture.nativeElement.querySelector('button');
@@ -61,7 +61,7 @@ describe('Content projection', () => {
     chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be displayed`).not.null
   });
 
-  it(`togglepanel.html: Add a button to come back to the description`, () => {
+  it(`togglePanel.html: Add a button to come back to the description`, () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     fixture.nativeElement.querySelector('button').click();

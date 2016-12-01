@@ -33,7 +33,7 @@ export const VideoComponent = new Vcs(new TsBuilder('VideoComponent'))
       this.video.likes++;
     }
     if(thumbs == Thumbs.DOWN){
-      this.video.likes++;
+      this.video.likes--;
     }`)))
   })
   .build();
