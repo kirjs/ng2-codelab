@@ -29,7 +29,7 @@ export enum Thumbs {
   }).commit('solved', (builder: TsBuilder) => {
     const decorator = new TsDecorator('Component');
     decorator.setValue('selector', 'my-thumbs');
-    decorator.setValue('templateUrl', 'thumbs.html');
+    decorator.setValue('templateUrl', './thumbs.html');
 
     builder.addBefore(decorator, TsClass);
 

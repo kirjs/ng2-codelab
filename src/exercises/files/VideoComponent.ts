@@ -20,7 +20,7 @@ export const VideoComponent = new Vcs(new TsBuilder('VideoComponent'))
   }).commit('solved', (builder: TsBuilder) => {
     const decorator = new TsDecorator('Component');
     decorator.setValue('selector', 'my-video');
-    decorator.setValue('templateUrl', 'video.html');
+    decorator.setValue('templateUrl', './video.html');
     builder.addBefore(decorator, TsClass);
   })
   .commit('withInput', (builder: TsBuilder) => {

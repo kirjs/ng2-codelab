@@ -15,7 +15,7 @@ export class ReducersService {
 
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
 
-    let localState;// = JSON.parse(localStorage.getItem('state'));
+    let localState = JSON.parse(localStorage.getItem('state'));
     return localState ? localState : state;
   }
 
@@ -25,7 +25,7 @@ export class ReducersService {
   }
 
   [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
-    state.auth = data
+    state.auth = data;
     return state;
   }
 

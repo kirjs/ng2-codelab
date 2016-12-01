@@ -277,7 +277,12 @@ export const codelabConfig: CodelabConfig = {
             name: 'Typescript',
             path: '0-intro',
             description: `
-          Let's create our first typescript module. 
+          <p>Let's create our first TypeScript module.</p>
+          <p>It will be a class called "Meetup".</p> 
+          <p>It will take a list of guests, and will have a getRsvp method, which will only return people who're coming.</p> 
+          <p>As you can see in the main.ts file we have 4 people signed up, but Charles Darwin had a last minute change of plans, 
+          so only 3 people should be returned.</p> 
+           
         `,
             solutions: [
               files.meetup.solved
