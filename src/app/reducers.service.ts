@@ -21,7 +21,9 @@ export class ReducersService {
 
   [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
 
-    return !state.autorun
+    state.autorun = !state.autorun;
+    
+    return state;
   }  
 
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
