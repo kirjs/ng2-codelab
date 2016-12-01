@@ -9,7 +9,7 @@ import {CodelabConfig} from "../codelab-config";
   templateUrl: './autoruncontrol.component.html',
   styleUrls: ['./autoruncontrol.component.css']
 })
-export class AutoRunControlComponent {
+export class AutorunControlComponent {
 
 	config: CodelabConfig;
 
