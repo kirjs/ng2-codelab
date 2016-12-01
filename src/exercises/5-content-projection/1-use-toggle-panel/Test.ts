@@ -1,23 +1,25 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {AppComponent} from '../../4-component-tree/0-add-video-component/AppComponent';
-import {appCode, videoCode, togglepanelCode} from '../../shared/code';
-import {AppModule} from "./solution/AppModule";
+import {AppComponent} from './AppComponent';
+import {appCode, videoCode, togglePanelCode, thumbsCode} from './code';
+import {AppModule} from "./AppModule";
 import {VideoComponent} from "./VideoComponent";
-import {VideoService} from "../../shared/VideoService";
-import {TogglePanelComponent} from "../0-add-toggle-panel-component/TogglePanelComponent";
-import {Api} from '../../shared/Api'
+import {VideoService} from "./VideoService";
+import {TogglePanelComponent} from "./TogglePanelComponent";
+import {ThumbsComponent} from "./ThumbsComponent";
+import {Api} from './Api'
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
     providers: [VideoService],
-    declarations: [AppComponent, VideoComponent, TogglePanelComponent]
+    declarations: [AppComponent, VideoComponent, TogglePanelComponent, ThumbsComponent]
   });
   TestBed.overrideComponent(AppComponent, {set: {template: appCode}});
+  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbsCode}});
   TestBed.overrideComponent(VideoComponent, {set: {template: videoCode}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglepanelCode}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanelCode}});
   TestBed.compileComponents();
 });
 

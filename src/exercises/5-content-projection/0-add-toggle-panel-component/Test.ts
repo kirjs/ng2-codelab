@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import 'initTestBed';
-import {togglepanelCode, wrapperCode} from '../../shared/code'
-import {TogglePanelComponent} from "./solution/TogglePanelComponent";
+import {togglePanelCode, wrapperCode} from './code'
+import {TogglePanelComponent} from "./TogglePanelComponent";
 import {WrapperComponent} from "./WrapperComponent";
 
 beforeEach(() => {
@@ -11,12 +11,14 @@ beforeEach(() => {
     providers: [],
     declarations: [TogglePanelComponent, WrapperComponent]
   });
+
   TestBed.overrideComponent(TogglePanelComponent, {
     set: {
-      template: togglepanelCode
+      template: togglePanelCode
     }
   });
   TestBed.compileComponents();
+  console.log('be');
 });
 
 describe('Content projection', () => {

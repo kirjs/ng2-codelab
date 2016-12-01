@@ -11,6 +11,11 @@ export interface FileConfig {
   code?: string;
 
   /**
+   * Source code of the file.
+   */
+  solution?: string;
+
+  /**
    * TS code to run before running the file.
    */
   before?: string;

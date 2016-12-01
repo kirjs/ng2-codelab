@@ -36,22 +36,26 @@ export class EditorComponent implements AfterViewInit {
   @Output() onCodeChange = new EventEmitter();
   editSub: Subject<String>;
   height = 0;
-  calcHeight(lines){
-    return lines * 16;
+  code: string;
+
+  calcHeight(lines) {
+    return lines * 17;
   }
 
 
   constructor(private http: Http, private applicationRef: ApplicationRef) {
+
     this.editSub = new Subject<String>();
     this.editSub.debounceTime(1000).subscribe((value) => {
       this.onCodeChange.emit(value);
     });
   }
-
-  ngAfterContentInit() {
+  loadCode(code: string){
+    this._editor.getModel().setValue(code);
   }
 
   ngAfterViewInit() {
+    this.code = this.file.code;
     const onGotAmdLoader = () => {
       (<any>window).require.config({paths: {'vs': 'assets/monaco/vs'}});
       (<any>window).require(['vs/editor/editor.main'], () => {
@@ -125,25 +129,26 @@ export class EditorComponent implements AfterViewInit {
     this._editor.getModel().onDidChangeContent(() => {
       this.updateValue(this._editor.getModel().getValue());
     });
-    // TODO(kirjs): Actually use it.
+
     const height = Math.max(100, this.calcHeight(this.file.code.split('\n').length));
-    this._editor.layout({height: 300, width: 700});
+    this._editor.layout({height: height + 20, width: 700});
   }
 
 
   updateValue(value: string) {
+    this.code = value;
     /*
-    TODO(resize):
+     TODO(resize):
      const height = this.calcHeight(value.split('\n').length );
 
-    if(this.height != height ){
-      this.height = height;
-      this.editorContent.nativeElement.style.height = height + 'px';
-      this.editorContent.nativeElement.parentElement.style.height = height + 'px';
-      this.editorContent.nativeElement.parentElement.parentElement.style.height = height + 'px';
-      this._editor.layout();
-    }
-*/
+     if(this.height != height ){
+     this.height = height;
+     this.editorContent.nativeElement.style.height = height + 'px';
+     this.editorContent.nativeElement.parentElement.style.height = height + 'px';
+     this.editorContent.nativeElement.parentElement.parentElement.style.height = height + 'px';
+     this._editor.layout();
+     }
+     */
     this.editSub.next(value)
   }
 }

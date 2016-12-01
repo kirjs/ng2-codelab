@@ -4,7 +4,7 @@ import {Observable, BehaviorSubject} from "rxjs/Rx";
 import {CodelabConfig} from "./codelab-config";
 import {ActionInit} from "./action-init";
 import {Action} from "./action";
-import {codelabConfig} from "./codelab/codelab-config";
+import {codelabConfig} from "../exercises/codelab-config";
 import {ActionTypes} from "./action-types.enum";
 import {ExerciseConfig} from "./exercise-config";
 import {MilestoneConfig} from "./milestone-config";
@@ -117,5 +117,9 @@ export class StateService {
 
   toggleFile(file: FileConfig) {
     this.dispatchAction(ActionTypes.TOGGLE_FILE, file);
+  }
+
+  loadSolution(file: FileConfig) {
+    this.dispatchAction(ActionTypes.LOAD_SOLUTION, file);
   }
 }

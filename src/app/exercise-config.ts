@@ -6,6 +6,7 @@ export interface ExerciseConfig {
   path: string,
   description: string,
   fileTemplates: Array<FileConfig>
+  solutions?: Array<FileConfig>
   editedFiles?: Array<FileConfig>;
   tests?: Array<TestInfo>;
   messageNext?: string

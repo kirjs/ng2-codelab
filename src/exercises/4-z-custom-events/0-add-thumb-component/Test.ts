@@ -1,10 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {thumbsCode} from '../../shared/code';
-import {Api} from '../../shared/Api'
+import {thumbsCode} from './code';
+import {Api} from './Api'
 import {ThumbsComponent, Thumbs} from "./ThumbsComponent";
 const thumbs = Api.fetch('')[0];
-
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({

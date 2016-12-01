@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {codelabConfig} from "./codelab-config";
+import {codelabConfig} from "../../exercises/codelab-config";
 import {MilestoneConfig} from "../milestone-config";
 import {CodelabConfig} from "../codelab-config";
 import {StateService} from "../state.service";

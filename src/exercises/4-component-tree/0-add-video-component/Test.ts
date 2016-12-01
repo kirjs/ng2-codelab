@@ -1,23 +1,27 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {VideoService} from '../../shared/VideoService';
-import {videoCode} from '../../shared/code';
-import {VideoComponent} from "./solution/VideoComponent";
-import {Api} from '../../shared/Api'
+import {VideoService} from './VideoService';
+import {videoCode} from './code';
+import {VideoComponent} from "./VideoComponent";
+import {Api} from './Api'
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
-  TestBed.resetTestingModule();
-  TestBed.configureTestingModule({
-    providers: [VideoService],
-    declarations: [VideoComponent]
-  });
-  TestBed.overrideComponent(VideoComponent, {
-    set: {
-      template: videoCode
-    }
-  });
-  TestBed.compileComponents();
+  try {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [VideoService],
+      declarations: [VideoComponent]
+    });
+    TestBed.overrideComponent(VideoComponent, {
+      set: {
+        template: videoCode
+      }
+    });
+    TestBed.compileComponents();
+  } catch (e) {
+    // whatever
+  }
 });
 
 describe('Component tree', () => {
@@ -44,7 +48,7 @@ describe('Component tree', () => {
 
   describe('Make sure things are displayed properly', () => {
     let fixture;
-    beforeEach(()=>{
+    beforeEach(() => {
       fixture = TestBed.createComponent(VideoComponent);
       fixture.componentInstance.video = video;
       fixture.detectChanges();

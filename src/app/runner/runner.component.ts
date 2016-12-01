@@ -90,7 +90,6 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               setters: [],
               execute: function () {
                 files.forEach((file) => {
-                  console.log(file.moduleName + 'Code');
                   exports(file.moduleName + 'Code', file.code);
                 });
               }
@@ -104,7 +103,10 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
           files.filter(file => file.type === 'ts').map((file) => {
             // Update module names
             let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
-              code = code.replace(/__SOLUTION__/g, '');
+              if(!code || !code.replace){
+                console.log(file);
+                debugger
+              }
               code = code.replace('./' + moduleName, './' + moduleName + index);
               return code;
             }, file.code);
@@ -117,7 +119,10 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               code = ';\n' + code + file.after;
             }
 
+
+
             const moduleName = file.moduleName + index;
+
             // TODO(kirjs): Add source maps.
             return ts.transpileModule(code, {
               compilerOptions: {
@@ -135,6 +140,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               reportDiagnostics: true
             });
           }).map((compiled) => {
+
             runJs(compiled.outputText);
           });
 
@@ -206,6 +212,10 @@ export class RunnerComponent implements AfterViewInit {
 
   }
 
+  ngOnChanges(){
+
+    this.runCode()
+  }
   ngAfterViewInit() {
     this.state.update
       .map(selectedExercise)

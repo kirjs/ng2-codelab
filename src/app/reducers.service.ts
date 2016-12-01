@@ -6,7 +6,7 @@ import {FileConfig} from "./file-config";
 import {TestInfo} from "./test-info";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs/Rx";
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {ExerciseService} from "./exercise.service";
 
 
@@ -23,10 +23,12 @@ export class ReducersService {
     state.page = 'feedback';
     return state;
   }
+
   [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
     state.auth = data
     return state;
   }
+
   [ActionTypes.SIMULATE_STATE](state: CodelabConfig, {data}: {data: CodelabConfig}) {
     data.auth = state.auth;
     return data;
@@ -52,6 +54,21 @@ export class ReducersService {
       if (file === data) {
         file.collapsed = !file.collapsed;
       }
+    });
+
+    return state;
+  }
+
+  [ActionTypes.LOAD_SOLUTION](state: CodelabConfig, {data}: {data: FileConfig}) {
+    const milestone = state.milestones[state.selectedMilestoneIndex];
+    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+
+    exercise.editedFiles = exercise.editedFiles.map((file) => {
+      if (file === data) {
+        file = Object.assign(file, {code: file.solution});
+      }
+
+      return file;
     });
 
     return state;
@@ -104,40 +121,45 @@ export class ReducersService {
 
   [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
     let items = this.angularFire.database.list('/feedback');
-    items.push({comment:feedback.data.comment, state:JSON.parse(JSON.stringify(state)), name: feedback.data.username});
+    items.push({
+      comment: feedback.data.comment,
+      state: JSON.parse(JSON.stringify(state)),
+      name: feedback.data.username
+    });
     state.user = feedback.data.username;
     return state;
   }
 
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
+    state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
     if (exerciseConfig.editedFiles) {
-      state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
       return state;
     }
 
-    exerciseConfig.editedFiles = [];
-    const files = exerciseConfig
-      .fileTemplates.map(file => `${file.path || exerciseConfig.path}/${file.filename}`);
 
+    exerciseConfig.editedFiles = exerciseConfig
+      .fileTemplates
+      .map((file: FileConfig) => {
+        if (!file) {
+          console.log(exerciseConfig.fileTemplates);
+          debugger
+        }
+        if (!file.code) {
+          file.code = this.exerciseService.fetch(`${exerciseConfig.path}/${file.filename}`);
+        }
 
-    return Observable.forkJoin(files.map(a => this.exerciseService.fetch(a))).map((responses) => {
-      responses.forEach((code: string, index) => {
-        // Just strip any folders from the imports.
-        // import {Component} from '@angular/core'; -> import {Component} from '@angular/core';
-        // import {A,B} from '../../blablabla/A'; -> import {A,B} from './A';
-        // This allows reusing components from different exercises (for typechecking) in
-        // a way that makes them look like they are in the same folder.
+        if (exerciseConfig.solutions) {
+          const solution = exerciseConfig.solutions.find(f => f.filename === file.filename);
+          if (solution) {
+            file.solution = solution.code;
+          }
+        }
 
-        code = code.replace(/(import.*from.*["']((?!@angular|rxjs)))(.*\/)/g, "$1./");
-        exerciseConfig.fileTemplates[index].code = code;
-        exerciseConfig.fileTemplates[index].moduleName = exerciseConfig.fileTemplates[index].filename.split('.')[0];
-        exerciseConfig.editedFiles[index] = Object.assign({}, exerciseConfig.fileTemplates[index]);
-        state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
+        return Object.assign({}, file);
       });
 
-      return state;
-    });
+    return state;
   }
 
   constructor(private exerciseService: ExerciseService, private angularFire: AngularFire) {

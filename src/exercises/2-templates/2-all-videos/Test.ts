@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
-import {AppComponent} from './solution/AppComponent';
+import {AppComponent} from './AppComponent';
 import 'initTestBed';
-import {appCode} from '../../shared/code';
+import {appCode} from './code';
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -53,7 +53,7 @@ describe('Blabla', () => {
   //   //TODO
   // });
 
-  it(`#Bonus app.html: When the component starts, search for empty string. `, () => {
+  it(`#Bonus AppComponent.ts: When the component starts, search for empty string. `, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const images = fixture.nativeElement.querySelectorAll('img');

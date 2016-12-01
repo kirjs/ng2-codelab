@@ -1,14 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 
-import {videoCode, thumbsCode} from '../../shared/code';
+import {videoCode, thumbsCode} from './code';
 import {AppModule} from "./AppModule";
 
-import {Api} from '../../shared/Api';
+import {Api} from './Api';
 
-import {ThumbsComponent} from "../../4-z-custom-events/0-add-thumb-component/ThumbsComponent";
-import {VideoComponent} from "../../4-component-tree/0-add-video-component/solution/VideoComponent";
-
+import {ThumbsComponent} from "./ThumbsComponent";
+import {VideoComponent} from "./VideoComponent";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -42,6 +41,14 @@ describe('Component tree', () => {
   });
 
   it(`video.html: Use the thumbs component`, () => {
+    let fixture = TestBed.createComponent(VideoComponent);
+    fixture.componentInstance.video = Api.fetch('')[0];
+    fixture.detectChanges();
+    chai.expect(fixture.nativeElement.querySelector('.thumbs-up')).is.ok
+    chai.expect(fixture.nativeElement.querySelector('.thumbs-down')).is.ok
+  });
+
+  it(`VideoComponent: Listen to the thumbs component onThumbs event, and update the amount of likes accordingly`, () => {
     let fixture = TestBed.createComponent(VideoComponent);
     fixture.componentInstance.video = Api.fetch('')[0];
     fixture.detectChanges();

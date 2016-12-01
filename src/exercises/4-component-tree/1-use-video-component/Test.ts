@@ -1,11 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {AppComponent} from './solution/AppComponent';
-import {VideoService} from '../../shared/VideoService';
-import {appCode, videoCode} from '../../shared/code';
+import {AppComponent} from './AppComponent';
+import {VideoService} from './VideoService';
+import {appCode, videoCode} from './code';
 import {AppModule} from "./AppModule";
-import {VideoComponent} from "../0-add-video-component/VideoComponent";
-import {Api} from '../../shared/Api';
+import {VideoComponent} from "./VideoComponent";
+import {Api} from './Api';
 
 
 beforeEach(() => {
