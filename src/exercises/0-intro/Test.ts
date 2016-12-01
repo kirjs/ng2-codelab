@@ -71,7 +71,7 @@ describe('Component', () => {
     chai.expect(typeof (new Meetup(anglars).getRsvp)).equals('function');
   });
 
-  it(`Make sure retRsvp returns only people with 'rsvp' set to true.`, () => {
+  it('getRsvp should only return people with "rsvp" set to true (check `anglars.ts`).', () => {
     chai.expect(new Meetup(anglars).getRsvp().length).equals(1);
   });
 
