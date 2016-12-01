@@ -71,7 +71,7 @@ describe('Component', () => {
     chai.expect(typeof (new Meetup(guests).getRsvp)).equals('function');
   });
 
-  it('getRsvp should only return people with "rsvp" set to true.', () => {
+  it('Modify getRsvp to filter the guests array and only return guests with rsvp set to true.', () => {
     chai.expect(new Meetup(guests).getRsvp().length).equals(1);
   });
 
