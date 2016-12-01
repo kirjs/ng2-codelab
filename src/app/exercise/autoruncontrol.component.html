@@ -1,1 +1,18 @@
-<h3 (click)="state.toggleAutorun()"> auto run controller </h3>
+<!-- <h3 (click)="state.toggleAutorun()"> auto run controller </h3> -->
+<!-- <style>
+.yoyo {
+    color: blue;
+}
+</style> -->
+<button 
+		type="submit" 
+		[ngClass]="{'autorun-on': config.autorun, 'autorun-off': !config.autorun}" 
+		[disabled]="config.autorun">Run
+</button>
+<label>
+    <input type="checkbox" name="isAutorun"  [(ngModel)]="config.autorun">
+    <span *ngIf="config.autorun"> automatically run as you type code (might be slow)</span>
+    <span *ngIf="!config.autorun"> click run to execute</span>
+</label>
+
+<hr class="yoyo">
