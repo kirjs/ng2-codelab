@@ -15,14 +15,14 @@
  * It will be stripped during runtime, and the Meetup module
  * will be loaded.
  */
-import {Meetup, evalJs} from './solution/Meetup';
+import {Meetup, evalJs} from './Meetup';
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
  */
-import {MeetupCode} from '../shared/code';
+import {MeetupCode} from './code';
 
-const anglars = [
+const guests = [
   {name: 'me', rsvp: true},
   {name: 'notme', rsvp: false},
 ];
@@ -58,21 +58,21 @@ describe('Component', () => {
     chai.expect(MeetupCode.indexOf('constructor') > -1, `The meetup class doesn't have constuctor`).is.true;
   });
 
-  it('Make constructor take a parameter "anglars"', () => {
-    chai.expect(Meetup.length, 'Meetup constructor should take one parameter called "anglars"').equals(1);
+  it('Make constructor take a parameter "guests"', () => {
+    chai.expect(Meetup.length, 'Meetup constructor should take one parameter called "guests"').equals(1);
   });
 
   it('This parameter should be public', () => {
-    const meetup = new Meetup(anglars);
-    chai.expect(meetup.anglars).equals(anglars);
+    const meetup = new Meetup(guests);
+    chai.expect(meetup.guests).equals(guests);
   });
 
   it('Create new method "getRsvp"', () => {
-    chai.expect(typeof (new Meetup(anglars).getRsvp)).equals('function');
+    chai.expect(typeof (new Meetup(guests).getRsvp)).equals('function');
   });
 
-  it('getRsvp should only return people with "rsvp" set to true (check `anglars.ts`).', () => {
-    chai.expect(new Meetup(anglars).getRsvp().length).equals(1);
+  it('getRsvp should only return people with "rsvp" set to true.', () => {
+    chai.expect(new Meetup(guests).getRsvp().length).equals(1);
   });
 
   /*

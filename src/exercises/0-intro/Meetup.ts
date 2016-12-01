@@ -1,2 +1,6 @@
-// Interface
-import {Anglar} from "./Anglar";
+interface Anglar {
+  name: string;
+  rsvp: boolean;
+}
+
+

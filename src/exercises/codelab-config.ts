@@ -19,6 +19,8 @@ import {TogglePanelComponent} from "./files/TogglePanelComponent";
 import {WrapperComponent} from "./files/WrapperComponent";
 import {ContextComponent} from "./files/ContextComponent";
 import {ContextService} from "./files/ContextService";
+import {Meetup} from "./files/Meetup";
+import {Main} from "./files/Main";
 
 
 function testFile() {
@@ -197,6 +199,13 @@ const files: {
   contextService: {
     initial: FileConfig
   },
+  meetup: {
+    initial: FileConfig,
+    solved: FileConfig
+  },
+  mainMeetup: {
+    initial: FileConfig
+  },
 
 } = {} as any;
 
@@ -216,6 +225,8 @@ files.togglePanelComponent = TogglePanelComponent;
 files.wrapperComponent = WrapperComponent;
 files.contextComponent = ContextComponent;
 files.contextService = ContextService;
+files.meetup = Meetup;
+files.mainMeetup = Main;
 
 
 export const codelabConfig: CodelabConfig = {
@@ -268,13 +279,12 @@ export const codelabConfig: CodelabConfig = {
             description: `
           Let's create our first typescript module. 
         `,
+            solutions: [
+              files.meetup.solved
+            ],
             fileTemplates: [
-              tsFile('Meetup'),
-              ...justForReference(
-                tsFile('Anglar'),
-                tsFile('anglars'),
-                tsFile('Main')
-              ),
+              evaled(files.meetup.initial),
+              evaled(files.mainMeetup.initial),
               testFile()
             ]
           },
