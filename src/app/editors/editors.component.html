@@ -1,8 +1,5 @@
 <div class="editors">
   <div *ngFor="let file of visibleFiles" class="editor">
-    <div *ngIf="file.solution" (click)="loadSolution(file)" style="float: right">
-      [load solution]
-    </div>
     <div class="filename" (click)="toggleFile(file)">
       <span *ngIf="file.collapsed" class="arrow">▷</span>
       <span *ngIf="!file.collapsed" class="arrow">▽</span>
