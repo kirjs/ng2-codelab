@@ -7,7 +7,6 @@ import {Http} from "@angular/http";
 import {Observable, Subject} from "rxjs/Rx";
 import 'rxjs/add/operator/debounceTime'
 import {FileConfig} from "../file-config";
-import {StateService} from "../state.service";
 
 declare const monaco: any;
 declare const require: any;
@@ -42,11 +41,9 @@ export class EditorComponent implements AfterViewInit {
   }
 
 
-  constructor(private http: Http, private applicationRef: ApplicationRef, state: StateService) {
+  constructor(private http: Http, private applicationRef: ApplicationRef) {
     this.editSub = new Subject<String>();
     this.editSub.debounceTime(1000).subscribe((value) => {
-
-      let st = state;
       this.onCodeChange.emit(value);
     });
   }

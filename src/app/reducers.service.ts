@@ -19,6 +19,7 @@ export class ReducersService {
     return localState ? localState : state;
   }
 
+  //momo
   [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
 
     state.autorun = !state.autorun;

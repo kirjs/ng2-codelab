@@ -1,10 +1,5 @@
-<!-- <h3 (click)="state.toggleAutorun()"> auto run controller </h3> -->
-<!-- <style>
-.yoyo {
-    color: blue;
-}
-</style> -->
-<h6 (click)="state.toggleAutorun()"> auto run controller </h6>
+<!-- momo -->
+<!-- <h6 (click)="state.toggleAutorun()"> auto run controller </h6>
 <button 
 		type="submit" 
 		[ngClass]="{'autorun-on': config.autorun, 'autorun-off': !config.autorun}" 
@@ -16,8 +11,26 @@
     	name="isAutorun" 
     	(click)="state.toggleAutorun()" 
     	[(ngModel)]="config.autorun">
-    <span *ngIf="config.autorun"> automatically run as you type code (might be slow)</span>
-    <span *ngIf="!config.autorun"> click run to execute</span>
+    <span *ngIf="config.autorun"> auto run as you type code (might be slow)</span>
+    <span *ngIf="!config.autorun"> click run to execute (auto run is OFF)</span>
+</label>
+
+<hr class="autorun-linebreak"> -->
+
+<button 
+        type="submit" 
+        [ngClass]="{'autorun-on': config.autorun, 'autorun-off': !config.autorun}" 
+        [disabled]="config.autorun"
+        (click)="run()">Run
+</button>
+<label>
+    <input 
+        type="checkbox" 
+        name="isAutorun" 
+        [(ngModel)]="config.autorun"
+        (click)="toggleAutorun(config.autorun)">
+    <span *ngIf="config.autorun"> auto run as you type code (might be slow)</span>
+    <span *ngIf="!config.autorun"> click run to execute (auto run is OFF)</span>
 </label>
 
 <hr class="autorun-linebreak">

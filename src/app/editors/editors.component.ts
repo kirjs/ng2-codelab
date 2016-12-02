@@ -2,6 +2,8 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Action} from "../action";
 import {FileConfig} from "../file-config";
 import {StateService} from "../state.service";
+//momo
+import { AutorunControlInterface } from "../exercise/autoruncontrol.interface"
 
 
 @Component({
@@ -11,6 +13,7 @@ import {StateService} from "../state.service";
 })
 export class EditorsComponent {
   @Output() public onCodeChange: EventEmitter<Action> = new EventEmitter<Action>();
+  @Output() public onAutorunChange: EventEmitter<AutorunControlInterface> = new EventEmitter<AutorunControlInterface>();
   @Input() public files: Array<any>;
 
   get visibleFiles() {

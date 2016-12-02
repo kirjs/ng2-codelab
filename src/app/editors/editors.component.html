@@ -5,7 +5,11 @@
       <span *ngIf="!file.collapsed"  class = "arrow">▽</span>
       {{file.filename}} {{file.readonly?' (this file is read only) ': ''}}
     </div>
-    <app-editor [file]="file" *ngIf="!file.collapsed" (onCodeChange)="onCodeChange.emit({file: file, code: $event})">
+    <!-- momo -->
+    <app-editor 
+    	[file]="file" *ngIf="!file.collapsed" 
+    	(onCodeChange)="onCodeChange.emit({file: file, code: $event})"
+    	(onAutorunChange)="onAutorunChange.emit({file: file, code: $event})">
     </app-editor>
   </div>
 </div>

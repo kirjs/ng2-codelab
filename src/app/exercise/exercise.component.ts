@@ -22,4 +22,8 @@ export class ExerciseComponent {
     this.state.updateCode(changedFile);
   }
 
+  onAutorunChange(changeAutorun) {
+
+    console.log('changed auto run');
+  }
 }

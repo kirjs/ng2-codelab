@@ -82,6 +82,7 @@ export class StateService {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
   }
 
+  //momo
   toggleAutorun() {
     this.dispatchAction(ActionTypes.TOGGLE_AUTORUN);
   }
