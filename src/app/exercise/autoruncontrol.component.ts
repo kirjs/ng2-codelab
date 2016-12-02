@@ -13,7 +13,7 @@ export class AutorunControlComponent {
 
 	config: CodelabConfig;
 
-	constructor(public state: StateService) {
+	constructor(private state: StateService) {
 	  state.update.subscribe((config)=>{
 	    this.config = config;
 	  });
