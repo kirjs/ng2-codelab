@@ -13,7 +13,6 @@ import { AutorunControlInterface } from "../exercise/autoruncontrol.interface"
 })
 export class EditorsComponent {
   @Output() public onCodeChange: EventEmitter<Action> = new EventEmitter<Action>();
-  @Output() public onAutorunChange: EventEmitter<AutorunControlInterface> = new EventEmitter<AutorunControlInterface>();
   @Input() public files: Array<any>;
 
   get visibleFiles() {

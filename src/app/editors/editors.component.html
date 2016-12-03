@@ -8,8 +8,7 @@
     <!-- momo -->
     <app-editor 
     	[file]="file" *ngIf="!file.collapsed" 
-    	(onCodeChange)="onCodeChange.emit({file: file, code: $event})"
-    	(onAutorunChange)="onAutorunChange.emit({file: file, code: $event})">
+    	(onCodeChange)="onCodeChange.emit({file: file, code: $event})">
     </app-editor>
   </div>
 </div>

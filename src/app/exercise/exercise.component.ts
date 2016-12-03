@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {FileConfig} from "../file-config";
 import {StateService, exerciseComplete} from "../state.service";
 import {ExerciseConfig} from "../exercise-config";
+import { AutorunControlInterface } from "./autoruncontrol.interface" //momo
 
 @Component({
   selector: 'app-exercise',
@@ -11,6 +12,8 @@ import {ExerciseConfig} from "../exercise-config";
 export class ExerciseComponent {
   @Input()
   public config: ExerciseConfig;
+  private currentAutorunState: AutorunControlInterface = null; //momo
+  private changedFiles:any[] = []; //momo
 
   constructor(private state: StateService) {
   }
@@ -19,11 +22,31 @@ export class ExerciseComponent {
   }
 
   onCodeChange(changedFile) {
+
     this.state.updateCode(changedFile);
+
+    // momo
+    let state 
+    if (this.currentAutorunState.autorun) {
+      this.changedFiles = [];   //clear chnaged files array in case any left over from previous manual run
+      this.state.updateCode(changedFile);
+    }
+    else { //manual
+      this.changedFiles.push(changedFile);
+    }
+
   }
 
+  //momo
   onAutorunChange(changeAutorun) {
 
-    console.log('changed auto run');
+    this.currentAutorunState = changeAutorun;
+
+    if (this.currentAutorunState.running && !this.currentAutorunState.autorun) {
+
+      for (let file in this.changedFiles) {
+         console.log(file); // "4", "5", "6"
+      }
+    }
   }
 }

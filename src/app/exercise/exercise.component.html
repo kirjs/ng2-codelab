@@ -6,10 +6,10 @@
 <!-- momo -->
   <app-editors [files]="config.editedFiles"
                (onCodeChange)="onCodeChange($event)"
-               (onAutorunChange)="onAutorunChange($event)" 
                (onFileCollapsed)="onFileCollapsed($event)">
   </app-editors>
   <div class="side">
+    <!-- momo -->
     <autorun-control (onAutorunChange)=onAutorunChange($event)></autorun-control>
     <div class="description" [innerHTML]="config.description"></div>
     <app-tests [tests]="config.tests"></app-tests>
