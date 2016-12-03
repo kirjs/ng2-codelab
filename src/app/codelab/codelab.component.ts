@@ -1,10 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {codelabConfig} from "../../exercises/codelab-config";
+import {Component, OnInit} from "@angular/core";
 import {MilestoneConfig} from "../milestone-config";
 import {CodelabConfig} from "../codelab-config";
 import {StateService} from "../state.service";
-import {ActionTypes} from "../action-types.enum";
-import {FeedbackPageComponent} from '../feedback-page/feedback-page.component';
 
 @Component({
   selector: 'app-codelab',
@@ -19,7 +16,7 @@ export class CodelabComponent implements OnInit {
   feedbackList = [];
 
   constructor(public state: StateService) {
-    state.update.subscribe((config)=>{
+    state.update.subscribe((config) => {
       this.config = config;
     });
   }

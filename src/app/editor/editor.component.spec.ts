@@ -1,9 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-
-import {EditorComponent} from './editor.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {EditorComponent} from "./editor.component";
 
 describe('EditorComponent', () => {
   let component: EditorComponent;

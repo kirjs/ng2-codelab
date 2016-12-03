@@ -11,7 +11,9 @@
     <td>{{feedbackItem.comment}}</td>
     <td>{{feedbackItem.state.selectedMilestoneIndex + 1}}</td>
     <td>{{feedbackItem.state.milestones[feedbackItem.state.selectedMilestoneIndex].selectedExerciseIndex + 1}}</td>
-    <td><button (click)="simulate(feedbackItem.state)">Simulate</button></td>
+    <td>
+      <button (click)="simulate(feedbackItem.state)">Simulate</button>
+    </td>
   </tr>
 </table>
 

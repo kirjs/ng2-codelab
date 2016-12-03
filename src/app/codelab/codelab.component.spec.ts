@@ -1,9 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-
-import {CodelabComponent} from './codelab.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {CodelabComponent} from "./codelab.component";
 import {StateService} from "../state.service";
 import {MockStateService} from "../../mocks/stateService";
 

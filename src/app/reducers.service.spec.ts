@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-
-import {TestBed, inject} from '@angular/core/testing';
-import {ReducersService} from './reducers.service';
+import {TestBed, inject} from "@angular/core/testing";
+import {ReducersService} from "./reducers.service";
 import {ExerciseService} from "./exercise.service";
 import {AngularFire} from "angularfire2";
 

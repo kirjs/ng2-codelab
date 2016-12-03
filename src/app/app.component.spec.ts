@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-
-import {TestBed, async} from '@angular/core/testing';
-import {AppComponent} from './app.component';
+import {TestBed, async} from "@angular/core/testing";
+import {AppComponent} from "./app.component";
 import {mockStateServiceProvider} from "../mocks/stateService";
 import {AngularFire} from "angularfire2";
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
+import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from "@angular/core";
 import * as ts from "typescript";
 import {FileConfig} from "../file-config";
 import {StateService, selectedExercise} from "../state.service";
@@ -103,7 +103,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
           files.filter(file => file.type === 'ts').map((file) => {
             // Update module names
             let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
-              if(!code || !code.replace){
+              if (!code || !code.replace) {
                 console.log(file);
                 debugger
               }
@@ -118,7 +118,6 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             if (file.after) {
               code = ';\n' + code + file.after;
             }
-
 
 
             const moduleName = file.moduleName + index;
@@ -212,9 +211,10 @@ export class RunnerComponent implements AfterViewInit {
 
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.runCode()
   }
+
   ngAfterViewInit() {
     this.state.update
       .map(selectedExercise)

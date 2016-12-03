@@ -1,9 +1,6 @@
-import {
-  Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output,
-  AfterViewInit
-} from '@angular/core';
+import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from "@angular/core";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import 'rxjs/add/operator/debounceTime'
+import "rxjs/add/operator/debounceTime";
 import {FileConfig} from "../file-config";
 
 declare const monaco: any;

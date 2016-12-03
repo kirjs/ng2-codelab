@@ -1,9 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-
-import {FeedbackPageComponent} from './feedback-page.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {FeedbackPageComponent} from "./feedback-page.component";
 import {mockStateServiceProvider} from "../../mocks/stateService";
 import {AngularFire} from "angularfire2";
 

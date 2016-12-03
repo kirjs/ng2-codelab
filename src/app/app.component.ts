@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {StateService} from "./state.service";
-import {AngularFire, FirebaseListObservable, AuthProviders, AuthMethods} from 'angularfire2';
+import {AngularFire} from "angularfire2";
 
 @Component({
   selector: 'app-root',

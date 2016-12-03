@@ -1,8 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+import {Injectable} from "@angular/core";
 import {Observable, BehaviorSubject} from "rxjs/Rx";
 import {CodelabConfig} from "./codelab-config";
-import {ActionInit} from "./action-init";
 import {Action} from "./action";
 import {codelabConfig} from "../exercises/codelab-config";
 import {ActionTypes} from "./action-types.enum";

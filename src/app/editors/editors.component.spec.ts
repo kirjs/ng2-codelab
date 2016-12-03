@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {EditorsComponent} from './editors.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {EditorsComponent} from "./editors.component";
 import {StateService} from "../state.service";
 import {MockStateService} from "../../mocks/stateService";
 

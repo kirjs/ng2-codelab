@@ -1,9 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-
-import {FeedbackWidgetComponent} from './feedback-widget.component';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {FeedbackWidgetComponent} from "./feedback-widget.component";
 import {mockStateServiceProvider} from "../../mocks/stateService";
 
 describe('FeedbackWidgetComponent', () => {

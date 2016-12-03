@@ -1,5 +1,4 @@
-import {Component, Input, Output, EventEmitter, ViewChildren, QueryList} from '@angular/core';
-import {Action} from "../action";
+import {Component, Input, ViewChildren, QueryList} from "@angular/core";
 import {FileConfig} from "../file-config";
 import {StateService} from "../state.service";
 import {EditorComponent} from "../editor/editor.component";
