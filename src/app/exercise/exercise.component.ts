@@ -1,6 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {FileConfig} from "../file-config";
-import {StateService, exerciseComplete} from "../state.service";
+import {Component, Input} from '@angular/core';
 import {ExerciseConfig} from "../exercise-config";
 
 @Component({
@@ -11,15 +9,4 @@ import {ExerciseConfig} from "../exercise-config";
 export class ExerciseComponent {
   @Input()
   public config: ExerciseConfig;
-
-  constructor(private state: StateService) {
-  }
-  allTestsPass(){
-    return exerciseComplete(this.config);
-  }
-
-  onCodeChange(changedFile) {
-    this.state.updateCode(changedFile);
-  }
-
 }

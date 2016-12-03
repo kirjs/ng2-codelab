@@ -1,7 +1,9 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EditorsComponent } from './editors.component';
+import {EditorsComponent} from './editors.component';
+import {StateService} from "../state.service";
+import {MockStateService} from "../../mocks/stateService";
 
 describe('EditorsComponent', () => {
   let component: EditorsComponent;
@@ -9,9 +11,13 @@ describe('EditorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorsComponent ]
+      declarations: [EditorsComponent],
+      providers: [{
+        provide: StateService, useValue: new MockStateService({})
+      }]
     })
-    .compileComponents();
+      .overrideComponent(EditorsComponent, {set: {template: 'hi'}})
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,7 +26,8 @@ describe('EditorsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should return visible files', () => {
+    component.files = [{hidden: true}, {hidden: false}];
+    expect(component.visibleFiles.length).toEqual(1);
   });
 });

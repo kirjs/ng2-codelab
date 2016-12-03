@@ -213,7 +213,6 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   ngOnChanges(){
-
     this.runCode()
   }
   ngAfterViewInit() {

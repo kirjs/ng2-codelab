@@ -8,7 +8,7 @@ import {AngularFire, FirebaseListObservable, AuthProviders, AuthMethods} from 'a
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user_progresses = this.angularFire.database.list('/user_progress');
+  //user_progresses = this.angularFire.database.list('/user_progress');
   currentState = {};
   remoteStateLoaded = false;
   auth = {uid: ''};

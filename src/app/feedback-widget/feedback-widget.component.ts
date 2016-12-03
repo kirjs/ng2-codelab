@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StateService} from "../state.service";
 
 @Component({
@@ -8,17 +8,21 @@ import {StateService} from "../state.service";
 })
 export class FeedbackWidgetComponent implements OnInit {
   open: false;
-  constructor(private state: StateService) { }
   username: string = "";
   comment: string = "";
+
+  constructor(private state: StateService) {
+  }
+
   ngOnInit() {
     this.state.update.subscribe(state => this.username = state.user);
   }
-  send(){
+
+  send() {
     if (this.comment && this.username) {
       let comment = this.comment;
       let username = this.username;
-      this.state.sendFeedback({comment,username});
+      this.state.sendFeedback({comment, username});
       this.comment = '';
     }
   }

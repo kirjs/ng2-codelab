@@ -120,13 +120,15 @@ export class ReducersService {
   }
 
   [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
-    let items = this.angularFire.database.list('/feedback');
-    items.push({
-      comment: feedback.data.comment,
-      state: JSON.parse(JSON.stringify(state)),
-      name: feedback.data.username
-    });
-    state.user = feedback.data.username;
+    if (state.app.feedbackEnabled) {
+      let items = this.angularFire.database.list('/feedback');
+      items.push({
+        comment: feedback.data.comment,
+        state: JSON.parse(JSON.stringify(state)),
+        name: feedback.data.username
+      });
+      state.user = feedback.data.username;
+    }
     return state;
   }
 

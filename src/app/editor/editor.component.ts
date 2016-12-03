@@ -1,10 +1,8 @@
 import {
-  Component, ApplicationRef, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output,
-  AfterViewInit, ContentChild, TemplateRef
+  Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output,
+  AfterViewInit
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Http} from "@angular/http";
-import {Observable, Subject} from "rxjs/Rx";
 import 'rxjs/add/operator/debounceTime'
 import {FileConfig} from "../file-config";
 
@@ -43,14 +41,14 @@ export class EditorComponent implements AfterViewInit {
   }
 
 
-  constructor(private http: Http, private applicationRef: ApplicationRef) {
-
+  constructor() {
     this.editSub = new Subject<String>();
     this.editSub.debounceTime(1000).subscribe((value) => {
       this.onCodeChange.emit(value);
     });
   }
-  loadCode(code: string){
+
+  loadCode(code: string) {
     this._editor.getModel().setValue(code);
   }
 

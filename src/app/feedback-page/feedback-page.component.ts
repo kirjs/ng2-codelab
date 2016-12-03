@@ -36,5 +36,4 @@ export class FeedbackPageComponent implements OnInit {
   simulate(state){
     this.state.simulateState(state);
   }
-
 }

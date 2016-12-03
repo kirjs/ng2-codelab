@@ -1,12 +1,21 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
-import { ReducersService } from './reducers.service';
+import {TestBed, inject} from '@angular/core/testing';
+import {ReducersService} from './reducers.service';
+import {ExerciseService} from "./exercise.service";
+import {AngularFire} from "angularfire2";
 
 describe('Service: Reducers', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ReducersService]
+      providers: [ReducersService,
+        {
+          provide: ExerciseService, useValue: {},
+        },
+        {
+          provide: AngularFire, useValue: {},
+        }
+      ]
     });
   });
 

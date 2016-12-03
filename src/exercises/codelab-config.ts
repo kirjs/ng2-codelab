@@ -177,7 +177,6 @@ const files: {
     initial: FileConfig,
     solved: FileConfig
   },
-
   togglePanelComponent: {
     initial: FileConfig,
     solved: FileConfig
@@ -230,6 +229,13 @@ files.mainMeetup = Main;
 
 
 export const codelabConfig: CodelabConfig = {
+    app: {
+      name: 'Codelab',
+      page: 'milestone',
+      user: '',
+      auth: '',
+      feedbackEnabled: false
+    },
     name: 'Angular2 codelab',
     user: '',
     auth: {},
