@@ -1,8 +1,8 @@
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
 import {ResourceLoader} from "@angular/compiler";
 import {AppModule} from "./AppModule";
+/*d:templatePageSetup/trimLeading*/
 import * as code from "./code";
-/*d:templatePageSetup*/
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {
     const templateId = url.replace(/\\d*\.html/, 'Code');
@@ -14,11 +14,9 @@ class MyResourceLoader extends ResourceLoader {
     return Promise.resolve(template);
   };
 }
-/*/d*//*d:bootstrapSolved*/
+/*/d*//*d:bootstrapSolved/trimTrailing*/
 const platform = platformBrowserDynamic();
-
-/*/d*//*d:bootstrapSolved:bootstrapSolved*/
-
+/*/d*//*d:bootstrapSolved:bootstrapSolved/trimTrailing*/
 platform.bootstrapModule(AppModule);
 /*/d*//*d:templatePageSetup*/
 platform.bootstrapModule(AppModule, {

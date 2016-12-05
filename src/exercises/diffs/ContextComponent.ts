@@ -8,7 +8,6 @@ import {VideoComponent} from "./VideoComponent";
 })
 export class ContextComponent {
   text: string;
-
   /*d:contextComponentUseSolved*/
   constructor(public parent: VideoComponent,
               private  service: ContextService) {
@@ -18,6 +17,4 @@ export class ContextComponent {
     this.text = this.service
       .getAdText(this.parent.video.description);
   }
-
-  /*/d*/
-}
+  /*/d*/}

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Api} from "./Api";
-/*d:diInjectServiceSolved*/
+/*d:diInjectServiceSolved/trimTrailing*/
 @Injectable()
 /*/d*//*d:initial*/
 export class VideoService {

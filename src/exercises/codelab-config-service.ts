@@ -1,19 +1,5 @@
 import {CodelabConfig} from "../app/codelab-config";
 import {FileConfig} from "../app/file-config";
-import {AppComponent} from "./files/AppComponent";
-import {AppModule} from "./files/AppModule";
-import {Bootstrap} from "./files/Bootstrap";
-import {VideoItem} from "./files/VideoItem";
-import {Api} from "./files/Api";
-import {VideoService} from "./files/VideoService";
-import {VideoComponent} from "./files/VideoComponent";
-import {ThumbsComponent} from "./files/ThumbsComponent";
-import {TogglePanelComponent} from "./files/TogglePanelComponent";
-import {WrapperComponent} from "./files/WrapperComponent";
-import {ContextComponent} from "./files/ContextComponent";
-import {ContextService} from "./files/ContextService";
-import {Meetup} from "./files/Meetup";
-import {Main} from "./files/Main";
 import {differ} from "../app/differ/differ";
 import {ExerciseService} from "../app/exercise.service";
 import {Injectable} from "@angular/core";
@@ -749,15 +735,17 @@ export class CodelabConfigService {
               fileTemplates: [
                 files.togglePanelComponent.togglePanelComponentCreate,
                 files.togglePanelHtml.togglePanelComponentCreate,
-                files.wrapperComponent.togglePanelComponentCreate,
-                files.appModule.togglePanelComponentCreate,
-                {
-                  filename: 'index.html',
-                  code: '<my-wrapper></my-wrapper>',
-                  type: 'html',
-                  moduleName: 'index'
-                },
-                files.bootstrap.togglePanelComponentCreate,
+                ...justForReference(
+                  files.wrapperComponent.togglePanelComponentCreate,
+                  files.appModule.togglePanelComponentCreate,
+                  {
+                    filename: 'index.html',
+                    code: '<my-wrapper></my-wrapper>',
+                    type: 'html',
+                    moduleName: 'index'
+                  },
+                  files.bootstrap.togglePanelComponentCreate,
+                ),
                 testFile()
               ],
               tests: []

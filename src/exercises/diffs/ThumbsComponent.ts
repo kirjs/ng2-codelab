@@ -8,15 +8,14 @@ export enum Thumbs {
   UP,
   DOWN
 }
-
-/*d:thumbsComponentCreateSolved*/
+/*d:thumbsComponentCreateSolved/trimTrailing*/
 @Component({
   selector: "my-thumbs",
   templateUrl: "./thumbs.html"
 })
 /*/d*/
 export class ThumbsComponent {
-  /*d:thumbsComponentCreateSolved*/
+  /*d:thumbsComponentCreateSolved/trimBoth*/
   @Output() onThumbs: EventEmitter<Thumbs> = new EventEmitter<Thumbs>();
 
   thumbsUp() {

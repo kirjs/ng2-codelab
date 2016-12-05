@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-/*d:createComponentSolved*/
+/*d:createComponentSolved/trimLeading*/
 import {VideoService} from "./VideoService";
 /*/d*//*d:templateAllVideos*/
 const FAKE_VIDEOS = [{
@@ -15,27 +15,21 @@ const FAKE_VIDEOS = [{
     src: "/assets/images/kitten2.jpg"
   }];
 /*/d*//*d:createComponentSolved*/
-
 @Component({
   selector: "my-app",
-
-  /*/d*//*d:createComponentSolved:createComponentSolved*/
+  /*/d*//*d:createComponentSolved:createComponentSolved/trimBoth*/
   template: "<h1>Hello CatTube!</h1>",
-
-  /*/d*//*d:templatePageSetup*/
+  /*/d*//*d:templatePageSetup/trimBoth*/
   templateUrl: './app.html'
-  /*/d*//*d:createComponentSolved*/
-
+  /*/d*//*d:createComponentSolved/trimTrailing*/
 })
 export class AppComponent {
-  /*/d*//*d:templatePageSetup*/
+/*/d*//*d:templatePageSetup/trimTrailing*/
   title = 'CatTube';
-  /*/d*//*d:diInjectServiceSolved*/
-
+/*/d*//*d:diInjectServiceSolved*/
   constructor(public videoService: VideoService) {
   }
-
-  /*/d*//*d:templateAddActionSolved*/
+/*/d*//*d:templateAddActionSolved/trimTrailing*/
   videos = [];
 
   search(searchString) {
@@ -43,14 +37,13 @@ export class AppComponent {
     this.videos = this.videoService.search(searchString);
     /*/d*//*d:templateAllVideosSolved:diInjectService*/
     this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(searchString) >= 0);
-    /*/d*//*d:templateAddActionSolved*/
+    /*/d*//*d:templateAddActionSolved/trimBoth*/
   }
 
-  /*/d*//*d:templateAllVideosSolved*/
+/*/d*//*d:templateAllVideosSolved*/
   ngOnInit(){
     this.search('');
   }
-  /*/d*//*d:createComponentSolved*/
+/*/d*//*d:createComponentSolved/trimTrailing*/
 }
 /*/d*/
-
