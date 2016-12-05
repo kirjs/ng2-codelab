@@ -1,9 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {VideoService} from './VideoService';
-import {videoCode} from './code';
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {VideoService} from "./VideoService";
+import {videoCode} from "./code";
 import {VideoComponent} from "./VideoComponent";
-import {Api} from './Api'
+import {Api} from "./Api";
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -34,7 +34,8 @@ describe('Component tree', () => {
     it(`VideoComponent.ts: Set the templateUrl to load appropriate html file.`, () => {
       const metadata = Reflect.getMetadata("annotations", VideoComponent);
       chai.expect(metadata, `VideoComponent doesn't have a @Component() annotation`).is.not.undefined;
-      chai.expect(metadata[0].templateUrl, `VideoComponent's templateUrl should be set to 'video.html'`).equals('video.html')
+      // TODO: Get rid of digits.
+      chai.expect(metadata[0].templateUrl, `VideoComponent's templateUrl should be set to './video.html'`).matches(/\.\/video\d*\.html/)
     });
 
     it(`VideoComponent.ts: Add a video @Input()`, () => {

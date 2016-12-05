@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {MilestoneConfig} from "../milestone-config";
+import {StateService} from "../state.service";
 
 
 @Component({
@@ -10,4 +11,7 @@ import {MilestoneConfig} from "../milestone-config";
 export class MilestoneComponent {
   @Input() config: MilestoneConfig;
   @Input() name: string;
+
+  constructor(public state: StateService) {
+  }
 }

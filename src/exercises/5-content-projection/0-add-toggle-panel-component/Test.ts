@@ -40,8 +40,8 @@ describe('Content projection', () => {
   it(`togglePanel.html: Use content projection to only display the content with the selector .description by default.`, () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
-    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null
-    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null
+    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null;
+    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null;
   });
 
   it(`togglePanel.html: Add a button to show extra information`, () => {
@@ -57,8 +57,8 @@ describe('Content projection', () => {
     let button = fixture.nativeElement.querySelector('button');
     button.click();
     fixture.detectChanges();
-    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be hidden`).is.null
-    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be displayed`).not.null
+    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be hidden`).is.null;
+    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be displayed`).not.null;
   });
 
   it(`togglePanel.html: Add a button to come back to the description`, () => {

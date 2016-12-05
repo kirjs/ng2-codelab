@@ -16,7 +16,7 @@ import {ReducersService} from "./reducers.service";
 import {FeedbackWidgetComponent} from "./feedback-widget/feedback-widget.component";
 import {FeedbackPageComponent} from "./feedback-page/feedback-page.component";
 import {ExerciseService} from "./exercise.service";
-import {codelabConfig} from "../exercises/codelab-config";
+import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
 
 
 let ngModuleConfig = {
@@ -42,13 +42,14 @@ let ngModuleConfig = {
   providers: [
     StateService,
     ReducersService,
-    ExerciseService
+    ExerciseService,
+    CodelabConfigService
   ],
   bootstrap: [AppComponent]
 };
 
 // We use firebase for the feedback. If it's disabled, we should do no extra network requests.
-if (codelabConfig.app.feedbackEnabled) {
+if (appConfig.feedbackEnabled) {
   const firebaseConfig = {
     apiKey: "AIzaSyBDg_JEXDrn7iuvGR-xrcU1bmjWc-uxmgA",
     authDomain: "ng2-codelab.firebaseapp.com",

@@ -4,7 +4,8 @@ export interface AppConfig {
   page: string,
   user: string,
   auth: string,
-  feedbackEnabled: boolean
+  feedbackEnabled: boolean,
+  preserveState: boolean
 }
 
 export interface CodelabConfig {

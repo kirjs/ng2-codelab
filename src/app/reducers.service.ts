@@ -8,14 +8,12 @@ import {Observable} from "rxjs/Rx";
 import {AngularFire} from "angularfire2";
 import {ExerciseService} from "./exercise.service";
 
-
 @Injectable()
 export class ReducersService {
-
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
-
     let localState = JSON.parse(localStorage.getItem('state'));
-    return localState ? localState : state;
+
+    return (state.app.preserveState && localState) ? localState : state;
   }
 
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
