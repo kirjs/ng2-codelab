@@ -17,6 +17,7 @@ export class ExerciseComponent {
 
   constructor(private state: StateService) {
   }
+  
   allTestsPass(){
     return exerciseComplete(this.config);
   }

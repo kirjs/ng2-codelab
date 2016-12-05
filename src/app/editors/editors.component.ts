@@ -2,8 +2,6 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Action} from "../action";
 import {FileConfig} from "../file-config";
 import {StateService} from "../state.service";
-//momo
-import { AutorunControlInterface } from "../exercise/autoruncontrol.interface"
 
 
 @Component({
