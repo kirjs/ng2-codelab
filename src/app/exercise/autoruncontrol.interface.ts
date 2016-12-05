@@ -1,4 +1,4 @@
-//momo
+
 export interface AutorunControlInterface {
 
 	autorun:boolean,

@@ -7,18 +7,17 @@ import {CodelabConfig} from "../codelab-config";
 import { AutorunControlInterface } from "./autoruncontrol.interface"
 import {codelabConfig} from "../codelab/codelab-config";
 
-//momo
 import {Observable, Subject} from "rxjs/Rx";
 
 @Component({
   selector: 'autorun-control',
   templateUrl: './autoruncontrol.component.html',
   styleUrls: ['./autoruncontrol.component.css']
-})												//momo
+})
 export class AutorunControlComponent implements OnInit{
 
 	config: CodelabConfig;
-	changeLog: string[] = []; //momo
+	changeLog: string[] = [];
 	labConfig = codelabConfig;
 	@Output() onAutorunChange: EventEmitter<AutorunControlInterface> = new EventEmitter<AutorunControlInterface>(); //momo
 	autorunEvent: AutorunControlInterface = 
@@ -31,20 +30,19 @@ export class AutorunControlComponent implements OnInit{
 		});
 	}
 
-	//moomo
 	toggleAutorun() {
 		this.autorunEvent.autorun = !this.config.autorun;
-		// this.autorunEvent.running = false;  //always reset 'running' to false when toggling autorun
+		//TODO_MOMO:  There probably is a timing issue here while 'running/executing)'
+		this.autorunEvent.running = false;  //always reset 'running' to false when toggling autorun
 		this.onAutorunChange.emit(this.autorunEvent);
 	}
 
-	//momo
 	run() {
+			//TODO_MOMO:  Need to disable run button until source execution complete
 		this.autorunEvent.running = true;
 		this.onAutorunChange.emit(this.autorunEvent);
 	}
 
-	//momo
 	ngOnInit(): void {
 		this.onAutorunChange.emit(this.autorunEvent); //momo tell exercise initial autorun state as reflected in codelab-config
 	}
