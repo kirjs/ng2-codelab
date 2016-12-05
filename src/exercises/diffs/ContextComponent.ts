@@ -17,4 +17,5 @@ export class ContextComponent {
     this.text = this.service
       .getAdText(this.parent.video.description);
   }
-  /*/d*/}
+  /*/d*/
+}

@@ -17,7 +17,7 @@ const FAKE_VIDEOS = [{
 /*/d*//*d:createComponentSolved*/
 @Component({
   selector: "my-app",
-  /*/d*//*d:createComponentSolved:createComponentSolved/trimBoth*/
+  /*/d*//*d:createComponentSolved:bootstrapSolved/trimBoth*/
   template: "<h1>Hello CatTube!</h1>",
   /*/d*//*d:templatePageSetup/trimBoth*/
   templateUrl: './app.html'

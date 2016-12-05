@@ -107,6 +107,8 @@ export class CodelabConfigService {
 
     function newTsFile(name, code) {
       return {
+        bootstrap: name === 'Bootstrap',
+        excludeFromTesting: name === 'Bootstrap',
         filename: name + '.ts',
         moduleName: name,
         code,
@@ -121,6 +123,7 @@ export class CodelabConfigService {
 
     function loadTs(name, states) {
       const result = differ(ExerciseService.exercises[`diffs/${name}.ts`], states);
+
       return mapObject(result, (code) => newTsFile(name, code));
     }
 
@@ -294,10 +297,10 @@ export class CodelabConfigService {
               ],
               fileTemplates: [
                 evaled(files.appComponent.createComponent),
-                ...hidden(
-                  files.appModule.createModuleSolved,
-                  files.bootstrap.bootstrapSolved
-                ),
+
+                files.appModule.createModuleSolved,
+                files.bootstrap.bootstrapSolved
+                ,
                 testFile()
               ]
             }, {
@@ -552,7 +555,6 @@ export class CodelabConfigService {
               solutions: [
                 files.videoHtml.videoComponentCreateSolved,
                 files.videoComponent.videoComponentCreateSolved,
-                files.appModule.videoComponentCreateSolved,
               ],
               fileTemplates: [
                 files.videoComponent.initial,
@@ -645,7 +647,8 @@ export class CodelabConfigService {
                 testFile(),
                 ...hidden({
                     filename: 'index.html',
-                    code: '<my-thumbs></my-thumbs>'
+                    code: '<my-thumbs></my-thumbs>',
+                    type: 'html'
                   },
                 )
               ],

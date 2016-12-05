@@ -5,7 +5,7 @@ import {AppModule} from "./AppModule";
 import * as code from "./code";
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {
-    const templateId = url.replace(/\\d*\.html/, 'Code');
+    const templateId = url.replace(/\d*\.html/, 'Code');
     let template = code[templateId];
     if (!template) {
       console.log(template);
