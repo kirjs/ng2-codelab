@@ -23,30 +23,51 @@ export class ExerciseComponent {
 
   onCodeChange(changedFile) {
 
-    this.state.updateCode(changedFile);
-
     // momo
-    let state 
-    if (this.currentAutorunState.autorun) {
-      this.changedFiles = [];   //clear chnaged files array in case any left over from previous manual run
+
+    //if autorun is off save changed files in exercise for batch execution later (click on 'run')
+    //otherwise run on each chzaracter input (potenmtially sluggisg since writing to localStorage)
+    if (this.currentAutorunState.autorun) { //autorun is ON
+
       this.state.updateCode(changedFile);
+
     }
-    else { //manual
-      this.changedFiles.push(changedFile);
+    else { //momo: manual run (autorun is OFF)
+
+      if (changedFile) {
+
+        let foundFileIndex = -1;
+
+        for (var i = 0; i < this.changedFiles.length; i++) {
+          if (this.changedFiles[i].file.filename === changedFile.file.filename) {
+            foundFileIndex = i;
+            this.changedFiles[i] = changedFile; //just update the array index with latest code/file info
+            break;
+          }
+        }
+
+        if (foundFileIndex === -1) {
+
+          this.changedFiles.push(changedFile);
+        }
+
+      }
     }
 
   }
 
-  //momo
+  //momo: act on changes in autorun component
   onAutorunChange(changeAutorun) {
 
-    this.currentAutorunState = changeAutorun;
+    this.currentAutorunState = changeAutorun; //always update state
+    //disregard if run isn't clicked
+    if (!this.currentAutorunState.running)
+      return;
 
-    if (this.currentAutorunState.running && !this.currentAutorunState.autorun) {
-
-      for (let file in this.changedFiles) {
-         console.log(file); // "4", "5", "6"
-      }
+    for (var i = 0; i < this.changedFiles.length; i++) {
+        let changedFile = {file: this.changedFiles[i].file, code: this.changedFiles[i].code}
+        this.state.updateCode(changedFile);
     }
+    
   }
 }
