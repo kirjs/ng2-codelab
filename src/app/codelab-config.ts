@@ -9,6 +9,7 @@ export interface AppConfig {
 }
 
 export interface CodelabConfig {
+  runId: number;
   app: AppConfig,
   name: string,
   page: 'milestone'|'feedback',

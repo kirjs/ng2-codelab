@@ -17,7 +17,7 @@ import {FeedbackWidgetComponent} from "./feedback-widget/feedback-widget.compone
 import {FeedbackPageComponent} from "./feedback-page/feedback-page.component";
 import {ExerciseService} from "./exercise.service";
 import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
-import {AutorunControlComponent} from "./exercise/autoruncontrol.component";
+import {AutorunControlComponent} from "./autorun/autoruncontrol.component";
 
 
 let ngModuleConfig = {

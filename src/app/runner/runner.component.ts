@@ -47,10 +47,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
   const iframe = createIframe(config);
   cachedIframes[config.id] = iframe;
   element.appendChild(iframe);
-
   const runJs = jsInjector(iframe);
-
-
   let index = 0;
 
   return new Promise((resolve, reject) => {
@@ -214,24 +211,15 @@ export class RunnerComponent implements AfterViewInit {
 
   }
 
-  ngOnChanges() {
-    this.runCode()
-  }
-
   ngAfterViewInit() {
     this.state.update
-      .map(selectedExercise)
-      .map(e => e.editedFiles.map(f => f.code))
-      // TODO: Find a better way to deep compare two arrays, or mb even to track file changes change detection
-      .map(a => JSON.stringify(a))
+      .map(e => e.runId)
       .distinctUntilChanged()
       .subscribe(() => {
         this.runCode()
       }, () => {
         debugger
       });
-
-    this.state.ping();
   }
 
 }

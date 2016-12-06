@@ -1,4 +1,5 @@
 export enum ActionTypes {
+  RUN_CODE,
   LOAD_SOLUTION,
   TOGGLE_FILE,
   TOGGLE_AUTORUN,

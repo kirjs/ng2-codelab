@@ -18,8 +18,6 @@ export class CodelabConfigService {
   public config: CodelabConfig;
 
   constructor(public exerciseService: ExerciseService) {
-
-
     function testFile() {
       return {
         filename: 'Test.ts',
@@ -33,7 +31,6 @@ export class CodelabConfigService {
         hidden: true
       };
     }
-
 
     function hidden(...files: FileConfig[]): FileConfig[] {
       return files.map(file => Object.assign({}, file, {hidden: true}))
@@ -181,6 +178,8 @@ export class CodelabConfigService {
 
     this.config = {
       app: appConfig,
+      runId: 0,
+      autorun: false,
       name: 'Angular2 codelab',
       user: '',
       auth: {},
