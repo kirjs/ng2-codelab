@@ -6,6 +6,7 @@
   <app-editors [files]="config.editedFiles"
                (onFileCollapsed)="onFileCollapsed($event)"></app-editors>
   <div class="side">
+    <autorun-control (onAutorunChange)=onAutorunChange($event)></autorun-control>
     <div class="description" [innerHTML]="config.description"></div>
     <app-tests [tests]="config.tests"></app-tests>
     <app-runner [files]="config.editedFiles" style="flex: 50%"></app-runner>

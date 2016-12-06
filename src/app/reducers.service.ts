@@ -16,6 +16,13 @@ export class ReducersService {
     return (state.app.preserveState && localState) ? localState : state;
   }
 
+  [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
+
+    state.autorun = !state.autorun;
+    
+    return state;
+  }  
+
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
     state.page = 'feedback';
     return state;
