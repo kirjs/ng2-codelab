@@ -84,10 +84,6 @@ export class StateService {
     this.dispatchAction(ActionTypes.TOGGLE_AUTORUN);
   }
 
-  // getAutorun() {
-  //   return JSON.parse(localStorage.getItem('state'));
-  // }
-
   openFeedback() {
     this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }

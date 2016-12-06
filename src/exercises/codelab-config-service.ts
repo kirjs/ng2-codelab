@@ -10,7 +10,7 @@ export const appConfig = {
   user: '',
   auth: '',
   feedbackEnabled: false,
-  preserveState: false
+  preserveState: true
 };
 
 @Injectable()
@@ -82,8 +82,6 @@ export class CodelabConfigService {
       }, extensions)
     }
 
-// Ugly, but helps to typecheck.
-// TODO: Find a nicer way
     const files = {} as any;
 
     function mapObject(object, callback) {
@@ -179,7 +177,7 @@ export class CodelabConfigService {
     this.config = {
       app: appConfig,
       runId: 0,
-      autorun: false,
+      autorun: true,
       name: 'Angular2 codelab',
       user: '',
       auth: {},

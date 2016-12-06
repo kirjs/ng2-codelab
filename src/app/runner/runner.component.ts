@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from "@angular/core";
 import * as ts from "typescript";
 import {FileConfig} from "../file-config";
-import {StateService, selectedExercise} from "../state.service";
+import {StateService} from "../state.service";
 
 let cachedIframes = {};
 
@@ -23,7 +23,6 @@ interface IframeConfig {
   id: string,
   url: string,
   restart?: boolean,
-  runId?: number,
   hidden?: boolean
 }
 
@@ -102,14 +101,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
 
           files.filter(file => file.type === 'ts').map((file) => {
             // Update module names
-            let code = files.map(file => file.moduleName).reduce((code, moduleName) => {
-              if (!code || !code.replace) {
-                console.log(file);
-                debugger
-              }
-              code = code.replace('./' + moduleName, './' + moduleName + index);
-              return code;
-            }, file.code);
+            let code = file.code;
 
             if (file.before) {
               code = file.before + ';\n' + code;
@@ -119,8 +111,8 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               code = ';\n' + code + file.after;
             }
 
+            const moduleName = file.moduleName;
 
-            const moduleName = file.moduleName + index;
 
             // TODO(kirjs): Add source maps.
             return ts.transpileModule(code, {
@@ -145,7 +137,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
 
 
           files.filter((file) => file.bootstrap).map((file) => {
-            const moduleName = file.moduleName + index;
+            const moduleName = file.moduleName;
             runJs(`System.import('${moduleName}')`);
           });
         }
@@ -166,7 +158,6 @@ export class RunnerComponent implements AfterViewInit {
   @Input() files: any;
   html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
-  runId = 0;
 
 
   constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService) {
@@ -199,7 +190,7 @@ export class RunnerComponent implements AfterViewInit {
     });
 
     injectIframe(this.element.nativeElement, {
-      id: 'testing', runId: this.runId++, 'url': 'assets/runner/tests.html', restart: true, hidden: false
+      id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
     })
       .then((sandbox) => {
 
