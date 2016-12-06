@@ -74,32 +74,68 @@ export class EditorComponent implements AfterViewInit {
   static configureMonaco() {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       experimentalDecorators: true,
-      allowNonTsExtensions: true
+      allowNonTsExtensions: true,
+      noImplicitAny: true,
     });
 
 
     const core = `
         declare module '@angular/core' {
-          export class Dog {
-            public bububu(): string;
-          }         
-        }                
+          export class EventEmitter<T> {
+            emit: function(param: T);
+          }       
+            
+          export interface ComponentConfig {
+            selector: string;
+            template?: string;
+            templateUrl?: string;
+          }
+          
+          export function Component(config: ComponentConfig);
+          
+          export interface NgModuleConfig {
+            imports?: any[];
+            declarations?: any[];
+            providers?: any[];
+            bootstrap?: any[];           
+          }
+          export function NgModule(config: NgModuleConfig);
+          export function Injectable();
+          export function Output();
+          export function Input();
+          
+        }  
+           
+        declare module '@angular/platform-browser' {
+          export class BrowserModule {
+           
+          }                        
+        }                                                        
         `;
 
     const pba = `    
-    import {Dog} from '@angular/core'
+  
     
-    declare module '@angular/platform-browser-dynamic' {
-          export class Platform {
+    namespace ./AppComponent {
+    declare module './AppComponent' {
+          export class AppComponent {
             public bootstrapModule(module: Dog): Dog
-          }
-          export declare const platformBrowserDynamic: (extraProviders?: any[]) => Platform;
-        }      `;
+          }          
+    }      
 
-    if (!monaco.languages.typescript.typescriptDefaults._extraLibs['Dog']) {
+    declare module 'AppComponent' {
+          export class AppComponent {
+            public bootstrapModule(module: Dog): Dog
+          }          
+    }      
+    }
 
+
+`;
+
+    if (!monaco.languages.typescript.typescriptDefaults._extraLibs['./AppComponent.d.ts']) {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(core, '@angular/core.d.ts');
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, '@angular/platform-browser-dynamic.d.ts');
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, './AppComponent.d.ts');
     }
 
     // Only need to configure it once

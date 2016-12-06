@@ -58,37 +58,36 @@ but this should be done dynamically instead. -->
   });
 </script>
 <script>
-  System.register("initTestBed", ['@angular/core/testing', '@angular/platform-browser-dynamic/testing'], function (){
+  System.register("initTestBed", ['@angular/core/testing', '@angular/platform-browser-dynamic/testing'], function () {
     "use strict";
     var testing_1, testing_2;
     return {
       setters: [
-        function (testing_1_1){
+        function (testing_1_1) {
           testing_1 = testing_1_1;
         },
-        function (testing_2_1){
+        function (testing_2_1) {
           testing_2 = testing_2_1;
         }],
-      execute: function (){
+      execute: function () {
         testing_1.TestBed.initTestEnvironment(testing_2.BrowserDynamicTestingModule, testing_2.platformBrowserDynamicTesting());
       }
     }
   });
 
-  function mochaBefore(){
-    mocha.setup('bdd').reporter(function (){
+  function mochaBefore() {
+    mocha.setup('bdd').reporter(function () {
     });
   }
 
-
-  function flattenTests(suite){
+  function flattenTests(suite) {
     const result = [];
 
-    function extractSuite(suite){
-      suite.suites.forEach(function (suite){
+    function extractSuite(suite) {
+      suite.suites.forEach(function (suite) {
         extractSuite(suite);
       });
-      suite.tests.forEach(function (test){
+      suite.tests.forEach(function (test) {
         result.push(test.title);
       });
     }
@@ -97,14 +96,14 @@ but this should be done dynamically instead. -->
     return result;
   }
 
-  function mochaAfter(runId){
+  function mochaAfter(runId) {
     window.top.postMessage({
       type: 'testList',
       tests: flattenTests(mocha.suite)
     }, '*');
 
     mocha.run()
-      .on('pass', function (test, result){
+      .on('pass', function (test, result) {
         window.top.postMessage({
           type: 'testResult',
           test: {
@@ -115,7 +114,7 @@ but this should be done dynamically instead. -->
           runId: runId
         }, '*')
       })
-      .on('fail', function (test, error){
+      .on('fail', function (test, error) {
         window.top.postMessage({
           type: 'testResult',
           test: {

@@ -1,29 +1,15 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+
+const exercises = require('../assets/exercises.json');
+import * as assert from 'assert';
+
+
 
 @Injectable()
 export class ExerciseService {
-  private exercises;
-  private fetcher;
-
-  public static exercises;
-
-  constructor(private http: Http) {
-    this.fetcher = http.get('assets/exercises.json')
-      .map(response => response.json()).subscribe(
-        (exercises) => {
-          ExerciseService.exercises = exercises;
-          this.exercises = exercises;
-        },
-        () => {
-          //  node src/gen/prefetch-exercises.js
-          debugger
-        }
-      );
-
-  }
-
-  fetch(file: string) {
-    return this.exercises[file];
+  private readonly exercises = exercises;
+  getExercise(path){
+    assert(this.exercises[path], `Exercise doesn't exist.`);
+    return this.exercises[path];
   }
 }

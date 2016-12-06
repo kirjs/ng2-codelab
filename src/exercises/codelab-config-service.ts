@@ -74,15 +74,6 @@ export class CodelabConfigService {
       }, extensions)
     }
 
-    function appBootstrap(extensions?) {
-      return Object.assign(tsFile('AppModule'), {
-        filename: 'Bootstrap.ts',
-        type: 'ts',
-        excludeFromTesting: true,
-        bootstrap: true,
-      }, extensions)
-    }
-
     const files = {} as any;
 
     function mapObject(object, callback) {
@@ -113,12 +104,12 @@ export class CodelabConfigService {
     }
 
     function loadHtml(name, states) {
-      const result = differ(ExerciseService.exercises[`diffs/${name}.html`], states);
+      const result = differ(exerciseService.getExercise(`diffs/${name}.html`), states);
       return mapObject(result, (code) => newHtmlFile(name, code));
     }
 
     function loadTs(name, states) {
-      const result = differ(ExerciseService.exercises[`diffs/${name}.ts`], states);
+      const result = differ(exerciseService.getExercise(`diffs/${name}.ts`), states);
 
       return mapObject(result, (code) => newTsFile(name, code));
     }
@@ -645,6 +636,7 @@ export class CodelabConfigService {
                 testFile(),
                 ...hidden({
                     filename: 'index.html',
+                    moduleName: 'index',
                     code: '<my-thumbs></my-thumbs>',
                     type: 'html'
                   },
@@ -696,7 +688,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten</h2>
-                  <img ng-reflect-src="/assets/images/kitten1.jpg" src="/assets/images/kitten1.jpg">            
+                  <img src="/assets/images/kitten1.jpg">            
                   <div>This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)</div>
                   <div>[Show meta]</div>
                   <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>

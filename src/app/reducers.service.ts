@@ -161,7 +161,7 @@ export class ReducersService {
           debugger
         }
         if (!file.code) {
-          file.code = this.exerciseService.fetch(`${exerciseConfig.path}/${file.filename}`);
+          file.code = this.exerciseService.getExercise(`${exerciseConfig.path}/${file.filename}`);
         }
 
         if (exerciseConfig.solutions) {

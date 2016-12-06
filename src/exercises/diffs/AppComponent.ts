@@ -3,9 +3,9 @@ import {Component} from "@angular/core";
 import {VideoService} from "./VideoService";
 /*/d*//*d:templateAllVideos*/
 const FAKE_VIDEOS = [{
-  title: "Cute kitten",
-  src: "/assets/images/kitten1.jpg"
-},
+    title: "Cute kitten",
+    src: "/assets/images/kitten1.jpg"
+  },
   {
     title: "Kitten on the tree",
     src: "/assets/images/kitten2.jpg"
