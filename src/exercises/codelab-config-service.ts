@@ -10,7 +10,8 @@ export const appConfig = {
   user: '',
   auth: '',
   feedbackEnabled: false,
-  preserveState: true
+  preserveState: true,
+  debug: true
 };
 
 @Injectable()

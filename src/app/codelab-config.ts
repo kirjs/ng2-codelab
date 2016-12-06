@@ -5,10 +5,12 @@ export interface AppConfig {
   user: string,
   auth: string,
   feedbackEnabled: boolean,
-  preserveState: boolean
+  preserveState: boolean,
+  debug: boolean
 }
 
 export interface CodelabConfig {
+  debugTrackTime?: number;
   runId: number;
   app: AppConfig,
   name: string,

@@ -28,6 +28,11 @@ export class ReducersService {
   [ActionTypes.RUN_CODE](state: CodelabConfig) {
     // Runner watches for changes to runId, and reruns the code on update.
     // This is probably not the most intuitive way to do things.
+    if (state.app.debug) {
+      state.debugTrackTime = (new Date()).getTime();
+      console.log('RUN START');
+    }
+
     state.runId++;
     return state;
   }
@@ -102,6 +107,12 @@ export class ReducersService {
         test.result = action.data.result;
       }
     });
+
+    if (state.app.debug) {
+      if (!selectedExercise(state).tests.find(t => t.pass === undefined)) {
+        console.log('RUN COMPLETE', (new Date()).getTime() - state.debugTrackTime);
+      }
+    }
 
     return state;
   }
