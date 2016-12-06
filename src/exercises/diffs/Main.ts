@@ -3,9 +3,9 @@ import {Meetup} from './Meetup';
 // Below is for your reference, we never actually run the file.
 // but feel free to play with the code.
 const guests = [{
-  rsvp: true,
-  name: 'Sir Isaac Newton'
-},
+    rsvp: true,
+    name: 'Sir Isaac Newton'
+  },
   {
     rsvp: true,
     name: 'Marie Curie'
