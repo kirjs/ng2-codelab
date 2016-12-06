@@ -80,6 +80,14 @@ export class StateService {
     this.dispatchAction(ActionTypes.NEXT_EXERCISE);
   }
 
+  toggleAutorun() {
+    this.dispatchAction(ActionTypes.TOGGLE_AUTORUN);
+  }
+
+  // getAutorun() {
+  //   return JSON.parse(localStorage.getItem('state'));
+  // }
+
   openFeedback() {
     this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
@@ -108,9 +116,8 @@ export class StateService {
     this.dispatchAction(ActionTypes.UPDATE_SINGLE_TEST_RESULT, test);
   }
 
-  ping() {
-    // This is a hack. See http://jsbin.com/yuqeniqena/1/edit?js,output
-    this.dispatchAction(ActionTypes.PING);
+  run() {
+    this.dispatchAction(ActionTypes.RUN_CODE);
   }
 
   toggleFile(file: FileConfig) {

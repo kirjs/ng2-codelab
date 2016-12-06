@@ -12,12 +12,23 @@ import {ExerciseService} from "./exercise.service";
 export class ReducersService {
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
     let localState = JSON.parse(localStorage.getItem('state'));
-
     return (state.app.preserveState && localState) ? localState : state;
+  }
+
+  [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
+    state.autorun = !state.autorun;
+    return state;
   }
 
   [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
     state.page = 'feedback';
+    return state;
+  }
+
+  [ActionTypes.RUN_CODE](state: CodelabConfig) {
+    // Runner watches for changes to runId, and reruns the code on update.
+    // This is probably not the most intuitive way to do things.
+    state.runId++;
     return state;
   }
 
@@ -31,16 +42,11 @@ export class ReducersService {
     return data;
   }
 
-
   [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}) {
     state.page = 'milestone';
     state.selectedMilestoneIndex = data;
     const nextIndex = selectedMilestone(state).selectedExerciseIndex;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
-  }
-
-  [ActionTypes.PING](state: CodelabConfig) {
-    return state;
   }
 
   [ActionTypes.TOGGLE_FILE](state: CodelabConfig, {data}: {data: FileConfig}) {
@@ -81,7 +87,7 @@ export class ReducersService {
       }
     });
 
-    return state;
+    return state.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
   [ActionTypes.SET_TEST_LIST](state: CodelabConfig, action: {data: Array<string>}) {
@@ -135,7 +141,6 @@ export class ReducersService {
     if (exerciseConfig.editedFiles) {
       return state;
     }
-
 
     exerciseConfig.editedFiles = exerciseConfig
       .fileTemplates

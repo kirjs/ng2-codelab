@@ -9,10 +9,12 @@ export interface AppConfig {
 }
 
 export interface CodelabConfig {
+  runId: number;
   app: AppConfig,
   name: string,
   page: 'milestone'|'feedback',
   selectedMilestoneIndex: number,
+  autorun:boolean,
   milestones: Array<MilestoneConfig>,
   user: string,
   auth: {}
