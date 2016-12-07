@@ -1,15 +1,16 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {AppComponent} from '../../4-component-tree/1-use-video-component/solution/AppComponent';
-import {appCode, videoCode, togglepanelCode, contextCode} from '../../shared/code';
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {AppComponent} from "./AppComponent";
+import {appCode, videoCode, togglePanelCode, contextCode, thumbsCode} from "./code";
 import {AppModule} from "./AppModule";
-import {VideoComponent} from "../../6-children/VideoComponent";
-import {VideoService} from "../../shared/VideoService";
-import {TogglePanelComponent} from "../../shared/TogglePanelComponent";
-import {ContextComponent} from "../../6-children/solution/ContextComponent";
-import {ContextService} from "../../6-children/ContextService";
-import {Api} from "../../shared/Api";
-import {FuzzyPipe} from "../0-create-pipe/solution/FuzzyPipe";
+import {VideoComponent} from "./VideoComponent";
+import {VideoService} from "./VideoService";
+import {TogglePanelComponent} from "./TogglePanelComponent";
+import {ContextComponent} from "./ContextComponent";
+import {ContextService} from "./ContextService";
+import {Api} from "./Api";
+import {FuzzyPipe} from "./FuzzyPipe";
+import {ThumbsComponent} from "./ThumbsComponent";
 
 function objectValues(object) {
   return Object.keys(object).reduce((result, key) => {
@@ -27,11 +28,12 @@ beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
     providers: [VideoService, ContextService, /* that's a hack, to provide parent component */ VideoComponent],
-    declarations: [AppComponent, VideoComponent, TogglePanelComponent, ContextComponent, FuzzyPipe]
+    declarations: [AppComponent, VideoComponent, ThumbsComponent, TogglePanelComponent, ContextComponent, FuzzyPipe]
   });
   TestBed.overrideComponent(AppComponent, {set: {template: appCode}});
   TestBed.overrideComponent(VideoComponent, {set: {template: videoCode}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglepanelCode}});
+  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbsCode}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanelCode}});
   TestBed.overrideComponent(ContextComponent, {set: {template: contextCode}});
   TestBed.compileComponents();
 });
@@ -53,7 +55,7 @@ describe('Pipes', () => {
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }
-    chai.expect(metadata[0].declarations, `Video component not found`).contains(FuzzyPipe);
+    chai.expect(metadata[0].declarations, `Fuzzy pipe not found`).contains(FuzzyPipe);
   });
 
   it(`video.html: Use the pipe on the date.`, () => {

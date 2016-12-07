@@ -61,7 +61,6 @@ export class CodelabConfigService {
       });
     }
 
-    const files = {} as any;
 
     function mapObject(object, callback) {
       return Object.keys(object).reduce((result, key) => {
@@ -93,13 +92,13 @@ export class CodelabConfigService {
 
     function loadHtml(name, states) {
       const result = differ(exerciseService.getExercise(`diffs/${name}.html`), states);
-      return mapObject(result, (code) => newHtmlFile(name, code));
+      return mapObject(result, (code) => newHtmlFile(name, code)) as Versions;
     }
 
     function loadTs(name, states) {
       const result = differ(exerciseService.getExercise(`diffs/${name}.ts`), states);
 
-      return mapObject(result, (code) => newTsFile(name, code));
+      return mapObject(result, (code) => newTsFile(name, code)) as Versions;
     }
 
     const commits = [
@@ -119,6 +118,8 @@ export class CodelabConfigService {
       'templateAllVideosSolved',
       'diInjectService',
       'diInjectServiceSolved',
+      'dataBinding',
+      'dataBindingSolved',
       'videoComponentCreate',
       'videoComponentCreateSolved',
       'videoComponentUse',
@@ -132,32 +133,80 @@ export class CodelabConfigService {
       'togglePanelComponentUse',
       'togglePanelComponentUseSolved',
       'contextComponentUse',
-      'contextComponentUseSolved'
+      'contextComponentUseSolved',
+      'fuzzyPipeCreate',
+      'fuzzyPipeCreateSolved',
+      'fuzzyPipeUse',
+      'fuzzyPipeUseSolved',
+      'neverShow'
     ];
-    files.appComponent = loadTs('AppComponent', commits) as any;
-    files.appModule = loadTs('AppModule', commits) as any;
-    files.appHtml = loadHtml('app', commits) as any;
-    files.bootstrap = loadTs('Bootstrap', commits) as any;
-    files.videoItem = loadTs('VideoItem', commits) as any;
-    files.api = loadTs('Api', commits) as any;
-    files.videoItem = loadTs('VideoItem', commits) as any;
-    files.videoService = loadTs('VideoService', commits) as any;
-    files.videoHtml = loadHtml('video', commits) as any;
-    files.videoComponent = loadTs('VideoComponent', commits) as any;
-    files.thumbsComponent = loadTs('ThumbsComponent', commits) as any;
-    files.thumbsHtml = loadHtml('thumbs', commits) as any;
-    files.togglePanelHtml = loadHtml('togglePanel', commits) as any;
-    files.togglePanelComponent = loadTs('TogglePanelComponent', commits) as any;
-    files.wrapperComponent = loadTs('WrapperComponent', commits) as any;
-    files.contextComponent = loadTs('ContextComponent', commits) as any;
-    files.contextService = loadTs('ContextService', commits) as any;
-    files.meetup = loadTs('Meetup', commits) as any;
-    files.mainMeetup = loadTs('Main', commits) as any;
-    files.guest = loadTs('Guest', commits) as any;
+    interface Versions {
+      meetup: FileConfig,
+      meetupSolved: FileConfig,
+      createComponent: FileConfig,
+      createComponentSolved: FileConfig,
+      createModule: FileConfig,
+      createModuleSolved: FileConfig,
+      bootstrap: FileConfig,
+      bootstrapSolved: FileConfig,
+      templatePageSetup: FileConfig,
+      templatePageSetupSolved: FileConfig,
+      templateAddAction: FileConfig,
+      templateAddActionSolved: FileConfig,
+      templateAllVideos: FileConfig,
+      templateAllVideosSolved: FileConfig,
+      diInjectService: FileConfig,
+      diInjectServiceSolved: FileConfig,
+      dataBinding: FileConfig,
+      dataBindingSolved: FileConfig,
+      videoComponentCreate: FileConfig,
+      videoComponentCreateSolved: FileConfig,
+      videoComponentUse: FileConfig,
+      videoComponentUseSolved: FileConfig,
+      thumbsComponentCreate: FileConfig,
+      thumbsComponentCreateSolved: FileConfig,
+      thumbsComponentUse: FileConfig,
+      thumbsComponentUseSolved: FileConfig,
+      togglePanelComponentCreate: FileConfig,
+      togglePanelComponentCreateSolved: FileConfig,
+      togglePanelComponentUse: FileConfig,
+      togglePanelComponentUseSolved: FileConfig,
+      contextComponentUse: FileConfig,
+      contextComponentUseSolved: FileConfig,
+      fuzzyPipeCreate: FileConfig,
+      fuzzyPipeCreateSolved: FileConfig
+      fuzzyPipeUse: FileConfig,
+      fuzzyPipeUseSolved: FileConfig,
+    }
+
+    const files = {
+      appComponent: loadTs('AppComponent', commits),
+      appModule: loadTs('AppModule', commits),
+      appHtml: loadHtml('app', commits),
+      bootstrap: loadTs('Bootstrap', commits),
+      dataBinding: loadTs('DataBinding', commits),
+      videoItem: loadTs('VideoItem', commits),
+      api: loadTs('Api', commits),
+      videoService: loadTs('VideoService', commits),
+      videoHtml: loadHtml('video', commits),
+      videoComponent: loadTs('VideoComponent', commits),
+      thumbsComponent: loadTs('ThumbsComponent', commits),
+      thumbsHtml: loadHtml('thumbs', commits),
+      togglePanelHtml: loadHtml('togglePanel', commits),
+      togglePanelComponent: loadTs('TogglePanelComponent', commits),
+      wrapperComponent: loadTs('WrapperComponent', commits),
+      contextComponent: loadTs('ContextComponent', commits),
+      contextService: loadTs('ContextService', commits),
+      meetup: loadTs('Meetup', commits),
+      mainMeetup: loadTs('Main', commits),
+      guest: loadTs('Guest', commits),
+      fuzzyPipe: loadTs('FuzzyPipe', commits),
+    };
 
     // Too hard to use diff comments for this, so I'm replacing the whole file
     files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
     files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
+    files.appModule.dataBinding = newTsFile('AppModule', exerciseService.getExercise(`diffs/DataBindingModule.ts`));
 
 
     this.config = {
@@ -507,7 +556,7 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               path: '1-bootstrap/intro',
-              description: `
+              description: sanitizer.bypassSecurityTrustHtml(`
           <h1>Let's create a Video component!</h1>
           <p>Now instead of having the video html in the app component, we're going to have
             a separate component for the video info.</p>
@@ -525,12 +574,35 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `,
+        `),
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
             },
-            {
+            /*{
+
+              name: 'Data binding',
+              description: `<p>This is a bonus exercise, meant to illustrate passing the data from
+                parent component to the child component </p>
+            `,
+              path: '4-component-tree/0-add-video-component',
+              solutions: [
+                files.dataBinding.dataBindingSolved,
+              ],
+              fileTemplates: [
+                files.dataBinding.dataBinding,
+                files.appModule.dataBinding,
+                files.bootstrap.dataBinding,
+                ...hidden({
+                  filename: 'index.html',
+                  moduleName: 'index',
+                  code: '<my-flag></my-flag>',
+                  type: 'html'
+                })
+                // testFile()
+              ],
+              tests: []
+            }, */{
 
               name: 'Create VideoComponent',
               description: `<p>Now instead of having the video html in the app component, we're going to have 
@@ -543,8 +615,8 @@ export class CodelabConfigService {
                 files.videoComponent.videoComponentCreateSolved,
               ],
               fileTemplates: [
-                files.videoComponent.initial,
-                files.videoHtml.initial,
+                files.videoComponent.videoComponentCreate,
+                files.videoHtml.videoComponentCreate,
                 ...justForReference(
                   files.appModule.videoComponentCreate,
                   files.videoService.videoComponentCreate,
@@ -676,7 +748,7 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               path: '1-bootstrap/intro',
-              description: `
+              description: sanitizer.bypassSecurityTrustHtml(`
           <h1>Let's project some content!</h1>
           <p>In this milestone we'll create a component called 'TogglePanel'</p>
           <p>It will actually take 2 divs, but only display one at a time. </p>
@@ -707,12 +779,10 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `,
+        `),
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
-
-
             },
             {
               name: 'Add TogglePanelComponent',
@@ -775,7 +845,7 @@ export class CodelabConfigService {
           exercises: [{
             name: 'Intro',
             path: '1-bootstrap/intro',
-            description: `
+            description: sanitizer.bypassSecurityTrustHtml(`
           <h1>Let's inject parent component!</h1>
           <p>In this milestone we'll create create a ContextAdComponent. </p>
           <p>This component will not use inputs. Instead it will require parent (Video) component and directly look at it's properties. </p>
@@ -787,7 +857,7 @@ export class CodelabConfigService {
                   <h2>Cute kitten dancing</h2>
                   <img  src="/assets/images/cat-0.png">            
                   <div>Decription: music</div>
-                  <div>[Show meta]</div>
+                  <button>Show meta</button>
                   <button>Thumbs Up</button> <button>Thumbs Down</button>
                   <div>Context ad: Turn up your speakers</div>                  
                 </div>
@@ -795,7 +865,7 @@ export class CodelabConfigService {
                   <h2>Cute kitten sleeping</h2>
                   <img  src="/assets/images/cat-0.png">            
                   <div>Decription: sleeping</div>
-                  <div>[Show meta]</div>
+                  <button>Show meta</button>
                   <button>Thumbs Up</button> <button>Thumbs Down</button>
                   <div>Context ad: Check out our web site.</div>                  
                 </div>
@@ -805,7 +875,7 @@ export class CodelabConfigService {
              <p>Note, we are actually calling it ContextComponent, because when it was called ContextAdComponent, adblock blocked it, and I spent 2 hours debugging. </p>
               
                    
-        `,
+        `),
             fileTemplates: [],
             tests: [],
             messageNext: `I'm a ready, let's start!`
@@ -840,54 +910,67 @@ export class CodelabConfigService {
                   files.api.contextComponentUse,
                   files.thumbsHtml.contextComponentUse,
                   files.thumbsComponent.contextComponentUse,
-                  // files.bootstrap.solved
+                  files.bootstrap.contextComponentUse
                 ),
                 testFile()
               ],
               tests: []
             }]
         },
+
+        {
+          name: 'Pipes',
+          selectedExerciseIndex: 0,
+          exercises: [{
+            name: 'Create a pipe',
+            description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
+            path: '7-pipes/0-create-pipe',
+            solutions: [
+              files.fuzzyPipe.fuzzyPipeCreateSolved,
+            ],
+            fileTemplates: [
+              evaled(files.fuzzyPipe.fuzzyPipeCreate),
+              testFile()
+            ],
+            tests: []
+          }, {
+            name: 'Use the pipe',
+            description: 'Now include the app in the module and use in the app.',
+            path: '7-pipes/1-use-pipe',
+            solutions: [
+              files.appModule.fuzzyPipeUseSolved,
+              files.videoHtml.fuzzyPipeUseSolved,
+            ],
+            fileTemplates: [
+              files.appModule.fuzzyPipeUse,
+              files.videoHtml.fuzzyPipeUse,
+              ...justForReference(
+                files.fuzzyPipe.fuzzyPipeUse,
+                files.contextService.fuzzyPipeUse,
+                files.videoComponent.fuzzyPipeUse,
+                files.togglePanelHtml.fuzzyPipeUse,
+                files.togglePanelComponent.fuzzyPipeUse,
+                files.appHtml.fuzzyPipeUse,
+                files.appComponent.fuzzyPipeUse,
+                files.videoService.fuzzyPipeUse,
+                files.videoItem.fuzzyPipeUse,
+                files.api.fuzzyPipeUse,
+                files.thumbsHtml.fuzzyPipeUse,
+                files.thumbsComponent.fuzzyPipeUse,
+                files.contextComponent.fuzzyPipeUse,
+                {
+                  filename: 'context.html',
+                  moduleName: 'context',
+                  code: '{{text}}'
+                },
+                files.bootstrap.fuzzyPipeUse
+              ),
+              testFile()
+            ],
+            tests: []
+          }]
+        },
         /*
-         {
-         name: 'Pipes',
-         selectedExerciseIndex: 0,
-         exercises: [{
-         name: 'Create a pipe',
-         description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
-         path: '7-pipes/0-create-pipe',
-         fileTemplates: [
-         tsFile('FuzzyPipe', {code: ``}),
-         testFile()
-         ],
-         tests: []
-         }, {
-         name: 'Use the pipe',
-         description: 'Now include the app in the module and use in the app.',
-         path: '7-pipes/1-use-pipe',
-         fileTemplates: [
-         htmlFile('video', {path: '6-children/solution'}),
-         tsFile('AppModule'),
-         tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
-         testFile(),
-         ...hidden(
-         tsFile('ContextComponent', {path: '6-children'}),
-         htmlFile('context', {path: '6-children'}),
-         tsFile('ContextService', {path: '6-children'}),
-         tsFile('VideoComponent', {path: '6-children'}),
-         htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-         htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-         sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-         tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
-         sharedAppBootstrap({hidden: true}),
-         sharedVideoInterface({hidden: true}),
-         sharedTsFile('VideoService', {hidden: true}),
-         sharedApiFile({hidden: true})
-         ),
-         testFile(),
-         ],
-         tests: []
-         }]
-         },
          {
          name: 'Tests',
          selectedExerciseIndex: 0,

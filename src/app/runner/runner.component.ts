@@ -33,7 +33,7 @@ function createIframe(config: IframeConfig) {
   iframe.setAttribute('frameBorder', '0');
   iframe.setAttribute('src', config.url);
   iframe.setAttribute('class', config.id);
-  iframe.setAttribute('style', 'width: 400px; height: 100%');
+  iframe.setAttribute('style', 'width: 500px; height: 100%');
   return iframe;
 }
 

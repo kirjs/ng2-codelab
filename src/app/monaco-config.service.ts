@@ -110,7 +110,6 @@ export class MonacoConfigService {
   }
 
   addDeclaration(file: FileConfig) {
-    console.log(file.filename, file.code);
     this.declarations[file.filename] = {
       dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
       file: file,

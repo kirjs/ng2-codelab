@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-
+import {Pipe, PipeTransform} from "@angular/core";
+/*d:fuzzyPipeCreateSolved*/
 @Pipe({name: 'fuzzy'})
 export class FuzzyPipe implements PipeTransform {
   transform(value: string) {
@@ -21,3 +21,4 @@ export class FuzzyPipe implements PipeTransform {
 export function evalJs(string) {
 
 }
+/*/d*/

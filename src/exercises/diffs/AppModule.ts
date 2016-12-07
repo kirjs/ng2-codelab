@@ -9,8 +9,10 @@ import {TogglePanelComponent} from "./TogglePanelComponent";
 import {VideoService} from "./VideoService";
 /*/d*//*d:videoComponentUse/trimLeading*/
 import {VideoComponent} from "./VideoComponent";
-/*/d*//*d:contextComponentUse*/
+/*/d*//*d:contextComponentUse/trimLeading*/
 import {ContextComponent} from "./ContextComponent";
+/*/d*//*d:fuzzyPipeUse/trimLeading*/
+import {FuzzyPipe} from "./FuzzyPipe";
 /*/d*//*d:createModuleSolved/trimTrailing*/
 @NgModule({
   imports: [BrowserModule],
@@ -19,6 +21,7 @@ import {ContextComponent} from "./ContextComponent";
     /*/d*//*d:thumbsComponentUseSolved/trimBoth*/, ThumbsComponent
     /*/d*//*d:togglePanelComponentUseSolved/trimBoth*/, TogglePanelComponent
     /*/d*//*d:contextComponentUse/trimBoth*/, ContextComponent
+    /*/d*//*d:fuzzyPipeUseSolved/trimBoth*/, FuzzyPipe
     /*/d*//*d:createModuleSolved/trimBoth*/
   ],
   bootstrap: [AppComponent]/*/d*//*d:diInjectServiceSolved/trimTrailing*/,
