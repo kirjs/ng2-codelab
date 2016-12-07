@@ -6,15 +6,15 @@ import {VideoService} from "./VideoService";
 /*/d*//*d:templateAllVideos*/
 const FAKE_VIDEOS = [{
     title: "Cute kitten",
-    src: "/assets/images/kitten1.jpg"
+    src: "/assets/images/cat-1.jpg"
   },
   {
     title: "Kitten on the tree",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/cat-5.jpg"
   },
   {
     title: "Serouis cat",
-    src: "/assets/images/kitten2.jpg"
+    src: "/assets/images/cat-3.jpg"
   }];
 /*/d*//*d:createComponentSolved*/
 @Component({

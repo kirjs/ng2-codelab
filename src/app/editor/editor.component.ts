@@ -28,7 +28,6 @@ export class EditorComponent implements AfterViewInit {
   private _editor: any;
   @Input() file: FileConfig;
   @ViewChild('editor') editorContent: ElementRef;
-  @Input() language: string = "typescript";
   @Output() onCodeChange = new EventEmitter();
   private editSub: Subject<String>;
   height = 0;
@@ -70,14 +69,12 @@ export class EditorComponent implements AfterViewInit {
         this.updateValue(this._editor.getModel().getValue());
       });
 
-      const height = Math.max(100, EditorComponent.calcHeight(this.file.code.split('\n').length));
-      this._editor.layout({height: height + 20, width: 700});
+
+      this.updateHeight(this.file.code);
     })
   }
 
-
-  updateValue(value: string) {
-
+  updateHeight(value: string) {
     const height = EditorComponent.calcHeight(value.split('\n').length);
 
     if (this.height != height) {
@@ -85,6 +82,10 @@ export class EditorComponent implements AfterViewInit {
       this.editorContent.nativeElement.style.height = height + 'px';
       this._editor.layout();
     }
+  }
+
+  updateValue(value: string) {
+    this.updateHeight(value);
     this.editSub.next(value)
   }
 }

@@ -3,7 +3,7 @@ import {VideoItem} from "./VideoItem";
 let FAKE_VIDEOS = [
   {
     title: "Cute kitten",
-    src: "/assets/images/kitten1.jpg",
+    src: "/assets/images/cat-0.png",
     description: "todo",
     views: 100,
     likes: 49329,
@@ -11,14 +11,14 @@ let FAKE_VIDEOS = [
   },
   {
     title: "Kitten on the tree",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-1.jpg",
     description: "todo",
     views: 100,
     likes: 20,
     date: '2016-11-21'
   }, {
     title: "More kitten",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-2.jpg",
     description: "todo",
     views: 100,
     likes: 20,
@@ -26,7 +26,7 @@ let FAKE_VIDEOS = [
 
   }, {
     title: "Another kitten",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-3.jpg",
     description: "todo",
     views: 100,
     likes: 20,
@@ -34,7 +34,7 @@ let FAKE_VIDEOS = [
   },
   {
     title: "Serouis cat",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-4.jpg",
     description: "todo",
     views: 100,
     likes: 20,
@@ -42,7 +42,7 @@ let FAKE_VIDEOS = [
   },
   {
     title: "Serouis cat",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-5.jpg",
     description: "todo",
     views: 100,
     likes: 20,
@@ -50,7 +50,7 @@ let FAKE_VIDEOS = [
   },
   {
     title: "Serouis cat",
-    src: "/assets/images/kitten2.jpg",
+    src: "/assets/images/cat-6.jpg",
     description: "todo",
     views: 100,
     likes: 20,

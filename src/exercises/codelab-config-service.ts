@@ -37,10 +37,6 @@ export class CodelabConfigService {
       return files.map(file => Object.assign({}, file, {hidden: true}))
     }
 
-    function bootstrap(...files: FileConfig[]): FileConfig[] {
-      return files.map(file => Object.assign({}, file, {bootstrap: true}))
-    }
-
     function readOnly(...files: FileConfig[]): FileConfig[] {
       return files.map(file => Object.assign({}, file, {readonly: true}))
     }
@@ -356,13 +352,13 @@ export class CodelabConfigService {
                 <button>Search!</button>
                 <div>
                   <h2>Cute kitten</h2>
-                  <img src="/assets/images/kitten1.jpg">
+                  <img src="/assets/images/cat-0.png">
                 </div><div>
                   <h2>Kitten on the tree</h2>
-                  <img src="/assets/images/kitten2.jpg">
+                  <img src="/assets/images/cat-1.jpg">
                 </div><div>
                   <h2>Serouis cat</h2>
-                  <img src="/assets/images/kitten2.jpg">
+                  <img src="/assets/images/cat-2.jpg">
                 </div>
               </div></my-app>
             </div>
@@ -449,25 +445,25 @@ export class CodelabConfigService {
                 <button>Search!</button>
                 <div>
                   <h2>Cute kitten</h2>
-                  <img  src="/assets/images/kitten1.jpg">
+                  <img  src="/assets/images/cat-0.png">
                 </div><div>
                   <h2>Kitten on the tree</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-1.jpg">
                 </div><div>
                   <h2>More kitten</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-2.jpg">
                 </div><div>
                   <h2>Another kitten</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-3.jpg">
                 </div><div>
                   <h2>Serouis cat</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-4.jpg">
                 </div><div>
                   <h2>Serouis cat</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-5.jpg">
                 </div><div>
                   <h2>Serouis cat</h2>
-                  <img  src="/assets/images/kitten2.jpg">
+                  <img  src="/assets/images/cat-6.jpg">
                 </div>
               </div></my-app>
             </div>
@@ -520,7 +516,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten</h2>
-                  <img  src="/assets/images/kitten1.jpg">
+                  <img  src="/assets/images/cat-0.png">
                   <div>Date 2016-11-25</div>
                   <div>Views 100</div>
                   <div>Likes 20</div>
@@ -601,7 +597,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten</h2>
-                  <img  src="/assets/images/kitten1.jpg">
+                  <img  src="/assets/images/cat-0.png">
                   <div>Date 2016-11-25</div>
                   <div>Views 100</div>
                   <div>Likes 20</div>
@@ -688,7 +684,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten</h2>
-                  <img src="/assets/images/kitten1.jpg">            
+                  <img src="/assets/images/cat-0.png">            
                   <div>This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)</div>
                   <div>[Show meta]</div>
                   <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
@@ -702,7 +698,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten</h2>
-                  <img  src="/assets/images/kitten1.jpg">            
+                  <img  src="/assets/images/cat-0.png">            
                   <div>Likes: 1000</div>
                   <div>Views: 1000000</div>
                   <div>[Show description]</div>
@@ -788,7 +784,7 @@ export class CodelabConfigService {
               <div class="smaller">   
                 <div>
                   <h2>Cute kitten dancing</h2>
-                  <img  src="/assets/images/kitten1.jpg">            
+                  <img  src="/assets/images/cat-0.png">            
                   <div>Decription: music</div>
                   <div>[Show meta]</div>
                   <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
@@ -796,7 +792,7 @@ export class CodelabConfigService {
                 </div>
                 <div>
                   <h2>Cute kitten sleeping</h2>
-                  <img  src="/assets/images/kitten1.jpg">            
+                  <img  src="/assets/images/cat-0.png">            
                   <div>Decription: sleeping</div>
                   <div>[Show meta]</div>
                   <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
