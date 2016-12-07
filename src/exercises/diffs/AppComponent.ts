@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
-/*d:createComponentSolved/trimLeading*/
+/*d:templateAddAction/trimLeading*/
+import {VideoItem} from "./VideoItem";
+/*/d*//*d:diInjectServiceSolved/trimLeading*/
 import {VideoService} from "./VideoService";
 /*/d*//*d:templateAllVideos*/
 const FAKE_VIDEOS = [{
@@ -30,17 +32,16 @@ export class AppComponent {
   constructor(public videoService: VideoService) {
   }
 /*/d*//*d:templateAddActionSolved/trimTrailing*/
-  videos = [];
+  videos: VideoItem[] = [];
 
-  search(searchString) {
+  search(searchString: string) {
     /*/d*//*d:diInjectServiceSolved*/
     this.videos = this.videoService.search(searchString);
     /*/d*//*d:templateAllVideosSolved:diInjectService*/
     this.videos = FAKE_VIDEOS.filter(video => video.title.indexOf(searchString) >= 0);
-    /*/d*//*d:templateAddActionSolved/trimBoth*/
-  }
+  /*/d*//*d:templateAddActionSolved/trimBoth*/}
+  /*/d*//*d:templateAllVideosSolved/trimTrailing*/
 
-/*/d*//*d:templateAllVideosSolved*/
   ngOnInit(){
     this.search('');
   }

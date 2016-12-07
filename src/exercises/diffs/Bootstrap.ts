@@ -1,7 +1,7 @@
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {ResourceLoader} from "@angular/compiler";
 import {AppModule} from "./AppModule";
 /*d:templatePageSetup/trimLeading*/
+import {ResourceLoader} from "@angular/compiler";
 import * as code from "./code";
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {

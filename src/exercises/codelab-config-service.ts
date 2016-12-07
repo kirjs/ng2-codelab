@@ -10,7 +10,7 @@ export const appConfig = {
   user: '',
   auth: '',
   feedbackEnabled: false,
-  preserveState: true,
+  preserveState: false,
   debug: true
 };
 
@@ -64,16 +64,6 @@ export class CodelabConfigService {
       });
     }
 
-    function tsFile(file, extensions?) {
-      return Object.assign({
-        filename: `${file}.ts`, type: 'ts', after: `
-    export function evalJs( js ){
-      return eval(js);
-    }
-`
-      }, extensions)
-    }
-
     const files = {} as any;
 
     function mapObject(object, callback) {
@@ -123,6 +113,8 @@ export class CodelabConfigService {
       'createModuleSolved',
       'bootstrap',
       'bootstrapSolved',
+      'forkBootstrapThumbs',
+      'forkBootstrapThumbsSolved',
       'templatePageSetup',
       'templatePageSetupSolved',
       'templateAddAction',
@@ -152,6 +144,7 @@ export class CodelabConfigService {
     files.bootstrap = loadTs('Bootstrap', commits) as any;
     files.videoItem = loadTs('VideoItem', commits) as any;
     files.api = loadTs('Api', commits) as any;
+    files.videoItem = loadTs('VideoItem', commits) as any;
     files.videoService = loadTs('VideoService', commits) as any;
     files.videoHtml = loadHtml('video', commits) as any;
     files.videoComponent = loadTs('VideoComponent', commits) as any;
@@ -341,7 +334,7 @@ export class CodelabConfigService {
           ]
         },
         {
-          name: 'Templates',
+          name: 'Intro',
           selectedExerciseIndex: 0,
           exercises: [
             {
@@ -404,6 +397,7 @@ export class CodelabConfigService {
                 files.appComponent.templateAddAction,
                 files.appHtml.templateAddAction,
                 ...justForReference(
+                  files.videoItem.templateAddAction,
                   files.appModule.templateAddAction,
                   files.bootstrap.templateAddAction,
                 ),
@@ -415,13 +409,14 @@ export class CodelabConfigService {
               description: `Finally let's iterate over the videos.`,
               path: '2-templates/2-all-videos',
               solutions: [
-                files.appHtml.templateAllVideosSolved,
                 files.appComponent.templateAllVideosSolved,
+                files.appHtml.templateAllVideosSolved,
               ],
               fileTemplates: [
-                files.appHtml.templateAllVideos,
                 files.appComponent.templateAllVideos,
+                files.appHtml.templateAllVideos,
                 ...justForReference(
+                  files.videoItem.templateAddAction,
                   files.appModule.templateAllVideos,
                   files.bootstrap.templateAllVideos,
                 ),
@@ -435,7 +430,7 @@ export class CodelabConfigService {
           name: 'Dependency Injection',
           selectedExerciseIndex: 0,
           exercises: [{
-            name: 'Templates',
+            name: 'Intro',
             path: '1-bootstrap/intro',
             description: `
           <h1>Let's inject a service.</h1>
@@ -630,7 +625,7 @@ export class CodelabConfigService {
                 files.thumbsComponent.thumbsComponentCreate,
                 ...justForReference(
                   files.api.thumbsComponentCreate,
-                  files.appModule.thumbsComponentCreate,
+                  files.appModule.forkBootstrapThumbs,
                   files.bootstrap.thumbsComponentCreate,
                 ),
                 testFile(),

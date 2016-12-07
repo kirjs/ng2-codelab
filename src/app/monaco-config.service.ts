@@ -1,10 +1,16 @@
 import {Injectable} from "@angular/core";
+import {FileConfig} from "./file-config";
 
 declare const monaco;
 
+interface DeclarationConfig {
+  code: string,
+  dispose: ()=>{}
+}
 @Injectable()
 export class MonacoConfigService {
   public monacoReady;
+  private declarations: {[key: string]: DeclarationConfig } = {};
 
   constructor() {
     this.monacoReady = new Promise((resolve) => {
@@ -69,10 +75,22 @@ export class MonacoConfigService {
         declare var x = 1;
            
         declare module '@angular/platform-browser' {
-          export class BrowserModule {
-           
-          }                        
+          export class BrowserModule {}                        
         }                                                        
+
+        declare module '@angular/platform-browser-dynamic' {
+          export class Platform {
+            bootstrapModule: function();
+          }
+          export function platformBrowserDynamic(): Platform;                       
+        }       
+        
+        declare module '@angular/compiler' {
+          export class ResourceLoader {           
+          }
+        }       
+                                                         
+                                                         
         `;
 
     if (!monaco.languages.typescript.typescriptDefaults._extraLibs['./AppComponent.d.ts']) {
@@ -81,5 +99,26 @@ export class MonacoConfigService {
       //monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, './MeetupSecretModule.d.ts');
       //monaco.languages.typescript.typescriptDefaults.addExtraLib(msm, 'inmemory://model/MeetupSecretModule.ts');
     }
+  }
+
+  cleanUpDeclarations() {
+    // TODO
+  }
+
+  updateDeclaration(file) {
+    let declaration = this.declarations[file.filename];
+    if (declaration) {
+      console.log(declaration.code == file.code);
+
+    } else {
+      this.declarations[file.filename] = {
+        dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
+        code: file.code
+      }
+    }
+  }
+
+  updateDeclarations(files: FileConfig[]) {
+    files.forEach((file) => this.updateDeclaration(file));
   }
 }

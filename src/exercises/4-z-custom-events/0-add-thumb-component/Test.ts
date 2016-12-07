@@ -45,7 +45,7 @@ describe('Component tree', () => {
     it(`ThumbsComponent.ts: Set the templateUrl to load appropriate html file.`, () => {
       const metadata = Reflect.getMetadata("annotations", ThumbsComponent);
       chai.expect(metadata, `ThumbsComponent doesn't have a @Component() annotation`).is.not.undefined;
-      chai.expect(metadata[0].templateUrl, `ThumbsComponent's templateUrl should be set to 'thumbs.html'`).equals('thumbs.html')
+      chai.expect(metadata[0].templateUrl, `ThumbsComponent's templateUrl should be set to './thumbs.html'`).equals('./thumbs.html')
     });
 
     it(`ThumbsComponent.ts: Add a @Output() called 'onThumbs'`, () => {
@@ -76,7 +76,7 @@ describe('Component tree', () => {
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
       });
-      chai.expect(thumbs, `OnThumbs was called without pressing the button`).to.be.not.ok
+      chai.expect(thumbs, `OnThumbs was called without pressing the button`).to.be.not.ok;
       fixture.nativeElement.querySelector('.thumbs-up').click();
       chai.expect(thumbs, `OnThumbs was not called when pressing the button with the 'thumbs-up' class.`).to.equal(Thumbs.UP);
     });
@@ -86,7 +86,7 @@ describe('Component tree', () => {
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
       });
-      chai.expect(thumbs, `OnThumbs was called without pressing the button`).to.be.not.ok
+      chai.expect(thumbs, `OnThumbs was called without pressing the button`).to.be.not.ok;
       fixture.nativeElement.querySelector('.thumbs-down').click();
       chai.expect(thumbs, `OnThumbs was not called when pressing the button with the 'thumbs-down' class.`).to.equal(Thumbs.DOWN);
     });

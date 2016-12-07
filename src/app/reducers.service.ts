@@ -93,6 +93,8 @@ export class ReducersService {
       }
     });
 
+    this.monacoConfig.updateDeclarations(exercise.editedFiles);
+
     return state.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
@@ -178,11 +180,10 @@ export class ReducersService {
     return state;
   }
 
-  constructor(
-    private exerciseService: ExerciseService,
-    private angularFire: AngularFire,
-    private monacoConfig: MonacoConfigService
-  ) {
+  constructor(private exerciseService: ExerciseService,
+              private angularFire: AngularFire,
+              private monacoConfig: MonacoConfigService) {
   }
+
 
 }
