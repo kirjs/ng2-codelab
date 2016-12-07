@@ -113,8 +113,6 @@ export class CodelabConfigService {
       'createModuleSolved',
       'bootstrap',
       'bootstrapSolved',
-      'forkBootstrapThumbs',
-      'forkBootstrapThumbsSolved',
       'templatePageSetup',
       'templatePageSetupSolved',
       'templateAddAction',
@@ -157,6 +155,10 @@ export class CodelabConfigService {
     files.contextService = loadTs('ContextService', commits) as any;
     files.meetup = loadTs('Meetup', commits) as any;
     files.mainMeetup = loadTs('Main', commits) as any;
+
+    // Too hard to use diff comments for this, so I'm replacing the whole file
+    files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
+    files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
 
 
     this.config = {
@@ -625,7 +627,7 @@ export class CodelabConfigService {
                 files.thumbsComponent.thumbsComponentCreate,
                 ...justForReference(
                   files.api.thumbsComponentCreate,
-                  files.appModule.forkBootstrapThumbs,
+                  files.appModule.thumbsComponentCreate,
                   files.bootstrap.thumbsComponentCreate,
                 ),
                 testFile(),
@@ -807,8 +809,6 @@ export class CodelabConfigService {
             fileTemplates: [],
             tests: [],
             messageNext: `I'm a ready, let's start!`
-
-
           },
             {
               name: 'Inject parent component',
@@ -843,27 +843,6 @@ export class CodelabConfigService {
                   // files.bootstrap.solved
                 ),
                 testFile()
-                /*
-                 tsFile('ContextComponent'),
-                 htmlFile('context'),
-                 htmlFile('video'),
-                 ...justForReference(
-                 tsFile('AppModule'),
-                 tsFile('ContextService'),
-                 tsFile('VideoComponent'),
-                 htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
-                 ),
-                 ...hidden(
-                 htmlFile('index'),
-                 htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-                 sharedTsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-                 tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
-                 sharedAppBootstrap(),
-                 sharedVideoInterface(),
-                 sharedTsFile('VideoService'),
-                 sharedApiFile(),
-                 ),*/
-                //testFile(),
               ],
               tests: []
             }]

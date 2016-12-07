@@ -3,6 +3,9 @@ import {AppModule} from "./AppModule";
 /*d:templatePageSetup/trimLeading*/
 import {ResourceLoader} from "@angular/compiler";
 import * as code from "./code";
+
+// The code below is used to match the Components with the appropriate templates.
+//
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {
     const templateId = url.replace(/\d*\.html/, 'Code');
