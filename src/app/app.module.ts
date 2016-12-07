@@ -18,6 +18,7 @@ import {FeedbackPageComponent} from "./feedback-page/feedback-page.component";
 import {ExerciseService} from "./exercise.service";
 import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
 import {AutorunControlComponent} from "./autorun/autoruncontrol.component";
+import {MonacoConfigService} from "./monaco-config.service";
 
 
 let ngModuleConfig = {
@@ -43,7 +44,8 @@ let ngModuleConfig = {
     StateService,
     ReducersService,
     ExerciseService,
-    CodelabConfigService
+    CodelabConfigService,
+    MonacoConfigService
   ],
   bootstrap: [AppComponent]
 };

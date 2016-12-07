@@ -17,8 +17,8 @@ export class EditorsComponent {
     return this.files.filter(file => !file.hidden);
   }
 
-  onCodeChange(changedFile) {
-    this.state.updateCode(changedFile);
+  onCodeChange(change) {
+    this.state.updateCode(change);
   }
 
   constructor(private  state: StateService) {

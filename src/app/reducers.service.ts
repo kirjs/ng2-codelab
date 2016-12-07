@@ -7,6 +7,7 @@ import {TestInfo} from "./test-info";
 import {Observable} from "rxjs/Rx";
 import {AngularFire} from "angularfire2";
 import {ExerciseService} from "./exercise.service";
+import {MonacoConfigService} from "./monaco-config.service";
 
 @Injectable()
 export class ReducersService {
@@ -177,7 +178,11 @@ export class ReducersService {
     return state;
   }
 
-  constructor(private exerciseService: ExerciseService, private angularFire: AngularFire) {
+  constructor(
+    private exerciseService: ExerciseService,
+    private angularFire: AngularFire,
+    private monacoConfig: MonacoConfigService
+  ) {
   }
 
 }

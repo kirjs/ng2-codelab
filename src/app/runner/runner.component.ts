@@ -61,7 +61,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
       const setHtml = (html) => {
         iframe.contentDocument.body.innerHTML = html;
       };
-      const displayError = (error, location) => {
+      const displayError = (error, info) => {
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
         setHtml(`Check out your browser console to see the full error!
@@ -122,16 +122,17 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
                 experimentalDecorators: true,
                 emitDecoratorMetadata: true,
                 noImplicitAny: true,
+                declaration: true,
                 // TODO: figure out why this doesn't work
-                // inlineSourceMap: true,
-                // sourceMap: true
+                inlineSourceMap: true,
+                inlineSources: true,
+                sourceMap: true
               },
               fileName: moduleName,
               moduleName: moduleName,
               reportDiagnostics: true
             });
           }).map((compiled) => {
-
             runJs(compiled.outputText);
           });
 
@@ -146,9 +147,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
   });
 }
 
-export interface RunnerConfig {
-  html: String
-}
+
 @Component({
   selector: 'app-runner',
   templateUrl: './runner.component.html',
