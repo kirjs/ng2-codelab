@@ -3,6 +3,7 @@ import {FileConfig} from "../app/file-config";
 import {differ} from "../app/differ/differ";
 import {ExerciseService} from "../app/exercise.service";
 import {Injectable} from "@angular/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 export const appConfig = {
   name: 'Codelab',
@@ -18,7 +19,7 @@ export const appConfig = {
 export class CodelabConfigService {
   public config: CodelabConfig;
 
-  constructor(public exerciseService: ExerciseService) {
+  constructor(public exerciseService: ExerciseService, sanitizer: DomSanitizer) {
     function testFile() {
       return {
         filename: 'Test.ts',
@@ -588,7 +589,7 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               path: '1-bootstrap/intro',
-              description: `
+              description: sanitizer.bypassSecurityTrustHtml(`
           <h1>Let's try  using custom events!</h1>
           <p>We'll add a thumbs component which will emit 'onThumbs' event.  </p>
           <p>Then in the video component we're going to listed to the event and change the amount of like accordingly.</p>
@@ -602,11 +603,11 @@ export class CodelabConfigService {
                   <div>Views 100</div>
                   <div>Likes 20</div>
                   <div>Description todo</div>
-                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <button>Thumbs Up</button> <button>Thumbs Down</button>
                 </div>
               </div>
             </div>          
-        `,
+        `),
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
@@ -687,7 +688,7 @@ export class CodelabConfigService {
                   <img src="/assets/images/cat-0.png">            
                   <div>This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)</div>
                   <div>[Show meta]</div>
-                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <button>Thumbs Up</button> <button>Thumbs Down</button>
                 </div>
               </div>
             </div>               
@@ -787,7 +788,7 @@ export class CodelabConfigService {
                   <img  src="/assets/images/cat-0.png">            
                   <div>Decription: music</div>
                   <div>[Show meta]</div>
-                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <button>Thumbs Up</button> <button>Thumbs Down</button>
                   <div>Context ad: Turn up your speakers</div>                  
                 </div>
                 <div>
@@ -795,7 +796,7 @@ export class CodelabConfigService {
                   <img  src="/assets/images/cat-0.png">            
                   <div>Decription: sleeping</div>
                   <div>[Show meta]</div>
-                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                  <button>Thumbs Up</button> <button>Thumbs Down</button>
                   <div>Context ad: Check out our web site.</div>                  
                 </div>
               </div>
