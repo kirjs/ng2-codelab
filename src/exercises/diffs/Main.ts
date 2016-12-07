@@ -1,8 +1,9 @@
-import {Meetup} from './Meetup';
+import {Meetup} from "./Meetup";
 
 // Below is for your reference, we never actually run the file.
 // but feel free to play with the code.
-const guests = [{
+const guests = [
+  {
     rsvp: true,
     name: 'Sir Isaac Newton'
   },
@@ -20,4 +21,6 @@ const guests = [{
   }];
 
 const meetup = new Meetup(guests);
-console.log(meetup.getRsvp());
+document.body.innerHTML = '<ul>' +
+  meetup.getRsvp().map(guest => `<li>${guest.name}</li>`).join('') +
+  '</ul>';

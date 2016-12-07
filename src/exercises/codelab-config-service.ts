@@ -83,9 +83,10 @@ export class CodelabConfigService {
     }
 
     function newTsFile(name, code) {
+      const bootstrap = ['Bootstrap', 'Main'].indexOf(name) >= 0;
       return {
-        bootstrap: name === 'Bootstrap',
-        excludeFromTesting: name === 'Bootstrap',
+        bootstrap: bootstrap,
+        excludeFromTesting: bootstrap,
         filename: name + '.ts',
         moduleName: name,
         code,
@@ -155,6 +156,7 @@ export class CodelabConfigService {
     files.contextService = loadTs('ContextService', commits) as any;
     files.meetup = loadTs('Meetup', commits) as any;
     files.mainMeetup = loadTs('Main', commits) as any;
+    files.guest = loadTs('Guest', commits) as any;
 
     // Too hard to use diff comments for this, so I'm replacing the whole file
     files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
@@ -223,8 +225,9 @@ export class CodelabConfigService {
                 files.meetup.meetupSolved
               ],
               fileTemplates: [
-                evaled(files.meetup.initial),
-                evaled(files.mainMeetup.initial),
+                evaled(files.meetup.meetup),
+                files.guest.meetup,
+                files.mainMeetup.meetup,
                 testFile()
               ]
             },

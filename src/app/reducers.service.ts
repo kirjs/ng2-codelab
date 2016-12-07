@@ -177,7 +177,10 @@ export class ReducersService {
         return Object.assign({}, file);
       });
 
-    return state;
+    this.monacoConfig.cleanUpDeclarations();
+    this.monacoConfig.updateDeclarations(exerciseConfig.editedFiles);
+
+    return this[ActionTypes.RUN_CODE](state);
   }
 
   constructor(private exerciseService: ExerciseService,

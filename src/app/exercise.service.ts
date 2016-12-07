@@ -9,7 +9,7 @@ import * as assert from 'assert';
 export class ExerciseService {
   private readonly exercises = exercises;
   getExercise(path){
-    assert(this.exercises[path], `Exercise doesn't exist.`);
+    assert(this.exercises[path], `Exercise doesn't exist: ${path}`);
     return this.exercises[path];
   }
 }

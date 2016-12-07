@@ -102,14 +102,16 @@ export class MonacoConfigService {
   }
 
   cleanUpDeclarations() {
-    // TODO
+    Object.keys(this.declarations).forEach((key) => {
+      this.declarations[key].dispose();
+      delete this.declarations[key];
+    });
   }
 
   updateDeclaration(file) {
     let declaration = this.declarations[file.filename];
     if (declaration) {
       console.log(declaration.code == file.code);
-
     } else {
       this.declarations[file.filename] = {
         dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
