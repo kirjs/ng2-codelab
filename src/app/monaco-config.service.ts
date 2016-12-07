@@ -4,8 +4,9 @@ import {FileConfig} from "./file-config";
 declare const monaco;
 
 interface DeclarationConfig {
-  code: string,
-  dispose: ()=>{}
+  dispose: {dispose: ()=>{}},
+  file: FileConfig,
+  code: string
 }
 @Injectable()
 export class MonacoConfigService {
@@ -95,29 +96,40 @@ export class MonacoConfigService {
 
     if (!monaco.languages.typescript.typescriptDefaults._extraLibs['./AppComponent.d.ts']) {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(core, '@angular/core.d.ts');
-      //monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, './AppComponent.d.ts');
-      //monaco.languages.typescript.typescriptDefaults.addExtraLib(pba, './MeetupSecretModule.d.ts');
-      //monaco.languages.typescript.typescriptDefaults.addExtraLib(msm, 'inmemory://model/MeetupSecretModule.ts');
     }
   }
 
   cleanUpDeclarations() {
-    Object.keys(this.declarations).forEach((key) => {
-      this.declarations[key].dispose();
-      delete this.declarations[key];
-    });
+    Object.keys(this.declarations)
+      .forEach(key => this.disposeDeclaration(this.declarations[key].file));
   }
 
-  updateDeclaration(file) {
+  disposeDeclaration(file: FileConfig) {
+    this.declarations[file.filename].dispose.dispose();
+    delete this.declarations[file.filename];
+  }
+
+  addDeclaration(file: FileConfig) {
+    console.log(file.filename, file.code);
+    this.declarations[file.filename] = {
+      dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
+      file: file,
+      code: file.code
+    }
+  }
+
+  updateDeclaration(file: FileConfig) {
     let declaration = this.declarations[file.filename];
+
     if (declaration) {
-      console.log(declaration.code == file.code);
-    } else {
-      this.declarations[file.filename] = {
-        dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
-        code: file.code
+      if (declaration.code === file.code) {
+        return;
+      } else {
+        this.disposeDeclaration(file);
       }
     }
+
+    this.addDeclaration(file);
   }
 
   updateDeclarations(files: FileConfig[]) {

@@ -51,7 +51,7 @@ export class EditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.monacoConfigService.monacoReady.then(monaco=>{
+    this.monacoConfigService.monacoReady.then(monaco => {
       const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
       this._editor = monaco.editor.create(myDiv,
