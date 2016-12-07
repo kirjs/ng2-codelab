@@ -1,7 +1,6 @@
 import {Meetup} from "./Meetup";
 
-// Below is for your reference, we never actually run the file.
-// but feel free to play with the code.
+// Use this file for reference.
 const guests = [
   {
     rsvp: true,
@@ -21,6 +20,8 @@ const guests = [
   }];
 
 const meetup = new Meetup(guests);
+
+// Angular2 is so much better than this:
 document.body.innerHTML = '<ul>' +
   meetup.getRsvp().map(guest => `<li>${guest.name}</li>`).join('') +
   '</ul>';
