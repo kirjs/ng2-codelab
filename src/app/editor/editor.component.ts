@@ -35,7 +35,7 @@ export class EditorComponent implements AfterViewInit {
 
 
   static calcHeight(lines) {
-    return lines * 17;
+    return lines * 18;
   }
 
 
@@ -77,18 +77,14 @@ export class EditorComponent implements AfterViewInit {
 
 
   updateValue(value: string) {
-    /*
-     TODO(resize):
-     const height = this.calcHeight(value.split('\n').length );
 
-     if(this.height != height ){
-     this.height = height;
-     this.editorContent.nativeElement.style.height = height + 'px';
-     this.editorContent.nativeElement.parentElement.style.height = height + 'px';
-     this.editorContent.nativeElement.parentElement.parentElement.style.height = height + 'px';
-     this._editor.layout();
-     }
-     */
+    const height = EditorComponent.calcHeight(value.split('\n').length);
+
+    if (this.height != height) {
+      this.height = height;
+      this.editorContent.nativeElement.style.height = height + 'px';
+      this._editor.layout();
+    }
     this.editSub.next(value)
   }
 }
