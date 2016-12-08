@@ -31,7 +31,7 @@ export class EditorComponent implements AfterViewInit {
   @Output() onCodeChange = new EventEmitter();
   private editSub: Subject<String>;
   height = 0;
-
+  public code = '';
 
   static calcHeight(lines) {
     return lines * 18;
@@ -85,8 +85,17 @@ export class EditorComponent implements AfterViewInit {
   }
 
   updateValue(value: string) {
-    this.updateHeight(value);
-    this.editSub.next(value)
+    if(this.code!=value){
+      this.code = value;
+      this.updateHeight(value);
+      this.editSub.next(value);
+    }
+  }
+
+  ping() {
+    // TODO: Find a better way.
+    let model = this._editor.getModel();
+    model.setValue(model.getValue());
   }
 }
 
