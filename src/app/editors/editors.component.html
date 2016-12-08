@@ -1,6 +1,6 @@
 <div class="editors">
   <div *ngFor="let file of visibleFiles" class="editor">
-    <div *ngIf="file.solution" (click)="loadSolution(file)" style="float: right">
+    <div *ngIf="debug && file.solution" (click)="loadSolution(file)" style="float: right">
       [load solution]
     </div>
     <div class="filename" (click)="toggleFile(file)">

@@ -12,6 +12,7 @@ import {EditorComponent} from "../editor/editor.component";
 export class EditorsComponent {
   @Input() public files: Array<any>;
   @ViewChildren(EditorComponent) children: QueryList<EditorComponent>;
+  private debug: boolean;
 
   get visibleFiles() {
     return this.files.filter(file => !file.hidden);
@@ -22,6 +23,9 @@ export class EditorsComponent {
   }
 
   constructor(private  state: StateService) {
+    state.update.subscribe((config) => {
+      this.debug = config.app.debug;
+    });
   }
 
   toggleFile(file: FileConfig) {

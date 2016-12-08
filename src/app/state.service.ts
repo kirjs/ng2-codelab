@@ -28,8 +28,8 @@ export class StateService {
   public readonly update: Observable<CodelabConfig>;
   private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
 
-  constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
 
+  constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
         try {

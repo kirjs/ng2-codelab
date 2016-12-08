@@ -12,8 +12,10 @@ import {MonacoConfigService} from "./monaco-config.service";
 @Injectable()
 export class ReducersService {
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
-    let localState = JSON.parse(localStorage.getItem('state'));
-    return (state.app.preserveState && localState) ? localState : state;
+    const localState = JSON.parse(localStorage.getItem('state'));
+    const actualState = (state.app.preserveState && localState) ? localState : state;
+    actualState.app = state.app;
+    return actualState;
   }
 
   [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {

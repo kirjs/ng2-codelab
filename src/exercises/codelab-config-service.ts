@@ -11,8 +11,8 @@ export const appConfig = {
   user: '',
   auth: '',
   feedbackEnabled: false,
-  preserveState: false,
-  debug: true
+  preserveState: !window.location.hash.includes('reset') || window.location.hash.includes('debug'),
+  debug: window.location.hash.includes('debug')
 };
 
 @Injectable()
@@ -581,28 +581,28 @@ export class CodelabConfigService {
             },
             /*{
 
-              name: 'Data binding',
-              description: `<p>This is a bonus exercise, meant to illustrate passing the data from
-                parent component to the child component </p>
-            `,
-              path: '4-component-tree/0-add-video-component',
-              solutions: [
-                files.dataBinding.dataBindingSolved,
-              ],
-              fileTemplates: [
-                files.dataBinding.dataBinding,
-                files.appModule.dataBinding,
-                files.bootstrap.dataBinding,
-                ...hidden({
-                  filename: 'index.html',
-                  moduleName: 'index',
-                  code: '<my-flag></my-flag>',
-                  type: 'html'
-                })
-                // testFile()
-              ],
-              tests: []
-            }, */{
+             name: 'Data binding',
+             description: `<p>This is a bonus exercise, meant to illustrate passing the data from
+             parent component to the child component </p>
+             `,
+             path: '4-component-tree/0-add-video-component',
+             solutions: [
+             files.dataBinding.dataBindingSolved,
+             ],
+             fileTemplates: [
+             files.dataBinding.dataBinding,
+             files.appModule.dataBinding,
+             files.bootstrap.dataBinding,
+             ...hidden({
+             filename: 'index.html',
+             moduleName: 'index',
+             code: '<my-flag></my-flag>',
+             type: 'html'
+             })
+             // testFile()
+             ],
+             tests: []
+             }, */{
 
               name: 'Create VideoComponent',
               description: `<p>Now instead of having the video html in the app component, we're going to have 
