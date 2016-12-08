@@ -9,18 +9,17 @@
  * There are
  *
  */
-
 /**
  * solution/ prefix is used to let the test typechecked.
  * It will be stripped during runtime, and the Meetup module
  * will be loaded.
  */
-import {Meetup, evalJs} from './Meetup';
+import {Meetup, evalJs} from "./Meetup";
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
  */
-import {MeetupCode} from './code';
+import {MeetupCode} from "./code";
 
 const guests = [
   {name: 'me', rsvp: true},
@@ -71,20 +70,21 @@ describe('Component', () => {
     chai.expect(typeof (new Meetup(guests).getRsvp)).equals('function');
   });
 
-  it('Modify getRsvp to filter the guests array and only return guests with rsvp set to true.', () => {
+  it(`Modify getRsvp to filter the guests array and only return guests with rsvp set to true. 
+  (hint: please do NOT use for loop, use filter. Ask us if you don't know how to do it)`, () => {
     chai.expect(new Meetup(guests).getRsvp().length).equals(1);
   });
 
   /*
-  xit(`Let's debug the app! You'll need this if something goes wrong.
+   xit(`Let's debug the app! You'll need this if something goes wrong.
    * Open the dev tools in your browser
    * Put in the new method add "debugger;"
    * The app will stop, and you'll be able to inspect local variables.
    * Get out using F8
    * We can't really test this, so this test is marked as passed
-  `, () => {
+   `, () => {
 
-  });
-*/
+   });
+   */
 });
 
