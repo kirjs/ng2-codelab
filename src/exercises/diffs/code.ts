@@ -1,5 +1,7 @@
 export const videoCode = '';
-export const thumbsCode = '';
+export declare const thumbs_thumbs_html: string;
+export declare const video_html: string;
+export declare const typescript_intro_Meetup_ts: string;
 export const appCode = '';
 export const AppComponentCode = '';
 export const MeetupCode = '';

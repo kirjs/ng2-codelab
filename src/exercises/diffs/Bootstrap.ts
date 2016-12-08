@@ -8,9 +8,10 @@ import * as code from "./code";
 //
 class MyResourceLoader extends ResourceLoader {
   get(url: string): Promise<string> {
-    const templateId = url.replace(/\d*\.html/, 'Code');
+    const templateId = Object.keys(code).find(key => key.includes(url.replace(/[\/\.-]/gi, '_')));
     let template = code[templateId];
     if (!template) {
+
       console.log(template);
       debugger;
     }

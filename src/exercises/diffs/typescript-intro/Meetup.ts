@@ -9,4 +9,7 @@ export class Meetup {
     return this.guests.filter(guest => guest.rsvp);
   }
 }
+/*/d*//*d:neverShow*/
+// Needed for type checking
+export function evalJs(param){}
 /*/d*/

@@ -19,7 +19,7 @@ import {Meetup, evalJs} from "./Meetup";
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
  */
-import {MeetupCode} from "./code";
+import * as code from "../code";
 
 const guests = [
   {name: 'me', rsvp: true},
@@ -52,9 +52,8 @@ describe('Component', () => {
   it('Add a constructor', () => {
     /**
      * Fancy: Require the actual source code, and search in it.
-     *
      */
-    chai.expect(MeetupCode.indexOf('constructor') > -1, `The meetup class doesn't have constuctor`).is.true;
+    chai.expect(code.typescript_intro_Meetup_ts.indexOf('constructor') > -1, `The meetup class doesn't have constuctor`).is.true;
   });
 
   it('Make constructor take a parameter "guests"', () => {

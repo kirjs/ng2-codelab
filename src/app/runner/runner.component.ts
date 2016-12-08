@@ -89,7 +89,8 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
                   if (!file.moduleName) {
                     debugger
                   }
-                  exports(file.moduleName + 'Code', file.code);
+
+                  exports(file.filename.replace(/[\/\.-]/gi, '_'), file.code);
                 });
               }
             }
@@ -133,6 +134,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               reportDiagnostics: true
             });
           }).map((compiled) => {
+            console.log(compiled.outputText);
             runJs(compiled.outputText);
           });
 

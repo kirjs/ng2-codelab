@@ -2,7 +2,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {AppComponent} from "./AppComponent";
 /*d:thumbsComponentUse/trimLeading*/
-import {ThumbsComponent} from "./ThumbsComponent";
+import {ThumbsComponent} from "./thumbs/ThumbsComponent";
 /*/d*//*d:togglePanelComponentUse/trimLeading*/
 import {TogglePanelComponent} from "./TogglePanelComponent";
 /*/d*//*d:diInjectService/trimLeading*/

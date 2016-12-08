@@ -1,13 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 
-import {videoCode, thumbsCode} from './code';
-import {AppModule} from "./AppModule";
-
-import {Api} from './Api';
-
+import {video_html, thumbs_thumbs_html} from '../code';
+import {AppModule} from "../AppModule";
+import {Api} from '../Api';
 import {ThumbsComponent} from "./ThumbsComponent";
-import {VideoComponent} from "./VideoComponent";
+import {VideoComponent} from "../VideoComponent";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -15,14 +13,15 @@ beforeEach(() => {
     providers: [],
     declarations: [VideoComponent, ThumbsComponent]
   });
+
   TestBed.overrideComponent(VideoComponent, {
     set: {
-      template: videoCode
+      template: video_html
     }
   });
   TestBed.overrideComponent(ThumbsComponent, {
     set: {
-      template: thumbsCode
+      template: thumbs_thumbs_html
     }
   });
   TestBed.compileComponents();
@@ -44,8 +43,8 @@ describe('Component tree', () => {
     let fixture = TestBed.createComponent(VideoComponent);
     fixture.componentInstance.video = Api.fetch('')[0];
     fixture.detectChanges();
-    chai.expect(fixture.nativeElement.querySelector('.thumbs-up')).is.ok
-    chai.expect(fixture.nativeElement.querySelector('.thumbs-down')).is.ok
+    chai.expect(fixture.nativeElement.querySelector('.thumbs-up')).is.ok;
+    chai.expect(fixture.nativeElement.querySelector('.thumbs-down')).is.ok;
   });
 
   it(`VideoComponent: Listen to the thumbs component onThumbs event, and update the amount of likes accordingly`, () => {

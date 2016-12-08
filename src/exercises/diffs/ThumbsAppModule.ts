@@ -1,6 +1,6 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
-import {ThumbsComponent} from "./ThumbsComponent";
+import {ThumbsComponent} from "./thumbs/ThumbsComponent";
 
 @NgModule({
   imports: [BrowserModule],

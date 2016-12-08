@@ -25,17 +25,18 @@ export class CodelabConfigService {
   public config: CodelabConfig;
 
   constructor(public exerciseService: ExerciseService, sanitizer: DomSanitizer) {
-    function testFile() {
+    function testFile(filename = 'Test.ts', code?) {
       return {
-        filename: 'Test.ts',
-        moduleName: 'Test',
+        filename,
+        moduleName: filename.replace('ts', ''),
         type: 'ts',
         excludeFromTesting: false,
         test: true,
         bootstrap: true,
         before: 'mochaBefore();',
         after: 'mochaAfter();',
-        hidden: true
+        hidden: true,
+        code
       };
     }
 
@@ -185,6 +186,7 @@ export class CodelabConfigService {
     }
 
     const files = {
+      test: loadTs('AppComponent', commits),
       appComponent: loadTs('AppComponent', commits),
       appModule: loadTs('AppModule', commits),
       appHtml: loadHtml('app', commits),
@@ -195,16 +197,16 @@ export class CodelabConfigService {
       videoService: loadTs('VideoService', commits),
       videoHtml: loadHtml('video', commits),
       videoComponent: loadTs('VideoComponent', commits),
-      thumbsComponent: loadTs('ThumbsComponent', commits),
-      thumbsHtml: loadHtml('thumbs', commits),
+      thumbsComponent: loadTs('thumbs/ThumbsComponent', commits),
+      thumbsHtml: loadHtml('thumbs/thumbs', commits),
       togglePanelHtml: loadHtml('togglePanel', commits),
       togglePanelComponent: loadTs('TogglePanelComponent', commits),
       wrapperComponent: loadTs('WrapperComponent', commits),
       contextComponent: loadTs('ContextComponent', commits),
       contextService: loadTs('ContextService', commits),
-      meetup: loadTs('Meetup', commits),
-      mainMeetup: loadTs('Main', commits),
-      guest: loadTs('Guest', commits),
+      meetup: loadTs('typescript-intro/Meetup', commits),
+      mainMeetup: loadTs('typescript-intro/Main', commits),
+      guest: loadTs('typescript-intro/Guest', commits),
       fuzzyPipe: loadTs('FuzzyPipe', commits),
     };
 
@@ -212,6 +214,9 @@ export class CodelabConfigService {
     files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
     files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
     files.appModule.dataBinding = newTsFile('AppModule', exerciseService.getExercise(`diffs/DataBindingModule.ts`));
+    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`diffs/thumbs/ThumbsComponentCreateTest.ts`));
+    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`diffs/thumbs/ThumbsComponentUseTest.ts`));
+    files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/typescript-intro/Test.ts`));
 
 
     this.config = {
@@ -279,7 +284,7 @@ export class CodelabConfigService {
                 evaled(files.meetup.meetup),
                 files.guest.meetup,
                 files.mainMeetup.meetup,
-                testFile()
+                files.test.meetup
               ]
             },
             {
@@ -335,10 +340,10 @@ export class CodelabConfigService {
               ],
               fileTemplates: [
                 evaled(files.appComponent.createComponent),
-
-                files.appModule.createModuleSolved,
-                files.bootstrap.bootstrapSolved
-                ,
+                ...hidden(
+                  files.appModule.createModuleSolved,
+                  files.bootstrap.bootstrapSolved
+                ),
                 testFile()
               ]
             }, {
@@ -708,7 +713,7 @@ export class CodelabConfigService {
                   files.appModule.thumbsComponentCreate,
                   files.bootstrap.thumbsComponentCreate,
                 ),
-                testFile(),
+                files.test.thumbsComponentCreate,
                 ...hidden({
                     filename: 'index.html',
                     moduleName: 'index',
@@ -742,7 +747,7 @@ export class CodelabConfigService {
                   files.api.thumbsComponentUse,
                   files.bootstrap.thumbsComponentUse,
                 ),
-                testFile()
+                files.test.thumbsComponentUse,
               ],
               tests: []
             }]
