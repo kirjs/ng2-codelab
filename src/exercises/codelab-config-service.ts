@@ -5,14 +5,18 @@ import {ExerciseService} from "../app/exercise.service";
 import {Injectable} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 
+const test = window.location.hash.includes('test');
+const debug = test || window.location.hash.includes('debug');
+const reset = window.location.hash.includes('reset') || debug;
+
 export const appConfig = {
   name: 'Codelab',
   page: 'milestone',
   user: '',
   auth: '',
   feedbackEnabled: false,
-  preserveState: !window.location.hash.includes('reset') || window.location.hash.includes('debug'),
-  debug: window.location.hash.includes('debug')
+  preserveState: !reset,
+  debug: debug
 };
 
 @Injectable()
@@ -358,6 +362,7 @@ export class CodelabConfigService {
             {
               name: 'Bootstrap the module',
               path: '1-bootstrap/2-bootstrap',
+              skipTests: true,
               description: `
           <p>Now we got module and component ready, let's bootstrap it!</p>
           <p>There's no really simple way to test it, so just make sure your app displays: 'Hello CatTube!'</p>`,

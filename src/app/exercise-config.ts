@@ -10,5 +10,6 @@ export interface ExerciseConfig {
   solutions?: Array<FileConfig>
   editedFiles?: Array<FileConfig>;
   tests?: Array<TestInfo>;
-  messageNext?: string
+  messageNext?: string,
+  skipTests?: boolean
 }

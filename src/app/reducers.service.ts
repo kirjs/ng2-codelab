@@ -70,6 +70,18 @@ export class ReducersService {
     return state;
   }
 
+  [ActionTypes.LOAD_ALL_SOLUTIONS](state: CodelabConfig) {
+    const milestone = state.milestones[state.selectedMilestoneIndex];
+    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+
+    return exercise.editedFiles.reduce((state, file) => {
+      if (file.solution) {
+        return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution}})
+      }
+      return state;
+    }, state);
+  }
+
   [ActionTypes.LOAD_SOLUTION](state: CodelabConfig, {data}: {data: FileConfig}) {
     const milestone = state.milestones[state.selectedMilestoneIndex];
     let exercise = milestone.exercises[milestone.selectedExerciseIndex];
@@ -78,7 +90,6 @@ export class ReducersService {
       if (file === data) {
         file = Object.assign(file, {code: file.solution});
       }
-
       return file;
     });
 
@@ -95,12 +106,15 @@ export class ReducersService {
       }
     });
 
-    this.monacoConfig.updateDeclarations(exercise.editedFiles);
+    this.monacoConfig.monacoReady.then(() => {
+      this.monacoConfig.updateDeclarations(exercise.editedFiles);
+    });
 
     return state.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
   [ActionTypes.SET_TEST_LIST](state: CodelabConfig, action: {data: Array<string>}) {
+
     selectedExercise(state).tests = action.data.map(test => ({title: test}));
     return state;
   }
@@ -122,17 +136,17 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.NEXT_EXERCISE](state: CodelabConfig, data) {
+  [ActionTypes.NEXT_EXERCISE](state: CodelabConfig) {
     let milestone = selectedMilestone(state);
     let nextIndex = milestone.selectedExerciseIndex + 1;
     // Check if we still have exercises left in the milestone.
     if (milestone.exercises.length > nextIndex) {
-      return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
+      return this[ActionTypes.SELECT_EXERCISE](state, {data: nextIndex});
     } else {
       // Looks like we're at the end of the milestone, let's move on to the next one!
       let nextMilestoneIndex = state.selectedMilestoneIndex + 1;
       if (state.milestones.length > nextMilestoneIndex) {
-        return this[ActionTypes.SELECT_MILESTONE](state, Object.assign({}, data, {data: nextMilestoneIndex}));
+        return this[ActionTypes.SELECT_MILESTONE](state, {data: nextMilestoneIndex});
       }
     }
     return state;
@@ -179,15 +193,19 @@ export class ReducersService {
         return Object.assign({}, file);
       });
 
-    this.monacoConfig.cleanUpDeclarations();
-    this.monacoConfig.updateDeclarations(exerciseConfig.editedFiles);
+    this.monacoConfig.monacoReady.then(() => {
+      this.monacoConfig.cleanUpDeclarations();
+      this.monacoConfig.updateDeclarations(exerciseConfig.editedFiles);
+    });
 
     return this[ActionTypes.RUN_CODE](state);
   }
 
-  constructor(private exerciseService: ExerciseService,
-              private angularFire: AngularFire,
-              private monacoConfig: MonacoConfigService) {
+  constructor(protected exerciseService: ExerciseService,
+              protected angularFire: AngularFire,
+              protected monacoConfig: MonacoConfigService) {
+
+
   }
 
 
