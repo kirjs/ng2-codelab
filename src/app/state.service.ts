@@ -131,8 +131,8 @@ export class StateService {
   testMode = 'broken';
   testLastExercise = null;
 
-  private test(state, action) {
-    if (state.test) {
+  private test(state: CodelabConfig, action) {
+    if (state.app.test) {
 
 
       if (ActionTypes.INIT_STATE === action.type) {

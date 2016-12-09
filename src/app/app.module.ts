@@ -19,8 +19,6 @@ import {ExerciseService} from "./exercise.service";
 import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
 import {AutorunControlComponent} from "./autorun/autoruncontrol.component";
 import {MonacoConfigService} from "./monaco-config.service";
-import {ReducersTestService} from "./reducers-test.service";
-
 
 let ngModuleConfig = {
   declarations: [

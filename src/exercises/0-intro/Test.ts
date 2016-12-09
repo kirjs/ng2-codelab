@@ -71,7 +71,8 @@ describe('Component', () => {
   });
 
   it(`Modify getRsvp to filter the guests array and only return guests with rsvp set to true. 
-  (hint: please do NOT use for loop, use filter. Ask us if you don't know how to do it)`, () => {
+  (hint: please use Array filter method, and NOT for loop. Ask us for help if you don't know how to
+   (There's potential of getting into an infinite loop otherwise)`, () => {
     chai.expect(new Meetup(guests).getRsvp().length).equals(1);
   });
 

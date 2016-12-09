@@ -16,7 +16,8 @@ export const appConfig = {
   auth: '',
   feedbackEnabled: false,
   preserveState: !reset,
-  debug: debug
+  debug: debug,
+  test: test
 };
 
 @Injectable()
