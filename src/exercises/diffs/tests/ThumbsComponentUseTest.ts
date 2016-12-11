@@ -4,7 +4,7 @@ import 'initTestBed';
 import {video_html, thumbs_thumbs_html} from '../code';
 import {AppModule} from "../AppModule";
 import {Api} from '../Api';
-import {ThumbsComponent} from "./ThumbsComponent";
+import {ThumbsComponent} from "../thumbs/ThumbsComponent";
 import {VideoComponent} from "../VideoComponent";
 
 beforeEach(() => {

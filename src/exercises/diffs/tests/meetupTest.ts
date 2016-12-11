@@ -14,7 +14,7 @@
  * It will be stripped during runtime, and the Meetup module
  * will be loaded.
  */
-import {Meetup, evalJs} from "./Meetup";
+import {Meetup, evalJs} from "../typescript-intro/Meetup";
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it

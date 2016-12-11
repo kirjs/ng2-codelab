@@ -1,16 +1,16 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {AppComponent} from "./AppComponent";
-import {appCode, videoCode, togglePanelCode, contextCode, thumbsCode} from "./code";
-import {AppModule} from "./AppModule";
-import {VideoComponent} from "./VideoComponent";
-import {VideoService} from "./VideoService";
-import {TogglePanelComponent} from "./TogglePanelComponent";
-import {ContextComponent} from "./ContextComponent";
-import {ContextService} from "./ContextService";
-import {Api} from "./Api";
-import {FuzzyPipe} from "./FuzzyPipe";
-import {ThumbsComponent} from "./ThumbsComponent";
+import {AppComponent} from "../AppComponent";
+import {app_html, video_html, togglePanel_html, context_html, thumbs_thumbs_html} from "../code";
+import {AppModule} from "../AppModule";
+import {VideoComponent} from "../VideoComponent";
+import {VideoService} from "../VideoService";
+import {TogglePanelComponent} from "../TogglePanelComponent";
+import {ContextComponent} from "../ContextComponent";
+import {ContextService} from "../ContextService";
+import {Api} from "../Api";
+import {FuzzyPipe} from "../FuzzyPipe";
+import {ThumbsComponent} from "../thumbs/ThumbsComponent";
 
 function objectValues(object) {
   return Object.keys(object).reduce((result, key) => {
@@ -30,11 +30,11 @@ beforeEach(() => {
     providers: [VideoService, ContextService, /* that's a hack, to provide parent component */ VideoComponent],
     declarations: [AppComponent, VideoComponent, ThumbsComponent, TogglePanelComponent, ContextComponent, FuzzyPipe]
   });
-  TestBed.overrideComponent(AppComponent, {set: {template: appCode}});
-  TestBed.overrideComponent(VideoComponent, {set: {template: videoCode}});
-  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbsCode}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanelCode}});
-  TestBed.overrideComponent(ContextComponent, {set: {template: contextCode}});
+  TestBed.overrideComponent(AppComponent, {set: {template: app_html}});
+  TestBed.overrideComponent(VideoComponent, {set: {template: video_html}});
+  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbs_thumbs_html}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanel_html}});
+  TestBed.overrideComponent(ContextComponent, {set: {template: context_html}});
   TestBed.compileComponents();
 });
 function sampleFuzzy(value) {

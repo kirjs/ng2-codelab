@@ -1,13 +1,13 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {AppComponent} from './AppComponent';
-import {appCode, videoCode, togglePanelCode, thumbsCode} from './code';
-import {AppModule} from "./AppModule";
-import {VideoComponent} from "./VideoComponent";
-import {VideoService} from "./VideoService";
-import {TogglePanelComponent} from "./TogglePanelComponent";
-import {ThumbsComponent} from "./ThumbsComponent";
-import {Api} from './Api'
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {AppComponent} from "../AppComponent";
+import {app_html, video_html, togglePanel_html, thumbs_thumbs_html} from "../code";
+import {AppModule} from "../AppModule";
+import {VideoComponent} from "../VideoComponent";
+import {VideoService} from "../VideoService";
+import {TogglePanelComponent} from "../TogglePanelComponent";
+import {ThumbsComponent} from "../thumbs/ThumbsComponent";
+import {Api} from "../Api";
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -16,10 +16,10 @@ beforeEach(() => {
     providers: [VideoService],
     declarations: [AppComponent, VideoComponent, TogglePanelComponent, ThumbsComponent]
   });
-  TestBed.overrideComponent(AppComponent, {set: {template: appCode}});
-  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbsCode}});
-  TestBed.overrideComponent(VideoComponent, {set: {template: videoCode}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanelCode}});
+  TestBed.overrideComponent(AppComponent, {set: {template: app_html}});
+  TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbs_thumbs_html}});
+  TestBed.overrideComponent(VideoComponent, {set: {template: video_html}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanel_html}});
   TestBed.compileComponents();
 });
 
@@ -49,8 +49,8 @@ describe('Component tree', () => {
     fixture.detectChanges();
     let panel = fixture.nativeElement.querySelector('my-toggle-panel');
 
-    chai.expect(panel.querySelector('.description')).is.not.null
-    chai.expect(panel.querySelector('.extra')).is.null
+    chai.expect(panel.querySelector('.description')).is.not.null;
+    chai.expect(panel.querySelector('.extra')).is.null;
 
     chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should display description text.`).contains(video.description);
     chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should not display likes `).not.contains(video.likes);
@@ -63,8 +63,8 @@ describe('Component tree', () => {
 
     panel.querySelector('button').click();
     fixture.detectChanges();
-    chai.expect(panel.querySelector('.description')).is.null.null
-    chai.expect(panel.querySelector('.extra')).is.not.null
+    chai.expect(panel.querySelector('.description')).is.null.null;
+    chai.expect(panel.querySelector('.extra')).is.not.null;
 
     chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should not description text.`).not.contains(video.description);
     chai.expect(fixture.nativeElement.querySelector('my-video').innerHTML, `Should display likes`).contains(video.likes);

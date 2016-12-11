@@ -1,9 +1,10 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {AppComponent} from './AppComponent';
-import {VideoService} from './VideoService';
-import {appCode, AppComponentCode} from './code';
-import {AppModule} from "./AppModule";
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {AppComponent} from "../AppComponent";
+import {VideoService} from "../VideoService";
+import {AppModule} from "../AppModule";
+import {app_html, AppComponent_ts} from "../code";
+
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -13,7 +14,7 @@ beforeEach(() => {
   });
   TestBed.overrideComponent(AppComponent, {
     set: {
-      template: appCode
+      template: app_html
     }
   });
   TestBed.compileComponents();
@@ -41,7 +42,7 @@ describe('Blabla', () => {
 
   it(`AppComponent.ts: Require videoService in the component`, () => {
     chai.expect(AppComponent.length, `App component constructor doesn't take any parameters`).to.equal(1);
-    chai.expect(AppComponentCode).matches(/VideoService/)
+    chai.expect(AppComponent_ts).matches(/VideoService/)
   });
 
   it(`AppComponent.ts: return videoService.search(results instead of fake data)`, () => {

@@ -1,18 +1,20 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
-import {thumbsCode} from './code';
-import {Api} from './Api'
-import {ThumbsComponent, Thumbs} from "./ThumbsComponent";
+import {thumbs_thumbs_html} from '../code';
+import {Api} from '../Api'
+import {ThumbsComponent, Thumbs} from "../thumbs/ThumbsComponent";
 const thumbs = Api.fetch('')[0];
+
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
     providers: [],
     declarations: [ThumbsComponent]
   });
+
   TestBed.overrideComponent(ThumbsComponent, {
     set: {
-      template: thumbsCode
+      template: thumbs_thumbs_html
     }
   });
   TestBed.compileComponents();

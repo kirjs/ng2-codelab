@@ -47,4 +47,9 @@ export class AppComponent {
   }
 /*/d*//*d:createComponentSolved/trimTrailing*/
 }
+/*/d*//*d:neverShow*/
+// Please ignore
+export function evalJs(string) {
+
+}
 /*/d*/

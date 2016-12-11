@@ -1,11 +1,11 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {AppComponent} from './AppComponent';
-import {VideoService} from './VideoService';
-import {appCode, videoCode} from './code';
-import {AppModule} from "./AppModule";
-import {VideoComponent} from "./VideoComponent";
-import {Api} from './Api';
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {AppComponent} from "../AppComponent";
+import {VideoService} from "../VideoService";
+import {app_html, video_html} from "../code";
+import {AppModule} from "../AppModule";
+import {VideoComponent} from "../VideoComponent";
+import {Api} from "../Api";
 
 
 beforeEach(() => {
@@ -16,12 +16,12 @@ beforeEach(() => {
   });
   TestBed.overrideComponent(AppComponent, {
     set: {
-      template: appCode
+      template: app_html
     }
   });
   TestBed.overrideComponent(VideoComponent, {
     set: {
-      template: videoCode
+      template: video_html
     }
   });
   TestBed.compileComponents();

@@ -1,9 +1,9 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {VideoService} from "./VideoService";
-import {videoCode} from "./code";
-import {VideoComponent} from "./VideoComponent";
-import {Api} from "./Api";
+import {VideoService} from "../VideoService";
+import {video_html} from "../code";
+import {VideoComponent} from "../VideoComponent";
+import {Api} from "../Api";
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -15,7 +15,7 @@ beforeEach(() => {
     });
     TestBed.overrideComponent(VideoComponent, {
       set: {
-        template: videoCode
+        template: video_html
       }
     });
     TestBed.compileComponents();

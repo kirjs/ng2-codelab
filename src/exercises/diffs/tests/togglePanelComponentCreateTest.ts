@@ -1,9 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import 'initTestBed';
-import {togglePanelCode, wrapperCode} from './code'
-import {TogglePanelComponent} from "./TogglePanelComponent";
-import {WrapperComponent} from "./WrapperComponent";
+import {TestBed} from "@angular/core/testing";
+import {By} from "@angular/platform-browser";
+import "initTestBed";
+import {togglePanel_html} from "../code";
+import {TogglePanelComponent} from "../TogglePanelComponent";
+import {WrapperComponent} from "../WrapperComponent";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -14,11 +14,10 @@ beforeEach(() => {
 
   TestBed.overrideComponent(TogglePanelComponent, {
     set: {
-      template: togglePanelCode
+      template: togglePanel_html
     }
   });
   TestBed.compileComponents();
-  console.log('be');
 });
 
 describe('Content projection', () => {
@@ -68,8 +67,8 @@ describe('Content projection', () => {
     fixture.detectChanges();
     fixture.nativeElement.querySelector('button').click();
     fixture.detectChanges();
-    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null
-    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null
+    chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null;
+    chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null;
   });
 });
 

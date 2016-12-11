@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import {AppComponent} from './AppComponent';
-import 'initTestBed';
-import {appCode} from './code';
+import {TestBed} from "@angular/core/testing";
+import {AppComponent} from "../AppComponent";
+import "initTestBed";
+import {app_html} from "../code";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -9,7 +9,7 @@ beforeEach(() => {
 
   TestBed.overrideComponent(AppComponent, {
     set: {
-      template: appCode
+      template: app_html
     }
   });
   TestBed.compileComponents();

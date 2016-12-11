@@ -134,7 +134,6 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               reportDiagnostics: true
             });
           }).map((compiled) => {
-            console.log(compiled.outputText);
             runJs(compiled.outputText);
           });
 

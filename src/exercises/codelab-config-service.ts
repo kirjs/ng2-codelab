@@ -214,10 +214,23 @@ export class CodelabConfigService {
     files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
     files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
     files.appModule.dataBinding = newTsFile('AppModule', exerciseService.getExercise(`diffs/DataBindingModule.ts`));
-    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`diffs/thumbs/ThumbsComponentCreateTest.ts`));
-    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`diffs/thumbs/ThumbsComponentUseTest.ts`));
-    files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/typescript-intro/Test.ts`));
-
+    files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/tests/meetupTest.ts`));
+    files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`diffs/tests/createComponentTest.ts`));
+    files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`diffs/tests/createModuleTest.ts`));
+    files.test.bootstrap = testFile('bootstrap/Test', exerciseService.getExercise(`diffs/tests/bootstrapTest.ts`));
+    files.test.templatePageSetup = testFile('templatePageSetup/Test', exerciseService.getExercise(`diffs/tests/templatePageSetupTest.ts`));
+    files.test.templateAddAction = testFile('templateAddAction/Test', exerciseService.getExercise(`diffs/tests/templateAddActionTest.ts`));
+    files.test.templateAllVideos = testFile('templateAllVideos/Test', exerciseService.getExercise(`diffs/tests/templateAllVideosTest.ts`));
+    files.test.diInjectService = testFile('diInjectService/Test', exerciseService.getExercise(`diffs/tests/diInjectServiceTest.ts`));
+    files.test.videoComponentCreate = testFile('videoComponentCreate/Test', exerciseService.getExercise(`diffs/tests/videoComponentCreateTest.ts`));
+    files.test.videoComponentUse = testFile('videoComponentUse/Test', exerciseService.getExercise(`diffs/tests/videoComponentUseTest.ts`));
+    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`diffs/tests/ThumbsComponentCreateTest.ts`));
+    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`diffs/tests/ThumbsComponentUseTest.ts`));
+    files.test.togglePanelComponentCreate = testFile('togglePanelComponentCreate/Test', exerciseService.getExercise(`diffs/tests/togglePanelComponentCreateTest.ts`));
+    files.test.togglePanelComponentUse = testFile('togglePanelComponentUse/Test', exerciseService.getExercise(`diffs/tests/togglePanelComponentUseTest.ts`));
+    files.test.contextComponentUse = testFile('contextComponentUse/Test', exerciseService.getExercise(`diffs/tests/contextComponentUseTest.ts`));
+    files.test.fuzzyPipeCreate = testFile('fuzzyPipeCreate/Test', exerciseService.getExercise(`diffs/tests/fuzzyPipeCreateTest.ts`));
+    files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`diffs/tests/fuzzyPipeUseTest.ts`));
 
     this.config = {
       app: appConfig,
@@ -313,7 +326,7 @@ export class CodelabConfigService {
 
           <div class = "inBrowser">
             <div class="smaller">
-              <h1>Hello Angular 2!</h1>
+              <h1>Hello CatTube!</h1>
             </div>
           </div>
           <p>3 simple steps: </p>
@@ -344,7 +357,7 @@ export class CodelabConfigService {
                   files.appModule.createModuleSolved,
                   files.bootstrap.bootstrapSolved
                 ),
-                testFile()
+                files.test.createComponent
               ]
             }, {
               name: 'Create a module',
@@ -362,7 +375,7 @@ export class CodelabConfigService {
                 ...hidden(
                   files.bootstrap.bootstrapSolved
                 ),
-                testFile()
+                files.test.createModule
               ]
             },
             {
@@ -380,7 +393,8 @@ export class CodelabConfigService {
                 ...justForReference(
                   files.appComponent.bootstrap,
                   files.appModule.bootstrap
-                )
+                ),
+                files.test.bootstrap
               ]
             },
             {
@@ -444,7 +458,7 @@ export class CodelabConfigService {
                   files.appModule.templatePageSetup,
                   files.bootstrap.templatePageSetup,
                 ),
-                testFile(),
+                files.test.templatePageSetup
               ],
               tests: []
             }, {
@@ -463,7 +477,7 @@ export class CodelabConfigService {
                   files.appModule.templateAddAction,
                   files.bootstrap.templateAddAction,
                 ),
-                testFile()
+                files.test.templateAddAction
               ],
               tests: []
             }, {
@@ -482,7 +496,7 @@ export class CodelabConfigService {
                   files.appModule.templateAllVideos,
                   files.bootstrap.templateAllVideos,
                 ),
-                testFile()
+                files.test.templateAllVideos
               ],
               tests: []
             }
@@ -555,7 +569,7 @@ export class CodelabConfigService {
                 files.api.diInjectService,
                 files.bootstrap.diInjectService,
               ),
-              testFile()
+              files.test.diInjectService
             ],
             tests: []
           }]
@@ -637,7 +651,7 @@ export class CodelabConfigService {
                   files.api.videoComponentCreate,
                   files.bootstrap.videoComponentCreate,
                 ),
-                testFile()
+                files.test.videoComponentCreate
               ],
               tests: []
             },
@@ -661,7 +675,7 @@ export class CodelabConfigService {
                   files.api.videoComponentUse,
                   files.bootstrap.videoComponentUse
                 ),
-                testFile()
+                files.test.videoComponentUse
               ],
               tests: []
             }]
@@ -817,7 +831,7 @@ export class CodelabConfigService {
                   },
                   files.bootstrap.togglePanelComponentCreate,
                 ),
-                testFile()
+                files.test.togglePanelComponentCreate
               ],
               tests: []
             },
@@ -845,7 +859,7 @@ export class CodelabConfigService {
                   files.thumbsComponent.togglePanelComponentUse,
                   files.bootstrap.togglePanelComponentUse,
                 ),
-                testFile()
+                files.test.togglePanelComponentUse
               ],
               tests: []
             }]
@@ -923,7 +937,7 @@ export class CodelabConfigService {
                   files.thumbsComponent.contextComponentUse,
                   files.bootstrap.contextComponentUse
                 ),
-                testFile()
+                files.test.contextComponentUse
               ],
               tests: []
             }]
@@ -941,7 +955,7 @@ export class CodelabConfigService {
             ],
             fileTemplates: [
               evaled(files.fuzzyPipe.fuzzyPipeCreate),
-              testFile()
+              files.test.fuzzyPipeCreate
             ],
             tests: []
           }, {
@@ -976,7 +990,7 @@ export class CodelabConfigService {
                 },
                 files.bootstrap.fuzzyPipeUse
               ),
-              testFile()
+              files.test.fuzzyPipeUse
             ],
             tests: []
           }]
