@@ -1,8 +1,8 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {VideoService} from "../VideoService";
-import {video_html} from "../code";
-import {VideoComponent} from "../VideoComponent";
+import {VideoService} from "../video/VideoService";
+import {video_video_html} from "../code";
+import {VideoComponent} from "../video/VideoComponent";
 import {Api} from "../Api";
 const video = Api.fetch('')[0];
 
@@ -15,7 +15,7 @@ beforeEach(() => {
     });
     TestBed.overrideComponent(VideoComponent, {
       set: {
-        template: video_html
+        template: video_video_html
       }
     });
     TestBed.compileComponents();
@@ -31,11 +31,11 @@ describe('Component tree', () => {
       chai.expect(metadata, `VideoComponent doesn't have a @Component() annotation`).is.not.undefined;
       chai.expect(metadata[0].selector, `VideoComponent's selector has to be 'my-video'.`).equals('my-video')
     });
+
     it(`VideoComponent.ts: Set the templateUrl to load appropriate html file.`, () => {
       const metadata = Reflect.getMetadata("annotations", VideoComponent);
       chai.expect(metadata, `VideoComponent doesn't have a @Component() annotation`).is.not.undefined;
-      // TODO: Get rid of digits.
-      chai.expect(metadata[0].templateUrl, `VideoComponent's templateUrl should be set to './video.html'`).matches(/\.\/video\d*\.html/)
+      chai.expect(metadata[0].templateUrl, `VideoComponent's templateUrl should be set to './video.html'`).matches(/\.\/video\.html/)
     });
 
     it(`VideoComponent.ts: Add a video @Input()`, () => {

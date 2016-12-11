@@ -1,11 +1,10 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-
-import {video_html, thumbs_thumbs_html} from '../code';
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {video_video_html, thumbs_thumbs_html} from "../code";
 import {AppModule} from "../AppModule";
-import {Api} from '../Api';
+import {Api} from "../Api";
 import {ThumbsComponent} from "../thumbs/ThumbsComponent";
-import {VideoComponent} from "../VideoComponent";
+import {VideoComponent} from "../video/VideoComponent";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -16,7 +15,7 @@ beforeEach(() => {
 
   TestBed.overrideComponent(VideoComponent, {
     set: {
-      template: video_html
+      template: video_video_html
     }
   });
   TestBed.overrideComponent(ThumbsComponent, {
@@ -55,6 +54,5 @@ describe('Component tree', () => {
     fixture.nativeElement.querySelector('.thumbs-up').click();
     chai.expect(fixture.componentInstance.video.likes).equals(likes + 1);
   });
-
 });
 

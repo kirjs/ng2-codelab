@@ -1,10 +1,10 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
 import {AppComponent} from "../AppComponent";
-import {VideoService} from "../VideoService";
-import {app_html, video_html} from "../code";
+import {VideoService} from "../video/VideoService";
+import {app_html, video_video_html} from "../code";
 import {AppModule} from "../AppModule";
-import {VideoComponent} from "../VideoComponent";
+import {VideoComponent} from "../video/VideoComponent";
 import {Api} from "../Api";
 
 
@@ -21,7 +21,7 @@ beforeEach(() => {
   });
   TestBed.overrideComponent(VideoComponent, {
     set: {
-      template: video_html
+      template: video_video_html
     }
   });
   TestBed.compileComponents();

@@ -1,13 +1,13 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
 import {AppComponent} from "../AppComponent";
-import {app_html, video_html, togglePanel_html, context_html, thumbs_thumbs_html} from "../code";
+import {app_html, video_video_html, toggle_panel_togglePanel_html, context_context_html, thumbs_thumbs_html} from "../code";
 import {AppModule} from "../AppModule";
-import {VideoComponent} from "../VideoComponent";
-import {VideoService} from "../VideoService";
-import {TogglePanelComponent} from "../TogglePanelComponent";
-import {ContextComponent} from "../ContextComponent";
-import {ContextService} from "../ContextService";
+import {VideoComponent} from "../video/VideoComponent";
+import {VideoService} from "../video/VideoService";
+import {TogglePanelComponent} from "../toggle-panel/TogglePanelComponent";
+import {ContextComponent} from "../context/ContextComponent";
+import {ContextService} from "../context/ContextService";
 import {Api} from "../Api";
 import {ThumbsComponent} from "../thumbs/ThumbsComponent";
 
@@ -38,9 +38,9 @@ beforeEach(() => {
     declarations: [AppComponent, VideoComponent, TogglePanelComponent, ContextComponent, ThumbsComponent]
   });
   TestBed.overrideComponent(AppComponent, {set: {template: app_html}});
-  TestBed.overrideComponent(VideoComponent, {set: {template: video_html}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: togglePanel_html}});
-  TestBed.overrideComponent(ContextComponent, {set: {template: context_html}});
+  TestBed.overrideComponent(VideoComponent, {set: {template: video_video_html}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: toggle_panel_togglePanel_html}});
+  TestBed.overrideComponent(ContextComponent, {set: {template: context_context_html}});
   TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbs_thumbs_html}});
 
   TestBed.compileComponents();

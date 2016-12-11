@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 /*d:templateAddAction/trimLeading*/
-import {VideoItem} from "./VideoItem";
+import {VideoItem} from "./video/VideoItem";
 /*/d*//*d:diInjectServiceSolved/trimLeading*/
-import {VideoService} from "./VideoService";
+import {VideoService} from "./video/VideoService";
 /*/d*//*d:templateAllVideos*/
 const FAKE_VIDEOS = [{
     title: "Cute kitten",

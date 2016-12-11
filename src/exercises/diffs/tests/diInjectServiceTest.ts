@@ -1,7 +1,7 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
 import {AppComponent} from "../AppComponent";
-import {VideoService} from "../VideoService";
+import {VideoService} from "../video/VideoService";
 import {AppModule} from "../AppModule";
 import {app_html, AppComponent_ts} from "../code";
 

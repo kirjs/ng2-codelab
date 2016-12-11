@@ -1,12 +1,11 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
-import {ThumbsComponent} from "./thumbs/ThumbsComponent";
-import {TogglePanelComponent} from "./TogglePanelComponent";
+import {TogglePanelComponent} from "./toggle-panel/TogglePanelComponent";
 import {WrapperComponent} from "./WrapperComponent";
 
 @NgModule({
   imports: [BrowserModule],
-  declarations: [WrapperComponent,TogglePanelComponent],
+  declarations: [WrapperComponent, TogglePanelComponent],
   bootstrap: [WrapperComponent]
 })
 export class AppModule {

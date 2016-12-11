@@ -191,29 +191,28 @@ export class CodelabConfigService {
       appModule: loadTs('AppModule', commits),
       appHtml: loadHtml('app', commits),
       bootstrap: loadTs('Bootstrap', commits),
-      dataBinding: loadTs('DataBinding', commits),
-      videoItem: loadTs('VideoItem', commits),
+      dataBinding: loadTs('data-binding/DataBinding', commits),
+      videoItem: loadTs('video/VideoItem', commits),
       api: loadTs('Api', commits),
-      videoService: loadTs('VideoService', commits),
-      videoHtml: loadHtml('video', commits),
-      videoComponent: loadTs('VideoComponent', commits),
+      videoService: loadTs('video/VideoService', commits),
+      videoHtml: loadHtml('video/video', commits),
+      videoComponent: loadTs('video/VideoComponent', commits),
       thumbsComponent: loadTs('thumbs/ThumbsComponent', commits),
       thumbsHtml: loadHtml('thumbs/thumbs', commits),
-      togglePanelHtml: loadHtml('togglePanel', commits),
-      togglePanelComponent: loadTs('TogglePanelComponent', commits),
+      togglePanelHtml: loadHtml('toggle-panel/togglePanel', commits),
+      togglePanelComponent: loadTs('toggle-panel/TogglePanelComponent', commits),
       wrapperComponent: loadTs('WrapperComponent', commits),
-      contextComponent: loadTs('ContextComponent', commits),
-      contextService: loadTs('ContextService', commits),
+      contextComponent: loadTs('context/ContextComponent', commits),
+      contextService: loadTs('context/ContextService', commits),
       meetup: loadTs('typescript-intro/Meetup', commits),
       mainMeetup: loadTs('typescript-intro/Main', commits),
       guest: loadTs('typescript-intro/Guest', commits),
-      fuzzyPipe: loadTs('FuzzyPipe', commits),
+      fuzzyPipe: loadTs('fuzzy-pipe/FuzzyPipe', commits),
     };
 
     // Too hard to use diff comments for this, so I'm replacing the whole file
     files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
     files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
-    files.appModule.dataBinding = newTsFile('AppModule', exerciseService.getExercise(`diffs/DataBindingModule.ts`));
     files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/tests/meetupTest.ts`));
     files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`diffs/tests/createComponentTest.ts`));
     files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`diffs/tests/createModuleTest.ts`));
@@ -917,7 +916,7 @@ export class CodelabConfigService {
               fileTemplates: [
                 files.contextComponent.contextComponentUse,
                 {
-                  filename: 'context.html',
+                  filename: 'context/context.html',
                   moduleName: 'context',
                   code: '{{text}}'
                 },
@@ -984,7 +983,7 @@ export class CodelabConfigService {
                 files.thumbsComponent.fuzzyPipeUse,
                 files.contextComponent.fuzzyPipeUse,
                 {
-                  filename: 'context.html',
+                  filename: 'context/context.html',
                   moduleName: 'context',
                   code: '{{text}}'
                 },

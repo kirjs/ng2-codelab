@@ -4,15 +4,15 @@ import {AppComponent} from "./AppComponent";
 /*d:thumbsComponentUse/trimLeading*/
 import {ThumbsComponent} from "./thumbs/ThumbsComponent";
 /*/d*//*d:togglePanelComponentUse/trimLeading*/
-import {TogglePanelComponent} from "./TogglePanelComponent";
+import {TogglePanelComponent} from "./toggle-panel/TogglePanelComponent";
 /*/d*//*d:diInjectService/trimLeading*/
-import {VideoService} from "./VideoService";
+import {VideoService} from "./video/VideoService";
 /*/d*//*d:videoComponentUse/trimLeading*/
-import {VideoComponent} from "./VideoComponent";
+import {VideoComponent} from "./video/VideoComponent";
 /*/d*//*d:contextComponentUse/trimLeading*/
-import {ContextComponent} from "./ContextComponent";
+import {ContextComponent} from "./context/ContextComponent";
 /*/d*//*d:fuzzyPipeUse/trimLeading*/
-import {FuzzyPipe} from "./FuzzyPipe";
+import {FuzzyPipe} from "./fuzzy-pipe/FuzzyPipe";
 /*/d*//*d:createModuleSolved/trimTrailing*/
 @NgModule({
   imports: [BrowserModule],

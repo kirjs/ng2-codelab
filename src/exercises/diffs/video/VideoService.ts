@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Api} from "./Api";
+import {Api} from "../Api";
 /*d:diInjectServiceSolved/trimTrailing*/
 @Injectable()
 /*/d*//*d:initial*/

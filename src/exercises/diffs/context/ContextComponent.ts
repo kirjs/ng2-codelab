@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {ContextService} from "./ContextService";
-import {VideoComponent} from "./VideoComponent";
+import {VideoComponent} from "../video/VideoComponent";
 
 @Component({
   selector: 'my-ad',

@@ -1,8 +1,8 @@
 import {TestBed} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import "initTestBed";
-import {togglePanel_html} from "../code";
-import {TogglePanelComponent} from "../TogglePanelComponent";
+import {toggle_panel_togglePanel_html} from "../code";
+import {TogglePanelComponent} from "../toggle-panel/TogglePanelComponent";
 import {WrapperComponent} from "../WrapperComponent";
 
 beforeEach(() => {
@@ -14,7 +14,7 @@ beforeEach(() => {
 
   TestBed.overrideComponent(TogglePanelComponent, {
     set: {
-      template: togglePanel_html
+      template: toggle_panel_togglePanel_html
     }
   });
   TestBed.compileComponents();

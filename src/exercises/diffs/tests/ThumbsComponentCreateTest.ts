@@ -5,6 +5,7 @@ import {Api} from '../Api'
 import {ThumbsComponent, Thumbs} from "../thumbs/ThumbsComponent";
 const thumbs = Api.fetch('')[0];
 
+
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
@@ -74,7 +75,7 @@ describe('Component tree', () => {
     });
 
     it(`thumbs.html: Make the 'thumbs-up' button emit the onThumbs event with the correct thums. Use the ENUM!`, () => {
-      let thumbs;
+      let thumbs = null;
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
       });
@@ -84,7 +85,7 @@ describe('Component tree', () => {
     });
 
     it(`thumbs.html: Make the 'thumbs-down' button emit the onThumbs event with the correct thums. Use the ENUM!`, () => {
-      let thumbs;
+      let thumbs = null;
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
       });
