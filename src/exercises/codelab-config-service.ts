@@ -250,7 +250,6 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Intro',
-              path: '0-intro',
               description: `
           <h1>Welcome to the Angular 2 and TypeScript CodeLab!</h1>
           <p>In this codelab we're going to learn the basics of TypeScript and Angular2.</p>
@@ -279,7 +278,6 @@ export class CodelabConfigService {
             },
             {
               name: 'Typescript',
-              path: '0-intro',
               description: `
           <p>Let's create our first TypeScript module.</p>
           <p>It will be a class called "Meetup".</p> 
@@ -300,7 +298,6 @@ export class CodelabConfigService {
             },
             {
               name: `Success`,
-              path: '0-intro',
               description: `
          You're done with the first milestone, and should now understand the basics of TypeScript!
         `,
@@ -317,7 +314,6 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Intro',
-              path: '1-bootstrap/intro',
               description: `
           <h1>Let's build our first Angular 2 app!</h1>
           <p>This is how it's going to look like</p>
@@ -340,7 +336,6 @@ export class CodelabConfigService {
             },
             {
               name: 'Create a component',
-              path: '1-bootstrap/0-component',
               description: `
             <p>Let's create our first component!</p>
             <p>For this exercise we'll create module and bootstrap everything.
@@ -359,7 +354,6 @@ export class CodelabConfigService {
               ]
             }, {
               name: 'Create a module',
-              path: '1-bootstrap/1-module',
               description: `
         Now we got the component, but we need to wrap it in a module. For this exercise we'll bootstrap the module for you.`,
               solutions: [
@@ -378,7 +372,6 @@ export class CodelabConfigService {
             },
             {
               name: 'Bootstrap the module',
-              path: '1-bootstrap/2-bootstrap',
               skipTests: true,
               description: `
           <p>Now we got module and component ready, let's bootstrap it!</p>
@@ -397,7 +390,6 @@ export class CodelabConfigService {
             },
             {
               name: 'success',
-              path: '1-bootstrap/outro',
               description: `
           <h1>Congrats on your first Angular2 app</h1>
         `,
@@ -413,7 +405,6 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Templates',
-              path: '1-bootstrap/intro',
               description: `
           <h1>Let's work with angular templates</h1>
           <p>As a result we'll see our cats displayed.</p>
@@ -445,7 +436,6 @@ export class CodelabConfigService {
             {
               name: 'Set up the page',
               description: `Let's setup a header, a search box, and a search button for our component!`,
-              path: '2-templates/0-header-input',
               solutions: [
                 files.appHtml.templatePageSetupSolved
               ],
@@ -462,7 +452,6 @@ export class CodelabConfigService {
             }, {
               name: 'Add some action',
               description: `Now let's add search method and display a message when there are no videos.`,
-              path: '2-templates/1-no-videos',
               solutions: [
                 files.appHtml.templateAddActionSolved,
                 files.appComponent.templateAddActionSolved,
@@ -481,7 +470,6 @@ export class CodelabConfigService {
             }, {
               name: 'Display all videos',
               description: `Finally let's iterate over the videos.`,
-              path: '2-templates/2-all-videos',
               solutions: [
                 files.appComponent.templateAllVideosSolved,
                 files.appHtml.templateAllVideosSolved,
@@ -505,7 +493,6 @@ export class CodelabConfigService {
           selectedExerciseIndex: 0,
           exercises: [{
             name: 'Intro',
-            path: '1-bootstrap/intro',
             description: `
           <h1>Let's inject a service.</h1>
           <p>Using a service is way better than hardcoded data. As a result we get even more cats.</p>
@@ -551,7 +538,6 @@ export class CodelabConfigService {
             description: `
           Now we're fetching the videos using a service instead of having them hardcoded.
         `,
-            path: '3-dependency-injection',
             solutions: [
               files.videoService.diInjectServiceSolved,
               files.appModule.diInjectServiceSolved,
@@ -578,7 +564,6 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Intro',
-              path: '1-bootstrap/intro',
               description: sanitizer.bypassSecurityTrustHtml(`
           <h1>Let's create a Video component!</h1>
           <p>Now instead of having the video html in the app component, we're going to have
@@ -608,7 +593,6 @@ export class CodelabConfigService {
              description: `<p>This is a bonus exercise, meant to illustrate passing the data from
              parent component to the child component </p>
              `,
-             path: '4-component-tree/0-add-video-component',
              solutions: [
              files.dataBinding.dataBindingSolved,
              ],
@@ -632,7 +616,6 @@ export class CodelabConfigService {
             a separate component for the video info.</p>
             <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
             `,
-              path: '4-component-tree/0-add-video-component',
               solutions: [
                 files.videoHtml.videoComponentCreateSolved,
                 files.videoComponent.videoComponentCreateSolved,
@@ -656,7 +639,6 @@ export class CodelabConfigService {
             {
               name: 'Use VideoComponent',
               description: `Use VideoComponent in the app.`,
-              path: '4-component-tree/1-use-video-component',
               solutions: [
                 files.appModule.videoComponentUseSolved,
                 files.appHtml.videoComponentUseSolved,
@@ -683,7 +665,6 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Intro',
-              path: '1-bootstrap/intro',
               description: `
           <h1>Let's try  using custom events!</h1>
           <p>We'll add a thumbs component which will emit 'onThumbs' event.  </p>
@@ -712,7 +693,6 @@ export class CodelabConfigService {
               description: `<p>Let's try some custom events now. </p>
             <p>We'll create a thumbs component which will send thumbsUp/thumbsDown event </p>
   `,
-              path: '4-z-custom-events/0-add-thumb-component',
               solutions: [
                 files.thumbsHtml.thumbsComponentCreateSolved,
                 files.thumbsComponent.thumbsComponentCreateSolved,
@@ -739,7 +719,6 @@ export class CodelabConfigService {
             {
               name: 'Use ThumbsComponent',
               description: `Use VideoComponent in the app.`,
-              path: '4-z-custom-events/1-use-thumb-component',
               solutions: [
                 files.appModule.thumbsComponentUseSolved,
                 files.videoHtml.thumbsComponentUseSolved,
@@ -770,7 +749,6 @@ export class CodelabConfigService {
 
             {
               name: 'Intro',
-              path: '1-bootstrap/intro',
               description: `
           <h1>Let's project some content!</h1>
           <p>In this milestone we'll create a component called 'TogglePanel'</p>
@@ -810,7 +788,6 @@ export class CodelabConfigService {
             {
               name: 'Add TogglePanelComponent',
               description: `Let's create a component which will use content projection to toggle between description and meta information. `,
-              path: '5-content-projection/0-add-toggle-panel-component',
               solutions: [
                 files.togglePanelHtml.togglePanelComponentCreateSolved,
                 files.togglePanelComponent.togglePanelComponentCreateSolved,
@@ -836,7 +813,6 @@ export class CodelabConfigService {
             {
               name: 'Use TogglePanelComponent',
               description: `Now let's use the component.`,
-              path: '5-content-projection/1-use-toggle-panel',
               solutions: [
                 files.appModule.togglePanelComponentUseSolved,
                 files.videoHtml.togglePanelComponentUseSolved
@@ -867,7 +843,6 @@ export class CodelabConfigService {
           selectedExerciseIndex: 0,
           exercises: [{
             name: 'Intro',
-            path: '1-bootstrap/intro',
             description: `
           <h1>Let's inject parent component!</h1>
           <p>In this milestone we'll create create a ContextAdComponent. </p>
@@ -908,7 +883,6 @@ export class CodelabConfigService {
               description: `<p>Create a Context(Ad)Component</p>
             <p>which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
             <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`,
-              path: '6-children',
               solutions: [
                 files.contextComponent.contextComponentUseSolved
               ],
@@ -947,7 +921,6 @@ export class CodelabConfigService {
           exercises: [{
             name: 'Create a pipe',
             description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
-            path: '7-pipes/0-create-pipe',
             solutions: [
               files.fuzzyPipe.fuzzyPipeCreateSolved,
             ],
@@ -959,7 +932,6 @@ export class CodelabConfigService {
           }, {
             name: 'Use the pipe',
             description: 'Now include the app in the module and use in the app.',
-            path: '7-pipes/1-use-pipe',
             solutions: [
               files.appModule.fuzzyPipeUseSolved,
               files.videoHtml.fuzzyPipeUseSolved,
@@ -1005,20 +977,14 @@ export class CodelabConfigService {
 
          <p>This milestone is experimental and temporarily uses 'mocha' and 'chai' instead of jasmine.</p>
          `,
-         path: '8-tests/0-test-component',
          fileTemplates: [
          Object.assign(testFile(), {hidden: false}),
-         htmlFile('video', {path: '6-children/solution'}),
          tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
          testFile(),
          ...hidden(
-         tsFile('ContextComponent', {path: '6-children'}),
          htmlFile('context', {path: '6-children'}),
-         tsFile('ContextService', {path: '6-children'}),
          tsFile('VideoComponent', {path: '6-children'}),
-         htmlFile('app', {path: '4-component-tree/1-use-video-component/solution'}),
          htmlFile('togglepanel', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
-         tsFile('TogglePanelComponent', {path: '5-content-projection/0-add-toggle-panel-component/solution'}),
          tsFile('AppComponent', {path: '4-component-tree/1-use-video-component/solution'}),
          sharedAppBootstrap({hidden: true}),
          sharedVideoInterface({hidden: true}),
@@ -1038,7 +1004,6 @@ export class CodelabConfigService {
         Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>
         (which is different from the feedback form)
 `,
-            path: 'test',
             fileTemplates: [],
             tests: []
           }]
