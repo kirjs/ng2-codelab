@@ -959,7 +959,6 @@ export class CodelabConfigService {
                   moduleName: 'context',
                   code: '{{text}}',
                   type: 'html'
-
                 },
                 files.bootstrap.fuzzyPipeUse
               ),
