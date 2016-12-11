@@ -186,33 +186,33 @@ export class CodelabConfigService {
     }
 
     const files = {
-      test: loadTs('AppComponent', commits),
-      appComponent: loadTs('AppComponent', commits),
-      appModule: loadTs('AppModule', commits),
+      test: loadTs('app.component', commits),
+      appComponent: loadTs('app.component', commits),
+      appModule: loadTs('app.module', commits),
       appHtml: loadHtml('app', commits),
-      bootstrap: loadTs('Bootstrap', commits),
-      dataBinding: loadTs('data-binding/DataBinding', commits),
-      videoItem: loadTs('video/VideoItem', commits),
-      api: loadTs('Api', commits),
-      videoService: loadTs('video/VideoService', commits),
+      bootstrap: loadTs('main', commits),
+      //dataBinding: loadTs('data-binding/DataBinding', commits),
+      videoItem: loadTs('video/video-item', commits),
+      api: loadTs('api.service', commits),
+      videoService: loadTs('video/video.service', commits),
       videoHtml: loadHtml('video/video', commits),
-      videoComponent: loadTs('video/VideoComponent', commits),
-      thumbsComponent: loadTs('thumbs/ThumbsComponent', commits),
+      videoComponent: loadTs('video/video.component', commits),
+      thumbsComponent: loadTs('thumbs/thumbs.component', commits),
       thumbsHtml: loadHtml('thumbs/thumbs', commits),
-      togglePanelHtml: loadHtml('toggle-panel/togglePanel', commits),
-      togglePanelComponent: loadTs('toggle-panel/TogglePanelComponent', commits),
-      wrapperComponent: loadTs('WrapperComponent', commits),
-      contextComponent: loadTs('context/ContextComponent', commits),
-      contextService: loadTs('context/ContextService', commits),
+      togglePanelHtml: loadHtml('toggle-panel/toggle-panel', commits),
+      togglePanelComponent: loadTs('toggle-panel/toggle-panel.component', commits),
+      wrapperComponent: loadTs('wrapper.component', commits),
+      contextComponent: loadTs('context/context.component', commits),
+      contextService: loadTs('context/context.service', commits),
       meetup: loadTs('typescript-intro/Meetup', commits),
       mainMeetup: loadTs('typescript-intro/Main', commits),
       guest: loadTs('typescript-intro/Guest', commits),
-      fuzzyPipe: loadTs('fuzzy-pipe/FuzzyPipe', commits),
+      fuzzyPipe: loadTs('fuzzy-pipe/fuzzy.pipe', commits),
     };
 
     // Too hard to use diff comments for this, so I'm replacing the whole file
-    files.appModule.thumbsComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/ThumbsAppModule.ts`));
-    files.appModule.togglePanelComponentCreate = newTsFile('AppModule', exerciseService.getExercise(`diffs/TogglePanelAppModule.ts`));
+    files.appModule.thumbsComponentCreate = newTsFile('app.module', exerciseService.getExercise(`diffs/thumbs.app.module.ts`));
+    files.appModule.togglePanelComponentCreate = newTsFile('app.module', exerciseService.getExercise(`diffs/toggle-panel.app.module.ts`));
     files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/tests/meetupTest.ts`));
     files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`diffs/tests/createComponentTest.ts`));
     files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`diffs/tests/createModuleTest.ts`));
@@ -262,7 +262,6 @@ export class CodelabConfigService {
             <li>There are no type definitions imported in the editor.</li>
             <li>Mocha is used for testing instead of jasmine. </li>
             <li>Forms/Routing milestone is missing.</li>
-            <li>File naming scheme with a dot should be used, e.g. "app.component.ts", not "AppComponent.ts".</li>
             <li>The app is not as beautiful as it could have been.</li>
           </ul>
              <p>Missing milestones/Topics for the advance course:</p>

@@ -1,16 +1,16 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {AppComponent} from "../AppComponent";
-import {app_html, video_video_html, toggle_panel_togglePanel_html, context_context_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../AppModule";
-import {VideoComponent} from "../video/VideoComponent";
-import {VideoService} from "../video/VideoService";
-import {TogglePanelComponent} from "../toggle-panel/TogglePanelComponent";
-import {ContextComponent} from "../context/ContextComponent";
-import {ContextService} from "../context/ContextService";
-import {Api} from "../Api";
-import {FuzzyPipe} from "../fuzzy-pipe/FuzzyPipe";
-import {ThumbsComponent} from "../thumbs/ThumbsComponent";
+import {AppComponent} from "../app.component";
+import {app_html, video_video_html, toggle_panel_toggle_panel_html, context_context_html, thumbs_thumbs_html} from "../code";
+import {AppModule} from "../app.module";
+import {VideoComponent} from "../video/video.component";
+import {VideoService} from "../video/video.service";
+import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
+import {ContextComponent} from "../context/context.component";
+import {ContextService} from "../context/context.service";
+import {Api} from "../api.service";
+import {FuzzyPipe} from "../fuzzy-pipe/fuzzy.pipe";
+import {ThumbsComponent} from "../thumbs/thumbs.component";
 
 function objectValues(object) {
   return Object.keys(object).reduce((result, key) => {
@@ -33,7 +33,7 @@ beforeEach(() => {
   TestBed.overrideComponent(AppComponent, {set: {template: app_html}});
   TestBed.overrideComponent(VideoComponent, {set: {template: video_video_html}});
   TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbs_thumbs_html}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: toggle_panel_togglePanel_html}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: toggle_panel_toggle_panel_html}});
   TestBed.overrideComponent(ContextComponent, {set: {template: context_context_html}});
   TestBed.compileComponents();
 });

@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {thumbs_thumbs_html} from '../code';
-import {Api} from '../Api'
-import {ThumbsComponent, Thumbs} from "../thumbs/ThumbsComponent";
+import {Api} from '../api.service'
+import {ThumbsComponent, Thumbs} from "../thumbs/thumbs.component";
 const thumbs = Api.fetch('')[0];
 
 

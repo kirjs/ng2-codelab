@@ -1,5 +1,5 @@
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {AppModule} from "./AppModule";
+import {AppModule} from "./app.module";
 /*d:templatePageSetup/trimLeading*/
 import {ResourceLoader} from "@angular/compiler";
 import * as code from "./code";

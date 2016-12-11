@@ -1,9 +1,9 @@
 import {TestBed} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import "initTestBed";
-import {toggle_panel_togglePanel_html} from "../code";
-import {TogglePanelComponent} from "../toggle-panel/TogglePanelComponent";
-import {WrapperComponent} from "../WrapperComponent";
+import {toggle_panel_toggle_panel_html} from "../code";
+import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
+import {WrapperComponent} from "../wrapper.component";
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -14,7 +14,7 @@ beforeEach(() => {
 
   TestBed.overrideComponent(TogglePanelComponent, {
     set: {
-      template: toggle_panel_togglePanel_html
+      template: toggle_panel_toggle_panel_html
     }
   });
   TestBed.compileComponents();

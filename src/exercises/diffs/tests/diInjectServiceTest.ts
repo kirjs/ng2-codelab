@@ -1,9 +1,9 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {AppComponent} from "../AppComponent";
-import {VideoService} from "../video/VideoService";
-import {AppModule} from "../AppModule";
-import {app_html, AppComponent_ts} from "../code";
+import {AppComponent} from "../app.component";
+import {VideoService} from "../video/video.service";
+import {AppModule} from "../app.module";
+import {app_html, app_component_ts} from "../code";
 
 
 beforeEach(() => {
@@ -42,7 +42,7 @@ describe('Blabla', () => {
 
   it(`AppComponent.ts: Require videoService in the component`, () => {
     chai.expect(AppComponent.length, `App component constructor doesn't take any parameters`).to.equal(1);
-    chai.expect(AppComponent_ts).matches(/VideoService/)
+    chai.expect(app_component_ts).matches(/VideoService/)
   });
 
   it(`AppComponent.ts: return videoService.search(results instead of fake data)`, () => {

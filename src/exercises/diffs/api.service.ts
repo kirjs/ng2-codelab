@@ -1,4 +1,4 @@
-import {VideoItem} from "./video/VideoItem";
+import {VideoItem} from "./video/video-item";
 
 let FAKE_VIDEOS = [
   {

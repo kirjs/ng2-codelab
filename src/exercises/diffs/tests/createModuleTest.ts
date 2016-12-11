@@ -1,7 +1,7 @@
 import {TestBed} from "@angular/core/testing";
-import {AppModule} from "../AppModule";
+import {AppModule} from "../app.module";
 import {BrowserModule} from "@angular/platform-browser";
-import {AppComponent} from "../AppComponent";
+import {AppComponent} from "../app.component";
 import "reflect-metadata";
 let metadata;
 

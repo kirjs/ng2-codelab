@@ -1,5 +1,5 @@
 import {TestBed} from "@angular/core/testing";
-import {AppComponent} from "../AppComponent";
+import {AppComponent} from "../app.component";
 import "initTestBed";
 import {app_html} from "../code";
 

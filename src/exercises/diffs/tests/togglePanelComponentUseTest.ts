@@ -1,13 +1,13 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
-import {AppComponent} from "../AppComponent";
-import {app_html, video_video_html, toggle_panel_togglePanel_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../AppModule";
-import {VideoComponent} from "../video/VideoComponent";
-import {VideoService} from "../video/VideoService";
-import {TogglePanelComponent} from "../toggle-panel/TogglePanelComponent";
-import {ThumbsComponent} from "../thumbs/ThumbsComponent";
-import {Api} from "../Api";
+import {AppComponent} from "../app.component";
+import {app_html, video_video_html, toggle_panel_toggle_panel_html, thumbs_thumbs_html} from "../code";
+import {AppModule} from "../app.module";
+import {VideoComponent} from "../video/video.component";
+import {VideoService} from "../video/video.service";
+import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
+import {ThumbsComponent} from "../thumbs/thumbs.component";
+import {Api} from "../api.service";
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -19,7 +19,7 @@ beforeEach(() => {
   TestBed.overrideComponent(AppComponent, {set: {template: app_html}});
   TestBed.overrideComponent(ThumbsComponent, {set: {template: thumbs_thumbs_html}});
   TestBed.overrideComponent(VideoComponent, {set: {template: video_video_html}});
-  TestBed.overrideComponent(TogglePanelComponent, {set: {template: toggle_panel_togglePanel_html}});
+  TestBed.overrideComponent(TogglePanelComponent, {set: {template: toggle_panel_toggle_panel_html}});
   TestBed.compileComponents();
 });
 

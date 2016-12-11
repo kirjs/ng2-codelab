@@ -1,10 +1,10 @@
 import {TestBed} from "@angular/core/testing";
 import "initTestBed";
 import {video_video_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../AppModule";
-import {Api} from "../Api";
-import {ThumbsComponent} from "../thumbs/ThumbsComponent";
-import {VideoComponent} from "../video/VideoComponent";
+import {AppModule} from "../app.module";
+import {Api} from "../api.service";
+import {ThumbsComponent} from "../thumbs/thumbs.component";
+import {VideoComponent} from "../video/video.component";
 
 beforeEach(() => {
   TestBed.resetTestingModule();

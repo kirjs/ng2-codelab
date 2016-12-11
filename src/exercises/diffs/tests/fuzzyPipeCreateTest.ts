@@ -1,4 +1,4 @@
-import {FuzzyPipe, evalJs} from '../fuzzy-pipe/FuzzyPipe';
+import {FuzzyPipe, evalJs} from '../fuzzy-pipe/fuzzy.pipe';
 import "reflect-metadata";
 
 let metadata;

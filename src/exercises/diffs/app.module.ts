@@ -1,18 +1,18 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
-import {AppComponent} from "./AppComponent";
+import {AppComponent} from "./app.component";
 /*d:thumbsComponentUse/trimLeading*/
-import {ThumbsComponent} from "./thumbs/ThumbsComponent";
+import {ThumbsComponent} from "./thumbs/thumbs.component";
 /*/d*//*d:togglePanelComponentUse/trimLeading*/
-import {TogglePanelComponent} from "./toggle-panel/TogglePanelComponent";
+import {TogglePanelComponent} from "./toggle-panel/toggle-panel.component";
 /*/d*//*d:diInjectService/trimLeading*/
-import {VideoService} from "./video/VideoService";
+import {VideoService} from "./video/video.service";
 /*/d*//*d:videoComponentUse/trimLeading*/
-import {VideoComponent} from "./video/VideoComponent";
+import {VideoComponent} from "./video/video.component";
 /*/d*//*d:contextComponentUse/trimLeading*/
-import {ContextComponent} from "./context/ContextComponent";
+import {ContextComponent} from "./context/context.component";
 /*/d*//*d:fuzzyPipeUse/trimLeading*/
-import {FuzzyPipe} from "./fuzzy-pipe/FuzzyPipe";
+import {FuzzyPipe} from "./fuzzy-pipe/fuzzy.pipe";
 /*/d*//*d:createModuleSolved/trimTrailing*/
 @NgModule({
   imports: [BrowserModule],
