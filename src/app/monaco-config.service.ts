@@ -58,6 +58,10 @@ export class MonacoConfigService {
             templateUrl?: string;
           }
           
+          export interface PipeConfig {
+            name: string;           
+          }
+          
           export function Component(config: ComponentConfig);
           
           export interface NgModuleConfig {
@@ -70,7 +74,11 @@ export class MonacoConfigService {
           export function Injectable();
           export function Output();
           export function Input();
-          
+          export function Pipe(config: PipeConfig);
+          export interface PipeTransform {
+            transform(value: string);
+          }
+                    
         }  
            
         declare var x = 1;
