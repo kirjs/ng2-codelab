@@ -122,7 +122,6 @@ export class MonacoConfigService {
     // This is a temporary hacks, seems like monaco ignores file location for relative imports.
     // it assumes that there are no files with the same filename in different folders.
     const filename = file.filename.replace(/.*\//, '');
-    console.log(filename);
     this.declarations[filename] = {
       dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${filename}`),
       file: file,
