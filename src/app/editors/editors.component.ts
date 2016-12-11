@@ -1,7 +1,8 @@
-import {Component, Input, ViewChildren, QueryList} from "@angular/core";
+import {Component, ElementRef, Input, ViewChild, ViewChildren, QueryList} from "@angular/core";
 import {FileConfig} from "../file-config";
 import {StateService} from "../state.service";
 import {EditorComponent} from "../editor/editor.component";
+import {ResizeComponent} from "../resize/resize.component";
 
 
 @Component({
@@ -12,10 +13,16 @@ import {EditorComponent} from "../editor/editor.component";
 export class EditorsComponent {
   @Input() public files: Array<any>;
   @ViewChildren(EditorComponent) children: QueryList<EditorComponent>;
+  @ViewChild('editors') editorsContainer: ElementRef;
   private debug: boolean;
+  private editorWidth;
 
   get visibleFiles() {
     return this.files.filter(file => !file.hidden);
+  }
+
+  ngOnInit() {
+    this.editorWidth = this.editorsContainer.nativeElement.clientWidth
   }
 
   onCodeChange(change) {
