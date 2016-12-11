@@ -667,7 +667,7 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               path: '1-bootstrap/intro',
-              description: sanitizer.bypassSecurityTrustHtml(`
+              description: `
           <h1>Let's try  using custom events!</h1>
           <p>We'll add a thumbs component which will emit 'onThumbs' event.  </p>
           <p>Then in the video component we're going to listed to the event and change the amount of like accordingly.</p>
@@ -685,7 +685,7 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `),
+        `,
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
@@ -754,7 +754,7 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               path: '1-bootstrap/intro',
-              description: sanitizer.bypassSecurityTrustHtml(`
+              description: `
           <h1>Let's project some content!</h1>
           <p>In this milestone we'll create a component called 'TogglePanel'</p>
           <p>It will actually take 2 divs, but only display one at a time. </p>
@@ -785,7 +785,7 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `),
+        `,
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
@@ -851,7 +851,7 @@ export class CodelabConfigService {
           exercises: [{
             name: 'Intro',
             path: '1-bootstrap/intro',
-            description: sanitizer.bypassSecurityTrustHtml(`
+            description: `
           <h1>Let's inject parent component!</h1>
           <p>In this milestone we'll create create a ContextAdComponent. </p>
           <p>This component will not use inputs. Instead it will require parent (Video) component and directly look at it's properties. </p>
@@ -881,7 +881,7 @@ export class CodelabConfigService {
              <p>Note, we are actually calling it ContextComponent, because when it was called ContextAdComponent, adblock blocked it, and I spent 2 hours debugging. </p>
               
                    
-        `),
+        `,
             fileTemplates: [],
             tests: [],
             messageNext: `I'm a ready, let's start!`
