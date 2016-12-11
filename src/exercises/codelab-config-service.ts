@@ -891,7 +891,8 @@ export class CodelabConfigService {
                 {
                   filename: 'context/context.html',
                   moduleName: 'context',
-                  code: '{{text}}'
+                  code: '{{text}}',
+                  type: 'html'
                 },
                 ...justForReference(
                   files.contextService.contextComponentUse,
