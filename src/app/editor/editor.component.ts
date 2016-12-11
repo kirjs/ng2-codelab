@@ -1,4 +1,5 @@
-import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from "@angular/core";
+import {Component, forwardRef, HostListener, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from "@angular/core";
+
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import "rxjs/add/operator/debounceTime";
 import {FileConfig} from "../file-config";
@@ -33,16 +34,29 @@ export class EditorComponent implements AfterViewInit {
   height = 0;
   public code = '';
 
-  static calcHeight(lines) {
-    return lines * 18;
-  }
+  @Input() editorH;
+  @Input() editorW;
+  @Input() isLast: boolean;
 
+  private TITLE_HEIGHT = 30;
 
   constructor(private monacoConfigService: MonacoConfigService) {
     this.editSub = new Subject<String>();
     this.editSub.debounceTime(1000).subscribe((value) => {
       this.onCodeChange.emit(value);
     });
+  }
+
+  ngOnChanges(changes) : void {
+    this.resetLayout();
+  }
+
+  getHeight() {
+    // last editor takes remaining space
+    if (this.isLast) {
+      return this.editorContent.nativeElement.clientHeight
+    }
+    return this.editorH
   }
 
   loadCode(code: string) {
@@ -61,33 +75,25 @@ export class EditorComponent implements AfterViewInit {
           readOnly: this.file.readonly,
           tabCompletion: true,
           wordBasedSuggestions: true,
-          lineNumbersMinChars: 3,
-          automaticLayout: true,
+          lineNumbersMinChars: 3
         });
 
       this._editor.getModel().onDidChangeContent(() => {
         this.updateValue(this._editor.getModel().getValue());
       });
 
-
-      this.updateHeight(this.file.code);
+      this.resetLayout();
     })
   }
 
-  updateHeight(value: string) {
-    const height = EditorComponent.calcHeight(value.split('\n').length);
-
-    if (this.height != height) {
-      this.height = height;
-      this.editorContent.nativeElement.style.height = height + 'px';
-      this._editor.layout();
-    }
+  resetLayout() {
+    if (!this._editor) return
+    this._editor.layout({height: this.getHeight(), width: this.editorW});
   }
 
   updateValue(value: string) {
     if(this.code!=value){
       this.code = value;
-      this.updateHeight(value);
       this.editSub.next(value);
     }
   }
@@ -96,6 +102,11 @@ export class EditorComponent implements AfterViewInit {
     // TODO: Find a better way.
     let model = this._editor.getModel();
     model.setValue(model.getValue());
+  }
+
+  @HostListener('window:resize', [])
+  onResize() {
+    this.resetLayout()
   }
 }
 

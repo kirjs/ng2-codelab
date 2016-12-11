@@ -1,15 +1,45 @@
-<div class="editors">
-  <div *ngFor="let file of visibleFiles" class="editor">
-    <div *ngIf="debug && file.solution" (click)="loadSolution(file)" style="float: right">
-      [load solution]
+<div
+    #editorContainer
+    class="editors">
+    <div
+        class="editor"
+        [ngClass]="{
+            'is-disabled': isMouseDown,
+            'fillRemaining': last
+        }"
+        *ngFor="let file of visibleFiles; let i = index; let last = last"
+        (mouseleave)="mouseStateReset()">
+        <div class="header">
+            <div *ngIf="debug && file.solution" (click)="loadSolution(file)" style="float: right">
+              [load solution]
+            </div>
+            <div class="filename"
+                (click)="toggleFile(file)">
+                <span
+                    *ngIf="file.collapsed"
+                    class="arrow">▷</span>
+                <span
+                    *ngIf="!file.collapsed"
+                    class="arrow">▽</span>
+                {{file.filename}} {{file.readonly?' (this file is read only) ': ''}} {{getHeight(i)}}
+            </div>
+            <span
+                class="resizeHandle"
+                *ngIf="i && getClosestCollapsedFile(i - 1) !== undefined"
+                (mousedown)="onMouseDown()"
+                (mousemove)="onMouseMove($event, i, getClosestCollapsedFile(i - 1))"
+                (mouseup)="mouseStateReset()">
+            </span>
+        </div>
+        <app-editor
+            class="fillRemaining"
+            *ngIf="!file.collapsed"
+            [file]="file"
+            [editorH]="getHeight(i)"
+            [editorW]="getWidth(i)"
+            [isLast]="last"
+            (onCodeChange)="onCodeChange.emit({file: file, code: $event})">
+        </app-editor>
     </div>
-    <div class="filename" (click)="toggleFile(file)">
-      <span *ngIf="file.collapsed" class="arrow">▷</span>
-      <span *ngIf="!file.collapsed" class="arrow">▽</span>
-      {{file.filename}} {{file.readonly?' (this file is read only) ': ''}}
-    </div>
-    <app-editor [file]="file" *ngIf="!file.collapsed" (onCodeChange)="onCodeChange({file: file, code: $event})">
-    </app-editor>
-  </div>
 </div>
 

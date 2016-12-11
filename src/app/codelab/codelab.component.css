@@ -62,6 +62,7 @@
 }
 
 .codelab-milestone {
+  display: flex;
   width: 100%;
 }
 
