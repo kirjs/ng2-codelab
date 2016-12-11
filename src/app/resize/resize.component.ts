@@ -4,17 +4,18 @@ import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core"
 	selector: 'resize',
 	templateUrl: `
 		<div [class.overlay]="isExpanded"></div>
-			<div
-				[class.is-expanded]="isExpanded">
-			</div>
+		<div
+			class="handle"
+			[class.is-expanded]="isExpanded">
+		</div>
 		`,
 	styles: [`
-	div {
+	.handle {
 		position: absolute;
 		right: 0;
 		top: 0;
 		height: 100%;
-		width: 10px;
+		width: 15px;
 		border-right: 1px dashed rgba(128, 128, 128, 0.5);
 		cursor: col-resize;
 	}
