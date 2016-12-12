@@ -14,7 +14,6 @@ import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core"
 export class ResizeComponent {
 	private initOffsetX;
 	private isMouseDown;
-	private isExpanded;
 	private initWidth;
 	@Input('width') width;
 	@Output() widthChange = new EventEmitter();
