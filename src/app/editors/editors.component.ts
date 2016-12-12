@@ -15,14 +15,14 @@ export class EditorsComponent {
   @ViewChildren(EditorComponent) children: QueryList<EditorComponent>;
   @ViewChild('editors') editorsContainer: ElementRef;
   private debug: boolean;
-  private editorWidth;
+  private editorsWidth;
 
   get visibleFiles() {
     return this.files.filter(file => !file.hidden);
   }
 
   ngOnInit() {
-    this.editorWidth = this.editorsContainer.nativeElement.clientWidth
+    this.editorsWidth = this.editorsContainer.nativeElement.clientWidth;
   }
 
   onCodeChange(change) {

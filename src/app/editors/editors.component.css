@@ -15,5 +15,7 @@
 
 .editor {
   width: 100%;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 

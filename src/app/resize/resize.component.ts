@@ -1,44 +1,14 @@
 import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
-	selector: 'resize',
-	templateUrl: `
-		<div [class.overlay]="isExpanded"></div>
-		<div
-			class="handle"
-			[class.is-expanded]="isExpanded">
-		</div>
-		`,
-	styles: [`
-	.handle {
-		position: absolute;
-		right: 0;
-		top: 0;
-		height: 100%;
-		width: 15px;
-		border-right: 1px dashed rgba(128, 128, 128, 0.5);
-		cursor: col-resize;
-	}
-
-	.is-expanded {
-		width: 100%;
-	}
-
-	.overlay {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		width: 100%;
-		height: 100%;
-	}
-  `],
+	selector: 'app-resize',
+	templateUrl: './resize.component.html',
+	styleUrls: ['./resize.component.css'],
 	host: {
 		'(mousemove)': 'onMouseMove($event)',
 		'(mousedown)': 'onMouseDown($event)',
-		'(mouseup)': 'onMouseUp()',
-		'(mouseleave)': 'onMouseUp()'
+		'(mouseup)': 'mouseStateReset()',
+		'(mouseleave)': 'mouseStateReset()'
 	}
 })
 export class ResizeComponent {
@@ -49,14 +19,11 @@ export class ResizeComponent {
 	@Input('width') width;
 	@Output() widthChange = new EventEmitter();
 
-	constructor(private elRef: ElementRef) {}
-
 	onMouseMove(e) {
-		if (!this.isMouseDown) return
-		this.isExpanded = true;
+		if (!this.isMouseDown) { return; }
 
-		let w= this.initWidth + e.clientX -this.initOffsetX
-		this.widthChange.emit(w);
+		let width = this.initWidth + e.clientX - this.initOffsetX
+		this.widthChange.emit(width);
 	}
 
 	onMouseDown(e) {
@@ -65,8 +32,7 @@ export class ResizeComponent {
 		this.initWidth = this.width
 	}
 
-	onMouseUp() {
+	mouseStateReset() {
 		this.isMouseDown = false;
-		this.isExpanded = false;
 	}
 }

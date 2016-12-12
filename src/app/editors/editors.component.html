@@ -1,7 +1,7 @@
 <div
   #editors
   class="editors"
-  [ngStyle]="{'width': editorWidth + 'px'}">
+  [ngStyle]="{'width': editorsWidth + 'px'}">
   <div *ngFor="let file of visibleFiles" class="editor">
     <div *ngIf="debug && file.solution" (click)="loadSolution(file)" style="float: right">
       [load solution]
@@ -15,6 +15,6 @@
     </app-editor>
   </div>
 
-  <resize [(width)]="editorWidth"></resize>
+  <app-resize [(width)]="editorsWidth"></app-resize>
 </div>
 
