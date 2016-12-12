@@ -6,6 +6,7 @@ import {Injectable} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 
 const test = window.location.hash.includes('test');
+const presentationMode = window.location.hash.includes('present');
 const debug = test || window.location.hash.includes('debug');
 const reset = window.location.hash.includes('reset') || debug;
 
@@ -16,8 +17,9 @@ export const appConfig = {
   auth: '',
   feedbackEnabled: false,
   preserveState: !reset,
-  debug: debug,
-  test: test
+  debug,
+  test,
+  presentationMode
 };
 
 @Injectable()
