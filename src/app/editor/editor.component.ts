@@ -34,7 +34,7 @@ export class EditorComponent implements AfterViewInit {
   public code = '';
 
   static calcHeight(lines) {
-    return lines * 18;
+    return Math.max(lines * 18, 18 * 6);
   }
 
 
@@ -85,7 +85,7 @@ export class EditorComponent implements AfterViewInit {
   }
 
   updateValue(value: string) {
-    if(this.code!=value){
+    if (this.code != value) {
       this.code = value;
       this.updateHeight(value);
       this.editSub.next(value);
