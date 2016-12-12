@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {StateService, exerciseComplete} from "../state.service";
+import {StateService} from "../state.service";
 import {ExerciseConfig} from "../exercise-config";
 
 
@@ -10,9 +10,10 @@ import {ExerciseConfig} from "../exercise-config";
 })
 export class ExerciseComponent {
   @Input() public config: ExerciseConfig;
-
+  public presentationMode: boolean;
 
   constructor(private state: StateService) {
+    state.update.subscribe(state => this.presentationMode = state.app.presentationMode);
   }
 
   onCodeChange(changedFile) {

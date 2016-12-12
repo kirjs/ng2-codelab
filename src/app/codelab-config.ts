@@ -7,7 +7,9 @@ export interface AppConfig {
   auth: string,
   feedbackEnabled: boolean,
   preserveState: boolean,
-  debug: boolean
+  debug: boolean,
+  presentationMode: boolean,
+  chinaMode: boolean
 }
 
 export interface CodelabConfig {
@@ -17,7 +19,7 @@ export interface CodelabConfig {
   name: string,
   page: 'milestone'|'feedback',
   selectedMilestoneIndex: number,
-  autorun:boolean,
+  autorun: boolean,
   milestones: Array<MilestoneConfig>,
   user: string,
   auth: {}

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Observable, BehaviorSubject} from "rxjs/Rx";
-import {CodelabConfig} from "./codelab-config";
+import {CodelabConfig, AppConfig} from "./codelab-config";
 import {Action} from "./action";
 import {ActionTypes} from "./action-types.enum";
 import {ExerciseConfig} from "./exercise-config";
@@ -27,9 +27,10 @@ export function exerciseComplete(exercise: ExerciseConfig) {
 export class StateService {
   public readonly update: Observable<CodelabConfig>;
   private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
-
+  public appConfig: AppConfig;
 
   constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
+    this.appConfig = codelabConfig.config.app;
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
 

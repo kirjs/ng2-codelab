@@ -1,4 +1,4 @@
-import {CodelabConfig} from "../app/codelab-config";
+import {CodelabConfig, AppConfig} from "../app/codelab-config";
 import {FileConfig} from "../app/file-config";
 import {differ} from "../app/differ/differ";
 import {ExerciseService} from "../app/exercise.service";
@@ -10,7 +10,7 @@ const presentationMode = window.location.hash.includes('present');
 const debug = test || window.location.hash.includes('debug');
 const reset = window.location.hash.includes('reset') || debug;
 
-export const appConfig = {
+export const appConfig: AppConfig = {
   name: 'Codelab',
   page: 'milestone',
   user: '',
@@ -19,7 +19,8 @@ export const appConfig = {
   preserveState: !reset,
   debug,
   test,
-  presentationMode
+  presentationMode,
+  chinaMode: true
 };
 
 @Injectable()
