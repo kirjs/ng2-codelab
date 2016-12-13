@@ -51,7 +51,8 @@
 }
 
 .milestone.selected .index {
-  background-color: #f90;
+  background-color: #5ccb5d;
+  color: #fff;
 }
 
 .collapse {
