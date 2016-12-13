@@ -8,8 +8,7 @@ export interface AppConfig {
   feedbackEnabled: boolean,
   preserveState: boolean,
   debug: boolean,
-  presentationMode: boolean,
-  chinaMode: boolean
+  presentationMode: boolean
 }
 
 export interface CodelabConfig {

@@ -95,7 +95,11 @@ export class EditorComponent implements AfterViewInit {
   ping() {
     // TODO: Find a better way.
     let model = this._editor.getModel();
-    model.setValue(model.getValue());
+    const oldFullModelRange = model.getFullModelRange();
+    const oldModelValueLength = model.getValueLengthInRange(oldFullModelRange);
+    const endLineNumber = model.getLineCount();
+    const endColumn = model.getLineMaxColumn(endLineNumber);
+    model._emitContentChanged2(1, 1, endLineNumber, endColumn, oldModelValueLength, model.getValue(), false, false);
   }
 }
 

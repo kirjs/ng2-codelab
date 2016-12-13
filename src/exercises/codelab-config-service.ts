@@ -19,8 +19,7 @@ export const appConfig: AppConfig = {
   preserveState: !reset,
   debug,
   test,
-  presentationMode,
-  chinaMode: true
+  presentationMode
 };
 
 @Injectable()

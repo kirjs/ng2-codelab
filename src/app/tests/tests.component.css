@@ -16,14 +16,6 @@
   background-color: #ff4d44;
 }
 
-.china-mode .test.pass:before {
-  background-color: #ff4d44;
-}
-
-.china-mode .test.fail:before {
-  background-color: #aaff30;
-}
-
 .checklist {
   padding: 10px;
 }

@@ -8,11 +8,5 @@ import {StateService} from "../state.service";
   styleUrls: ['./tests.component.css']
 })
 export class TestsComponent {
-  private chinaMode;
-
-  constructor(public state: StateService) {
-    this.chinaMode = state.appConfig.chinaMode;
-  }
-
   @Input() tests: Array<TestInfo>;
 }
