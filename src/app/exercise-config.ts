@@ -4,7 +4,7 @@ import {SafeHtml} from "@angular/platform-browser";
 
 export interface ExerciseConfig {
   name: string,
-  description: string|SafeHtml,
+  description: string,
   fileTemplates: Array<FileConfig>
   solutions?: Array<FileConfig>
   editedFiles?: Array<FileConfig>;

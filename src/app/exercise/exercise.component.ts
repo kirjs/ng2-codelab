@@ -1,6 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {StateService} from "../state.service";
 import {ExerciseConfig} from "../exercise-config";
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -12,7 +13,11 @@ export class ExerciseComponent {
   @Input() public config: ExerciseConfig;
   public presentationMode: boolean;
 
-  constructor(private state: StateService) {
+  public get sanitizedDescription() {
+    return this.sanitizer.bypassSecurityTrustHtml(this.config.description);
+  }
+
+  constructor(private state: StateService, private sanitizer: DomSanitizer) {
     state.update.subscribe(state => this.presentationMode = state.app.presentationMode);
   }
 

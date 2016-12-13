@@ -26,7 +26,7 @@ export const appConfig: AppConfig = {
 export class CodelabConfigService {
   public config: CodelabConfig;
 
-  constructor(public exerciseService: ExerciseService, sanitizer: DomSanitizer) {
+  constructor(public exerciseService: ExerciseService) {
     function testFile(filename = 'Test.ts', code?) {
       return {
         filename,
@@ -566,7 +566,7 @@ export class CodelabConfigService {
           exercises: [
             {
               name: 'Intro',
-              description: sanitizer.bypassSecurityTrustHtml(`
+              description: `
           <h1>Let's create a Video component!</h1>
           <p>Now instead of having the video html in the app component, we're going to have
             a separate component for the video info.</p>
@@ -584,7 +584,7 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `),
+        `,
               fileTemplates: [],
               tests: [],
               messageNext: `I'm a ready, let's start!`
