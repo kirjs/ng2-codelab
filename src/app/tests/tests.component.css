@@ -5,15 +5,19 @@
   display: inline-block;
   background-color: #dddddd;
   content: "";
-  margin-right: 10px;
+  margin-right: 4px;
+}
+
+.test.pass {
+  color: #999;
 }
 
 .test.pass:before {
-  background-color: #aaff30;
+  background-color: #5ccb5d;
 }
 
 .test.fail:before {
-  background-color: #ff4d44;
+  background-color: #ff6144;
 }
 
 .checklist {
