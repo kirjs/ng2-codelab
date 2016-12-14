@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 
 @Component({
 	selector: 'app-resize',
@@ -13,16 +13,21 @@ import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core"
 })
 export class ResizeComponent {
 	private initOffsetX;
-	private isMouseDown;
 	private initWidth;
-	@Input('width') width;
-	@Output() widthChange = new EventEmitter();
+	private isMouseDown:boolean;
+	private width;
+
+	constructor(private elRef: ElementRef) {}
+
+	ngOnInit() {
+		this.width = this.elRef.nativeElement.clientWidth;
+	}
 
 	onMouseMove(e) {
+		e.preventDefault();
 		if (!this.isMouseDown) { return; }
 
-		let width = this.initWidth + e.clientX - this.initOffsetX
-		this.widthChange.emit(width);
+		this.width = this.initWidth + e.clientX - this.initOffsetX;
 	}
 
 	onMouseDown(e) {

@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   height: 100%;
-  width: 600px;
+  max-width: 100%;
 }
 
 .filename {

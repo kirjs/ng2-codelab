@@ -1,3 +1,8 @@
+.resize {
+	position: relative;
+	width: 600px;
+}
+
 .spacer {
 	display: flex;
 	justify-content: center;
