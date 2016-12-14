@@ -1,6 +1,7 @@
 .resize {
 	position: relative;
 	width: 600px;
+	height: 100%;
 }
 
 .spacer {
