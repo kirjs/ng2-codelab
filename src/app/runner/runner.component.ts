@@ -64,10 +64,10 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
       const displayError = (error, info) => {
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
-        setHtml(`Check out your browser console to see the full error!
+        setHtml(`
+            <div style = "border-top: 1px #888 dotted; padding-top: 4px; margin-top: 4px">Check out your browser console to see the full error!</div>
             <pre>${escaped}</pre>`);
       };
-
       iframe.contentWindow.console.error = function (error, message) {
         // handle angular error 1/3
         displayError(error, 'Angular Error');
