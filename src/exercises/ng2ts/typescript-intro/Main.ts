@@ -1,4 +1,4 @@
-import {Meetup} from "./Meetup";
+import {Codelab} from "./Codelab";
 
 // Use this file for reference.
 const guests = [
@@ -19,9 +19,9 @@ const guests = [
     name: 'Charles Darwin'
   }];
 
-const meetup = new Meetup(guests);
+const codelab = new Codelab(guests);
 
 // Angular2 is so much better than this:
 document.body.innerHTML = '<ul>' +
-  meetup.getRsvp().map(guest => `<li>${guest.name}</li>`).join('') +
+  codelab.getRsvp().map(guest => `<li>${guest.name}</li>`).join('') +
   '</ul>';

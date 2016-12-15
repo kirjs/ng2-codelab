@@ -1,7 +1,7 @@
 import {Guest} from './Guest';
 /*d:initial:initial*/// Add your code here
-/*/d*//*d:meetupSolved*/
-export class Meetup {
+/*/d*//*d:codelabSolved*/
+export class Codelab {
   constructor(public guests: Guest[]) {
   }
 
@@ -11,5 +11,5 @@ export class Meetup {
 }
 /*/d*//*d:neverShow*/
 // Needed for type checking
-export function evalJs(param){}
+export function evalJs(param){ return param;}
 /*/d*/

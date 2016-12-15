@@ -16,7 +16,7 @@ beforeEach(() => {
 });
 
 describe('Blabla', () => {
-  it(`app.html: Add a <h1> header, put the 'title' property inside`, () => {
+  it(`app.html: Add a <h1> header, display the 'title' property of the AppComponent inside`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const header = fixture.nativeElement.querySelector('h1');
@@ -29,7 +29,7 @@ describe('Blabla', () => {
     chai.expect(header2.innerHTML, `Use the curly braces to put component title property in the header`).contains('SomethingElse');
   });
 
-  it(`app.html: Add an <input> with a placeholder set to 'video' `, () => {
+  it(`app.html: Add an <input> with a 'placeholder' set to 'video' (hint: 'placeholder' is just an attribute of an input tag) `, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const input = fixture.nativeElement.querySelector('input');
@@ -37,7 +37,7 @@ describe('Blabla', () => {
     chai.expect(input.placeholder, `Input placeholder should contain word 'video'`).contains('video');
   });
 
-  it(`app.html: Add a <button> which says 'search'`, () => {
+  it(`app.html: Add a <button> labeled 'search'`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button');

@@ -20,10 +20,6 @@ function objectValues(object) {
 }
 const sampleVideo = Api.fetch('')[0];
 
-function objectHasAn(object, Type) {
-  return objectValues(object).some(val => val instanceof Type)
-}
-
 beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({

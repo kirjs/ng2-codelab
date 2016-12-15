@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import 'initTestBed';
-import {thumbs_thumbs_html} from '../code';
-import {Api} from '../api.service'
+import {TestBed} from "@angular/core/testing";
+import "initTestBed";
+import {thumbs_thumbs_html} from "../code";
+import {Api} from "../api.service";
 import {ThumbsComponent, Thumbs} from "../thumbs/thumbs.component";
 const thumbs = Api.fetch('')[0];
 
@@ -29,17 +29,17 @@ describe('Component tree', () => {
       fixture.detectChanges();
     });
 
-    it(`thumbs.html: Add a button with a 'thumbs-up' class.`, () => {
-      chai.expect(fixture.nativeElement.querySelector('.thumbs-up'), `can't find thumbs up button`).to.be.ok
+    it(`thumbs.html: Add a button with a 'thumbs-up' CSS class.`, () => {
+      chai.expect(fixture.nativeElement.querySelector('.thumbs-up'), `can't find thumbs up button`).to.be.ok;
     });
 
-    it(`thumbs.html: Add a button with a 'thumbs-down' class.`, () => {
-      chai.expect(fixture.nativeElement.querySelector('.thumbs-up'), `can't find thumbs up button`).to.be.ok
+    it(`thumbs.html: Add a button with a 'thumbs-down' CSS class.`, () => {
+      chai.expect(fixture.nativeElement.querySelector('.thumbs-down'), `can't find thumbs down button`).to.be.ok;
     });
   });
 
   describe('Make sure things work', () => {
-    it(`ThumbsComponent.ts: Set a selector to be 'my-thumbs'.`, () => {
+    it(`ThumbsComponent.ts: Set the selector to be 'my-thumbs'.`, () => {
       const metadata = Reflect.getMetadata("annotations", ThumbsComponent);
       chai.expect(metadata, `ThumbsComponent doesn't have a @Component() annotation`).is.not.undefined;
       chai.expect(metadata[0].selector, `ThumbsComponent's selector has to be 'my-thumbs'.`).equals('my-thumbs')
@@ -51,19 +51,12 @@ describe('Component tree', () => {
       chai.expect(metadata[0].templateUrl, `ThumbsComponent's templateUrl should be set to './thumbs.html'`).equals('./thumbs.html')
     });
 
-    it(`ThumbsComponent.ts: Add a @Output() called 'onThumbs'`, () => {
+    // TODO: split
+    it(`ThumbsComponent.ts: Add an 'onThumbs' property and set the value to a new EventEmitter. Decorate with @Output()`, () => {
       const metadata = Reflect.getMetadata("propMetadata", ThumbsComponent);
       chai.expect(metadata, `ThumbsComponent doesn't have any @Outputs()'s`).is.not.undefined;
       chai.expect(Object.keys(metadata).length, `ThumbsComponent doesn't have any @Outputs()'s`).equals(1);
       chai.expect(metadata.onThumbs, `ThumbsComponent's @Outputs()' should be called onThumbs.`).is.not.undefined;
-    });
-  });
-
-  describe('Make sure things work', () => {
-    it(`ThumbsComponent.ts, thumbs.html: Set a selector to be 'my-thumbs'.`, () => {
-      const metadata = Reflect.getMetadata("annotations", ThumbsComponent);
-      chai.expect(metadata, `ThumbsComponent doesn't have a @Component() annotation`).is.not.undefined;
-      chai.expect(metadata[0].selector, `ThumbsComponent's selector has to be 'my-thumbs'.`).equals('my-thumbs')
     });
   });
 
@@ -74,7 +67,7 @@ describe('Component tree', () => {
       fixture.detectChanges();
     });
 
-    it(`thumbs.html: Make the 'thumbs-up' button emit the onThumbs event with the correct thums. Use the ENUM!`, () => {
+    it(`thumbs.html: Make the 'thumbs-up' button emit the onThumbs event with the correct thumbs ENUM value.`, () => {
       let thumbs = null;
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
@@ -84,7 +77,7 @@ describe('Component tree', () => {
       chai.expect(thumbs, `OnThumbs was not called when pressing the button with the 'thumbs-up' class.`).to.equal(Thumbs.UP);
     });
 
-    it(`thumbs.html: Make the 'thumbs-down' button emit the onThumbs event with the correct thums. Use the ENUM!`, () => {
+    it(`thumbs.html: Make the 'thumbs-down' button emit the onThumbs event with the correct thumbs ENUM value.`, () => {
       let thumbs = null;
       fixture.componentInstance.onThumbs.subscribe((event) => {
         thumbs = event;
@@ -93,8 +86,6 @@ describe('Component tree', () => {
       fixture.nativeElement.querySelector('.thumbs-down').click();
       chai.expect(thumbs, `OnThumbs was not called when pressing the button with the 'thumbs-down' class.`).to.equal(Thumbs.DOWN);
     });
-
   });
-
 });
 

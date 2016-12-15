@@ -50,6 +50,6 @@ export class AppComponent {
 /*/d*//*d:neverShow*/
 // Please ignore
 export function evalJs(string) {
-
+  return string;
 }
 /*/d*/

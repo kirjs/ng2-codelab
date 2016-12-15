@@ -28,7 +28,7 @@ beforeEach(() => {
 });
 
 describe('Component tree', () => {
-  it(`AppModule: Add the VideoComponent to the AppModule declarations.`, () => {
+  it(`AppModule: Add the VideoComponent to the AppModule 'declarations'.`, () => {
     let metadata;
     try {
       metadata = Reflect.getMetadata("annotations", AppModule);
@@ -39,7 +39,7 @@ describe('Component tree', () => {
     chai.expect(metadata[0].declarations, `Keep the app component`).contains(AppComponent);
   });
 
-  it(`app.html: Replace the video html with the video component`, () => {
+  it(`app.html: Use video component (get rid of the old title/thumbnail)`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.videos = Api.fetch('');
     // TODO: if the element is added, but the video prop is not present, this test will fail with
@@ -52,7 +52,7 @@ describe('Component tree', () => {
     chai.expect(myVideos.length, `There should be one my-video element for each element`).equals(fixture.componentInstance.videos.length);
   });
 
-  it(`app.html: Pass the video property to the component (don't forget the square braces)`, () => {
+  it(`app.html: Use the data binding to pass the video object to the component (don't forget the square brackets)`, () => {
     let fixture = TestBed.createComponent(AppComponent);
 
     fixture.componentInstance.videos = Api.fetch('');

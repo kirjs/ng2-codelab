@@ -10,6 +10,6 @@
     <div class="description" [innerHTML]="sanitizedDescription"></div>
     <app-tests [tests]="config.tests"></app-tests>
     <app-runner [files]="config.editedFiles" style="flex: 50%"></app-runner>
-    <app-feedback-widget></app-feedback-widget>
+    <app-feedback-widget *ngIf="state.appConfig.feedbackEnabled"></app-feedback-widget>
   </div>
 </div>

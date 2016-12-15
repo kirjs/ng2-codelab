@@ -3,7 +3,6 @@ import {FileConfig} from "../app/file-config";
 import {differ} from "../app/differ/differ";
 import {ExerciseService} from "../app/exercise.service";
 import {Injectable} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
 
 const test = window.location.hash.includes('test');
 const presentationMode = window.location.hash.includes('present');
@@ -87,7 +86,7 @@ export class CodelabConfigService {
     }
 
     function newTsFile(name, code) {
-      const bootstrap = ['Bootstrap', 'Main'].indexOf(name) >= 0;
+      const bootstrap = name.toLowerCase().indexOf('main') >= 0;
       return {
         bootstrap: bootstrap,
         excludeFromTesting: bootstrap,
@@ -99,19 +98,19 @@ export class CodelabConfigService {
     }
 
     function loadHtml(name, states) {
-      const result = differ(exerciseService.getExercise(`diffs/${name}.html`), states);
+      const result = differ(exerciseService.getExercise(`ng2ts/${name}.html`), states);
       return mapObject(result, (code) => newHtmlFile(name, code)) as Versions;
     }
 
     function loadTs(name, states) {
-      const result = differ(exerciseService.getExercise(`diffs/${name}.ts`), states);
+      const result = differ(exerciseService.getExercise(`ng2ts/${name}.ts`), states);
 
       return mapObject(result, (code) => newTsFile(name, code)) as Versions;
     }
 
     const commits = [
-      'meetup',
-      'meetupSolved',
+      'codelab',
+      'codelabSolved',
       'createComponent',
       'createComponentSolved',
       'createModule',
@@ -149,8 +148,8 @@ export class CodelabConfigService {
       'neverShow'
     ];
     interface Versions {
-      meetup: FileConfig,
-      meetupSolved: FileConfig,
+      codelab: FileConfig,
+      codelabSolved: FileConfig,
       createComponent: FileConfig,
       createComponentSolved: FileConfig,
       createModule: FileConfig,
@@ -206,32 +205,32 @@ export class CodelabConfigService {
       wrapperComponent: loadTs('wrapper.component', commits),
       contextComponent: loadTs('context/context.component', commits),
       contextService: loadTs('context/context.service', commits),
-      meetup: loadTs('typescript-intro/Meetup', commits),
-      mainMeetup: loadTs('typescript-intro/Main', commits),
+      codelab: loadTs('typescript-intro/Codelab', commits),
+      mainCodelab: loadTs('typescript-intro/Main', commits),
       guest: loadTs('typescript-intro/Guest', commits),
       fuzzyPipe: loadTs('fuzzy-pipe/fuzzy.pipe', commits),
     };
 
     // Too hard to use diff comments for this, so I'm replacing the whole file
-    files.appModule.thumbsComponentCreate = newTsFile('app.module', exerciseService.getExercise(`diffs/thumbs.app.module.ts`));
-    files.appModule.togglePanelComponentCreate = newTsFile('app.module', exerciseService.getExercise(`diffs/toggle-panel.app.module.ts`));
-    files.test.meetup = testFile('typescript-intro/Test', exerciseService.getExercise(`diffs/tests/meetupTest.ts`));
-    files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`diffs/tests/createComponentTest.ts`));
-    files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`diffs/tests/createModuleTest.ts`));
-    files.test.bootstrap = testFile('bootstrap/Test', exerciseService.getExercise(`diffs/tests/bootstrapTest.ts`));
-    files.test.templatePageSetup = testFile('templatePageSetup/Test', exerciseService.getExercise(`diffs/tests/templatePageSetupTest.ts`));
-    files.test.templateAddAction = testFile('templateAddAction/Test', exerciseService.getExercise(`diffs/tests/templateAddActionTest.ts`));
-    files.test.templateAllVideos = testFile('templateAllVideos/Test', exerciseService.getExercise(`diffs/tests/templateAllVideosTest.ts`));
-    files.test.diInjectService = testFile('diInjectService/Test', exerciseService.getExercise(`diffs/tests/diInjectServiceTest.ts`));
-    files.test.videoComponentCreate = testFile('videoComponentCreate/Test', exerciseService.getExercise(`diffs/tests/videoComponentCreateTest.ts`));
-    files.test.videoComponentUse = testFile('videoComponentUse/Test', exerciseService.getExercise(`diffs/tests/videoComponentUseTest.ts`));
-    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`diffs/tests/ThumbsComponentCreateTest.ts`));
-    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`diffs/tests/ThumbsComponentUseTest.ts`));
-    files.test.togglePanelComponentCreate = testFile('togglePanelComponentCreate/Test', exerciseService.getExercise(`diffs/tests/togglePanelComponentCreateTest.ts`));
-    files.test.togglePanelComponentUse = testFile('togglePanelComponentUse/Test', exerciseService.getExercise(`diffs/tests/togglePanelComponentUseTest.ts`));
-    files.test.contextComponentUse = testFile('contextComponentUse/Test', exerciseService.getExercise(`diffs/tests/contextComponentUseTest.ts`));
-    files.test.fuzzyPipeCreate = testFile('fuzzyPipeCreate/Test', exerciseService.getExercise(`diffs/tests/fuzzyPipeCreateTest.ts`));
-    files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`diffs/tests/fuzzyPipeUseTest.ts`));
+    files.appModule.thumbsComponentCreate = newTsFile('app.module', exerciseService.getExercise(`ng2ts/thumbs.app.module.ts`));
+    files.appModule.togglePanelComponentCreate = newTsFile('app.module', exerciseService.getExercise(`ng2ts/toggle-panel.app.module.ts`));
+    files.test.codelab = testFile('typescript-intro/Test', exerciseService.getExercise(`ng2ts/tests/codelabTest.ts`));
+    files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`ng2ts/tests/createComponentTest.ts`));
+    files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`ng2ts/tests/createModuleTest.ts`));
+    files.test.bootstrap = testFile('bootstrap/Test', exerciseService.getExercise(`ng2ts/tests/bootstrapTest.ts`));
+    files.test.templatePageSetup = testFile('templatePageSetup/Test', exerciseService.getExercise(`ng2ts/tests/templatePageSetupTest.ts`));
+    files.test.templateAddAction = testFile('templateAddAction/Test', exerciseService.getExercise(`ng2ts/tests/templateAddActionTest.ts`));
+    files.test.templateAllVideos = testFile('templateAllVideos/Test', exerciseService.getExercise(`ng2ts/tests/templateAllVideosTest.ts`));
+    files.test.diInjectService = testFile('diInjectService/Test', exerciseService.getExercise(`ng2ts/tests/diInjectServiceTest.ts`));
+    files.test.videoComponentCreate = testFile('videoComponentCreate/Test', exerciseService.getExercise(`ng2ts/tests/videoComponentCreateTest.ts`));
+    files.test.videoComponentUse = testFile('videoComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/videoComponentUseTest.ts`));
+    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`ng2ts/tests/ThumbsComponentCreateTest.ts`));
+    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`ng2ts/tests/ThumbsComponentUseTest.ts`));
+    files.test.togglePanelComponentCreate = testFile('togglePanelComponentCreate/Test', exerciseService.getExercise(`ng2ts/tests/togglePanelComponentCreateTest.ts`));
+    files.test.togglePanelComponentUse = testFile('togglePanelComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/togglePanelComponentUseTest.ts`));
+    files.test.contextComponentUse = testFile('contextComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/contextComponentUseTest.ts`));
+    files.test.fuzzyPipeCreate = testFile('fuzzyPipeCreate/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeCreateTest.ts`));
+    files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeUseTest.ts`));
 
     this.config = {
       app: appConfig,
@@ -253,26 +252,11 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               description: `
-          <h1>Welcome to the Angular 2 and TypeScript CodeLab!</h1>
-          <p>In this codelab we're going to learn the basics of TypeScript and Angular2.</p>
+          <h1>Welcome to the Angular and TypeScript CodeLab!</h1>
+          <p>In this codelab we're going to learn the basics of TypeScript and Angular.</p>
+          <p>We're using Angular version 2.1.0</p>
           <p>The slides for the codelab are available using
-          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a></p>
-          <p>Enjoy, and please leave your feedback.</p>
-          <p>List of known issues:</p>
-          <ul>
-            <li>There are no type definitions imported in the editor.</li>
-            <li>Mocha is used for testing instead of jasmine. </li>
-            <li>Forms/Routing milestone is missing.</li>
-            <li>The app is not as beautiful as it could have been.</li>
-          </ul>
-             <p>Missing milestones/Topics for the advance course:</p>
-          <ul>
-            <li>Angular-cli.</li>
-            <li>Data flows</li>
-            <li>Rxjs</li>
-            <li>CSS and styling</li>
-          </ul>
-
+          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a>.</p>                 
         `,
               fileTemplates: [],
               tests: [],
@@ -281,33 +265,23 @@ export class CodelabConfigService {
             {
               name: 'Typescript',
               description: `
-          <p>Let's create our first TypeScript module.</p>
-          <p>It will be a class called "Meetup".</p> 
-          <p>It will take a list of guests, and will have a getRsvp method, which will only return people who're coming.</p> 
-          <p>As you can see in the main.ts file we have 4 people signed up, but Charles Darwin had a last minute change of plans, 
-          so only 3 people should be returned.</p> 
-           
+          <p>We created a TypeScript file for you, now let's add our first TS class
+           called Codelab.</p>
+          
+          <p>It will take a list of guests, and will have a 'getGuestsComing' method, which will only return people who're coming.</p> 
+          <p>As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans, 
+          so only 3 people should be returned.</p>            
         `,
               solutions: [
-                files.meetup.meetupSolved
+                files.codelab.codelabSolved
               ],
               fileTemplates: [
-                evaled(files.meetup.meetup),
-                files.guest.meetup,
-                files.mainMeetup.meetup,
-                files.test.meetup
+                evaled(files.codelab.codelab),
+                files.guest.codelab,
+                files.mainCodelab.codelab,
+                files.test.codelab
               ]
-            },
-            {
-              name: `Success`,
-              description: `
-         You're done with the first milestone, and should now understand the basics of TypeScript!
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `Start on the app!`
-            },
-
+            }
           ]
         },
         {
@@ -317,8 +291,8 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               description: `
-          <h1>Let's build our first Angular 2 app!</h1>
-          <p>This is how it's going to look like</p>
+          <h1>Let's build our first Angular app!</h1>
+          <p>This is how it will look:</p>
 
           <div class = "inBrowser">
             <div class="smaller">
@@ -327,9 +301,9 @@ export class CodelabConfigService {
           </div>
           <p>3 simple steps: </p>
           <ol>
-            <li>Create the component</li>
-            <li>Create the module</li>
-            <li>Bootstrap the module</li>
+            <li>Create a Component</li>
+            <li>Create a NgModule</li>
+            <li>Bootstrap the NgModule</li>
           </ol>
         `,
               fileTemplates: [],
@@ -339,10 +313,7 @@ export class CodelabConfigService {
             {
               name: 'Create a component',
               description: `
-            <p>Let's create our first component!</p>
-            <p>For this exercise we'll create module and bootstrap everything.
-             Just make sure the component looks right.</p>
-`,
+            <p>Let's create our first component!</p>`,
               solutions: [
                 files.appComponent.createComponentSolved
               ],
@@ -355,9 +326,8 @@ export class CodelabConfigService {
                 files.test.createComponent
               ]
             }, {
-              name: 'Create a module',
-              description: `
-        Now we got the component, but we need to wrap it in a module. For this exercise we'll bootstrap the module for you.`,
+              name: 'Create a NgModule',
+              description: `Now we got the component, we need to pass it to a NgModule.`,
               solutions: [
                 files.appModule.createModuleSolved
               ],
@@ -376,8 +346,8 @@ export class CodelabConfigService {
               name: 'Bootstrap the module',
               skipTests: true,
               description: `
-          <p>Now we got module and component ready, let's bootstrap it!</p>
-          <p>There's no really simple way to test it, so just make sure your app displays: 'Hello CatTube!'</p>`,
+          <p>Now we got both NgModule and component ready, let's bootstrap the app!</p>
+          <p>There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'</p>`,
               solutions: [
                 files.bootstrap.bootstrapSolved
               ],
@@ -389,26 +359,17 @@ export class CodelabConfigService {
                 ),
                 files.test.bootstrap
               ]
-            },
-            {
-              name: 'success',
-              description: `
-          <h1>Congrats on your first Angular2 app</h1>
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `Let's learn the templates!`
-            },
+            }
           ]
         },
         {
-          name: 'Intro',
+          name: 'Templates',
           selectedExerciseIndex: 0,
           exercises: [
             {
-              name: 'Templates',
+              name: 'Intro',
               description: `
-          <h1>Let's work with angular templates</h1>
+          <h1>Let's explore Angular templates!</h1>
           <p>As a result we'll see our cats displayed.</p>
           
           <div class = "inBrowser">
@@ -437,7 +398,7 @@ export class CodelabConfigService {
             },
             {
               name: 'Set up the page',
-              description: `Let's setup a header, a search box, and a search button for our component!`,
+              description: `Let's setup a header, a search box, and a search button in the app component!`,
               solutions: [
                 files.appHtml.templatePageSetupSolved
               ],
@@ -453,7 +414,10 @@ export class CodelabConfigService {
               tests: []
             }, {
               name: 'Add some action',
-              description: `Now let's add search method and display a message when there are no videos.`,
+              description: `Let's do two things here: 
+              <ul>
+              <li>Add a search method to the AppComponent</li>
+              <li>Display a message when there are no videos.</li>`,
               solutions: [
                 files.appHtml.templateAddActionSolved,
                 files.appComponent.templateAddActionSolved,
@@ -538,7 +502,7 @@ export class CodelabConfigService {
           }, {
             name: 'Service injection',
             description: `
-          Now we're fetching the videos using a service instead of having them hardcoded.
+          Let's fetch the videos using a service, instead of having them hardcoded.
         `,
             solutions: [
               files.videoService.diInjectServiceSolved,
@@ -568,9 +532,8 @@ export class CodelabConfigService {
               name: 'Intro',
               description: `
           <h1>Let's create a Video component!</h1>
-          <p>Now instead of having the video html in the app component, we're going to have
-            a separate component for the video info.</p>
-          <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
+          <p>Create a separate component with the video information.</p>
+          <p>Add description, amount of views and likes. </p>
               
             <div class = "inBrowser">
               <div class="smaller">   
@@ -614,10 +577,7 @@ export class CodelabConfigService {
              }, */{
 
               name: 'Create VideoComponent',
-              description: `<p>Now instead of having the video html in the app component, we're going to have 
-            a separate component for the video info.</p>
-            <p>We are also going to use this moment to add more information: description, amount of views and amount of likes. </p>
-            `,
+              description: `Create a video component.`,
               solutions: [
                 files.videoHtml.videoComponentCreateSolved,
                 files.videoComponent.videoComponentCreateSolved,
@@ -640,7 +600,7 @@ export class CodelabConfigService {
             },
             {
               name: 'Use VideoComponent',
-              description: `Use VideoComponent in the app.`,
+              description: `Use the VideoComponent in the app.`,
               solutions: [
                 files.appModule.videoComponentUseSolved,
                 files.appHtml.videoComponentUseSolved,
@@ -668,9 +628,9 @@ export class CodelabConfigService {
             {
               name: 'Intro',
               description: `
-          <h1>Let's try  using custom events!</h1>
-          <p>We'll add a thumbs component which will emit 'onThumbs' event.  </p>
-          <p>Then in the video component we're going to listed to the event and change the amount of like accordingly.</p>
+          <h1>Let's use custom events!</h1>
+          <p>Add a ThumbsComponent which will emit an 'onThumbs' event.  </p>
+          <p>In the video component listen to the event and change the amount of likes accordingly.</p>
               
             <div class = "inBrowser">
               <div class="smaller">   
@@ -692,9 +652,7 @@ export class CodelabConfigService {
             },
             {
               name: 'Create ThumbsComponent',
-              description: `<p>Let's try some custom events now. </p>
-            <p>We'll create a thumbs component which will send thumbsUp/thumbsDown event </p>
-  `,
+              description: `Create ThumbsComponent.`,
               solutions: [
                 files.thumbsHtml.thumbsComponentCreateSolved,
                 files.thumbsComponent.thumbsComponentCreateSolved,
@@ -720,7 +678,7 @@ export class CodelabConfigService {
             },
             {
               name: 'Use ThumbsComponent',
-              description: `Use VideoComponent in the app.`,
+              description: `Use the 'ThumbsComponent' in the app.`,
               solutions: [
                 files.appModule.thumbsComponentUseSolved,
                 files.videoHtml.thumbsComponentUseSolved,

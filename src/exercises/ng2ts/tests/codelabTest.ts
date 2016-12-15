@@ -11,10 +11,10 @@
  */
 /**
  * solution/ prefix is used to let the test typechecked.
- * It will be stripped during runtime, and the Meetup module
+ * It will be stripped during runtime, and the Codelab module
  * will be loaded.
  */
-import {Meetup, evalJs} from "../typescript-intro/Meetup";
+import {Codelab, evalJs} from "../typescript-intro/Codelab";
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
@@ -27,7 +27,7 @@ const guests = [
 ];
 
 describe('Component', () => {
-  it(`Create a class called Meetup`, () => {
+  it(`Create a class called 'Codelab'`, () => {
     /**
      * We can use evalJs to get into the scope of the user's file.
      * Currently evalJs has to be manually added to the `before`
@@ -39,40 +39,40 @@ describe('Component', () => {
      * e.g. if the user created teh class, but haven't exported it this
      * test will still pass.
      */
-    chai.expect(typeof evalJs('Meetup')).equals('function');
+    chai.expect(typeof evalJs('Codelab')).equals('function');
   });
 
   it(`Export the class`, () => {
     /**
      * Require the class, assert it's a function (compile target is es5).
      */
-    chai.expect(typeof Meetup).equals('function');
+    chai.expect(typeof Codelab).equals('function');
   });
 
   it('Add a constructor', () => {
     /**
      * Fancy: Require the actual source code, and search in it.
      */
-    chai.expect(code.typescript_intro_Meetup_ts.indexOf('constructor') > -1, `The meetup class doesn't have constuctor`).is.true;
+    chai.expect(code.typescript_intro_Codelab_ts.indexOf('constructor') > -1, `The codelab class doesn't have constuctor`).is.true;
   });
 
   it('Make constructor take a parameter "guests"', () => {
-    chai.expect(Meetup.length, 'Meetup constructor should take one parameter called "guests"').equals(1);
+    chai.expect(Codelab.length, 'Codelab constructor should take one parameter called "guests"').equals(1);
   });
 
   it('This parameter should be public', () => {
-    const meetup = new Meetup(guests);
-    chai.expect(meetup.guests).equals(guests);
+    const codelab = new Codelab(guests);
+    chai.expect(codelab.guests).equals(guests);
   });
 
-  it('Create new method "getRsvp"', () => {
-    chai.expect(typeof (new Meetup(guests).getRsvp)).equals('function');
+  it('Create new method "getGuestsComing"', () => {
+    chai.expect(typeof (new Codelab(guests).getRsvp)).equals('function');
   });
 
-  it(`Modify getRsvp to filter the guests array and only return guests with rsvp set to true. 
-  (hint: please use Array filter method, and NOT for loop. Ask us for help if you don't know how to
+  it(`Modify getRsvp to filter the guests array and only return guests with the 'coming' property set to true. 
+  (hint: please use Array.filter method, and NOT a for loop. Ask us for help if you don't know how to
    (There's potential of getting into an infinite loop otherwise)`, () => {
-    chai.expect(new Meetup(guests).getRsvp().length).equals(1);
+    chai.expect(new Codelab(guests).getRsvp().length).equals(1);
   });
 
   /*

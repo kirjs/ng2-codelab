@@ -47,6 +47,21 @@ let FAKE_VIDEOS = [
     views: 100,
     likes: 20,
     date: '2016-08-02'
+  }, {
+    title: "Serouis cat",
+    src: "/assets/images/cat-5.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20,
+    date: '2016-08-02'
+  },
+  {
+    title: "Opps, looks like a bug!",
+    src: "/assets/images/dog.jpg",
+    description: "todo",
+    views: 100,
+    likes: 20,
+    date: '2016-08-02'
   },
   {
     title: "Serouis cat",

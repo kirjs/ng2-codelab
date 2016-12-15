@@ -21,7 +21,7 @@ beforeEach(() => {
 });
 
 describe('Blabla', () => {
-  it(`VideoService.ts: Add @Injectable() decorator to the class.`, () => {
+  it(`VideoService.ts: Add @Injectable() decorator to the classs`, () => {
     let metadata;
     try {
       metadata = Reflect.getMetadata("parameters", VideoService);
@@ -30,7 +30,7 @@ describe('Blabla', () => {
     }
     chai.expect(metadata).not.undefined;
   });
-  it(`Appmodule.ts: Add VideoService to the module providers`, () => {
+  it(`Appmodule.ts: Add VideoService to the NgModule providers property`, () => {
     let metadata;
     try {
       metadata = Reflect.getMetadata("annotations", AppModule);
@@ -40,12 +40,12 @@ describe('Blabla', () => {
     chai.expect(metadata[0].providers[0]).equals(VideoService);
   });
 
-  it(`AppComponent.ts: Require videoService in the component`, () => {
+  it(`AppComponent.ts: Inject videoService in the component constructor`, () => {
     chai.expect(AppComponent.length, `App component constructor doesn't take any parameters`).to.equal(1);
     chai.expect(app_component_ts).matches(/VideoService/)
   });
 
-  it(`AppComponent.ts: return videoService.search(results instead of fake data)`, () => {
+  it(`AppComponent.ts: When searching assign videoService.search results to the videos property of the class`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.componentInstance.search('itten');
     chai.expect(fixture.componentInstance.videos.length).to.equal(4);

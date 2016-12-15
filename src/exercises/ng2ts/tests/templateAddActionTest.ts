@@ -16,22 +16,22 @@ beforeEach(() => {
 });
 
 describe('Blabla', () => {
-  it(`AppComponent.ts: Add 'videos' property, set the value as empty array.`, () => {
+  it(`AppComponent.ts: Add a 'videos' property, set the value as empty array.`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    chai.expect(fixture.componentInstance.videos, `No videos property on the component`).is.not.undefined
+    chai.expect(fixture.componentInstance.videos, `No videos property on the component`).is.not.undefined;
     chai.expect(fixture.componentInstance.videos, `Videos property on the component is not an array.`).is.an('array');
   });
 
-  it(`AppComponent.ts: Add 'search' method on the component, and make it take SearchString as a parameter.`, () => {
+  it(`AppComponent.ts: Add a 'search' method on the component, that takes a 'searchString' parameter.`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     chai.expect(fixture.componentInstance.search, `Search should be a function`).is.a('function');
     chai.expect(fixture.componentInstance.search.length, `Search should take one parameter`).equals(1);
   });
 
-  it(`app.html: Add click handler to the button, call 'search' method and pass input value 
-      (it shouldn't search yet, just take the parameter)`, () => {
+  it(`app.html: Add a click handler to the button, call 'search' method and pass the input value 
+      (Actual search functionality will be implemented in the next exercise)`, () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const input = fixture.nativeElement.querySelector('input');
