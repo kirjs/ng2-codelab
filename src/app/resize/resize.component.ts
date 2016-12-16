@@ -24,9 +24,9 @@ export class ResizeComponent {
 	}
 
 	onMouseMove(e) {
-		e.preventDefault();
 		if (!this.isMouseDown) { return; }
 
+		e.preventDefault();
 		this.width = this.initWidth + e.clientX - this.initOffsetX;
 	}
 

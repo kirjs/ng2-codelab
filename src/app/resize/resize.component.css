@@ -16,16 +16,7 @@
 }
 
 .handle {
-	position: absolute;
-	right: 8px;
-	top: 0;
-	height: 100%;
-	width: 1px;
 	border-right: 1px dashed rgba(128, 128, 128, 0.5);
-}
-
-.is-expanded {
-	width: 100%;
 }
 
 .overlay {
