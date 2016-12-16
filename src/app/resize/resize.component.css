@@ -1,0 +1,39 @@
+.resize {
+	position: relative;
+	width: 600px;
+	height: 100%;
+}
+
+.spacer {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 15px;
+	cursor: col-resize;
+}
+
+.handle {
+	position: absolute;
+	right: 8px;
+	top: 0;
+	height: 100%;
+	width: 1px;
+	border-right: 1px dashed rgba(128, 128, 128, 0.5);
+}
+
+.is-expanded {
+	width: 100%;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}

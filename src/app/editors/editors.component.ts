@@ -2,6 +2,7 @@ import {Component, Input, ViewChildren, QueryList} from "@angular/core";
 import {FileConfig} from "../file-config";
 import {StateService} from "../state.service";
 import {EditorComponent} from "../editor/editor.component";
+import {ResizeComponent} from "../resize/resize.component";
 
 
 @Component({

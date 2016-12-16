@@ -30,7 +30,6 @@
 }
 
 app-editors {
-  width: 650px;
   display: flex;
 }
 
@@ -43,4 +42,5 @@ app-editors {
 
 .exercise-panel {
   display: flex;
+  height: 100%;
 }

@@ -51,8 +51,9 @@ h1 {
 }
 
 app-exercise {
-  padding: 8px;
   display: block;
+  height: 100%;
+  padding: 8px;
 }
 
 .header {

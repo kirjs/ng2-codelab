@@ -19,6 +19,7 @@ import {ExerciseService} from "./exercise.service";
 import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
 import {AutorunControlComponent} from "./autorun/autoruncontrol.component";
 import {MonacoConfigService} from "./monaco-config.service";
+import {ResizeComponent} from "./resize/resize.component";
 
 let ngModuleConfig = {
   declarations: [
@@ -32,7 +33,8 @@ let ngModuleConfig = {
     TestsComponent,
     FeedbackWidgetComponent,
     FeedbackPageComponent,
-    AutorunControlComponent
+    AutorunControlComponent,
+    ResizeComponent
   ],
   imports: [
     BrowserModule,
