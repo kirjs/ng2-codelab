@@ -1,42 +1,50 @@
-import {Component, ElementRef} from "@angular/core";
+import {Component, ElementRef, HostListener} from '@angular/core';
 
 @Component({
-	selector: 'app-resize',
-	templateUrl: './resize.component.html',
-	styleUrls: ['./resize.component.css'],
-	host: {
-		'(mousemove)': 'onMouseMove($event)',
-		'(mousedown)': 'onMouseDown($event)',
-		'(mouseup)': 'mouseStateReset()',
-		'(mouseleave)': 'mouseStateReset()'
-	}
+  selector: 'app-resize',
+  templateUrl: './resize.component.html',
+  styleUrls: ['./resize.component.css']
 })
 export class ResizeComponent {
-	private initOffsetX;
-	private initWidth;
-	private isMouseDown:boolean;
-	private width;
+  private initOffsetX;
+  private initWidth;
+  private isMouseDown: boolean;
+  private width;
+  private minWidth = 400;
 
-	constructor(private elRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) {
+  }
 
-	ngOnInit() {
-		this.width = this.elRef.nativeElement.clientWidth;
-	}
+  ngOnInit() {
+    this.width = this.elementRef.nativeElement.clientWidth;
+  }
 
-	onMouseMove(e) {
-		e.preventDefault();
-		if (!this.isMouseDown) { return; }
+  calcWidth(x) {
+    return this.initWidth + x - this.initOffsetX
+  }
 
-		this.width = this.initWidth + e.clientX - this.initOffsetX;
-	}
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(e) {
+    if (!this.isMouseDown) {
+      return;
+    }
+    e.preventDefault();
 
-	onMouseDown(e) {
-		this.isMouseDown = true;
-		this.initOffsetX = e.clientX;
-		this.initWidth = this.width
-	}
+    this.width = Math.max(this.minWidth, this.calcWidth(e.clientX));
+  }
 
-	mouseStateReset() {
-		this.isMouseDown = false;
-	}
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(e) {
+    if (e.target.className && (e.target.className.includes('spacer') || e.target.className.includes('handle') )) {
+      this.isMouseDown = true;
+      this.initOffsetX = e.clientX;
+      this.initWidth = this.width
+    }
+  }
+
+  @HostListener('mouseup')
+  @HostListener('mouseleave')
+  mouseStateReset() {
+    this.isMouseDown = false;
+  }
 }
