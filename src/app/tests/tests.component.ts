@@ -1,6 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {TestInfo} from "../test-info";
-import {StateService} from "../state.service";
+import {Component, Input} from '@angular/core';
+import {TestInfo} from '../test-info';
 
 @Component({
   selector: 'app-tests',
@@ -9,4 +8,8 @@ import {StateService} from "../state.service";
 })
 export class TestsComponent {
   @Input() tests: Array<TestInfo>;
+
+  isFirstUnsolved(test) {
+    return this.tests.find(test => !test.pass) === test;
+  }
 }
