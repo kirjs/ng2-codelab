@@ -1,8 +1,8 @@
-import {TestBed} from "@angular/core/testing";
-import {AppModule} from "../app.module";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppComponent} from "../app.component";
-import "reflect-metadata";
+import {TestBed} from '@angular/core/testing';
+import {AppModule} from '../app.module';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from '../app.component';
+import 'reflect-metadata';
 let metadata;
 
 beforeEach(() => {
@@ -10,7 +10,7 @@ beforeEach(() => {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({declarations: []});
   try {
-    metadata = Reflect.getMetadata("annotations", AppModule);
+    metadata = Reflect.getMetadata('annotations', AppModule);
   } catch (e) {
     // Do nothing, we have assertions below for this case
   }

@@ -1,16 +1,16 @@
-import {TestBed} from "@angular/core/testing";
-import "initTestBed";
-import {AppComponent} from "../app.component";
-import {app_html, video_video_html, toggle_panel_toggle_panel_html, context_context_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../app.module";
-import {VideoComponent} from "../video/video.component";
-import {VideoService} from "../video/video.service";
-import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
-import {ContextComponent} from "../context/context.component";
-import {ContextService} from "../context/context.service";
-import {Api} from "../api.service";
-import {FuzzyPipe} from "../fuzzy-pipe/fuzzy.pipe";
-import {ThumbsComponent} from "../thumbs/thumbs.component";
+import {TestBed} from '@angular/core/testing';
+import 'initTestBed';
+import {AppComponent} from '../app.component';
+import {app_html, video_video_html, toggle_panel_toggle_panel_html, context_context_html, thumbs_thumbs_html} from '../code';
+import {AppModule} from '../app.module';
+import {VideoComponent} from '../video/video.component';
+import {VideoService} from '../video/video.service';
+import {TogglePanelComponent} from '../toggle-panel/toggle-panel.component';
+import {ContextComponent} from '../context/context.component';
+import {ContextService} from '../context/context.service';
+import {Api} from '../api.service';
+import {FuzzyPipe} from '../fuzzy-pipe/fuzzy.pipe';
+import {ThumbsComponent} from '../thumbs/thumbs.component';
 
 function objectValues(object) {
   return Object.keys(object).reduce((result, key) => {
@@ -47,7 +47,7 @@ describe('Pipes', () => {
   it(`AppModule: Add the FuzzyPipe to the AppModule declarations`, () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata("annotations", AppModule);
+      metadata = Reflect.getMetadata('annotations', AppModule);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }

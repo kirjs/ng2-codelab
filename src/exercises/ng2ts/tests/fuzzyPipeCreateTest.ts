@@ -1,10 +1,10 @@
 import {FuzzyPipe, evalJs} from '../fuzzy-pipe/fuzzy.pipe';
-import "reflect-metadata";
+import 'reflect-metadata';
 
 let metadata;
 beforeEach(() => {
   try {
-    metadata = Reflect.getMetadata("annotations", FuzzyPipe);
+    metadata = Reflect.getMetadata('annotations', FuzzyPipe);
   } catch (e) {
 
   }

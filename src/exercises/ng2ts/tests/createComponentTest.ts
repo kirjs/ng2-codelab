@@ -1,14 +1,14 @@
-import {TestBed} from "@angular/core/testing";
+import {TestBed} from '@angular/core/testing';
 // Solution prefix will be stripped-out by the app
-import {AppComponent, evalJs} from "../app.component";
-import "reflect-metadata";
+import {AppComponent, evalJs} from '../app.component';
+import 'reflect-metadata';
 
 let metadata;
 beforeEach(() => {
   try {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({declarations: [AppComponent]});
-    metadata = Reflect.getMetadata("annotations", AppComponent);
+    metadata = Reflect.getMetadata('annotations', AppComponent);
   } catch (e) {
     // Do nothing, we have assertions below for this case
   }

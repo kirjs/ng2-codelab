@@ -5,8 +5,8 @@ export class Codelab {
   constructor(public guests: Guest[]) {
   }
 
-  getRsvp() {
-    return this.guests.filter(guest => guest.rsvp);
+  getGuestsComing() {
+    return this.guests.filter(guest => guest.coming);
   }
 }
 /*/d*//*d:neverShow*/

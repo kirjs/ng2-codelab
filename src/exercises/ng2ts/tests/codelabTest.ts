@@ -14,16 +14,16 @@
  * It will be stripped during runtime, and the Codelab module
  * will be loaded.
  */
-import {Codelab, evalJs} from "../typescript-intro/Codelab";
+import {Codelab, evalJs} from '../typescript-intro/Codelab';
 /**
  * In the test we get the access to the actual sourcecode
  * I'd try not to overuse it
  */
-import * as code from "../code";
+import * as code from '../code';
 
 const guests = [
-  {name: 'me', rsvp: true},
-  {name: 'notme', rsvp: false},
+  {name: 'me', coming: true},
+  {name: 'notme', coming: false},
 ];
 
 describe('Component', () => {
@@ -56,8 +56,8 @@ describe('Component', () => {
     chai.expect(code.typescript_intro_Codelab_ts.indexOf('constructor') > -1, `The codelab class doesn't have constuctor`).is.true;
   });
 
-  it('Make constructor take a parameter "guests"', () => {
-    chai.expect(Codelab.length, 'Codelab constructor should take one parameter called "guests"').equals(1);
+  it(`Make constructor take a parameter 'guests'`, () => {
+    chai.expect(Codelab.length, `Codelab constructor should take one parameter called 'guests'`).equals(1);
   });
 
   it('This parameter should be public', () => {
@@ -65,20 +65,20 @@ describe('Component', () => {
     chai.expect(codelab.guests).equals(guests);
   });
 
-  it('Create new method "getGuestsComing"', () => {
-    chai.expect(typeof (new Codelab(guests).getRsvp)).equals('function');
+  it(`Create new method 'getGuestsComing'`, () => {
+    chai.expect(typeof (new Codelab(guests).getGuestsComing)).equals('function');
   });
 
-  it(`Modify getRsvp to filter the guests array and only return guests with the 'coming' property set to true. 
+  it(`Modify getGuestsComing to filter the guests array and only return guests with the 'coming' property set to true. 
   (hint: please use Array.filter method, and NOT a for loop. Ask us for help if you don't know how to
    (There's potential of getting into an infinite loop otherwise)`, () => {
-    chai.expect(new Codelab(guests).getRsvp().length).equals(1);
+    chai.expect(new Codelab(guests).getGuestsComing().length).equals(1);
   });
 
   /*
    xit(`Let's debug the app! You'll need this if something goes wrong.
    * Open the dev tools in your browser
-   * Put in the new method add "debugger;"
+   * Put in the new method add 'debugger;'
    * The app will stop, and you'll be able to inspect local variables.
    * Get out using F8
    * We can't really test this, so this test is marked as passed

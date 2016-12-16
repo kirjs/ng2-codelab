@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Output, EventEmitter} from '@angular/core';
 
 /**
  * Yes, TypeScript has enums!
@@ -10,8 +10,8 @@ export enum Thumbs {
 }
 /*d:thumbsComponentCreateSolved/trimTrailing*/
 @Component({
-  selector: "my-thumbs",
-  templateUrl: "./thumbs.html"
+  selector: 'my-thumbs',
+  templateUrl: './thumbs.html'
 })
 /*/d*/
 export class ThumbsComponent {

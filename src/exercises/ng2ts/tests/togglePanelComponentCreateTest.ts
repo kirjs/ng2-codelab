@@ -1,9 +1,9 @@
-import {TestBed} from "@angular/core/testing";
-import {By} from "@angular/platform-browser";
-import "initTestBed";
-import {toggle_panel_toggle_panel_html} from "../code";
-import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
-import {WrapperComponent} from "../wrapper.component";
+import {TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import 'initTestBed';
+import {toggle_panel_toggle_panel_html} from '../code';
+import {TogglePanelComponent} from '../toggle-panel/toggle-panel.component';
+import {WrapperComponent} from '../wrapper.component';
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -32,8 +32,8 @@ describe('Content projection', () => {
     chai.expect(props.length, `A property with a default value was not declared on the component.`).is.not.equal(0);
     chai.expect(props.length, `Too many properties were declared.`).is.not.greaterThan(1);
     const prop = props[0];
-    chai.expect(fixture.componentInstance[prop], `Property "${prop}" is not of type boolean`).is.a('boolean');
-    chai.expect(fixture.componentInstance[prop], `Property "${prop}" must have a default value`).is.not.undefined;
+    chai.expect(fixture.componentInstance[prop], `Property '${prop}' is not of type boolean`).is.a('boolean');
+    chai.expect(fixture.componentInstance[prop], `Property '${prop}' must have a default value`).is.not.undefined;
   });
 
   it(`togglePanel.html: Use content projection to only display the content with the selector .description by default.`, () => {

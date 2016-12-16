@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'my-wrapper',
@@ -6,8 +6,8 @@ import {Component} from "@angular/core";
   // Please don't do this at home.
   template: `
     <my-toggle-panel>
-    <div class="description">Either show me</div>
-    <div class="extra">Or show me</div>
+    <div class='description'>Either show me</div>
+    <div class='extra'>Or show me</div>
     </my-toggle-panel>
     `
 })

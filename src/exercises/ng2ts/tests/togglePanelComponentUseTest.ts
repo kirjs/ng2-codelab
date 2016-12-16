@@ -1,13 +1,13 @@
-import {TestBed} from "@angular/core/testing";
-import "initTestBed";
-import {AppComponent} from "../app.component";
-import {app_html, video_video_html, toggle_panel_toggle_panel_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../app.module";
-import {VideoComponent} from "../video/video.component";
-import {VideoService} from "../video/video.service";
-import {TogglePanelComponent} from "../toggle-panel/toggle-panel.component";
-import {ThumbsComponent} from "../thumbs/thumbs.component";
-import {Api} from "../api.service";
+import {TestBed} from '@angular/core/testing';
+import 'initTestBed';
+import {AppComponent} from '../app.component';
+import {app_html, video_video_html, toggle_panel_toggle_panel_html, thumbs_thumbs_html} from '../code';
+import {AppModule} from '../app.module';
+import {VideoComponent} from '../video/video.component';
+import {VideoService} from '../video/video.service';
+import {TogglePanelComponent} from '../toggle-panel/toggle-panel.component';
+import {ThumbsComponent} from '../thumbs/thumbs.component';
+import {Api} from '../api.service';
 const video = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -27,7 +27,7 @@ describe('Component tree', () => {
   it(`AppModule: Add the TogglePanelComponent to the AppModule declarations.`, () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata("annotations", AppModule);
+      metadata = Reflect.getMetadata('annotations', AppModule);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }

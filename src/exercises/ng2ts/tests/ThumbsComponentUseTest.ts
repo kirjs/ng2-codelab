@@ -1,10 +1,10 @@
-import {TestBed} from "@angular/core/testing";
-import "initTestBed";
-import {video_video_html, thumbs_thumbs_html} from "../code";
-import {AppModule} from "../app.module";
-import {Api} from "../api.service";
-import {ThumbsComponent} from "../thumbs/thumbs.component";
-import {VideoComponent} from "../video/video.component";
+import {TestBed} from '@angular/core/testing';
+import 'initTestBed';
+import {video_video_html, thumbs_thumbs_html} from '../code';
+import {AppModule} from '../app.module';
+import {Api} from '../api.service';
+import {ThumbsComponent} from '../thumbs/thumbs.component';
+import {VideoComponent} from '../video/video.component';
 
 beforeEach(() => {
   TestBed.resetTestingModule();
@@ -30,7 +30,7 @@ describe('Component tree', () => {
   it(`AppModule: Add the ThumbsComponent to the AppModule 'declarations' property`, () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata("annotations", AppModule);
+      metadata = Reflect.getMetadata('annotations', AppModule);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }

@@ -1,9 +1,9 @@
-import {TestBed} from "@angular/core/testing";
-import "initTestBed";
-import {AppComponent} from "../app.component";
-import {VideoService} from "../video/video.service";
-import {AppModule} from "../app.module";
-import {app_html, app_component_ts} from "../code";
+import {TestBed} from '@angular/core/testing';
+import 'initTestBed';
+import {AppComponent} from '../app.component';
+import {VideoService} from '../video/video.service';
+import {AppModule} from '../app.module';
+import {app_html, app_component_ts} from '../code';
 
 
 beforeEach(() => {
@@ -24,7 +24,7 @@ describe('Blabla', () => {
   it(`VideoService.ts: Add @Injectable() decorator to the classs`, () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata("parameters", VideoService);
+      metadata = Reflect.getMetadata('parameters', VideoService);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }
@@ -33,7 +33,7 @@ describe('Blabla', () => {
   it(`Appmodule.ts: Add VideoService to the NgModule providers property`, () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata("annotations", AppModule);
+      metadata = Reflect.getMetadata('annotations', AppModule);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }

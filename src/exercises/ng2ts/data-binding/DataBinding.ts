@@ -1,12 +1,12 @@
-import {Component, Input} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import {Component, Input} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'my-flag',
 
   template: `<my-rectangle [color]="'yellow'" [height]="60"></my-rectangle>
-    <my-rectangle [color]="'blue'" [height]="30"></my-rectangle>
-    <my-rectangle [color]="'red'" [height]="30"></my-rectangle>`
+    <my-rectangle [color]="'blue'" [height]='30'></my-rectangle>
+    <my-rectangle [color]="'red'" [height]='30'></my-rectangle>`
 
 
 })
