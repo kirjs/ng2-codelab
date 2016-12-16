@@ -131,51 +131,52 @@ export class StateService {
   testMode = 'broken';
   testLastExercise = null;
 
-  private test(state, action) {
+  private test(state: CodelabConfig, action) {
+    if (state.app.test) {
 
 
-    if (ActionTypes.INIT_STATE === action.type) {
-      this.nextExercise();
-      this.testMode = 'broken';
-      return state;
-    }
-    if (ActionTypes.NEXT_EXERCISE === action.type) {
-      const exercise = selectedExercise(state);
-
-
-      if (this.testLastExercise != exercise && exercise.fileTemplates.length === 0 || exercise.skipTests) {
-        this.testLastExercise = exercise;
-        // This is just info
+      if (ActionTypes.INIT_STATE === action.type) {
         this.nextExercise();
+        this.testMode = 'broken';
+        return state;
       }
-    }
+      if (ActionTypes.NEXT_EXERCISE === action.type) {
+        const exercise = selectedExercise(state);
 
-    if (ActionTypes.SET_TEST_LIST === action.type) {
-      this.expectedTests = action.data.length;
-    }
 
-    if (ActionTypes.UPDATE_SINGLE_TEST_RESULT === action.type) {
-      if (this.testMode === 'broken') {
-        this.expectedTests--;
-        if (this.expectedTests === 0) {
-          this.testMode = 'fixed';
-          this.loadSolutions();
-
+        if (this.testLastExercise != exercise && exercise.fileTemplates.length === 0 || exercise.skipTests) {
+          this.testLastExercise = exercise;
+          // This is just info
+          this.nextExercise();
         }
-      } else if (this.testMode === 'fixed') {
-        if (action.data.pass) {
+      }
+
+      if (ActionTypes.SET_TEST_LIST === action.type) {
+        this.expectedTests = action.data.length;
+      }
+
+      if (ActionTypes.UPDATE_SINGLE_TEST_RESULT === action.type) {
+        if (this.testMode === 'broken') {
           this.expectedTests--;
           if (this.expectedTests === 0) {
-            this.testMode = 'broken';
-            this.nextExercise();
+            this.testMode = 'fixed';
+            this.loadSolutions();
+
           }
-        } else {
-          console.log('TEST FAILED', action.data);
-          debugger
+        } else if (this.testMode === 'fixed') {
+          if (action.data.pass) {
+            this.expectedTests--;
+            if (this.expectedTests === 0) {
+              this.testMode = 'broken';
+              this.nextExercise();
+            }
+          } else {
+            console.log('TEST FAILED', action.data);
+            debugger
+          }
         }
       }
     }
-
     return state;
   }
 

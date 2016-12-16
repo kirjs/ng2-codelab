@@ -19,3 +19,20 @@
   box-sizing: border-box;
 }
 
+.file {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
+  border: 1px solid #000;
+  margin-bottom: 2px;
+}
+.file-ts {
+  background: #1a67bf;
+  color: white;
+}
+.file-html{
+  background: #9cff7d;
+}

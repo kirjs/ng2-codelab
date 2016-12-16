@@ -1,8 +1,8 @@
-export const videoCode = '';
-export const thumbsCode = '';
-export const appCode = '';
-export const AppComponentCode = '';
-export const MeetupCode = '';
-export const togglepanelCode = '';
-export const wrapperCode = '';
-export const contextCode = '';
+export declare const thumbs_thumbs_html: string;
+export declare const video_video_html: string;
+export declare const typescript_intro_Meetup_ts: string;
+export declare const app_html: string;
+export declare const app_component_ts: string;
+export declare const toggle_panel_toggle_panel_html: string;
+export declare const context_context_html: string;
+

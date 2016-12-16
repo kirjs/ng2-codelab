@@ -179,10 +179,6 @@ export class ReducersService {
           console.log(exerciseConfig.fileTemplates);
           debugger
         }
-        if (!file.code) {
-          file.code = this.exerciseService.getExercise(`${exerciseConfig.path}/${file.filename}`);
-        }
-
         if (exerciseConfig.solutions) {
           const solution = exerciseConfig.solutions.find(f => f.filename === file.filename);
           if (solution) {

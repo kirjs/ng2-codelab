@@ -1,5 +1,6 @@
 import {MilestoneConfig} from "./milestone-config";
 export interface AppConfig {
+  test: boolean;
   name: string,
   page: string,
   user: string,

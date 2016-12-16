@@ -58,6 +58,10 @@ export class MonacoConfigService {
             templateUrl?: string;
           }
           
+          export interface PipeConfig {
+            name: string;           
+          }
+          
           export function Component(config: ComponentConfig);
           
           export interface NgModuleConfig {
@@ -70,7 +74,11 @@ export class MonacoConfigService {
           export function Injectable();
           export function Output();
           export function Input();
-          
+          export function Pipe(config: PipeConfig);
+          export interface PipeTransform {
+            transform(value: string);
+          }
+                    
         }  
            
         declare var x = 1;
@@ -110,8 +118,12 @@ export class MonacoConfigService {
   }
 
   addDeclaration(file: FileConfig) {
-    this.declarations[file.filename] = {
-      dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`),
+    // Flatten the file structure.
+    // This is a temporary hacks, seems like monaco ignores file location for relative imports.
+    // it assumes that there are no files with the same filename in different folders.
+    const filename = file.filename.replace(/.*\//, '');
+    this.declarations[filename] = {
+      dispose: monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${filename}`),
       file: file,
       code: file.code
     }
