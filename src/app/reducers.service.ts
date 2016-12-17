@@ -1,13 +1,13 @@
-import {Injectable} from "@angular/core";
-import {CodelabConfig} from "./codelab-config";
-import {ActionTypes} from "./action-types.enum";
-import {selectedMilestone, selectedExercise} from "./state.service";
-import {FileConfig} from "./file-config";
-import {TestInfo} from "./test-info";
-import {Observable} from "rxjs/Rx";
-import {AngularFire} from "angularfire2";
-import {ExerciseService} from "./exercise.service";
-import {MonacoConfigService} from "./monaco-config.service";
+import {Injectable} from '@angular/core';
+import {CodelabConfig} from './codelab-config';
+import {ActionTypes} from './action-types.enum';
+import {selectedMilestone, selectedExercise} from './state.service';
+import {FileConfig} from './file-config';
+import {TestInfo} from './test-info';
+import {Observable} from 'rxjs/Rx';
+import {AngularFire} from 'angularfire2';
+import {ExerciseService} from './exercise.service';
+import {MonacoConfigService} from './monaco-config.service';
 
 @Injectable()
 export class ReducersService {

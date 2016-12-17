@@ -1,14 +1,15 @@
-import {Injectable} from "@angular/core";
-import {Observable, BehaviorSubject} from "rxjs/Rx";
-import {CodelabConfig, AppConfig} from "./codelab-config";
-import {Action} from "./action";
-import {ActionTypes} from "./action-types.enum";
-import {ExerciseConfig} from "./exercise-config";
-import {MilestoneConfig} from "./milestone-config";
-import {ReducersService} from "./reducers.service";
-import {assert} from "./utils";
-import {FileConfig} from "./file-config";
-import {CodelabConfigService} from "../exercises/codelab-config-service";
+import {Injectable} from '@angular/core';
+import {Observable, BehaviorSubject} from 'rxjs/Rx';
+import {CodelabConfig, AppConfig} from './codelab-config';
+import {Action} from './action';
+import {ActionTypes} from './action-types.enum';
+import {ExerciseConfig} from './exercise-config';
+import {MilestoneConfig} from './milestone-config';
+import {ReducersService} from './reducers.service';
+import {assert} from './utils';
+import {FileConfig} from './file-config';
+import {CodelabConfigService} from '../exercises/codelab-config-service';
+import {testMiddleware} from './middleware/test.middleware';
 
 
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
@@ -22,6 +23,7 @@ export function selectedExercise(state: CodelabConfig): ExerciseConfig {
 export function exerciseComplete(exercise: ExerciseConfig) {
   return exercise.tests && exercise.tests.every(test => test.pass);
 }
+type Middleware = (CodelabConfig, any)=>CodelabConfig;
 
 @Injectable()
 export class StateService {
@@ -29,15 +31,20 @@ export class StateService {
   private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
   public appConfig: AppConfig;
 
+  middleware: Middleware[] = [];
+
+  applyMiddleware(state, action) {
+    return this.middleware.reduce((state, middleware) => middleware(state, action), state);
+  }
+
   constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
+    this.addMiddleware(testMiddleware(this));
     this.appConfig = codelabConfig.config.app;
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
-
         try {
           if (reducers[action.type]) {
-            const result = this.test(reducers[action.type](state, action), action);
-
+            const result = this.applyMiddleware(reducers[action.type](state, action), action);
             return result instanceof Observable ? result : Observable.of(result);
           }
           if (!state) {
@@ -47,7 +54,7 @@ export class StateService {
         catch (e) {
           debugger
         }
-        return this.test(state, action);
+        return this.applyMiddleware(state, action);
       }, codelabConfig.config)
       .map((state: CodelabConfig) => {
         localStorage.setItem('state', JSON.stringify(state));
@@ -62,6 +69,10 @@ export class StateService {
       debugger
     });
 
+  }
+
+  public addMiddleware(middleware: Middleware) {
+    this.middleware.push(middleware);
   }
 
   private dispatchAction(actionType: ActionTypes, data?) {
@@ -128,60 +139,7 @@ export class StateService {
     this.dispatchAction(ActionTypes.LOAD_SOLUTION, file);
   }
 
-  expectedTests = 0;
-  testMode = 'broken';
-  testLastExercise = null;
-
-  private test(state: CodelabConfig, action) {
-    if (state.app.test) {
-
-
-      if (ActionTypes.INIT_STATE === action.type) {
-        this.nextExercise();
-        this.testMode = 'broken';
-        return state;
-      }
-      if (ActionTypes.NEXT_EXERCISE === action.type) {
-        const exercise = selectedExercise(state);
-
-
-        if (this.testLastExercise != exercise && exercise.fileTemplates.length === 0 || exercise.skipTests) {
-          this.testLastExercise = exercise;
-          // This is just info
-          this.nextExercise();
-        }
-      }
-
-      if (ActionTypes.SET_TEST_LIST === action.type) {
-        this.expectedTests = action.data.length;
-      }
-
-      if (ActionTypes.UPDATE_SINGLE_TEST_RESULT === action.type) {
-        if (this.testMode === 'broken') {
-          this.expectedTests--;
-          if (this.expectedTests === 0) {
-            this.testMode = 'fixed';
-            this.loadSolutions();
-
-          }
-        } else if (this.testMode === 'fixed') {
-          if (action.data.pass) {
-            this.expectedTests--;
-            if (this.expectedTests === 0) {
-              this.testMode = 'broken';
-              this.nextExercise();
-            }
-          } else {
-            console.log('TEST FAILED', action.data);
-            debugger
-          }
-        }
-      }
-    }
-    return state;
-  }
-
-  private loadSolutions() {
+  loadSolutions() {
     this.dispatchAction(ActionTypes.LOAD_ALL_SOLUTIONS);
   }
 }
