@@ -1,8 +1,8 @@
-import {CodelabConfig, AppConfig} from "../app/codelab-config";
-import {FileConfig} from "../app/file-config";
-import {differ} from "../app/differ/differ";
-import {ExerciseService} from "../app/exercise.service";
-import {Injectable} from "@angular/core";
+import {CodelabConfig, AppConfig} from '../app/codelab-config';
+import {FileConfig} from '../app/file-config';
+import {differ} from '../app/differ/differ';
+import {ExerciseService} from '../app/exercise.service';
+import {Injectable} from '@angular/core';
 
 const test = window.location.hash.includes('test');
 const presentationMode = window.location.hash.includes('present');
@@ -26,10 +26,10 @@ export class CodelabConfigService {
   public config: CodelabConfig;
 
   constructor(public exerciseService: ExerciseService) {
-    function testFile(filename = 'Test.ts', code?) {
+    function testFile(path = 'Test.ts', code?) {
       return {
-        filename,
-        moduleName: filename.replace('ts', ''),
+        path,
+        moduleName: path.replace('ts', ''),
         type: 'ts',
         excludeFromTesting: false,
         test: true,
@@ -78,7 +78,7 @@ export class CodelabConfigService {
 
     function newHtmlFile(name, code) {
       return {
-        filename: name + '.html',
+        path: name + '.html',
         moduleName: name,
         code,
         type: 'html'
@@ -90,7 +90,7 @@ export class CodelabConfigService {
       return {
         bootstrap: bootstrap,
         excludeFromTesting: bootstrap,
-        filename: name + '.ts',
+        path: name + '.ts',
         moduleName: name,
         code,
         type: 'ts'
@@ -566,7 +566,7 @@ export class CodelabConfigService {
              files.appModule.dataBinding,
              files.bootstrap.dataBinding,
              ...hidden({
-             filename: 'index.html',
+             path: 'index.html',
              moduleName: 'index',
              code: '<my-flag></my-flag>',
              type: 'html'
@@ -667,7 +667,7 @@ export class CodelabConfigService {
                 ),
                 files.test.thumbsComponentCreate,
                 ...hidden({
-                    filename: 'index.html',
+                    path: 'index.html',
                     moduleName: 'index',
                     code: '<my-thumbs></my-thumbs>',
                     type: 'html'
@@ -759,7 +759,7 @@ export class CodelabConfigService {
                   files.wrapperComponent.togglePanelComponentCreate,
                   files.appModule.togglePanelComponentCreate,
                   {
-                    filename: 'index.html',
+                    path: 'index.html',
                     code: '<my-wrapper></my-wrapper>',
                     type: 'html',
                     moduleName: 'index'
@@ -849,7 +849,7 @@ export class CodelabConfigService {
               fileTemplates: [
                 files.contextComponent.contextComponentUse,
                 {
-                  filename: 'context/context.html',
+                  path: 'context/context.html',
                   moduleName: 'context',
                   code: '{{text}}',
                   type: 'html'
@@ -915,7 +915,7 @@ export class CodelabConfigService {
                 files.thumbsComponent.fuzzyPipeUse,
                 files.contextComponent.fuzzyPipeUse,
                 {
-                  filename: 'context/context.html',
+                  path: 'context/context.html',
                   moduleName: 'context',
                   code: '{{text}}',
                   type: 'html'

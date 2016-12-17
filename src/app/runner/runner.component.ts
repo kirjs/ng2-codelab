@@ -91,13 +91,13 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
                     debugger
                   }
 
-                  exports(file.filename.replace(/[\/\.-]/gi, '_'), file.code);
+                  exports(file.path.replace(/[\/\.-]/gi, '_'), file.code);
                 });
               }
             }
           });
 
-          files.filter(file => file.filename.indexOf('index.html') >= 0).map((file => {
+          files.filter(file => file.path.indexOf('index.html') >= 0).map((file => {
             setHtml(file.code)
           }));
 

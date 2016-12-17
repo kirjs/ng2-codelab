@@ -180,7 +180,7 @@ export class ReducersService {
           debugger
         }
         if (exerciseConfig.solutions) {
-          const solution = exerciseConfig.solutions.find(f => f.filename === file.filename);
+          const solution = exerciseConfig.solutions.find(f => f.path === file.path);
           if (solution) {
             file.solution = solution.code;
           }

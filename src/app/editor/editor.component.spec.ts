@@ -17,7 +17,7 @@ describe('EditorComponent', () => {
     fixture = TestBed.createComponent(EditorComponent);
     component = fixture.componentInstance;
     component.file = {
-      filename: 'test.ts'
+      path: 'test.ts'
     };
     fixture.detectChanges();
   });

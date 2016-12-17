@@ -113,7 +113,7 @@ export class MonacoConfigService {
   }
 
   disposeDeclaration(file: FileConfig) {
-    const filename = MonacoConfigService.normalize(file.filename);
+    const filename = MonacoConfigService.normalize(file.path);
 
     this.declarations[filename].dispose.dispose();
     delete this.declarations[filename];
@@ -127,11 +127,11 @@ export class MonacoConfigService {
     // Flatten the file structure.
     // This is a temporary hacks, seems like monaco ignores file location for relative imports.
     // it assumes that there are no files with the same filename in different folders.
-    const filename = MonacoConfigService.normalize(file.filename);
+    const filename = MonacoConfigService.normalize(file.path);
     const normalized = monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${filename}`);
     let initial;
-    if (filename !== file.filename) {
-      initial = monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.filename}`);
+    if (filename !== file.path) {
+      initial = monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.path}`);
     }
 
 
@@ -150,7 +150,7 @@ export class MonacoConfigService {
   }
 
   updateDeclaration(file: FileConfig) {
-    const filename = MonacoConfigService.normalize(file.filename);
+    const filename = MonacoConfigService.normalize(file.path);
     let declaration = this.declarations[filename];
 
     if (declaration) {
