@@ -30,7 +30,7 @@ export class CodelabConfigService {
       return {
         path,
         moduleName: path.replace('ts', ''),
-        type: 'ts',
+        type: 'typescript',
         excludeFromTesting: false,
         test: true,
         bootstrap: true,
@@ -93,7 +93,7 @@ export class CodelabConfigService {
         path: name + '.ts',
         moduleName: name,
         code,
-        type: 'ts'
+        type: 'typescript'
       }
     }
 

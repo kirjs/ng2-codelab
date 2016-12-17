@@ -1,16 +1,12 @@
-import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from "@angular/core";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import "rxjs/add/operator/debounceTime";
-import {FileConfig} from "../file-config";
-import {Subject} from "rxjs";
-import {MonacoConfigService} from "../monaco-config.service";
+import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+import {FileConfig} from '../file-config';
+import {Subject} from 'rxjs';
+import {MonacoConfigService} from '../monaco-config.service';
 
 declare const require: any;
 
-const languages = {
-  ts: 'typescript',
-  html: 'html'
-};
 
 @Component({
   selector: 'app-editor',
@@ -55,8 +51,7 @@ export class EditorComponent implements AfterViewInit {
 
       this._editor = monaco.editor.create(myDiv,
         {
-          value: this.file.code,
-          language: languages[this.file.type],
+          model: monaco.editor.getModel(this.file.path),
           scrollBeyondLastLine: false,
           readOnly: this.file.readonly,
           tabCompletion: true,

@@ -1,17 +1,11 @@
-import {Injectable} from "@angular/core";
-import {FileConfig} from "./file-config";
+import {Injectable} from '@angular/core';
+import {FileConfig} from './file-config';
 
 declare const monaco;
 
-interface DeclarationConfig {
-  dispose: {dispose: ()=>void},
-  file: FileConfig,
-  code: string
-}
 @Injectable()
 export class MonacoConfigService {
   public monacoReady;
-  private declarations: {[key: string]: DeclarationConfig } = {};
 
   constructor() {
     this.monacoReady = new Promise((resolve) => {
@@ -102,69 +96,20 @@ export class MonacoConfigService {
                                                          
         `;
 
-    if (!monaco.languages.typescript.typescriptDefaults._extraLibs['./AppComponent.d.ts']) {
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(core, '@angular/core.d.ts');
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(core, 'node_modules/@angular/core.d.ts');
+  }
+
+  createFileModels(files: FileConfig[]) {
+    if (!monaco) {
+      throw "Monaco not ready";
     }
-  }
-
-  cleanUpDeclarations() {
-    Object.keys(this.declarations)
-      .forEach(key => this.disposeDeclaration(this.declarations[key].file));
-  }
-
-  disposeDeclaration(file: FileConfig) {
-    const filename = MonacoConfigService.normalize(file.path);
-
-    this.declarations[filename].dispose.dispose();
-    delete this.declarations[filename];
-  }
-
-  static normalize(filename: string) {
-    return filename.replace(/.*\//, '');
-  }
-
-  addDeclaration(file: FileConfig) {
-    // Flatten the file structure.
-    // This is a temporary hacks, seems like monaco ignores file location for relative imports.
-    // it assumes that there are no files with the same filename in different folders.
-    const filename = MonacoConfigService.normalize(file.path);
-    const normalized = monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${filename}`);
-    let initial;
-    if (filename !== file.path) {
-      initial = monaco.languages.typescript.typescriptDefaults.addExtraLib(file.code, `inmemory://model/${file.path}`);
+    const models = monaco.editor.getModels();
+    if (models.length) {
+      models.forEach(model => model.dispose());
     }
-
-
-    this.declarations[filename] = {
-      dispose: {
-        dispose(){
-          normalized.dispose();
-          if (initial) {
-            initial.dispose();
-          }
-        }
-      },
-      file: file,
-      code: file.code
-    }
-  }
-
-  updateDeclaration(file: FileConfig) {
-    const filename = MonacoConfigService.normalize(file.path);
-    let declaration = this.declarations[filename];
-
-    if (declaration) {
-      if (declaration.code === file.code) {
-        return;
-      } else {
-        this.disposeDeclaration(file);
-      }
-    }
-
-    this.addDeclaration(file);
-  }
-
-  updateDeclarations(files: FileConfig[]) {
-    files.forEach((file) => this.updateDeclaration(file));
+    files.map(file => {
+      monaco.editor.createModel(file.code, file.type, file.path);
+      debugger
+    })
   }
 }

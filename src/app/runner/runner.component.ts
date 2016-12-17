@@ -1,7 +1,7 @@
-import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from "@angular/core";
-import * as ts from "typescript";
-import {FileConfig} from "../file-config";
-import {StateService} from "../state.service";
+import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
+import * as ts from 'typescript';
+import {FileConfig} from '../file-config';
+import {StateService} from '../state.service';
 
 let cachedIframes = {};
 
@@ -101,7 +101,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             setHtml(file.code)
           }));
 
-          files.filter(file => file.type === 'ts').map((file) => {
+          files.filter(file => file.type === 'typescript').map((file) => {
             // Update module names
             let code = file.code;
 

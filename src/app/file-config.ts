@@ -1,7 +1,7 @@
 export interface FileConfig {
   collapsed?: boolean;
   /**
-   * Only .ts is supported ATM.
+   * typescript or html.
    */
     type?: string;
 

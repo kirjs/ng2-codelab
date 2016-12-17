@@ -6,7 +6,6 @@ import {FileConfig} from './file-config';
 import {TestInfo} from './test-info';
 import {Observable} from 'rxjs/Rx';
 import {AngularFire} from 'angularfire2';
-import {ExerciseService} from './exercise.service';
 import {MonacoConfigService} from './monaco-config.service';
 
 @Injectable()
@@ -106,10 +105,6 @@ export class ReducersService {
       }
     });
 
-    this.monacoConfig.monacoReady.then(() => {
-      this.monacoConfig.updateDeclarations(exercise.editedFiles);
-    });
-
     return state.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
@@ -168,39 +163,36 @@ export class ReducersService {
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
     state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
-    if (exerciseConfig.editedFiles) {
-      return state;
+    if (!exerciseConfig.editedFiles) {
+
+
+      exerciseConfig.editedFiles = exerciseConfig
+        .fileTemplates
+        .map((file: FileConfig) => {
+          if (!file) {
+            console.log(exerciseConfig.fileTemplates);
+            debugger
+          }
+          if (exerciseConfig.solutions) {
+            const solution = exerciseConfig.solutions.find(f => f.path === file.path);
+            if (solution) {
+              file.solution = solution.code;
+            }
+          }
+
+          return Object.assign({}, file);
+        });
     }
 
-    exerciseConfig.editedFiles = exerciseConfig
-      .fileTemplates
-      .map((file: FileConfig) => {
-        if (!file) {
-          console.log(exerciseConfig.fileTemplates);
-          debugger
-        }
-        if (exerciseConfig.solutions) {
-          const solution = exerciseConfig.solutions.find(f => f.path === file.path);
-          if (solution) {
-            file.solution = solution.code;
-          }
-        }
-
-        return Object.assign({}, file);
-      });
-
     this.monacoConfig.monacoReady.then(() => {
-      this.monacoConfig.cleanUpDeclarations();
-      this.monacoConfig.updateDeclarations(exerciseConfig.editedFiles);
+      this.monacoConfig.createFileModels(exerciseConfig.editedFiles);
     });
 
     return this[ActionTypes.RUN_CODE](state);
   }
 
-  constructor(protected exerciseService: ExerciseService,
-              protected angularFire: AngularFire,
+  constructor(protected angularFire: AngularFire,
               protected monacoConfig: MonacoConfigService) {
-
 
   }
 
