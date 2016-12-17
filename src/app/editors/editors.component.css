@@ -1,6 +1,6 @@
 .editors {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
   height: 100%;
   max-width: 100%;
 }
