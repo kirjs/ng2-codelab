@@ -2,11 +2,11 @@ import {Component} from "@angular/core";
 import {StateService} from "../state.service";
 
 @Component({
-  selector: 'autorun-control',
-  templateUrl: 'autoruncontrol.component.html',
-  styleUrls: ['autoruncontrol.component.css']
+  selector: 'app-autorun',
+  templateUrl: './autorun.component.html',
+  styleUrls: ['./autorun.component.css']
 })
-export class AutorunControlComponent {
+export class AutorunComponent {
   autorun: boolean;
 
   constructor(private state: StateService) {

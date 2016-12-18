@@ -16,8 +16,8 @@ import {ReducersService} from "./reducers.service";
 import {FeedbackWidgetComponent} from "./feedback-widget/feedback-widget.component";
 import {FeedbackPageComponent} from "./feedback-page/feedback-page.component";
 import {ExerciseService} from "./exercise.service";
-import {CodelabConfigService, appConfig} from "../exercises/codelab-config-service";
-import {AutorunControlComponent} from "./autorun/autoruncontrol.component";
+import {CodelabConfigService, appConfig} from "../../exercises/codelab-config-service";
+import {AutorunComponent} from "./autorun/autorun.component";
 import {MonacoConfigService} from "./monaco-config.service";
 import {ResizeComponent} from "./resize/resize.component";
 
@@ -33,7 +33,7 @@ let ngModuleConfig = {
     TestsComponent,
     FeedbackWidgetComponent,
     FeedbackPageComponent,
-    AutorunControlComponent,
+    AutorunComponent,
     ResizeComponent
   ],
   imports: [

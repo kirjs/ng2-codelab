@@ -22,7 +22,7 @@ const FAKE_VIDEOS = [{
   /*/d*//*d:createComponentSolved:bootstrapSolved/trimBoth*/
   template: '<h1>Hello CatTube!</h1>',
   /*/d*//*d:templatePageSetup/trimBoth*/
-  templateUrl: './app.html'
+  templateUrl: 'app.html'
   /*/d*//*d:createComponentSolved/trimTrailing*/
 })
 export class AppComponent {

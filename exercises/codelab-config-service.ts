@@ -1,7 +1,7 @@
-import {CodelabConfig, AppConfig} from '../app/codelab-config';
-import {FileConfig} from '../app/file-config';
-import {differ} from '../app/differ/differ';
-import {ExerciseService} from '../app/exercise.service';
+import {CodelabConfig, AppConfig} from '../src/app/codelab-config';
+import {FileConfig} from '../src/app/file-config';
+import {differ} from '../src/app/differ/differ';
+import {ExerciseService} from '../src/app/exercise.service';
 import {Injectable} from '@angular/core';
 
 const test = window.location.hash.includes('test');

@@ -8,7 +8,7 @@ import {MilestoneConfig} from './milestone-config';
 import {ReducersService} from './reducers.service';
 import {assert} from './utils';
 import {FileConfig} from './file-config';
-import {CodelabConfigService} from '../exercises/codelab-config-service';
+import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {testMiddleware} from './middleware/test.middleware';
 
 
@@ -23,12 +23,12 @@ export function selectedExercise(state: CodelabConfig): ExerciseConfig {
 export function exerciseComplete(exercise: ExerciseConfig) {
   return exercise.tests && exercise.tests.every(test => test.pass);
 }
-type Middleware = (CodelabConfig, any)=>CodelabConfig;
+export type Middleware = (CodelabConfig, any)=>CodelabConfig;
 
 @Injectable()
 export class StateService {
   public readonly update: Observable<CodelabConfig>;
-  private readonly dispatch = new BehaviorSubject<Action>({type: ActionTypes.INIT_STATE, data: {}});
+  private readonly dispatch: BehaviorSubject<Action>;
   public appConfig: AppConfig;
 
   middleware: Middleware[] = [];
@@ -38,6 +38,16 @@ export class StateService {
   }
 
   constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
+
+    this.dispatch = new BehaviorSubject<Action>({
+      type: ActionTypes.IGNORE,
+      data: {}
+    });
+
+    this.dispatch.next({
+      type: ActionTypes.INIT_STATE,
+      data: {}
+    });
     this.addMiddleware(testMiddleware(this));
     this.appConfig = codelabConfig.config.app;
     this.update = this.dispatch
