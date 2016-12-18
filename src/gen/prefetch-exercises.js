@@ -1,6 +1,6 @@
 const glob = require('glob');
 const fs = require('fs');
-const exercisePath = 'src/exercises/';
+const exercisePath = 'exercises/';
 const files = glob.sync(exercisePath + '**/*', {
   nodir: true
 });
