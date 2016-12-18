@@ -1,14 +1,13 @@
 import {CodelabState} from '../src/app/codelab-config';
 import {FileConfig} from '../src/app/file-config';
 import {differ} from '../src/app/differ/differ';
-import {ExerciseService} from '../src/app/exercise.service';
 import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CodelabConfigService {
   public config: CodelabState;
 
-  constructor(public exerciseService: ExerciseService) {
+  constructor() {
     function testFile(path = 'Test.ts', code?) {
       return {
         path,
@@ -80,16 +79,6 @@ export class CodelabConfigService {
       }
     }
 
-    function loadHtml(name, states) {
-      const result = differ(exerciseService.getExercise(`ng2ts/${name}.html`), states);
-      return mapObject(result, (code) => newHtmlFile(name, code)) as Versions;
-    }
-
-    function loadTs(name, states) {
-      const result = differ(exerciseService.getExercise(`ng2ts/${name}.ts`), states);
-
-      return mapObject(result, (code) => newTsFile(name, code)) as Versions;
-    }
 
     const commits = [
       'codelab',
@@ -169,51 +158,64 @@ export class CodelabConfigService {
       fuzzyPipeUseSolved: FileConfig,
     }
 
+    function loadFile(name, code) {
+      const result = differ(code, commits);
+      if (name.includes('.ts')) {
+        name = name.replace('.ts', '');
+        return mapObject(result, (code) => newTsFile(name, code)) as Versions;
+      }
+      if (name.includes('.html')) {
+        name = name.replace('.html', '');
+        return mapObject(result, (code) => newHtmlFile(name, code)) as Versions;
+      }
+    }
+
     const files = {
-      test: loadTs('app.component', commits),
-      appComponent: loadTs('app.component', commits),
-      appModule: loadTs('app.module', commits),
-      appHtml: loadHtml('app', commits),
-      bootstrap: loadTs('main', commits),
-      //dataBinding: loadTs('data-binding/DataBinding', commits),
-      videoItem: loadTs('video/video-item', commits),
-      api: loadTs('api.service', commits),
-      videoService: loadTs('video/video.service', commits),
-      videoHtml: loadHtml('video/video', commits),
-      videoComponent: loadTs('video/video.component', commits),
-      thumbsComponent: loadTs('thumbs/thumbs.component', commits),
-      thumbsHtml: loadHtml('thumbs/thumbs', commits),
-      togglePanelHtml: loadHtml('toggle-panel/toggle-panel', commits),
-      togglePanelComponent: loadTs('toggle-panel/toggle-panel.component', commits),
-      wrapperComponent: loadTs('wrapper.component', commits),
-      contextComponent: loadTs('context/context.component', commits),
-      contextService: loadTs('context/context.service', commits),
-      codelab: loadTs('typescript-intro/Codelab', commits),
-      mainCodelab: loadTs('typescript-intro/Main', commits),
-      guest: loadTs('typescript-intro/Guest', commits),
-      fuzzyPipe: loadTs('fuzzy-pipe/fuzzy.pipe', commits),
+      test: loadFile('app.component.ts', require('!raw!./ng2ts/app.component.ts')),
+      appComponent: loadFile('app.component.ts', require('!raw!./ng2ts/app.component.ts')),
+      appModule: loadFile('app.module.ts', require('!raw!./ng2ts/app.module.ts')),
+      appHtml: loadFile('app.html', require('!raw!./ng2ts/app.html')),
+      bootstrap: loadFile('main.ts', require('!raw!./ng2ts/main.ts')),
+      //daloadFile(taBinding: 'data-binding/DataBinding', require('!raw!./ng2ts/aBinding: 'data-binding/DataBinding')),
+      videoItem: loadFile('video/video-item.ts', require('!raw!./ng2ts/video/video-item.ts')),
+      api: loadFile('api.service.ts', require('!raw!./ng2ts/api.service.ts')),
+      videoService: loadFile('video/video.service.ts', require('!raw!./ng2ts/video/video.service.ts')),
+      videoHtml: loadFile('video/video.html', require('!raw!./ng2ts/video/video.html')),
+      videoComponent: loadFile('video/video.component.ts', require('!raw!./ng2ts/video/video.component.ts')),
+      thumbsComponent: loadFile('thumbs/thumbs.component.ts', require('!raw!./ng2ts/thumbs/thumbs.component.ts')),
+      thumbsHtml: loadFile('thumbs/thumbs.html', require('!raw!./ng2ts/thumbs/thumbs.html')),
+      togglePanelHtml: loadFile('toggle-panel/toggle-panel.html', require('!raw!./ng2ts/toggle-panel/toggle-panel.html')),
+      togglePanelComponent: loadFile('toggle-panel/toggle-panel.component.ts', require('!raw!./ng2ts/toggle-panel/toggle-panel.component.ts')),
+      wrapperComponent: loadFile('wrapper.component.ts', require('!raw!./ng2ts/wrapper.component.ts')),
+      contextComponent: loadFile('context/context.component.ts', require('!raw!./ng2ts/context/context.component.ts')),
+      contextService: loadFile('context/context.service.ts', require('!raw!./ng2ts/context/context.service.ts')),
+      codelab: loadFile('typescript-intro/Codelab.ts', require('!raw!./ng2ts/typescript-intro/Codelab.ts')),
+      mainCodelab: loadFile('typescript-intro/Main.ts', require('!raw!./ng2ts/typescript-intro/Main.ts')),
+      guest: loadFile('typescript-intro/Guest.ts', require('!raw!./ng2ts/typescript-intro/Guest.ts')),
+      fuzzyPipe: loadFile('fuzzy-pipe/fuzzy.pipe.ts', require('!raw!./ng2ts/fuzzy-pipe/fuzzy.pipe.ts')),
     };
 
+
     // Too hard to use diff comments for this, so I'm replacing the whole file
-    files.appModule.thumbsComponentCreate = newTsFile('app.module', exerciseService.getExercise(`ng2ts/thumbs.app.module.ts`));
-    files.appModule.togglePanelComponentCreate = newTsFile('app.module', exerciseService.getExercise(`ng2ts/toggle-panel.app.module.ts`));
-    files.test.codelab = testFile('typescript-intro/Test', exerciseService.getExercise(`ng2ts/tests/codelabTest.ts`));
-    files.test.createComponent = testFile('createComponent/Test', exerciseService.getExercise(`ng2ts/tests/createComponentTest.ts`));
-    files.test.createModule = testFile('createModule/Test', exerciseService.getExercise(`ng2ts/tests/createModuleTest.ts`));
-    files.test.bootstrap = testFile('bootstrap/Test', exerciseService.getExercise(`ng2ts/tests/bootstrapTest.ts`));
-    files.test.templatePageSetup = testFile('templatePageSetup/Test', exerciseService.getExercise(`ng2ts/tests/templatePageSetupTest.ts`));
-    files.test.templateAddAction = testFile('templateAddAction/Test', exerciseService.getExercise(`ng2ts/tests/templateAddActionTest.ts`));
-    files.test.templateAllVideos = testFile('templateAllVideos/Test', exerciseService.getExercise(`ng2ts/tests/templateAllVideosTest.ts`));
-    files.test.diInjectService = testFile('diInjectService/Test', exerciseService.getExercise(`ng2ts/tests/diInjectServiceTest.ts`));
-    files.test.videoComponentCreate = testFile('videoComponentCreate/Test', exerciseService.getExercise(`ng2ts/tests/videoComponentCreateTest.ts`));
-    files.test.videoComponentUse = testFile('videoComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/videoComponentUseTest.ts`));
-    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', exerciseService.getExercise(`ng2ts/tests/ThumbsComponentCreateTest.ts`));
-    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', exerciseService.getExercise(`ng2ts/tests/ThumbsComponentUseTest.ts`));
-    files.test.togglePanelComponentCreate = testFile('togglePanelComponentCreate/Test', exerciseService.getExercise(`ng2ts/tests/togglePanelComponentCreateTest.ts`));
-    files.test.togglePanelComponentUse = testFile('togglePanelComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/togglePanelComponentUseTest.ts`));
-    files.test.contextComponentUse = testFile('contextComponentUse/Test', exerciseService.getExercise(`ng2ts/tests/contextComponentUseTest.ts`));
-    files.test.fuzzyPipeCreate = testFile('fuzzyPipeCreate/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeCreateTest.ts`));
-    files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeUseTest.ts`));
+    files.appModule.thumbsComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/thumbs.app.module.ts`));
+    files.appModule.togglePanelComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/toggle-panel.app.module.ts`));
+    files.test.codelab = testFile('typescript-intro/Test', require(`!raw!./ng2ts/tests/codelabTest.ts`));
+    files.test.createComponent = testFile('createComponent/Test', require(`!raw!./ng2ts/tests/createComponentTest.ts`));
+    files.test.createModule = testFile('createModule/Test', require(`!raw!./ng2ts/tests/createModuleTest.ts`));
+    files.test.bootstrap = testFile('bootstrap/Test', require(`!raw!./ng2ts/tests/bootstrapTest.ts`));
+    files.test.templatePageSetup = testFile('templatePageSetup/Test', require(`!raw!./ng2ts/tests/templatePageSetupTest.ts`));
+    files.test.templateAddAction = testFile('templateAddAction/Test', require(`!raw!./ng2ts/tests/templateAddActionTest.ts`));
+    files.test.templateAllVideos = testFile('templateAllVideos/Test', require(`!raw!./ng2ts/tests/templateAllVideosTest.ts`));
+    files.test.diInjectService = testFile('diInjectService/Test', require(`!raw!./ng2ts/tests/diInjectServiceTest.ts`));
+    files.test.videoComponentCreate = testFile('videoComponentCreate/Test', require(`!raw!./ng2ts/tests/videoComponentCreateTest.ts`));
+    files.test.videoComponentUse = testFile('videoComponentUse/Test', require(`!raw!./ng2ts/tests/videoComponentUseTest.ts`));
+    files.test.thumbsComponentCreate = testFile('thumbs/ThumbsComponentCreateTest', require(`!raw!./ng2ts/tests/ThumbsComponentCreateTest.ts`));
+    files.test.thumbsComponentUse = testFile('thumbs/ThumbsComponentUseTest', require(`!raw!./ng2ts/tests/ThumbsComponentUseTest.ts`));
+    files.test.togglePanelComponentCreate = testFile('togglePanelComponentCreate/Test', require(`!raw!./ng2ts/tests/togglePanelComponentCreateTest.ts`));
+    files.test.togglePanelComponentUse = testFile('togglePanelComponentUse/Test', require(`!raw!./ng2ts/tests/togglePanelComponentUseTest.ts`));
+    files.test.contextComponentUse = testFile('contextComponentUse/Test', require(`!raw!./ng2ts/tests/contextComponentUseTest.ts`));
+    files.test.fuzzyPipeCreate = testFile('fuzzyPipeCreate/Test', require(`!raw!./ng2ts/tests/fuzzyPipeCreateTest.ts`));
+    files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', require(`!raw!./ng2ts/tests/fuzzyPipeUseTest.ts`));
 
     this.config = {
       name: 'Angular2 codelab',

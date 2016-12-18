@@ -15,7 +15,6 @@ import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from './reducers.service';
 import {FeedbackWidgetComponent} from './feedback-widget/feedback-widget.component';
 import {FeedbackPageComponent} from './feedback-page/feedback-page.component';
-import {ExerciseService} from './exercise.service';
 import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {AutorunComponent} from './autorun/autorun.component';
 import {MonacoConfigService} from './monaco-config.service';
@@ -45,7 +44,6 @@ let ngModuleConfig = {
   providers: [
     StateService,
     ReducersService,
-    ExerciseService,
     CodelabConfigService,
     AppConfigService,
     MonacoConfigService

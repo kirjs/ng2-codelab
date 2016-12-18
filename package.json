@@ -9,8 +9,6 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "generate-types": "dts-generator --name angular --project . --out angular.d.ts",
-    "prefetch-exercises": "node src/gen/prefetch-exercises",
     "deploy": "ng build --prod && firebase deploy"
   },
   "private": true,
