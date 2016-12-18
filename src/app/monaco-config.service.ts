@@ -91,13 +91,11 @@ export class MonacoConfigService {
   }
 
   createFileModels(files: FileConfig[]) {
-    if (!monaco) {
-      throw "Monaco not ready";
-    }
     const models = monaco.editor.getModels();
     if (models.length) {
       models.forEach(model => model.dispose());
     }
+    console.log(files);
 
     files.map(file => {
       monaco.editor.createModel(file.code, file.type, file.path);

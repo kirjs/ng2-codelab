@@ -1,15 +1,16 @@
-<div class="description main" [innerHTML]="sanitizedDescription" *ngIf="!config?.editedFiles?.length"></div>
+<div class="description main" [innerHTML]="sanitizedDescription" *ngIf="!config?.files?.length"></div>
 <div *ngIf="false" class="next" (click)="state.nextExercise()">
   {{config.messageNext || 'Good job! Go to the next exercise!'}}
 </div>
-<div class="exercise-panel" *ngIf="config?.editedFiles?.length">
-  <app-editors [files]="config.editedFiles"
+
+<div class="exercise-panel" *ngIf="config?.files?.length">
+  <app-editors [files]="config.files"
                (onFileCollapsed)="onFileCollapsed($event)"></app-editors>
   <div class="side">
     <app-autorun (onAutorunChange)=onAutorunChange($event)></app-autorun>
     <div class="description" [innerHTML]="sanitizedDescription"></div>
     <app-tests [tests]="config.tests"></app-tests>
-    <app-runner [files]="config.editedFiles" style="flex: 50%"></app-runner>
+    <app-runner [files]="config.files" style="flex: 50%"></app-runner>
     <app-feedback-widget *ngIf="state.appConfig.feedbackEnabled"></app-feedback-widget>
   </div>
 </div>

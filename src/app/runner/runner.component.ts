@@ -62,6 +62,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
         iframe.contentDocument.body.innerHTML = html;
       };
       const displayError = (error, info) => {
+        console.log(info, error);
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
         setHtml(`
@@ -96,6 +97,13 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               }
             }
           });
+
+          files.map(file => {
+            if (!file.path) {
+              debugger
+            }
+          });
+
 
           files.filter(file => file.path.indexOf('index.html') >= 0).map((file => {
             setHtml(file.code)

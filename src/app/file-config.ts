@@ -10,6 +10,7 @@ export interface FileConfig {
    */
   code?: string;
 
+  template: string,
   /**
    * Source code of the file.
    */

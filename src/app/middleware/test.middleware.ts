@@ -24,7 +24,7 @@ export function testMiddleware(stateService: StateService, appConfig: AppConfig)
         const exercise = selectedExercise(state);
 
 
-        if (lastExercise != exercise && exercise.fileTemplates.length === 0 || exercise.skipTests) {
+        if (lastExercise != exercise && !exercise.files || exercise.skipTests) {
           lastExercise = exercise;
           // This is just info
           stateService.nextExercise();

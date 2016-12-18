@@ -1,7 +1,7 @@
-import {ExerciseConfig} from "./exercise-config";
+import {ExerciseConfig, SlideConfig} from "./exercise-config";
 
 export interface MilestoneConfig {
   name: string,
   selectedExerciseIndex: number;
-  exercises: Array<ExerciseConfig>
+  exercises: Array<ExerciseConfig|SlideConfig>
 }

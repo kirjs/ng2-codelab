@@ -19,7 +19,9 @@ export class CodelabConfigService {
         before: 'mochaBefore();',
         after: 'mochaAfter();',
         hidden: true,
-        code
+        code,
+        template: code,
+        solution: code,
       };
     }
 
@@ -51,23 +53,18 @@ export class CodelabConfigService {
     }
 
 
-    function mapObject(object, callback) {
-      return Object.keys(object).reduce((result, key) => {
-        result[key] = callback(object[key]);
-        return result;
-      }, {});
-    }
-
-    function newHtmlFile(name, code) {
+    function newHtmlFile(name, code, solution) {
       return {
         path: name + '.html',
         moduleName: name,
         code,
+        template: code,
+        solution,
         type: 'html'
       }
     }
 
-    function newTsFile(name, code) {
+    function newTsFile(name, code, solution) {
       const bootstrap = name.toLowerCase().indexOf('main') >= 0;
       return {
         bootstrap: bootstrap,
@@ -75,6 +72,8 @@ export class CodelabConfigService {
         path: name + '.ts',
         moduleName: name,
         code,
+        template: code,
+        solution,
         type: 'typescript'
       }
     }
@@ -82,41 +81,23 @@ export class CodelabConfigService {
 
     const commits = [
       'codelab',
-      'codelabSolved',
       'createComponent',
-      'createComponentSolved',
       'createModule',
-      'createModuleSolved',
       'bootstrap',
-      'bootstrapSolved',
       'templatePageSetup',
-      'templatePageSetupSolved',
       'templateAddAction',
-      'templateAddActionSolved',
       'templateAllVideos',
-      'templateAllVideosSolved',
       'diInjectService',
-      'diInjectServiceSolved',
       'dataBinding',
-      'dataBindingSolved',
       'videoComponentCreate',
-      'videoComponentCreateSolved',
       'videoComponentUse',
-      'videoComponentUseSolved',
       'thumbsComponentCreate',
-      'thumbsComponentCreateSolved',
       'thumbsComponentUse',
-      'thumbsComponentUseSolved',
       'togglePanelComponentCreate',
-      'togglePanelComponentCreateSolved',
       'togglePanelComponentUse',
-      'togglePanelComponentUseSolved',
       'contextComponentUse',
-      'contextComponentUseSolved',
       'fuzzyPipeCreate',
-      'fuzzyPipeCreateSolved',
       'fuzzyPipeUse',
-      'fuzzyPipeUseSolved',
       'neverShow'
     ];
     interface Versions {
@@ -158,20 +139,29 @@ export class CodelabConfigService {
       fuzzyPipeUseSolved: FileConfig,
     }
 
-    function loadFile(name, code) {
-      const result = differ(code, commits);
+    function loadFile(name, code): Versions {
+      const diffs = differ(code, commits);
       if (name.includes('.ts')) {
         name = name.replace('.ts', '');
-        return mapObject(result, (code) => newTsFile(name, code)) as Versions;
+        return commits.reduce((result, commit) => {
+          result[commit] = newTsFile(name, diffs[commit], diffs[commit + 'Solved']);
+          result[commit + 'Solved'] = newTsFile(name, diffs[commit + 'Solved'], diffs[commit + 'Solved']);
+          return result;
+        }, {}) as Versions;
+
       }
       if (name.includes('.html')) {
         name = name.replace('.html', '');
-        return mapObject(result, (code) => newHtmlFile(name, code)) as Versions;
+        return commits.reduce((result, commit) => {
+          result[commit] = newHtmlFile(name, diffs[commit], diffs[commit + 'Solved']);
+          return result;
+        }, {}) as Versions;
       }
     }
 
+
     const files = {
-      test: loadFile('app.component.ts', require('!raw!./ng2ts/app.component.ts')),
+      test: loadFile('app.component.ts', require(`!raw!./ng2ts/app.component.ts`)),
       appComponent: loadFile('app.component.ts', require('!raw!./ng2ts/app.component.ts')),
       appModule: loadFile('app.module.ts', require('!raw!./ng2ts/app.module.ts')),
       appHtml: loadFile('app.html', require('!raw!./ng2ts/app.html')),
@@ -195,10 +185,9 @@ export class CodelabConfigService {
       fuzzyPipe: loadFile('fuzzy-pipe/fuzzy.pipe.ts', require('!raw!./ng2ts/fuzzy-pipe/fuzzy.pipe.ts')),
     };
 
-
     // Too hard to use diff comments for this, so I'm replacing the whole file
-    files.appModule.thumbsComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/thumbs.app.module.ts`));
-    files.appModule.togglePanelComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/toggle-panel.app.module.ts`));
+    files.appModule.thumbsComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/thumbs.app.module.ts`), '');
+    files.appModule.togglePanelComponentCreate = newTsFile('app.module', require(`!raw!./ng2ts/toggle-panel.app.module.ts`), '');
     files.test.codelab = testFile('typescript-intro/Test', require(`!raw!./ng2ts/tests/codelabTest.ts`));
     files.test.createComponent = testFile('createComponent/Test', require(`!raw!./ng2ts/tests/createComponentTest.ts`));
     files.test.createModule = testFile('createModule/Test', require(`!raw!./ng2ts/tests/createModuleTest.ts`));
@@ -233,10 +222,7 @@ export class CodelabConfigService {
           <p>We're using Angular version 2.1.0</p>
           <p>The slides for the codelab are available using
           <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a>.</p>                 
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `Let's start`
+        `
             },
             {
               name: 'Typescript',
@@ -248,10 +234,7 @@ export class CodelabConfigService {
           <p>As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans, 
           so only 3 people should be returned.</p>            
         `,
-              solutions: [
-                files.codelab.codelabSolved
-              ],
-              fileTemplates: [
+              files: [
                 evaled(files.codelab.codelab),
                 files.guest.codelab,
                 files.mainCodelab.codelab,
@@ -281,19 +264,13 @@ export class CodelabConfigService {
             <li>Create a NgModule</li>
             <li>Bootstrap the NgModule</li>
           </ol>
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `I'm a ready, let's start!`
+        `
             },
             {
               name: 'Create a component',
               description: `
             <p>Let's create our first component!</p>`,
-              solutions: [
-                files.appComponent.createComponentSolved
-              ],
-              fileTemplates: [
+              files: [
                 evaled(files.appComponent.createComponent),
                 ...hidden(
                   files.appModule.createModuleSolved,
@@ -304,10 +281,7 @@ export class CodelabConfigService {
             }, {
               name: 'Create a NgModule',
               description: `Now we got the component, we need to pass it to a NgModule.`,
-              solutions: [
-                files.appModule.createModuleSolved
-              ],
-              fileTemplates: [
+              files: [
                 files.appModule.createModule,
                 ...justForReference(
                   files.appComponent.createModule
@@ -324,10 +298,7 @@ export class CodelabConfigService {
               description: `
           <p>Now we got both NgModule and component ready, let's bootstrap the app!</p>
           <p>There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'</p>`,
-              solutions: [
-                files.bootstrap.bootstrapSolved
-              ],
-              fileTemplates: [
+              files: [
                 files.bootstrap.bootstrap,
                 ...justForReference(
                   files.appComponent.bootstrap,
@@ -367,18 +338,13 @@ export class CodelabConfigService {
             </div>
           </div>
         
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `I'm a ready, let's start!`
+        `
             },
             {
               name: 'Set up the page',
               description: `Let's setup a header, a search box, and a search button in the app component!`,
-              solutions: [
-                files.appHtml.templatePageSetupSolved
-              ],
-              fileTemplates: [
+
+              files: [
                 files.appHtml.templatePageSetup,
                 ...justForReference(
                   files.appComponent.templatePageSetup,
@@ -387,18 +353,13 @@ export class CodelabConfigService {
                 ),
                 files.test.templatePageSetup
               ],
-              tests: []
             }, {
               name: 'Add some action',
               description: `Let's do two things here: 
               <ul>
               <li>Add a search method to the AppComponent</li>
               <li>Display a message when there are no videos.</li>`,
-              solutions: [
-                files.appHtml.templateAddActionSolved,
-                files.appComponent.templateAddActionSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.appComponent.templateAddAction,
                 files.appHtml.templateAddAction,
                 ...justForReference(
@@ -407,16 +368,11 @@ export class CodelabConfigService {
                   files.bootstrap.templateAddAction,
                 ),
                 files.test.templateAddAction
-              ],
-              tests: []
+              ]
             }, {
               name: 'Display all videos',
               description: `Finally let's iterate over the videos.`,
-              solutions: [
-                files.appComponent.templateAllVideosSolved,
-                files.appHtml.templateAllVideosSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.appComponent.templateAllVideos,
                 files.appHtml.templateAllVideos,
                 ...justForReference(
@@ -425,8 +381,7 @@ export class CodelabConfigService {
                   files.bootstrap.templateAllVideos,
                 ),
                 files.test.templateAllVideos
-              ],
-              tests: []
+              ]
             }
           ]
         },
@@ -472,20 +427,13 @@ export class CodelabConfigService {
           </div>
         
         `,
-            fileTemplates: [],
-            tests: [],
-            messageNext: `I'm a ready, let's start!`
+
           }, {
             name: 'Service injection',
             description: `
           Let's fetch the videos using a service, instead of having them hardcoded.
         `,
-            solutions: [
-              files.videoService.diInjectServiceSolved,
-              files.appModule.diInjectServiceSolved,
-              files.appComponent.diInjectServiceSolved,
-            ],
-            fileTemplates: [
+            files: [
               files.videoService.diInjectService,
               files.appModule.diInjectService,
               files.appComponent.diInjectService,
@@ -496,8 +444,7 @@ export class CodelabConfigService {
                 files.bootstrap.diInjectService,
               ),
               files.test.diInjectService
-            ],
-            tests: []
+            ]
           }]
         },
         {
@@ -524,9 +471,7 @@ export class CodelabConfigService {
               </div>
             </div>          
         `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `I'm a ready, let's start!`
+              files: []
             },
             /*{
 
@@ -537,7 +482,7 @@ export class CodelabConfigService {
              solutions: [
              files.dataBinding.dataBindingSolved,
              ],
-             fileTemplates: [
+             files: [
              files.dataBinding.dataBinding,
              files.appModule.dataBinding,
              files.bootstrap.dataBinding,
@@ -554,11 +499,7 @@ export class CodelabConfigService {
 
               name: 'Create VideoComponent',
               description: `Create a video component.`,
-              solutions: [
-                files.videoHtml.videoComponentCreateSolved,
-                files.videoComponent.videoComponentCreateSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.videoComponent.videoComponentCreate,
                 files.videoHtml.videoComponentCreate,
                 ...justForReference(
@@ -571,17 +512,12 @@ export class CodelabConfigService {
                   files.bootstrap.videoComponentCreate,
                 ),
                 files.test.videoComponentCreate
-              ],
-              tests: []
+              ]
             },
             {
               name: 'Use VideoComponent',
               description: `Use the VideoComponent in the app.`,
-              solutions: [
-                files.appModule.videoComponentUseSolved,
-                files.appHtml.videoComponentUseSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.appModule.videoComponentUse,
                 files.appHtml.videoComponentUse,
                 ...justForReference(
@@ -594,8 +530,7 @@ export class CodelabConfigService {
                   files.bootstrap.videoComponentUse
                 ),
                 files.test.videoComponentUse
-              ],
-              tests: []
+              ]
             }]
         }, {
           name: 'Custom events',
@@ -622,18 +557,12 @@ export class CodelabConfigService {
               </div>
             </div>          
         `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `I'm a ready, let's start!`
+              files: []
             },
             {
               name: 'Create ThumbsComponent',
               description: `Create ThumbsComponent.`,
-              solutions: [
-                files.thumbsHtml.thumbsComponentCreateSolved,
-                files.thumbsComponent.thumbsComponentCreateSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.thumbsHtml.thumbsComponentCreate,
                 files.thumbsComponent.thumbsComponentCreate,
                 ...justForReference(
@@ -642,25 +571,14 @@ export class CodelabConfigService {
                   files.bootstrap.thumbsComponentCreate,
                 ),
                 files.test.thumbsComponentCreate,
-                ...hidden({
-                    path: 'index.html',
-                    moduleName: 'index',
-                    code: '<my-thumbs></my-thumbs>',
-                    type: 'html'
-                  },
+                ...hidden(newHtmlFile('index', '<my-thumbs></my-thumbs>', '')
                 )
               ],
-              tests: []
             },
             {
               name: 'Use ThumbsComponent',
               description: `Use the 'ThumbsComponent' in the app.`,
-              solutions: [
-                files.appModule.thumbsComponentUseSolved,
-                files.videoHtml.thumbsComponentUseSolved,
-                files.videoComponent.thumbsComponentUseSolved
-              ],
-              fileTemplates: [
+              files: [
                 files.videoHtml.thumbsComponentUse,
                 files.videoComponent.thumbsComponentUse,
                 files.appModule.thumbsComponentUse,
@@ -675,8 +593,7 @@ export class CodelabConfigService {
                   files.bootstrap.thumbsComponentUse,
                 ),
                 files.test.thumbsComponentUse,
-              ],
-              tests: []
+              ]
             }]
         }, {
           name: 'Content projection',
@@ -716,44 +633,28 @@ export class CodelabConfigService {
                 </div>
               </div>
             </div>          
-        `,
-              fileTemplates: [],
-              tests: [],
-              messageNext: `I'm a ready, let's start!`
+        `
             },
             {
               name: 'Add TogglePanelComponent',
               description: `Let's create a component which will use content projection to toggle between description and meta information. `,
-              solutions: [
-                files.togglePanelHtml.togglePanelComponentCreateSolved,
-                files.togglePanelComponent.togglePanelComponentCreateSolved,
-              ],
-              fileTemplates: [
+              files: [
                 files.togglePanelComponent.togglePanelComponentCreate,
                 files.togglePanelHtml.togglePanelComponentCreate,
                 ...justForReference(
                   files.wrapperComponent.togglePanelComponentCreate,
                   files.appModule.togglePanelComponentCreate,
-                  {
-                    path: 'index.html',
-                    code: '<my-wrapper></my-wrapper>',
-                    type: 'html',
-                    moduleName: 'index'
-                  },
+
+                  ...hidden(newHtmlFile('index', '<my-wrapper></my-wrapper>', '')),
                   files.bootstrap.togglePanelComponentCreate,
                 ),
                 files.test.togglePanelComponentCreate
-              ],
-              tests: []
+              ]
             },
             {
               name: 'Use TogglePanelComponent',
               description: `Now let's use the component.`,
-              solutions: [
-                files.appModule.togglePanelComponentUseSolved,
-                files.videoHtml.togglePanelComponentUseSolved
-              ],
-              fileTemplates: [
+              files: [
                 files.appModule.togglePanelComponentUse,
                 files.videoHtml.togglePanelComponentUse,
                 ...justForReference(
@@ -770,8 +671,8 @@ export class CodelabConfigService {
                   files.bootstrap.togglePanelComponentUse,
                 ),
                 files.test.togglePanelComponentUse
-              ],
-              tests: []
+              ]
+
             }]
         },
         {
@@ -810,19 +711,13 @@ export class CodelabConfigService {
               
                    
         `,
-            fileTemplates: [],
-            tests: [],
-            messageNext: `I'm a ready, let's start!`
           },
             {
               name: 'Inject parent component',
               description: `<p>Create a Context(Ad)Component</p>
             <p>which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
             <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`,
-              solutions: [
-                files.contextComponent.contextComponentUseSolved
-              ],
-              fileTemplates: [
+              files: [
                 files.contextComponent.contextComponentUse,
                 {
                   path: 'context/context.html',
@@ -847,8 +742,7 @@ export class CodelabConfigService {
                   files.bootstrap.contextComponentUse
                 ),
                 files.test.contextComponentUse
-              ],
-              tests: []
+              ]
             }]
         },
 
@@ -858,22 +752,14 @@ export class CodelabConfigService {
           exercises: [{
             name: 'Create a pipe',
             description: 'Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.',
-            solutions: [
-              files.fuzzyPipe.fuzzyPipeCreateSolved,
-            ],
-            fileTemplates: [
+            files: [
               evaled(files.fuzzyPipe.fuzzyPipeCreate),
               files.test.fuzzyPipeCreate
-            ],
-            tests: []
+            ]
           }, {
             name: 'Use the pipe',
             description: 'Now include the app in the module and use in the app.',
-            solutions: [
-              files.appModule.fuzzyPipeUseSolved,
-              files.videoHtml.fuzzyPipeUseSolved,
-            ],
-            fileTemplates: [
+            files: [
               files.appModule.fuzzyPipeUse,
               files.videoHtml.fuzzyPipeUse,
               ...justForReference(
@@ -890,17 +776,11 @@ export class CodelabConfigService {
                 files.thumbsHtml.fuzzyPipeUse,
                 files.thumbsComponent.fuzzyPipeUse,
                 files.contextComponent.fuzzyPipeUse,
-                {
-                  path: 'context/context.html',
-                  moduleName: 'context',
-                  code: '{{text}}',
-                  type: 'html'
-                },
+                newHtmlFile('context/context', '{{text}}', ''),
                 files.bootstrap.fuzzyPipeUse
               ),
               files.test.fuzzyPipeUse
-            ],
-            tests: []
+            ]
           }]
         },
         /*
@@ -915,7 +795,7 @@ export class CodelabConfigService {
 
          <p>This milestone is experimental and temporarily uses 'mocha' and 'chai' instead of jasmine.</p>
          `,
-         fileTemplates: [
+         files: [
          Object.assign(testFile(), {hidden: false}),
          tsFile('FuzzyPipe', {readonly: true, path: '7-pipes/0-create-pipe/solution'}),
          testFile(),
@@ -941,9 +821,7 @@ export class CodelabConfigService {
             description: `
         Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>
         (which is different from the feedback form)
-`,
-            fileTemplates: [],
-            tests: []
+`
           }]
         }
       ]
