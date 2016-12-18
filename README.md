@@ -1,8 +1,16 @@
 # Codelab
 This is an codelab platform designed to simplify creating interactive exercises.
 
+This app is intended with Angular v2 and is intended to teach angular v2.
+
 Demo:
 https://ng2ts-c64e3.firebaseapp.com/
+
+## Longer term plans.
+* Adding more content
+* Adding features
+* Generalizing the app
+
 
 ## Starting the server
 This is a temporary hack to allow synchronous loading of the exercises.
