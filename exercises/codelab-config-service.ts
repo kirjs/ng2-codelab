@@ -1,25 +1,8 @@
-import {CodelabConfig, AppConfig} from '../src/app/codelab-config';
+import {CodelabConfig} from '../src/app/codelab-config';
 import {FileConfig} from '../src/app/file-config';
 import {differ} from '../src/app/differ/differ';
 import {ExerciseService} from '../src/app/exercise.service';
 import {Injectable} from '@angular/core';
-
-const test = window.location.hash.includes('test');
-const presentationMode = window.location.hash.includes('present');
-const debug = test || window.location.hash.includes('debug');
-const reset = window.location.hash.includes('reset') || debug;
-
-export const appConfig: AppConfig = {
-  name: 'Codelab',
-  page: 'milestone',
-  user: '',
-  auth: '',
-  feedbackEnabled: false,
-  preserveState: !reset,
-  debug,
-  test,
-  presentationMode
-};
 
 @Injectable()
 export class CodelabConfigService {
@@ -233,7 +216,6 @@ export class CodelabConfigService {
     files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeUseTest.ts`));
 
     this.config = {
-      app: appConfig,
       runId: 0,
       autorun: true,
       name: 'Angular2 codelab',
@@ -243,9 +225,6 @@ export class CodelabConfigService {
       selectedMilestoneIndex: 0,
       milestones: [
         {
-          /**
-           * See the interface.
-           */
           name: 'Intro to TypeScript',
           selectedExerciseIndex: 0,
           exercises: [

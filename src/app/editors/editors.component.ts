@@ -1,8 +1,8 @@
-import {Component, Input, ViewChildren, QueryList} from "@angular/core";
-import {FileConfig} from "../file-config";
-import {StateService} from "../state.service";
-import {EditorComponent} from "../editor/editor.component";
-import {ResizeComponent} from "../resize/resize.component";
+import {Component, Input, ViewChildren, QueryList} from '@angular/core';
+import {FileConfig} from '../file-config';
+import {StateService} from '../state.service';
+import {EditorComponent} from '../editor/editor.component';
+import {AppConfigService} from '../app-config.service';
 
 
 @Component({
@@ -24,18 +24,16 @@ export class EditorsComponent {
 
     // TODO(kirjs): This is needed to update typings in the editor. There should be a better way.
     this.children.forEach(child => {
-        if(change.code!=child.code){
-          // TODO: Find a better way
-          child.ping();
-        }
+      if (change.code != child.code) {
+        // TODO: Find a better way
+        child.ping();
+      }
     });
 
   }
 
-  constructor(private  state: StateService) {
-    state.update.subscribe((config) => {
-      this.debug = config.app.debug;
-    });
+  constructor(private  state: StateService, appConfig: AppConfigService) {
+    this.debug = appConfig.config.debug;
   }
 
   toggleFile(file: FileConfig) {

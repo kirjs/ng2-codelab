@@ -1,4 +1,4 @@
-import {MilestoneConfig} from "./milestone-config";
+import {MilestoneConfig} from './milestone-config';
 export interface AppConfig {
   test: boolean;
   name: string,
@@ -14,7 +14,6 @@ export interface AppConfig {
 export interface CodelabConfig {
   debugTrackTime?: number;
   runId: number;
-  app: AppConfig,
   name: string,
   page: 'milestone'|'feedback',
   selectedMilestoneIndex: number,

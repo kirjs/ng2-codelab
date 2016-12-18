@@ -10,6 +10,7 @@ import {assert} from './utils';
 import {FileConfig} from './file-config';
 import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {testMiddleware} from './middleware/test.middleware';
+import {AppConfigService} from './app-config.service';
 
 
 export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
@@ -20,10 +21,7 @@ export function selectedExercise(state: CodelabConfig): ExerciseConfig {
   return assert(milestone.exercises[milestone.selectedExerciseIndex]);
 }
 
-export function exerciseComplete(exercise: ExerciseConfig) {
-  return exercise.tests && exercise.tests.every(test => test.pass);
-}
-export type Middleware = (CodelabConfig, any)=>CodelabConfig;
+export type Middleware = (CodelabConfig, any) => CodelabConfig;
 
 @Injectable()
 export class StateService {
@@ -37,7 +35,7 @@ export class StateService {
     return this.middleware.reduce((state, middleware) => middleware(state, action), state);
   }
 
-  constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService) {
+  constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService, appConfig: AppConfigService) {
 
     this.dispatch = new BehaviorSubject<Action>({
       type: ActionTypes.IGNORE,
@@ -48,8 +46,8 @@ export class StateService {
       type: ActionTypes.INIT_STATE,
       data: {}
     });
-    this.addMiddleware(testMiddleware(this));
-    this.appConfig = codelabConfig.config.app;
+    this.addMiddleware(testMiddleware(this, appConfig.config));
+    this.appConfig = appConfig.config;
     this.update = this.dispatch
       .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
         try {
@@ -143,10 +141,6 @@ export class StateService {
 
   toggleFile(file: FileConfig) {
     this.dispatchAction(ActionTypes.TOGGLE_FILE, file);
-  }
-
-  loadSolution(file: FileConfig) {
-    this.dispatchAction(ActionTypes.LOAD_SOLUTION, file);
   }
 
   loadSolutions() {

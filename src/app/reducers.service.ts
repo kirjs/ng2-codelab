@@ -7,13 +7,13 @@ import {TestInfo} from './test-info';
 import {Observable} from 'rxjs/Rx';
 import {AngularFire} from 'angularfire2';
 import {MonacoConfigService} from './monaco-config.service';
+import {AppConfigService} from './app-config.service';
 
 @Injectable()
 export class ReducersService {
   [ActionTypes.INIT_STATE](state: CodelabConfig) {
     const localState = JSON.parse(localStorage.getItem('state'));
-    const actualState = (state.app.preserveState && localState) ? localState : state;
-    actualState.app = state.app;
+    const actualState = (this.appConfig.config.preserveState && localState) ? localState : state;
     return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
   }
 
@@ -30,7 +30,7 @@ export class ReducersService {
   [ActionTypes.RUN_CODE](state: CodelabConfig) {
     // Runner watches for changes to runId, and reruns the code on update.
     // This is probably not the most intuitive way to do things.
-    if (state.app.debug) {
+    if (this.appConfig.config.debug) {
       state.debugTrackTime = (new Date()).getTime();
       console.log('RUN START');
     }
@@ -122,7 +122,7 @@ export class ReducersService {
       }
     });
 
-    if (state.app.debug) {
+    if (this.appConfig.config.debug) {
       if (!selectedExercise(state).tests.find(t => t.pass === undefined)) {
         console.log('RUN COMPLETE', (new Date()).getTime() - state.debugTrackTime);
       }
@@ -148,7 +148,7 @@ export class ReducersService {
   }
 
   [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
-    if (state.app.feedbackEnabled) {
+    if (this.appConfig.config.feedbackEnabled) {
       let items = this.angularFire.database.list('/feedback');
       items.push({
         comment: feedback.data.comment,
@@ -194,7 +194,8 @@ export class ReducersService {
   }
 
   constructor(protected angularFire: AngularFire,
-              protected monacoConfig: MonacoConfigService) {
+              protected monacoConfig: MonacoConfigService,
+              protected appConfig: AppConfigService) {
 
   }
 

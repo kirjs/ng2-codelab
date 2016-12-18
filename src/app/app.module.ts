@@ -1,25 +1,26 @@
-import {BrowserModule} from "@angular/platform-browser";
-import {NgModule} from "@angular/core";
-import {FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
-import {AppComponent} from "./app.component";
-import {ExerciseComponent} from "./exercise/exercise.component";
-import {EditorComponent} from "./editor/editor.component";
-import {RunnerComponent} from "./runner/runner.component";
-import {EditorsComponent} from "./editors/editors.component";
-import {CodelabComponent} from "./codelab/codelab.component";
-import {MilestoneComponent} from "./milestone/milestone.component";
-import {StateService} from "./state.service";
-import {AngularFireModule, AuthProviders, AuthMethods, AngularFire} from "angularfire2";
-import {TestsComponent} from "./tests/tests.component";
-import {ReducersService} from "./reducers.service";
-import {FeedbackWidgetComponent} from "./feedback-widget/feedback-widget.component";
-import {FeedbackPageComponent} from "./feedback-page/feedback-page.component";
-import {ExerciseService} from "./exercise.service";
-import {CodelabConfigService, appConfig} from "../../exercises/codelab-config-service";
-import {AutorunComponent} from "./autorun/autorun.component";
-import {MonacoConfigService} from "./monaco-config.service";
-import {ResizeComponent} from "./resize/resize.component";
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {AppComponent} from './app.component';
+import {ExerciseComponent} from './exercise/exercise.component';
+import {EditorComponent} from './editor/editor.component';
+import {RunnerComponent} from './runner/runner.component';
+import {EditorsComponent} from './editors/editors.component';
+import {CodelabComponent} from './codelab/codelab.component';
+import {MilestoneComponent} from './milestone/milestone.component';
+import {StateService} from './state.service';
+import {AngularFireModule, AuthProviders, AuthMethods, AngularFire} from 'angularfire2';
+import {TestsComponent} from './tests/tests.component';
+import {ReducersService} from './reducers.service';
+import {FeedbackWidgetComponent} from './feedback-widget/feedback-widget.component';
+import {FeedbackPageComponent} from './feedback-page/feedback-page.component';
+import {ExerciseService} from './exercise.service';
+import {CodelabConfigService} from '../../exercises/codelab-config-service';
+import {AutorunComponent} from './autorun/autorun.component';
+import {MonacoConfigService} from './monaco-config.service';
+import {ResizeComponent} from './resize/resize.component';
+import {AppConfigService, appConfig} from './app-config.service';
 
 let ngModuleConfig = {
   declarations: [
@@ -46,6 +47,7 @@ let ngModuleConfig = {
     ReducersService,
     ExerciseService,
     CodelabConfigService,
+    AppConfigService,
     MonacoConfigService
   ],
   bootstrap: [AppComponent]
