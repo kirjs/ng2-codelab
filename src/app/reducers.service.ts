@@ -14,7 +14,7 @@ export class ReducersService {
     const localState = JSON.parse(localStorage.getItem('state'));
     const actualState = (state.app.preserveState && localState) ? localState : state;
     actualState.app = state.app;
-    return actualState;
+    return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
   }
 
   [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
@@ -161,7 +161,9 @@ export class ReducersService {
   }
 
   [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
+    console.log('selecting', data);
     state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
+    console.log(state);
     const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
     if (!exerciseConfig.editedFiles) {
 
@@ -184,16 +186,15 @@ export class ReducersService {
         });
     }
 
-    this.monacoConfig.monacoReady.then(() => {
-      this.monacoConfig.createFileModels(exerciseConfig.editedFiles);
-    });
+
+    this.monacoConfig.createFileModels(exerciseConfig.editedFiles);
+
 
     return this[ActionTypes.RUN_CODE](state);
   }
 
   constructor(protected angularFire: AngularFire,
               protected monacoConfig: MonacoConfigService) {
-
   }
 
 

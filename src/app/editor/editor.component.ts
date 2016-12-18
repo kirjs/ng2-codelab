@@ -4,7 +4,7 @@ import 'rxjs/add/operator/debounceTime';
 import {FileConfig} from '../file-config';
 import {Subject} from 'rxjs';
 import {MonacoConfigService} from '../monaco-config.service';
-
+declare const monaco: any;
 declare const require: any;
 
 
@@ -46,27 +46,27 @@ export class EditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.monacoConfigService.monacoReady.then(monaco => {
-      const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
-      this._editor = monaco.editor.create(myDiv,
-        {
-          model: monaco.editor.getModel(this.file.path),
-          scrollBeyondLastLine: false,
-          readOnly: this.file.readonly,
-          tabCompletion: true,
-          wordBasedSuggestions: true,
-          lineNumbersMinChars: 3,
-          automaticLayout: true,
-        });
+    const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
-      this._editor.getModel().onDidChangeContent(() => {
-        this.updateValue(this._editor.getModel().getValue());
+    this._editor = monaco.editor.create(myDiv,
+      {
+        model: monaco.editor.getModel(this.file.path),
+        scrollBeyondLastLine: false,
+        readOnly: this.file.readonly,
+        tabCompletion: true,
+        wordBasedSuggestions: true,
+        lineNumbersMinChars: 3,
+        automaticLayout: true,
       });
 
+    this._editor.getModel().onDidChangeContent(() => {
+      this.updateValue(this._editor.getModel().getValue());
+    });
 
-      this.updateHeight(this.file.code);
-    })
+
+    this.updateHeight(this.file.code);
+
   }
 
   updateHeight(value: string) {

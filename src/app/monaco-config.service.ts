@@ -1,35 +1,26 @@
 import {Injectable} from '@angular/core';
 import {FileConfig} from './file-config';
 
+const monacoLoaderCode = require('raw!../assets/monaco/vs/loader');
+
+const win = window as any;
 declare const monaco;
+
 
 @Injectable()
 export class MonacoConfigService {
-  public monacoReady;
+  public static monacoReady = new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.innerHTML = monacoLoaderCode;
+    document.head.appendChild(script);
 
-  constructor() {
-    this.monacoReady = new Promise((resolve) => {
-      const onGotAmdLoader = () => {
-        (<any>window).require.config({paths: {'vs': 'assets/monaco/vs'}});
-        (<any>window).require(['vs/editor/editor.main'], () => {
-          MonacoConfigService.configureMonaco();
-          resolve(monaco);
-        });
-      };
-
-      // Load AMD loader if necessary
-      if (!(<any>window).require) {
-        const loaderScript = document.createElement('script');
-        loaderScript.type = 'text/javascript';
-        loaderScript.src = 'assets/monaco/vs/loader.js';
-        loaderScript.addEventListener('load', onGotAmdLoader);
-        document.body.appendChild(loaderScript);
-      } else {
-        onGotAmdLoader();
-      }
+    win.require.config({paths: {'vs': 'assets/monaco/vs'}});
+    win.require(['vs/editor/editor.main'], () => {
+      MonacoConfigService.configureMonaco();
+      resolve(monaco);
     });
-
-  }
+  });
 
   static configureMonaco() {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
@@ -107,9 +98,9 @@ export class MonacoConfigService {
     if (models.length) {
       models.forEach(model => model.dispose());
     }
+
     files.map(file => {
       monaco.editor.createModel(file.code, file.type, file.path);
-      debugger
     })
   }
 }
