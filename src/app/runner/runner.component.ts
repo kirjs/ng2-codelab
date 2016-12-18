@@ -205,7 +205,7 @@ export class RunnerComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.state.update
-      .map(e => e.runId)
+      .map(e => e.local.runId)
       .distinctUntilChanged()
       .subscribe(() => {
         this.runCode()

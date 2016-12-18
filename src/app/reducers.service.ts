@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CodelabConfig} from './codelab-config';
+import {AppState} from './codelab-config';
 import {ActionTypes} from './action-types.enum';
 import {selectedMilestone, selectedExercise} from './state.service';
 import {FileConfig} from './file-config';
@@ -11,53 +11,53 @@ import {AppConfigService} from './app-config.service';
 
 @Injectable()
 export class ReducersService {
-  [ActionTypes.INIT_STATE](state: CodelabConfig) {
+  [ActionTypes.INIT_STATE](state: AppState) {
     const localState = JSON.parse(localStorage.getItem('state'));
     const actualState = (this.appConfig.config.preserveState && localState) ? localState : state;
     return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
   }
 
-  [ActionTypes.TOGGLE_AUTORUN](state: CodelabConfig) {
-    state.autorun = !state.autorun;
+  [ActionTypes.TOGGLE_AUTORUN](state: AppState) {
+    state.local.autorun = !state.local.autorun;
     return state;
   }
 
-  [ActionTypes.OPEN_FEEDBACK](state: CodelabConfig) {
-    state.page = 'feedback';
+  [ActionTypes.OPEN_FEEDBACK](state: AppState) {
+    state.local.page = 'feedback';
     return state;
   }
 
-  [ActionTypes.RUN_CODE](state: CodelabConfig) {
+  [ActionTypes.RUN_CODE](state: AppState) {
     // Runner watches for changes to runId, and reruns the code on update.
     // This is probably not the most intuitive way to do things.
     if (this.appConfig.config.debug) {
-      state.debugTrackTime = (new Date()).getTime();
+      state.local.debugTrackTime = (new Date()).getTime();
       console.log('RUN START');
     }
 
-    state.runId++;
+    state.local.runId++;
     return state;
   }
 
-  [ActionTypes.SET_AUTH](state: CodelabConfig, {data}: {data: {}}) {
-    state.auth = data;
+  [ActionTypes.SET_AUTH](state: AppState, {data}: {data: {}}) {
+    state.local.auth = data;
     return state;
   }
 
-  [ActionTypes.SIMULATE_STATE](state: CodelabConfig, {data}: {data: CodelabConfig}) {
-    data.auth = state.auth;
+  [ActionTypes.SIMULATE_STATE](state: AppState, {data}: {data: AppState}) {
+    data.local.auth = state.local.auth;
     return data;
   }
 
-  [ActionTypes.SELECT_MILESTONE](state: CodelabConfig, {data}: {data: number}) {
-    state.page = 'milestone';
-    state.selectedMilestoneIndex = data;
+  [ActionTypes.SELECT_MILESTONE](state: AppState, {data}: {data: number}) {
+    state.local.page = 'milestone';
+    state.codelab.selectedMilestoneIndex = data;
     const nextIndex = selectedMilestone(state).selectedExerciseIndex;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
   }
 
-  [ActionTypes.TOGGLE_FILE](state: CodelabConfig, {data}: {data: FileConfig}) {
-    const milestone = state.milestones[state.selectedMilestoneIndex];
+  [ActionTypes.TOGGLE_FILE](state: AppState, {data}: {data: FileConfig}) {
+    const milestone = state.codelab.milestones[state.codelab.selectedMilestoneIndex];
     let exercise = milestone.exercises[milestone.selectedExerciseIndex];
 
     exercise.editedFiles.forEach((file) => {
@@ -69,10 +69,8 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.LOAD_ALL_SOLUTIONS](state: CodelabConfig) {
-    const milestone = state.milestones[state.selectedMilestoneIndex];
-    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
-
+  [ActionTypes.LOAD_ALL_SOLUTIONS](state: AppState) {
+    const exercise = selectedExercise(state);
     return exercise.editedFiles.reduce((state, file) => {
       if (file.solution) {
         return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution}})
@@ -81,9 +79,8 @@ export class ReducersService {
     }, state);
   }
 
-  [ActionTypes.LOAD_SOLUTION](state: CodelabConfig, {data}: {data: FileConfig}) {
-    const milestone = state.milestones[state.selectedMilestoneIndex];
-    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+  [ActionTypes.LOAD_SOLUTION](state: AppState, {data}: {data: FileConfig}) {
+    const exercise = selectedExercise(state);
 
     exercise.editedFiles = exercise.editedFiles.map((file) => {
       if (file === data) {
@@ -95,9 +92,8 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.UPDATE_CODE](state: CodelabConfig, {data}: {data: {file: FileConfig, code: string}}) {
-    const milestone = state.milestones[state.selectedMilestoneIndex];
-    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+  [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string}}) {
+    const exercise = selectedExercise(state);
 
     exercise.editedFiles.forEach((file) => {
       if (file === data.file) {
@@ -105,16 +101,16 @@ export class ReducersService {
       }
     });
 
-    return state.autorun ? this[ActionTypes.RUN_CODE](state) : state;
+    return state.local.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
-  [ActionTypes.SET_TEST_LIST](state: CodelabConfig, action: {data: Array<string>}) {
+  [ActionTypes.SET_TEST_LIST](state: AppState, action: {data: Array<string>}) {
 
     selectedExercise(state).tests = action.data.map(test => ({title: test}));
     return state;
   }
 
-  [ActionTypes.UPDATE_SINGLE_TEST_RESULT](state: CodelabConfig, action: {data: TestInfo}) {
+  [ActionTypes.UPDATE_SINGLE_TEST_RESULT](state: AppState, action: {data: TestInfo}) {
     selectedExercise(state).tests.forEach(test => {
       if (test.title === action.data.title) {
         test.pass = action.data.pass;
@@ -124,14 +120,14 @@ export class ReducersService {
 
     if (this.appConfig.config.debug) {
       if (!selectedExercise(state).tests.find(t => t.pass === undefined)) {
-        console.log('RUN COMPLETE', (new Date()).getTime() - state.debugTrackTime);
+        console.log('RUN COMPLETE', (new Date()).getTime() - state.local.debugTrackTime);
       }
     }
 
     return state;
   }
 
-  [ActionTypes.NEXT_EXERCISE](state: CodelabConfig) {
+  [ActionTypes.NEXT_EXERCISE](state: AppState) {
     let milestone = selectedMilestone(state);
     let nextIndex = milestone.selectedExerciseIndex + 1;
     // Check if we still have exercises left in the milestone.
@@ -139,15 +135,15 @@ export class ReducersService {
       return this[ActionTypes.SELECT_EXERCISE](state, {data: nextIndex});
     } else {
       // Looks like we're at the end of the milestone, let's move on to the next one!
-      let nextMilestoneIndex = state.selectedMilestoneIndex + 1;
-      if (state.milestones.length > nextMilestoneIndex) {
+      let nextMilestoneIndex = state.codelab.selectedMilestoneIndex + 1;
+      if (state.codelab.milestones.length > nextMilestoneIndex) {
         return this[ActionTypes.SELECT_MILESTONE](state, {data: nextMilestoneIndex});
       }
     }
     return state;
   }
 
-  [ActionTypes.SEND_FEEDBACK](state: CodelabConfig, feedback) {
+  [ActionTypes.SEND_FEEDBACK](state: AppState, feedback) {
     if (this.appConfig.config.feedbackEnabled) {
       let items = this.angularFire.database.list('/feedback');
       items.push({
@@ -155,16 +151,14 @@ export class ReducersService {
         state: JSON.parse(JSON.stringify(state)),
         name: feedback.data.username
       });
-      state.user = feedback.data.username;
+      state.local.user = feedback.data.username;
     }
     return state;
   }
 
-  [ActionTypes.SELECT_EXERCISE](state: CodelabConfig, {data}: {data: number}): CodelabConfig | Observable<CodelabConfig> {
-    console.log('selecting', data);
-    state.milestones[state.selectedMilestoneIndex].selectedExerciseIndex = data;
-    console.log(state);
-    const exerciseConfig = state.milestones[state.selectedMilestoneIndex].exercises[data];
+  [ActionTypes.SELECT_EXERCISE](state: AppState, {data}: {data: number}): AppState | Observable<AppState> {
+    state.codelab.milestones[state.codelab.selectedMilestoneIndex].selectedExerciseIndex = data;
+    const exerciseConfig = state.codelab.milestones[state.codelab.selectedMilestoneIndex].exercises[data];
     if (!exerciseConfig.editedFiles) {
 
 

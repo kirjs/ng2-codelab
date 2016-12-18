@@ -11,7 +11,7 @@ export class AutorunComponent {
 
   constructor(private state: StateService) {
     state.update.subscribe((config) => {
-      this.autorun = config.autorun;
+      this.autorun = config.local.autorun;
     });
   }
 

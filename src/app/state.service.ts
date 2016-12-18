@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
-import {CodelabConfig, AppConfig} from './codelab-config';
+import {AppState, AppConfig} from './codelab-config';
 import {Action} from './action';
 import {ActionTypes} from './action-types.enum';
 import {ExerciseConfig} from './exercise-config';
@@ -13,19 +13,19 @@ import {testMiddleware} from './middleware/test.middleware';
 import {AppConfigService} from './app-config.service';
 
 
-export function selectedMilestone(state: CodelabConfig): MilestoneConfig {
-  return assert(state.milestones[state.selectedMilestoneIndex]);
+export function selectedMilestone(state: AppState): MilestoneConfig {
+  return assert(state.codelab.milestones[state.codelab.selectedMilestoneIndex]);
 }
-export function selectedExercise(state: CodelabConfig): ExerciseConfig {
+export function selectedExercise(state: AppState): ExerciseConfig {
   const milestone = selectedMilestone(state);
   return assert(milestone.exercises[milestone.selectedExerciseIndex]);
 }
 
-export type Middleware = (CodelabConfig, any) => CodelabConfig;
+export type Middleware = (CodelabConfig, any) => AppState;
 
 @Injectable()
 export class StateService {
-  public readonly update: Observable<CodelabConfig>;
+  public readonly update: Observable<AppState>;
   private readonly dispatch: BehaviorSubject<Action>;
   public appConfig: AppConfig;
 
@@ -49,7 +49,7 @@ export class StateService {
     this.addMiddleware(testMiddleware(this, appConfig.config));
     this.appConfig = appConfig.config;
     this.update = this.dispatch
-      .mergeScan<CodelabConfig>((state: CodelabConfig, action: Action): any => {
+      .mergeScan<AppState>((state: AppState, action: Action): any => {
         try {
           if (reducers[action.type]) {
             const result = this.applyMiddleware(reducers[action.type](state, action), action);
@@ -63,8 +63,18 @@ export class StateService {
           debugger
         }
         return this.applyMiddleware(state, action);
-      }, codelabConfig.config)
-      .map((state: CodelabConfig) => {
+      }, {
+        codelab: codelabConfig.config,
+        local: {
+          runId: 0,
+          page: 'milestone',
+          autorun: true,
+          user: '',
+          auth: {}
+        },
+        config: appConfig.config
+      })
+      .map((state: AppState) => {
         localStorage.setItem('state', JSON.stringify(state));
         return state;
       })
@@ -74,6 +84,7 @@ export class StateService {
     this.update.subscribe(() => {
       //console.log('next');
     }, (error) => {
+      console.log(error);
       debugger
     });
 
@@ -105,10 +116,6 @@ export class StateService {
 
   toggleAutorun() {
     this.dispatchAction(ActionTypes.TOGGLE_AUTORUN);
-  }
-
-  openFeedback() {
-    this.dispatchAction(ActionTypes.OPEN_FEEDBACK);
   }
 
   setAuth(auth) {

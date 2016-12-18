@@ -1,4 +1,4 @@
-import {CodelabConfig, AppConfig} from '../codelab-config';
+import {AppState, AppConfig} from '../codelab-config';
 import {ActionTypes} from '../action-types.enum';
 import {selectedExercise, StateService} from '../state.service';
 
@@ -13,7 +13,7 @@ export function testMiddleware(stateService: StateService, appConfig: AppConfig)
   let testMode: TestMode = TestMode.BROKEN;
   let lastExercise = null;
 
-  return function test(state: CodelabConfig, action) {
+  return function test(state: AppState, action) {
     if (appConfig.test) {
       if (ActionTypes.INIT_STATE === action.type) {
         stateService.nextExercise();

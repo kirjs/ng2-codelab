@@ -1,4 +1,4 @@
-import {CodelabConfig} from '../src/app/codelab-config';
+import {CodelabState} from '../src/app/codelab-config';
 import {FileConfig} from '../src/app/file-config';
 import {differ} from '../src/app/differ/differ';
 import {ExerciseService} from '../src/app/exercise.service';
@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CodelabConfigService {
-  public config: CodelabConfig;
+  public config: CodelabState;
 
   constructor(public exerciseService: ExerciseService) {
     function testFile(path = 'Test.ts', code?) {
@@ -216,12 +216,7 @@ export class CodelabConfigService {
     files.test.fuzzyPipeUse = testFile('fuzzyPipeUse/Test', exerciseService.getExercise(`ng2ts/tests/fuzzyPipeUseTest.ts`));
 
     this.config = {
-      runId: 0,
-      autorun: true,
       name: 'Angular2 codelab',
-      user: '',
-      auth: {},
-      page: 'milestone',
       selectedMilestoneIndex: 0,
       milestones: [
         {

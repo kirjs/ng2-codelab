@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {MilestoneConfig} from "../milestone-config";
-import {CodelabConfig} from "../codelab-config";
-import {StateService} from "../state.service";
+import {Component, OnInit} from '@angular/core';
+import {MilestoneConfig} from '../milestone-config';
+import {AppState} from '../codelab-config';
+import {StateService} from '../state.service';
 
 @Component({
   selector: 'app-codelab',
@@ -9,11 +9,10 @@ import {StateService} from "../state.service";
   styleUrls: ['./codelab.component.css']
 })
 export class CodelabComponent implements OnInit {
-  config: CodelabConfig;
+  config: AppState;
   public collapsePanel = true;
   milestone: MilestoneConfig;
   section: 'milestone';
-  feedbackList = [];
 
   constructor(public state: StateService) {
     state.update.subscribe((config) => {
@@ -22,6 +21,6 @@ export class CodelabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.milestone = this.config.milestones[0];
+    this.milestone = this.config.codelab.milestones[0];
   }
 }

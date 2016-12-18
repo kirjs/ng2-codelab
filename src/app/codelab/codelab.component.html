@@ -5,8 +5,8 @@
         {{collapsePanel ? '▶': '◀'}}
       </div>
       <div
-        class="milestone {{config.selectedMilestoneIndex === i ?'selected':''}}"
-        *ngFor="let item of config.milestones; let i = index;"
+        class="milestone {{config.codelab.selectedMilestoneIndex === i ?'selected':''}}"
+        *ngFor="let item of config.codelab.milestones; let i = index;"
         (click)="state.selectMilestone(i)"
       >
         <div class="index">{{i + 1}}</div>
@@ -19,10 +19,10 @@
     </div>
 
 
-    <div class="codelab-milestone" *ngIf="config.page === 'milestone'">
-      <app-milestone [config]="config.milestones[config.selectedMilestoneIndex]" [name]="config.name"></app-milestone>
+    <div class="codelab-milestone" *ngIf="config.local.page === 'milestone'">
+      <app-milestone [config]="config.codelab.milestones[config.codelab.selectedMilestoneIndex]" [name]="config.codelab.name"></app-milestone>
     </div>
-    <div class="codelab-milestone" *ngIf="config.page === 'feedback'">
+    <div class="codelab-milestone" *ngIf="config.local.page === 'feedback'">
       <app-feedback-page></app-feedback-page>
     </div>
 
