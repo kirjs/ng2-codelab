@@ -1,7 +1,7 @@
 export interface FileConfig {
   collapsed?: boolean;
   /**
-   * Only .ts is supported ATM.
+   * typescript or html.
    */
     type?: string;
 
@@ -34,7 +34,7 @@ export interface FileConfig {
   /**
    * Actual filename.
    */
-  filename: string;
+  path: string;
 
   /**
    * If this is true; the file will be included in the preview iframe.
@@ -60,9 +60,4 @@ export interface FileConfig {
    * If this is true; the file will be hidden.
    */
   hidden?: boolean;
-
-  /**
-   * Sometimes we want to reuse files from different exercises.
-   */
-  path?: string;
 }

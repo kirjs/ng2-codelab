@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {StateService} from "../state.service";
+import {Component, OnInit} from '@angular/core';
+import {StateService} from '../state.service';
 
 @Component({
   selector: 'app-feedback-widget',
@@ -15,7 +15,7 @@ export class FeedbackWidgetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.state.update.subscribe(state => this.username = state.user);
+    this.state.update.subscribe(state => this.username = state.local.user);
   }
 
   send() {
@@ -26,5 +26,4 @@ export class FeedbackWidgetComponent implements OnInit {
       this.comment = '';
     }
   }
-
 }

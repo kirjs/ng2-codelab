@@ -1,7 +1,7 @@
-import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from "@angular/core";
-import * as ts from "typescript";
-import {FileConfig} from "../file-config";
-import {StateService} from "../state.service";
+import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
+import * as ts from 'typescript';
+import {FileConfig} from '../file-config';
+import {StateService} from '../state.service';
 
 let cachedIframes = {};
 
@@ -33,7 +33,7 @@ function createIframe(config: IframeConfig) {
   iframe.setAttribute('frameBorder', '0');
   iframe.setAttribute('src', config.url);
   iframe.setAttribute('class', config.id);
-  iframe.setAttribute('style', 'width: 600px; height: 100%');
+  iframe.setAttribute('style', 'width: 500px; height: 100%');
   return iframe;
 }
 
@@ -61,10 +61,11 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
       const setHtml = (html) => {
         iframe.contentDocument.body.innerHTML = html;
       };
-      const displayError = (error, location) => {
+      const displayError = (error, info) => {
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
-        setHtml(`Check out your browser console to see the full error!
+        setHtml(`
+            <div style = "border-top: 1px #888 dotted; padding-top: 4px; margin-top: 4px">Check out your browser console to see the full error!</div>
             <pre>${escaped}</pre>`);
       };
 
@@ -89,17 +90,18 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
                   if (!file.moduleName) {
                     debugger
                   }
-                  exports(file.moduleName + 'Code', file.code);
+
+                  exports(file.path.replace(/[\/\.-]/gi, '_'), file.code);
                 });
               }
             }
           });
 
-          files.filter(file => file.filename.indexOf('index.html') >= 0).map((file => {
+          files.filter(file => file.path.indexOf('index.html') >= 0).map((file => {
             setHtml(file.code)
           }));
 
-          files.filter(file => file.type === 'ts').map((file) => {
+          files.filter(file => file.type === 'typescript').map((file) => {
             // Update module names
             let code = file.code;
 
@@ -122,16 +124,17 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
                 experimentalDecorators: true,
                 emitDecoratorMetadata: true,
                 noImplicitAny: true,
+                declaration: true,
                 // TODO: figure out why this doesn't work
-                // inlineSourceMap: true,
-                // sourceMap: true
+                inlineSourceMap: true,
+                inlineSources: true,
+                sourceMap: true
               },
               fileName: moduleName,
               moduleName: moduleName,
               reportDiagnostics: true
             });
           }).map((compiled) => {
-
             runJs(compiled.outputText);
           });
 
@@ -146,9 +149,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
   });
 }
 
-export interface RunnerConfig {
-  html: String
-}
+
 @Component({
   selector: 'app-runner',
   templateUrl: './runner.component.html',
@@ -204,7 +205,7 @@ export class RunnerComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.state.update
-      .map(e => e.runId)
+      .map(e => e.local.runId)
       .distinctUntilChanged()
       .subscribe(() => {
         this.runCode()

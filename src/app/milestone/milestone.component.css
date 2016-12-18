@@ -28,7 +28,7 @@ h1 {
 }
 
 .exercise.codelab-title {
-  background: #f90;
+  background: #5ccb5d;
   color: #fff;
   font-weight: 400;
   font-size: 20px;
@@ -47,11 +47,13 @@ h1 {
   background-color: #dddddd;
   cursor: pointer;
   margin-right: 4px;
+  white-space: nowrap;
 }
 
 app-exercise {
-  padding: 8px;
   display: block;
+  height: 100%;
+  padding: 8px;
 }
 
 .header {

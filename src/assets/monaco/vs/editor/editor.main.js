@@ -5163,7 +5163,7 @@ define(__m[488/*vs/base/common/scorer*/], __M([1/*require*/,0/*exports*/]), func
 });
 /*!
 END THIRD PARTY
-*/ 
+*/
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -7605,16 +7605,16 @@ define(__m[14/*vs/base/common/event*/], __M([1/*require*/,0/*exports*/,3/*vs/bas
      * to fire it from the insides.
      * Sample:
         class Document {
-    
+
             private _onDidChange = new Emitter<(value:string)=>any>();
-    
+
             public onDidChange = this._onDidChange.event;
-    
+
             // getter-style
             // get onDidChange(): Event<(value:string)=>any> {
             // 	return this._onDidChange.event;
             // }
-    
+
             private _doIt() {
                 //...
                 this._onDidChange.fire(value);
@@ -15319,7 +15319,7 @@ define(__m[432/*vs/base/browser/ui/scrollbar/verticalScrollbar*/], __M([1/*requi
                 canUseTranslate3d: options.canUseTranslate3d,
                 lazyRender: options.lazyRender,
                 host: host,
-                scrollbarState: new scrollbarState_1.ScrollbarState((options.verticalHasArrows ? options.arrowSize : 0), (options.vertical === scrollable_1.ScrollbarVisibility.Hidden ? 0 : options.verticalScrollbarSize), 
+                scrollbarState: new scrollbarState_1.ScrollbarState((options.verticalHasArrows ? options.arrowSize : 0), (options.vertical === scrollable_1.ScrollbarVisibility.Hidden ? 0 : options.verticalScrollbarSize),
                 // give priority to vertical scroll bar over horizontal and let it scroll all the way to the bottom
                 0),
                 visibility: options.vertical,
@@ -15445,7 +15445,7 @@ define(__m[70/*vs/base/common/network*/], __M([1/*require*/,0/*exports*/,5/*vs/b
                     p(req);
                 }
             };
-            req.open(options.type || 'GET', options.url, 
+            req.open(options.type || 'GET', options.url,
             // Promise based XHR does not support sync.
             //
             true, options.user, options.password);
@@ -23625,7 +23625,7 @@ define(__m[199/*vs/editor/common/commands/trimTrailingWhitespaceCommand*/], __M(
                 cursors.splice(i, 1);
             }
         }
-        var r = [], cursorIndex = 0, cursorLen = cursors.length, lineNumber, lineCount, lineContent, minEditColumn, maxLineColumn, fromColumn, 
+        var r = [], cursorIndex = 0, cursorLen = cursors.length, lineNumber, lineCount, lineContent, minEditColumn, maxLineColumn, fromColumn,
         // toColumn:number,
         lastNonWhitespaceIndex;
         for (lineNumber = 1, lineCount = model.getLineCount(); lineNumber <= lineCount; lineNumber++) {
@@ -26810,7 +26810,7 @@ define(__m[184/*vs/editor/common/modes/linkComputer*/], __M([1/*require*/,0/*exp
         };
         return StateMachine;
     }());
-    // State machine for http:// or https:// or file://
+    // LocalState machine for http:// or https:// or file://
     var stateMachine = new StateMachine([
         [1 /* Start */, 104 /* h */, 2 /* H */],
         [1 /* Start */, 72 /* H */, 2 /* H */],
@@ -29877,7 +29877,7 @@ define(__m[99/*vs/editor/common/viewLayout/viewLineRenderer*/], __M([1/*require*
         var renderControlCharacters = input.renderControlCharacters;
         var charBreakIndex = (input.stopRenderingLineAfter === -1 ? lineTextLength : input.stopRenderingLineAfter - 1);
         if (lineTextLength === 0) {
-            return new RenderLineOutput([], 0, 
+            return new RenderLineOutput([], 0,
             // This is basically for IE's hit test to work
             '<span><span>&nbsp;</span></span>');
         }
@@ -32951,7 +32951,7 @@ define(__m[144/*vs/editor/contrib/diffNavigator/common/diffNavigator*/], __M([1/
             }
         };
         DiffNavigator.prototype.move = function (fwd) {
-            assert.ok(!this.disposed, 'Illegal State - diff navigator has been disposed');
+            assert.ok(!this.disposed, 'Illegal LocalState - diff navigator has been disposed');
             if (!this.canNavigate()) {
                 return;
             }
@@ -43052,7 +43052,7 @@ define(__m[334/*vs/editor/browser/controller/mouseTarget*/], __M([1/*require*/,0
             };
         };
         MouseTargetFactory.prototype._doHitTest = function (e, mouseVerticalOffset) {
-            // State of the art (18.10.2012):
+            // LocalState of the art (18.10.2012):
             // The spec says browsers should support document.caretPositionFromPoint, but nobody implemented it (http://dev.w3.org/csswg/cssom-view/)
             // Gecko:
             //    - they tried to implement it once, but failed: https://bugzilla.mozilla.org/show_bug.cgi?id=654352

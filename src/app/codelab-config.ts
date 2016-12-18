@@ -1,21 +1,32 @@
-import {MilestoneConfig} from "./milestone-config";
+import {MilestoneConfig} from './milestone-config';
 export interface AppConfig {
+  test: boolean;
   name: string,
   page: string,
   user: string,
   auth: string,
   feedbackEnabled: boolean,
-  preserveState: boolean
+  preserveState: boolean,
+  debug: boolean,
+  presentationMode: boolean
 }
 
-export interface CodelabConfig {
+export interface AppState {
+  codelab: CodelabState,
+  config: AppConfig,
+  local: LocalState
+}
+export interface LocalState {
+  debugTrackTime?: number;
   runId: number;
-  app: AppConfig,
-  name: string,
   page: 'milestone'|'feedback',
-  selectedMilestoneIndex: number,
-  autorun:boolean,
-  milestones: Array<MilestoneConfig>,
+  autorun: boolean,
   user: string,
   auth: {}
+}
+
+export interface CodelabState {
+  name: string,
+  selectedMilestoneIndex: number,
+  milestones: Array<MilestoneConfig>
 }
