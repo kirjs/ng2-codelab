@@ -47,6 +47,9 @@ export interface FileConfig {
    */
   bootstrap?: boolean;
 
+
+  excludeFromTesting?: boolean,
+
   /**
    * if this is true; the file will be displayed in read only mode.
    */

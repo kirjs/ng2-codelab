@@ -5,24 +5,24 @@ import {Guest} from './Guest';
 const guests = [
   {
     coming: true,
-    name: 'Sir Isaac Newton'
+    name: `Sir Isaac Newton`
   },
   {
     coming: true,
-    name: 'Marie Curie'
+    name: `Marie Curie`
   },
   {
     coming: true,
-    name: 'Albert Einstein'
+    name: `Albert Einstein`
   },
   {
     coming: false,
-    name: 'Charles Darwin'
+    name: `Charles Darwin`
   }];
 
 const codelab = new Codelab(guests);
 
 // Angular2 is so much better than this:
 document.body.innerHTML = '<ul>' +
-  codelab.getGuestsComing().map((guest:Guest) => `<li>${guest.name}</li>`).join('') +
+  codelab.getGuestsComing().map((guest: Guest) => `<li>${guest.name}</li>`).join('') +
   '</ul>';

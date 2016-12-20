@@ -88,10 +88,6 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
               setters: [],
               execute: function () {
                 files.forEach((file) => {
-                  if (!file.moduleName) {
-                    debugger
-                  }
-
                   exports(file.path.replace(/[\/\.-]/gi, '_'), file.code);
                 });
               }
