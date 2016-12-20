@@ -1,3 +1,4 @@
+declare const polyglot: {t: (s)=>any};
 import {Codelab} from './Codelab';
 import {Guest} from './Guest';
 
@@ -5,19 +6,19 @@ import {Guest} from './Guest';
 const guests = [
   {
     coming: true,
-    name: `Sir Isaac Newton`
+    name: polyglot.t(`Sir Isaac Newton`)
   },
   {
     coming: true,
-    name: `Marie Curie`
+    name: polyglot.t(`Marie Curie`)
   },
   {
     coming: true,
-    name: `Albert Einstein`
+    name: polyglot.t(`Albert Einstein`)
   },
   {
     coming: false,
-    name: `Charles Darwin`
+    name: polyglot.t(`Charles Darwin`)
   }];
 
 const codelab = new Codelab(guests);

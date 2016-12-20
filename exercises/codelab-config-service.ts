@@ -3,6 +3,10 @@ import {FileConfig} from '../src/app/file-config';
 import {differ} from '../src/app/differ/differ';
 import {Injectable} from '@angular/core';
 import {ng2tsConfig} from './ng2ts/ng2ts';
+
+import {i18n} from '../src/gen/i18n';
+
+
 declare const require;
 
 // This should be done using require.context.
@@ -50,12 +54,15 @@ const preloadedFiles = {
   'index.html': '<my-thumbs></my-thumbs><my-wrapper></my-wrapper>'
 };
 
+
+
+
 function getFileByPath(path) {
   if (!preloadedFiles[path]) {
     throw new Error('Incorrect path');
   }
 
-  return preloadedFiles[path];
+  return i18n(path, preloadedFiles[path]);
 }
 
 @Injectable()
@@ -100,7 +107,6 @@ export class CodelabConfigService {
 `
       });
     }
-
 
     function getFile(path: string, stages: string[], stage: string, bootstrap: boolean, overrides): FileConfig {
       const type = path.substr(path.lastIndexOf('.') + 1);

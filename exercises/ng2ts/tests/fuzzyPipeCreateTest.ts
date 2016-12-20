@@ -1,3 +1,4 @@
+declare const polyglot: {t: (s)=>any};
 import {FuzzyPipe, evalJs} from '../fuzzy-pipe/fuzzy.pipe';
 import 'reflect-metadata';
 
@@ -16,23 +17,23 @@ const formattedDate = d.toISOString().slice(0, 10);
 
 
 describe('Pipe', () => {
-  it('Create a class called FuzzyPipe', () => {
+  it(polyglot.t(`Create a class called FuzzyPipe`), () => {
     chai.expect(typeof evalJs('FuzzyPipe')).equals('function');
   });
 
-  it('Export it', () => {
+  it(polyglot.t(`Export it`), () => {
     chai.expect(typeof FuzzyPipe).equals('function');
   });
 
-  it('Add a @Pipe() decorator', () => {
+  it(polyglot.t(`Add a @Pipe() decorator`), () => {
     chai.expect(metadata).is.an('array')
   });
 
-  it('Set the name to fuzzy', () => {
+  it(polyglot.t(`Set the name to fuzzy`), () => {
     chai.expect(metadata[0].name).equals('fuzzy');
   });
 
-  it(`Make it return '2 days ago for '${formattedDate}'`, () => {
+  it(polyglot.t(`Make it return '2 days ago for '${formattedDate}'`), () => {
     let fuzzyTime = new FuzzyPipe();
     chai.expect(fuzzyTime.transform(d.toISOString().slice(0, 10)).toLowerCase()).equals('2 days');
   });
