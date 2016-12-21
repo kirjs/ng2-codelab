@@ -1,8 +1,14 @@
-declare const polyglot: {t: (s)=>any};
+declare const polyglot: {t: (s) => any};
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {AppComponent} from '../app.component';
-import {app_html, video_video_html, toggle_panel_toggle_panel_html, context_context_html, thumbs_thumbs_html} from '../code';
+import {
+  app_html,
+  video_video_html,
+  toggle_panel_toggle_panel_html,
+  context_context_html,
+  thumbs_thumbs_html
+} from '../code';
 import {AppModule} from '../app.module';
 import {VideoComponent} from '../video/video.component';
 import {VideoService} from '../video/video.service';
@@ -13,12 +19,6 @@ import {Api} from '../api.service';
 import {FuzzyPipe} from '../fuzzy-pipe/fuzzy.pipe';
 import {ThumbsComponent} from '../thumbs/thumbs.component';
 
-function objectValues(object) {
-  return Object.keys(object).reduce((result, key) => {
-    result.push(object[key]);
-    return result;
-  }, []);
-}
 const sampleVideo = Api.fetch('')[0];
 
 beforeEach(() => {
@@ -39,7 +39,8 @@ function sampleFuzzy(value) {
   let dateNow = new Date();
   let millisecondsDifference = dateNow.getTime() - date.getTime();
   let differenceDays = Math.floor(millisecondsDifference / (1000 * 3600 * 24));
-  return differenceDays + ' days';
+
+  return differenceDays + ' ' + polyglot.t('days');
 }
 
 describe('Pipes', () => {

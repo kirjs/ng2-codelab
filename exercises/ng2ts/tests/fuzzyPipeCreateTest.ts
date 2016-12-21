@@ -1,4 +1,4 @@
-declare const polyglot: {t: (s)=>any};
+declare const polyglot: {t: (s) => any};
 import {FuzzyPipe, evalJs} from '../fuzzy-pipe/fuzzy.pipe';
 import 'reflect-metadata';
 
@@ -35,7 +35,7 @@ describe('Pipe', () => {
 
   it(polyglot.t(`Make it return '2 days ago for '${formattedDate}'`), () => {
     let fuzzyTime = new FuzzyPipe();
-    chai.expect(fuzzyTime.transform(d.toISOString().slice(0, 10)).toLowerCase()).equals('2 days');
+    chai.expect(fuzzyTime.transform(d.toISOString().slice(0, 10)).toLowerCase()).equals('2 ' + polyglot.t('days'));
   });
 });
 

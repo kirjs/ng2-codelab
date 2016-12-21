@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 export function i18n(filename: string, code: string) {
-  if (filename != 'tests/codelabTest.ts') {
+  if (!filename.includes('.ts')) {
     return code;
   }
   const replacements = [];
@@ -16,7 +16,7 @@ export function i18n(filename: string, code: string) {
       replacements.push({
         end: node.getEnd(),
         start: node.getStart(source),
-        text: '`[translated]` + ' + source.text.substring(node.getStart(source) + 11,node.getEnd()-1)
+        text: '`[translated]` + ' + source.text.substring(node.getStart(source) + 11, node.getEnd() - 1)
       });
     }
 
@@ -26,7 +26,7 @@ export function i18n(filename: string, code: string) {
   extractThings(source);
 
   const replacementsReversed = replacements.reverse();
-  for (const { start, end, text } of replacementsReversed) {
+  for (const {start, end, text} of replacementsReversed) {
     code = code.slice(0, start) + text + code.slice(end)
   }
 
