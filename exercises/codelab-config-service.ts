@@ -3,66 +3,16 @@ import {FileConfig} from '../src/app/file-config';
 import {differ} from '../src/app/differ/differ';
 import {Injectable} from '@angular/core';
 import {ng2tsConfig} from './ng2ts/ng2ts';
-
-import {i18n} from '../src/gen/i18n';
-
+import {i18n} from '../src/i18n/i18n';
 
 declare const require;
 
-// This should be done using require.context.
-const preloadedFiles = {
-  'app.component.ts': require(`!raw!./ng2ts/app.component.ts`),
-  'app.module.ts': require('!raw!./ng2ts/app.module.ts'),
-  'app.html': require('!raw!./ng2ts/app.html'),
-  'main.ts': require('!raw!./ng2ts/main.ts'),
-  'video/video-item.ts': require('!raw!./ng2ts/video/video-item.ts'),
-  'api.service.ts': require('!raw!./ng2ts/api.service.ts'),
-  'video/video.service.ts': require('!raw!./ng2ts/video/video.service.ts'),
-  'video/video.html': require('!raw!./ng2ts/video/video.html'),
-  'video/video.component.ts': require('!raw!./ng2ts/video/video.component.ts'),
-  'thumbs/thumbs.component.ts': require('!raw!./ng2ts/thumbs/thumbs.component.ts'),
-  'thumbs/thumbs.html': require('!raw!./ng2ts/thumbs/thumbs.html'),
-  'toggle-panel/toggle-panel.html': require('!raw!./ng2ts/toggle-panel/toggle-panel.html'),
-  'toggle-panel/toggle-panel.component.ts': require('!raw!./ng2ts/toggle-panel/toggle-panel.component.ts'),
-  'wrapper.component.ts': require('!raw!./ng2ts/wrapper.component.ts'),
-  'context/context.component.ts': require('!raw!./ng2ts/context/context.component.ts'),
-  'context/context.service.ts': require('!raw!./ng2ts/context/context.service.ts'),
-  'context/context.html': require('!raw!./ng2ts/context/context.html'),
-  'typescript-intro/Codelab.ts': require('!raw!./ng2ts/typescript-intro/Codelab.ts'),
-  'typescript-intro/Main.ts': require('!raw!./ng2ts/typescript-intro/Main.ts'),
-  'typescript-intro/Guest.ts': require('!raw!./ng2ts/typescript-intro/Guest.ts'),
-  'fuzzy-pipe/fuzzy.pipe.ts': require('!raw!./ng2ts/fuzzy-pipe/fuzzy.pipe.ts'),
-  'tests/codelabTest.ts': require('!raw!./ng2ts/tests/codelabTest.ts'),
-  'tests/createComponentTest.ts': require('!raw!./ng2ts/tests/createComponentTest.ts'),
-  'tests/createModuleTest.ts': require('!raw!./ng2ts/tests/createModuleTest.ts'),
-  'tests/bootstrapTest.ts': require('!raw!./ng2ts/tests/bootstrapTest.ts'),
-  'tests/templatePageSetupTest.ts': require('!raw!./ng2ts/tests/templatePageSetupTest.ts'),
-  'tests/templateAddActionTest.ts': require('!raw!./ng2ts/tests/templateAddActionTest.ts'),
-  'tests/templateAllVideosTest.ts': require('!raw!./ng2ts/tests/templateAllVideosTest.ts'),
-  'tests/diInjectServiceTest.ts': require('!raw!./ng2ts/tests/diInjectServiceTest.ts'),
-  'tests/videoComponentCreateTest.ts': require('!raw!./ng2ts/tests/videoComponentCreateTest.ts'),
-  'tests/videoComponentUseTest.ts': require('!raw!./ng2ts/tests/videoComponentUseTest.ts'),
-  'tests/ThumbsComponentCreateTest.ts': require('!raw!./ng2ts/tests/ThumbsComponentCreateTest.ts'),
-  'tests/ThumbsComponentUseTest.ts': require('!raw!./ng2ts/tests/ThumbsComponentUseTest.ts'),
-  'tests/togglePanelComponentCreateTest.ts': require('!raw!./ng2ts/tests/togglePanelComponentCreateTest.ts'),
-  'tests/togglePanelComponentUseTest.ts': require('!raw!./ng2ts/tests/togglePanelComponentUseTest.ts'),
-  'tests/contextComponentUseTest.ts': require('!raw!./ng2ts/tests/contextComponentUseTest.ts'),
-  'tests/fuzzyPipeCreateTest.ts': require('!raw!./ng2ts/tests/fuzzyPipeCreateTest.ts'),
-  'tests/fuzzyPipeUseTest.ts': require('!raw!./ng2ts/tests/fuzzyPipeUseTest.ts'),
-  'thumbs.app.module.ts': require('!raw!./ng2ts/thumbs.app.module.ts'),
-  'toggle-panel.app.module.ts': require('!raw!./ng2ts/toggle-panel.app.module.ts'),
-  'index.html': '<my-thumbs></my-thumbs><my-wrapper></my-wrapper>'
-};
-
-
-
-
 function getFileByPath(path) {
-  if (!preloadedFiles[path]) {
+  if (!ng2tsConfig.preloadedFiles[path]) {
     throw new Error('Incorrect path');
   }
 
-  return i18n(path, preloadedFiles[path]);
+  return i18n(path, ng2tsConfig.preloadedFiles[path]);
 }
 
 @Injectable()
