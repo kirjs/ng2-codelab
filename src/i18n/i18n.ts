@@ -1,10 +1,8 @@
 import * as ts from 'typescript';
 
 export function extractMessages(filename: string, code: string) {
-  console.log('--');
   const source = ts.createSourceFile(filename, code, ts.ScriptTarget.ES5);
-  return extractMessagesFromSourceFile(source).map(message=>message.text);
-
+  return extractMessagesFromSourceFile(source).map(message => message.text);
 }
 
 function extractMessagesFromSourceFile(source: ts.SourceFile) {
