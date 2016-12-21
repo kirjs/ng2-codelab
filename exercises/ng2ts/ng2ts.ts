@@ -1,4 +1,3 @@
-
 //  TODO: This should be done using require.context
 const preloadedFiles = {
   'app.component.ts': require(`!raw!./app.component.ts`),
