@@ -3,6 +3,14 @@ import { StateService } from "./state.service";
 import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2';
 import {appConfig} from './app-config.service';
 
+const getSimulateId = (urlHash) => {
+  let hashParts = urlHash.split('&');
+  let simulateIdParameter = hashParts.find(x => x.includes('simulate_id'));
+  if(simulateIdParameter){
+   return simulateIdParameter.replace('#simulate_id=',''); 
+  }
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +23,10 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    if(getSimulateId(window.location.hash)){
+      let feedbackId = getSimulateId(window.location.hash);
+      //TODO: write code to get the state of given feedback and simulate it.
+    }
     if(appConfig.feedbackEnabled){
         this.user_progresses = this.angularFire.database.list('/user_progress');
         this.auth = { uid: '' };
