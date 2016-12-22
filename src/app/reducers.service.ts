@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Rx';
 import {AngularFire} from 'angularfire2';
 import {MonacoConfigService} from './monaco-config.service';
 import {AppConfigService} from './app-config.service';
+import {ExerciseConfig} from './exercise-config';
 
 @Injectable()
 export class ReducersService {
@@ -58,9 +59,10 @@ export class ReducersService {
 
   [ActionTypes.TOGGLE_FILE](state: AppState, {data}: {data: FileConfig}) {
     const milestone = state.codelab.milestones[state.codelab.selectedMilestoneIndex];
-    let exercise = milestone.exercises[milestone.selectedExerciseIndex];
+    let exercise = milestone.exercises[milestone.selectedExerciseIndex] as ExerciseConfig;
 
-    exercise.editedFiles.forEach((file) => {
+
+    exercise.files.forEach((file) => {
       if (file === data) {
         file.collapsed = !file.collapsed;
       }
@@ -70,9 +72,11 @@ export class ReducersService {
   }
 
   [ActionTypes.LOAD_ALL_SOLUTIONS](state: AppState) {
-    const exercise = selectedExercise(state);
-    return exercise.editedFiles.reduce((state, file) => {
+
+    const exercise = selectedExercise(state) as ExerciseConfig;
+    return exercise.files.reduce((state, file) => {
       if (file.solution) {
+
         return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution}})
       }
       return state;
@@ -80,9 +84,9 @@ export class ReducersService {
   }
 
   [ActionTypes.LOAD_SOLUTION](state: AppState, {data}: {data: FileConfig}) {
-    const exercise = selectedExercise(state);
+    const exercise = selectedExercise(state) as ExerciseConfig;
 
-    exercise.editedFiles = exercise.editedFiles.map((file) => {
+    exercise.files = exercise.files.map((file) => {
       if (file === data) {
         file = Object.assign(file, {code: file.solution});
       }
@@ -93,9 +97,9 @@ export class ReducersService {
   }
 
   [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string}}) {
-    const exercise = selectedExercise(state);
+    const exercise = selectedExercise(state) as ExerciseConfig;
 
-    exercise.editedFiles.forEach((file) => {
+    exercise.files.forEach((file) => {
       if (file === data.file) {
         file.code = data.code;
       }
@@ -157,32 +161,14 @@ export class ReducersService {
   }
 
   [ActionTypes.SELECT_EXERCISE](state: AppState, {data}: {data: number}): AppState | Observable<AppState> {
-    state.codelab.milestones[state.codelab.selectedMilestoneIndex].selectedExerciseIndex = data;
-    const exerciseConfig = state.codelab.milestones[state.codelab.selectedMilestoneIndex].exercises[data];
-    if (!exerciseConfig.editedFiles) {
+    const milestone = selectedMilestone(state);
+    milestone.selectedExerciseIndex = data;
+    const exercise = selectedExercise(state);
 
-
-      exerciseConfig.editedFiles = exerciseConfig
-        .fileTemplates
-        .map((file: FileConfig) => {
-          if (!file) {
-            console.log(exerciseConfig.fileTemplates);
-            debugger
-          }
-          if (exerciseConfig.solutions) {
-            const solution = exerciseConfig.solutions.find(f => f.path === file.path);
-            if (solution) {
-              file.solution = solution.code;
-            }
-          }
-
-          return Object.assign({}, file);
-        });
+    if (exercise.files) {
+      exercise.files.forEach(file => file.code = file.template);
+      this.monacoConfig.createFileModels(exercise.files);
     }
-
-
-    this.monacoConfig.createFileModels(exerciseConfig.editedFiles);
-
 
     return this[ActionTypes.RUN_CODE](state);
   }

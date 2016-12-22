@@ -1,3 +1,4 @@
+declare const polyglot: {t: (s)=>any};
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {AppComponent} from '../app.component';
@@ -47,22 +48,22 @@ beforeEach(() => {
 });
 
 describe('Children', () => {
-  it(`ContextComponent: Inject the ContextService into the constructor and store it as a property.`, () => {
+  it(polyglot.t(`ContextComponent: Inject the ContextService into the constructor and store it as a property.`), () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(objectHasAn(fixture.componentInstance, ContextService)).to.be.true;
   });
 
-  it(`ContextComponent: Inject the parent component (VideoComponent) into the constructor and store it as a property.`, () => {
+  it(polyglot.t(`ContextComponent: Inject the parent component (VideoComponent) into the constructor and store it as a property.`), () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(objectHasAn(fixture.componentInstance, VideoComponent)).to.be.true;
   });
 
-  it(`ContextComponent: Add an ngOnInit method to the component. (It's a special method angular will call when the component is created).`, () => {
+  it(polyglot.t(`ContextComponent: Add an ngOnInit method to the component. (It's a special method angular will call when the component is created).`), () => {
     const fixture = TestBed.createComponent(ContextComponent);
     chai.expect(fixture.componentInstance.ngOnInit).is.a('function');
   });
 
-  it(`ContextComponent: In the onOnInit method Call 'getAdText' on the service, and pass it the video 'description' provided by the injected video component. Assign the result to the declared text property.`, () => {
+  it(polyglot.t(`ContextComponent: In the onOnInit method Call 'getAdText' on the service, and pass it the video 'description' provided by the injected video component. Assign the result to the declared text property.`), () => {
     const fixture = TestBed.createComponent(ContextComponent);
     let componentInstance = fixture.componentInstance;
 
@@ -83,7 +84,7 @@ describe('Children', () => {
     chai.expect(fixture.nativeElement.innerHTML).to.contain('Check out our web site');
   });
 
-  it(`AppModule: Add the ContextComponent to the AppModule declarations (We did this for you).`, () => {
+  it(polyglot.t(`AppModule: Add the ContextComponent to the AppModule declarations (We did this for you).`), () => {
     let metadata;
     try {
       metadata = Reflect.getMetadata('annotations', AppModule);
@@ -93,7 +94,7 @@ describe('Children', () => {
     chai.expect(metadata[0].declarations, `Video component not found`).contains(ContextComponent);
   });
 
-  it(`video.html: Actually display the ad (We actually also did it for you).`, () => {
+  it(polyglot.t(`video.html: Actually display the ad (We actually also did it for you).`), () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     // TODO: Actually write a test

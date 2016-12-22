@@ -10,6 +10,7 @@ export interface FileConfig {
    */
   code?: string;
 
+  template: string,
   /**
    * Source code of the file.
    */
@@ -45,6 +46,9 @@ export interface FileConfig {
    * If this is true
    */
   bootstrap?: boolean;
+
+
+  excludeFromTesting?: boolean,
 
   /**
    * if this is true; the file will be displayed in read only mode.

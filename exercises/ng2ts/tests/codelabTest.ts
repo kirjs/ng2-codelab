@@ -1,3 +1,4 @@
+declare const polyglot: {t: (s)=>any};
 /**
  * This is a good sample sample of a codelab exercise.
  *
@@ -27,7 +28,7 @@ const guests = [
 ];
 
 describe('Component', () => {
-  it(`Create a class called 'Codelab'`, () => {
+  it(polyglot.t(`Create a class called 'Codelab'`), () => {
     /**
      * We can use evalJs to get into the scope of the user's file.
      * Currently evalJs has to be manually added to the `before`
@@ -42,36 +43,36 @@ describe('Component', () => {
     chai.expect(typeof evalJs('Codelab')).equals('function');
   });
 
-  it(`Export the class`, () => {
+  it(polyglot.t(`Export the class`), () => {
     /**
      * Require the class, assert it's a function (compile target is es5).
      */
     chai.expect(typeof Codelab).equals('function');
   });
 
-  it('Add a constructor', () => {
+  it(polyglot.t('Add a constructor'), () => {
     /**
      * Fancy: Require the actual source code, and search in it.
      */
-    chai.expect(code.typescript_intro_Codelab_ts.indexOf('constructor') > -1, `The codelab class doesn't have constuctor`).is.true;
+    chai.expect(code.typescript_intro_Codelab_ts.indexOf('constructor') > -1, polyglot.t(`The codelab class doesn't have constuctor`)).is.true;
   });
 
-  it(`Make constructor take a parameter 'guests'`, () => {
-    chai.expect(Codelab.length, `Codelab constructor should take one parameter called 'guests'`).equals(1);
+  it(polyglot.t(`Make constructor take a parameter 'guests'`), () => {
+    chai.expect(Codelab.length, polyglot.t(`Codelab constructor should take one parameter called 'guests'`)).equals(1);
   });
 
-  it('This parameter should be public', () => {
+  it(polyglot.t('This parameter should be public'), () => {
     const codelab = new Codelab(guests);
     chai.expect(codelab.guests).equals(guests);
   });
 
-  it(`Create new method 'getGuestsComing'`, () => {
+  it(polyglot.t(`Create new method 'getGuestsComing'`), () => {
     chai.expect(typeof (new Codelab(guests).getGuestsComing)).equals('function');
   });
 
-  it(`Modify getGuestsComing to filter the guests array and only return guests with the 'coming' property set to true. 
+  it(polyglot.t(`Modify getGuestsComing to filter the guests array and only return guests with the 'coming' property set to true. 
   (hint: please use Array.filter method, and NOT a for loop. Ask us for help if you don't know how to
-   (There's potential of getting into an infinite loop otherwise)`, () => {
+   (There's potential of getting into an infinite loop otherwise)`), () => {
     chai.expect(new Codelab(guests).getGuestsComing().length).equals(1);
   });
 

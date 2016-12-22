@@ -2,15 +2,15 @@ import {VideoItem} from './video/video-item';
 
 let FAKE_VIDEOS = [
   {
-    title: 'Cute kitten',
+    title: `Cute kitten`,
     src: '/assets/images/cat-0.png',
-    description: 'todo',
+    description: `todo`,
     views: 100,
     likes: 49329,
     date: '2016-11-25'
   },
   {
-    title: 'Kitten on the tree',
+    title: `Kitten on the tree`,
     src: '/assets/images/cat-1.jpg',
     description: 'todo',
     views: 100,

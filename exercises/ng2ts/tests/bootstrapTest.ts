@@ -1,5 +1,6 @@
+declare const polyglot: {t: (s)=>any};
 describe('Component', () => {
-  xit(`There is actually no simple way to test it, just make sure it looks nice :)`, () => {
+  xit(polyglot.t(`There is actually no simple way to test it, just make sure it looks nice :)`), () => {
 
   });
 });

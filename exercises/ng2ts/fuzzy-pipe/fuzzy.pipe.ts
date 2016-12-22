@@ -11,9 +11,9 @@ export class FuzzyPipe implements PipeTransform {
     let differenceYears = Math.floor(differenceDays / 365);
 
     if (differenceDays < 365) {
-      return differenceDays + ' days';
+      return differenceDays + ' ' + polyglot.t('days');
     }
-    return differenceYears + ' years ago';
+    return differenceYears + ' ' + polyglot.t('years ago');
   }
 }
 /*/d*//*d:neverShow*/

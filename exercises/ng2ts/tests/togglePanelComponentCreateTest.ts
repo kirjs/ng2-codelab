@@ -1,3 +1,4 @@
+declare const polyglot: {t: (s)=>any};
 import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import 'initTestBed';
@@ -21,10 +22,10 @@ beforeEach(() => {
 });
 
 describe('Content projection', () => {
-  it(`TogglePanelComponent.ts: We added the template and the selector for you, enjoy!`, () => {
+  it(polyglot.t(`TogglePanelComponent.ts: We added the template and the selector for you, enjoy!`), () => {
   });
 
-  it(`TogglePanelComponent.ts: Add a boolean property to the component. The property can have any name, and must have a default value.`, () => {
+  it(polyglot.t(`TogglePanelComponent.ts: Add a boolean property to the component. The property can have any name, and must have a default value.`), () => {
     let fixture = TestBed.createComponent(TogglePanelComponent);
     // the intent is to let them come up with the property name, so we assume there will be one.
     const props = Object.keys(fixture.componentInstance);
@@ -36,21 +37,21 @@ describe('Content projection', () => {
     chai.expect(fixture.componentInstance[prop], `Property '${prop}' must have a default value`).is.not.undefined;
   });
 
-  it(`togglePanel.html: Use content projection to only display the content with the selector .description by default.`, () => {
+  it(polyglot.t(`togglePanel.html: Use content projection to only display the content with the selector .description by default.`), () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     chai.expect(fixture.debugElement.query(By.css('.description')), `Description should be displayed`).not.null;
     chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be hidden`).is.null;
   });
 
-  it(`togglePanel.html: Add a button to show extra information`, () => {
+  it(polyglot.t(`togglePanel.html: Add a button to show extra information`), () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     let buttons = fixture.nativeElement.querySelectorAll('button');
     chai.expect(buttons.length, `Should show exactly one button`).to.equals(1);
   });
 
-  it(`togglePanel.html: When the button is pressed, switch the flag and only display the content with the '.extra' selector.`, () => {
+  it(polyglot.t(`togglePanel.html: When the button is pressed, switch the flag and only display the content with the '.extra' selector.`), () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     let button = fixture.nativeElement.querySelector('button');
@@ -60,7 +61,7 @@ describe('Content projection', () => {
     chai.expect(fixture.debugElement.query(By.css('.extra')), `Extra information should be displayed`).not.null;
   });
 
-  it(`togglePanel.html: Add a button to come back to the description`, () => {
+  it(polyglot.t(`togglePanel.html: Add a button to come back to the description`), () => {
     let fixture = TestBed.createComponent(WrapperComponent);
     fixture.detectChanges();
     fixture.nativeElement.querySelector('button').click();
