@@ -175,7 +175,7 @@ export interface ExerciseConfigTemplate {
   name: string,
   skipTests?: boolean,
   description: string,
-  stage: stage,
+  stage: string,
   files: {
     exercise?: string[]
     reference?: string[]
@@ -191,7 +191,7 @@ export interface MilestoneConfigTemplate {
 }
 
 export const ng2tsConfig: CodelabConfigTemplate = {
-  name: 'Angular2 codelab',
+  name: 'Angular2 Codelab',
   files,
   preloadedFiles,
   overrides: {
@@ -215,7 +215,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         `)
         },
         {
-          name: polyglot.t(`Typescript`),
+          name: polyglot.t(`TypeScript`),
           stage: `codelab`,
           description: polyglot.t(`
           <p>We created a TypeScript file for you, now let's add our first TS class

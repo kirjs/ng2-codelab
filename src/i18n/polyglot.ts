@@ -1,7 +1,5 @@
 const Polyglot = require('node-polyglot');
-const ru =  require("!json!../../exercises/ng2ts/i18n/ru.json");
+const zh = require("!json!../../exercises/ng2ts/i18n/zh.json");
 const polyglot = new Polyglot();
-
-polyglot.extend(ru);
-
+polyglot.extend(zh);
 export {polyglot};
