@@ -87,8 +87,10 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             return {
               setters: [],
               execute: function () {
+                exports('ts', ts);
                 files.forEach((file) => {
                   exports(file.path.replace(/[\/\.-]/gi, '_'), file.code);
+                  exports(file.path.replace(/[\/\.-]/gi, '_') + '_AST', ts.createSourceFile(file.path, file.code, ts.ScriptTarget.ES5));
                 });
               }
             }

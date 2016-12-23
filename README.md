@@ -1,14 +1,15 @@
 # Codelab
 This is an codelab platform designed to simplify creating interactive exercises.
 
-This app is created with Angular v2 and is intended to teach angular v2.
+This app is created with Angular v2 and is intended to teach [Angular v2](https://angular.io).
 
 Demo:
 https://ng2ts-c64e3.firebaseapp.com/
 
 # Other languages
 This codelab has been translated in other languages:
-Chinese: [查看此readme文档的中文版](https://github.com/kirjs/ng2-codelab/blob/master/translations/zh/README.md) translated by 杨春华、[胡可](https://github.com/KevinHu-1024) and [章小飞](https://github.com/damoqiongqiu)!
+
+Chinese: [查看此readme文档的中文版](https://github.com/kirjs/ng2-codelab/blob/master/translations/zh/README.md) translated by [杨春华](https://github.com/jsrj78)、[胡可](https://github.com/KevinHu-1024) and [章小飞](https://github.com/damoqiongqiu)!
 
 
 ## Longer term plans.
