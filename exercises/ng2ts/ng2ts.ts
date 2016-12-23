@@ -647,7 +647,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Inject parent component`),
           description: polyglot.t(`<p>Create a Context(Ad)Component</p>
-            <p>which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
+            <p>Which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
             <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`),
           stage: `contextComponentUse`,
           files: {
@@ -719,10 +719,11 @@ export const ng2tsConfig: CodelabConfigTemplate = {
       exercises: [{
         slide: true,
         name: polyglot.t(`All done!`),
-        description: polyglot.t(`
-        Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>
-        (which is different from the feedback form)
-        `)
+        description: `
+        <h1>${polyglot.t('Thanks for completing the codelab!')}</h1>
+        <p>${polyglot.t('Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>')}
+        <p>${polyglot.t('This codelab is written in Angular 2! <a href = "https://github.com/kirjs/ng2-codelab">Check out the code at this git repo</a>')}
+        `
       }]
     }
   ]
