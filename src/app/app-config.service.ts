@@ -12,7 +12,7 @@ export const appConfig: AppConfig = {
   page: 'milestone',
   user: '',
   auth: '',
-  feedbackEnabled: false,
+  feedbackEnabled: true,
   preserveState: !reset,
   debug,
   test,
