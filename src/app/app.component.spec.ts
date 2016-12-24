@@ -2,7 +2,7 @@
 import {TestBed, async} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
 import {mockStateServiceProvider} from "../mocks/stateService";
-import {AngularFire} from "angularfire2";
+
 
 describe('App: Codelab', () => {
   beforeEach(() => {
@@ -10,8 +10,7 @@ describe('App: Codelab', () => {
       declarations: [
         AppComponent
       ],
-      providers: [mockStateServiceProvider({}),
-        {provide: AngularFire, useValue: {}}]
+      providers: [mockStateServiceProvider({})]
     }).overrideComponent(
       AppComponent, {set: {template: 'hi'}});
   });

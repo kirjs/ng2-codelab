@@ -5,6 +5,8 @@ const polyglot = new Polyglot();
 if (environment.language === 'zh') {
   zh = require("!json!../../exercises/ng2ts/i18n/zh.json");
   polyglot.extend(zh);
+} else {
+  polyglot.extend(require("!json!../../exercises/ng2ts/i18n/en.json"));
 }
 
 

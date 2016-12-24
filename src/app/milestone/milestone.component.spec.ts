@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {MilestoneComponent} from "./milestone.component";
+import {StateService} from '../state.service';
 
 describe('MilestoneComponent', () => {
   let component: MilestoneComponent;
@@ -8,7 +9,9 @@ describe('MilestoneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MilestoneComponent]
+      declarations: [MilestoneComponent],
+      providers: [{provide: StateService, use: {}}]
+
     })
       .overrideComponent(MilestoneComponent, {set: {template: 'hi'}})
       .compileComponents();

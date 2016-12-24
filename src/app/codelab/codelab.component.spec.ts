@@ -1,8 +1,8 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {CodelabComponent} from "./codelab.component";
-import {StateService} from "../state.service";
-import {MockStateService} from "../../mocks/stateService";
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CodelabComponent} from './codelab.component';
+import {StateService} from '../state.service';
+import {MockStateService} from '../../mocks/stateService';
 
 describe('CodelabComponent', () => {
   let component: CodelabComponent;
@@ -15,7 +15,7 @@ describe('CodelabComponent', () => {
       declarations: [CodelabComponent],
       providers: [{
         provide: StateService, useValue: new MockStateService({
-          milestones: [milestone0]
+          codelab: {milestones: [milestone0]}
         })
       }]
     })
