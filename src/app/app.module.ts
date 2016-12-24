@@ -10,7 +10,7 @@ import {EditorsComponent} from './editors/editors.component';
 import {CodelabComponent} from './codelab/codelab.component';
 import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from './state.service';
-import {AngularFireModule, AuthProviders, AuthMethods, AngularFire} from 'angularfire2';
+//import {AngularFireModule, AuthProviders, AuthMethods, AngularFire} from 'angularfire2';
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from './reducers.service';
 import {FeedbackWidgetComponent} from './feedback-widget/feedback-widget.component';
@@ -53,6 +53,7 @@ let ngModuleConfig = {
 
 // We use firebase for the feedback. If it's disabled, we should do no extra network requests.
 if (appConfig.feedbackEnabled) {
+  /*
   const firebaseConfig = {
     apiKey: "AIzaSyBDg_JEXDrn7iuvGR-xrcU1bmjWc-uxmgA",
     authDomain: "ng2-codelab.firebaseapp.com",
@@ -65,9 +66,10 @@ if (appConfig.feedbackEnabled) {
   };
 
   ngModuleConfig.imports.push(AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig) as any)
+  */
 } else {
   @NgModule({
-    providers: [{provide: AngularFire, useValue: {}}]
+    //providers: [{provide: AngularFire, useValue: {}}]
   })
   class FakeAngularFileModule {
   }

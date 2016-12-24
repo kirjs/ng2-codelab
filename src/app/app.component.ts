@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {StateService} from "./state.service";
-import {AngularFire} from "angularfire2";
+//import {AngularFire} from "angularfire2";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent {
   remoteStateLoaded = false;
   auth = {uid: ''};
 
-  constructor(private state: StateService, private angularFire: AngularFire) {
+  constructor(private state: StateService) {
 
     /*
      this.state.update.debounceTime(500).subscribe((state) => {
