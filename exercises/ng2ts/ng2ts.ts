@@ -191,7 +191,7 @@ export interface MilestoneConfigTemplate {
 }
 
 export const ng2tsConfig: CodelabConfigTemplate = {
-  name: 'Angular2 Codelab',
+  name: 'Angular 101 Codelab (beta)',
   files,
   preloadedFiles,
   overrides: {
@@ -206,25 +206,27 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Welcome to the Angular and TypeScript CodeLab!</h1>
-          <p>In this codelab we're going to learn the basics of TypeScript and Angular.</p>
-          <p>We're using Angular version 2.1.0</p>
-          <p>The slides for the codelab are available using
-          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a>.</p>                 
-        `)
+          description: `
+          <h1>${polyglot.t('Angular/TypeScript CodeLab!')}</h1>
+          <p>${polyglot.t(`In this codelab we're going to learn the basics of TypeScript and Angular.`)}</p>
+          <p>${polyglot.t(`This is a beta version of the codelab with limited access, please don't share it publically (yet).`)}</p>
+          <p>${polyglot.t(`This codelab is very new and only covers the basics of Angular. Please leave your feedback (in the end) and come back for more advanced exercises later.`)}</p>
+          <p>${polyglot.t(`We're using Angular version 2.3.0`)}</p>
+          <p>${polyglot.t(`The slides for the codelab are available using
+          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a>.`)}</p>                 
+        `
         },
         {
           name: polyglot.t(`TypeScript`),
           stage: `codelab`,
-          description: polyglot.t(`
-          <p>We created a TypeScript file for you, now let's add our first TS class
-           called Codelab.</p>
-          
-          <p>It will take a list of guests, and will have a 'getGuestsComing' method, which will only return people who're coming.</p> 
-          <p>As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans, 
-          so only 3 people should be returned.</p>            
-        `),
+          description: `
+          <p>${polyglot.t(`We created a TypeScript file for you, now let's add our first TS class
+           called Codelab.`)}</p>
+
+          <p>${polyglot.t(`It will take a list of guests, and will have a 'getGuestsComing' method, which will only return people who're coming.`)}</p>
+          <p>${polyglot.t(`As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans,
+          so only 3 people should be returned.`)}</p>
+        `,
           files: {
             exercise: [
               files.typescript_intro_Codelab_ts,
@@ -246,28 +248,27 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Let's build our first Angular app!</h1>
-          <p>This is how it will look:</p>
+          description: `
+          <h1>${polyglot.t(`Let's build our first Angular app!`)}</h1>
+          <p>${polyglot.t(`This is how it will look:`)}</p>
 
           <div class = "inBrowser">
             <div class="smaller">
               <h1>Hello CatTube!</h1>
             </div>
           </div>
-          <p>3 simple steps: </p>
+          <p>${polyglot.t(`3 simple steps:`)}</p>
           <ol>
-            <li>Create a Component</li>
-            <li>Create a NgModule</li>
-            <li>Bootstrap the NgModule</li>
+            <li>${polyglot.t(`Create a Component`)}</li>
+            <li>${polyglot.t(`Create a NgModule`)}</li>
+            <li>${polyglot.t(`Bootstrap the NgModule`)}</li>
           </ol>
-        `)
+        `
         },
         {
           name: polyglot.t(`Create a component`),
           stage: `createComponent`,
-          description: polyglot.t(`
-            <p>Let's create our first component!</p>`),
+          description: `<p>${polyglot.t(`Let's create our first component!`)}</p>`,
           files: {
             exercise: [files.appComponent],
             reference: [files.appModule, files.main],
@@ -291,9 +292,9 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Bootstrap the module`),
           skipTests: true,
           stage: `bootstrap`,
-          description: polyglot.t(`
-          <p>Now we got both NgModule and component ready, let's bootstrap the app!</p>
-          <p>There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'</p>`),
+          description: `
+          <p>${polyglot.t(`Now we got both NgModule and component ready, let's bootstrap the app!`)}</p>
+          <p>${polyglot.t(`There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'`)}</p>`,
           files: {
             exercise: [files.main],
             reference: [files.appComponent, files.appModule],
@@ -345,10 +346,13 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           }
         }, {
           name: polyglot.t(`Add some action`),
-          description: polyglot.t(`Let's do two things here:
+          description: `
+              <p>${polyglot.t(`Let's do two things here:`)}</p>
               <ul>
-              <li>Add a search method to the AppComponent</li>
-              <li>Display a message when there are no videos.</li>`),
+                 <li>${polyglot.t(`Add a search method to the AppComponent`)}</li>
+                 <li>${polyglot.t(`Display a message when there are no videos.`)}</li>
+               </ul>
+            `,
           stage: `templateAddAction`,
           files: {
             exercise: [files.appComponent, files.appHtml],
@@ -724,7 +728,8 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         <h1>${polyglot.t('This is it for now!')}</h1>
         <p>${polyglot.t(`This codelab is really new. We're working on adding more advanced and fun exercises. `)}
         <p>${polyglot.t('Meanwhile please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>. This would help us to improve!')}
-        <p>${polyglot.t('This codelab is written in Angular 2! <a href = "https://github.com/kirjs/ng2-codelab">Check out the code at this git repo</a>')}
+        <p>${polyglot.t('This codelab is written in Angular! <a href = "https://github.com/kirjs/ng2-codelab">Check out the code at this git repo</a>')}
+        <p>${polyglot.t('If you want to learn more about angular check out <a href = "https://angular.io/">angular.io</a>')}
         `
       }]
     }
