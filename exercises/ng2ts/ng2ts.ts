@@ -607,76 +607,77 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           }
         }]
     },
+    /*
+     {
+     name: polyglot.t(`Parent-container`),
+     exercises: [{
+     name: polyglot.t(`Intro`),
+     slide: true,
+     description: polyglot.t(`
+     <h1>Let's inject parent component!</h1>
+     <p>In this milestone we'll create create a ContextAdComponent. </p>
+     <p>This component will not use inputs. Instead it will require parent (Video) component and directly look at it's properties. </p>
+     <p>It will display different text depending of if there's a word 'music' in the description. </p>
+
+     <div class = "inBrowser">
+     <div class="smaller">
+     <div>
+     <h2>Cute kitten dancing</h2>
+     <img  src="/assets/images/cat-0.png">
+     <div>Decription: music</div>
+     <button>Show meta</button>
+     <button>Thumbs Up</button> <button>Thumbs Down</button>
+     <div>Context ad: Turn up your speakers</div>
+     </div>
+     <div>
+     <h2>Cute kitten sleeping</h2>
+     <img  src="/assets/images/cat-0.png">
+     <div>Decription: sleeping</div>
+     <button>Show meta</button>
+     <button>Thumbs Up</button> <button>Thumbs Down</button>
+     <div>Context ad: Check out our web site.</div>
+     </div>
+     </div>
+     </div>
+
+     <p>Note, we are actually calling it ContextComponent, because when it was called ContextAdComponent, adblock blocked it, and I spent 2 hours debugging. </p>
+
+
+     `),
+     },
+     {
+     name: polyglot.t(`Inject parent component`),
+     description: polyglot.t(`<p>Create a Context(Ad)Component</p>
+     <p>Which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
+     <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`),
+     stage: `contextComponentUse`,
+     files: {
+     exercise: [files.contextComponent, files.context_context_html],
+     reference: [
+
+     files.contextService,
+     files.video_video_html,
+     files.appModule,
+     files.video_video_component,
+     files.toggle_panel_toggle_panel,
+     files.toggle_panel_toggle_panel_html,
+     files.thumbs_thumbs_component,
+     files.thumbs_thumbs_html,
+     files.appHtml,
+     files.appComponent,
+     files.video_videoService,
+     files.video_videoItem,
+     files.apiService,
+     files.main
+     ],
+     test: [files.test],
+     bootstrap: [files.main]
+     },
+     }]
+     },
+     */
     {
-      name: polyglot.t(`Parent-container`),
-      exercises: [{
-        name: polyglot.t(`Intro`),
-        slide: true,
-        description: polyglot.t(`
-          <h1>Let's inject parent component!</h1>
-          <p>In this milestone we'll create create a ContextAdComponent. </p>
-          <p>This component will not use inputs. Instead it will require parent (Video) component and directly look at it's properties. </p>
-          <p>It will display different text depending of if there's a word 'music' in the description. </p>
-
-            <div class = "inBrowser">
-              <div class="smaller">
-                <div>
-                  <h2>Cute kitten dancing</h2>
-                  <img  src="/assets/images/cat-0.png">
-                  <div>Decription: music</div>
-                  <button>Show meta</button>
-                  <button>Thumbs Up</button> <button>Thumbs Down</button>
-                  <div>Context ad: Turn up your speakers</div>
-                </div>
-                <div>
-                  <h2>Cute kitten sleeping</h2>
-                  <img  src="/assets/images/cat-0.png">
-                  <div>Decription: sleeping</div>
-                  <button>Show meta</button>
-                  <button>Thumbs Up</button> <button>Thumbs Down</button>
-                  <div>Context ad: Check out our web site.</div>
-                </div>
-              </div>
-            </div>
-
-             <p>Note, we are actually calling it ContextComponent, because when it was called ContextAdComponent, adblock blocked it, and I spent 2 hours debugging. </p>
-
-
-        `),
-      },
-        {
-          name: polyglot.t(`Inject parent component`),
-          description: polyglot.t(`<p>Create a Context(Ad)Component</p>
-            <p>Which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
-            <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`),
-          stage: `contextComponentUse`,
-          files: {
-            exercise: [files.contextComponent, files.context_context_html],
-            reference: [
-
-              files.contextService,
-              files.video_video_html,
-              files.appModule,
-              files.video_video_component,
-              files.toggle_panel_toggle_panel,
-              files.toggle_panel_toggle_panel_html,
-              files.thumbs_thumbs_component,
-              files.thumbs_thumbs_html,
-              files.appHtml,
-              files.appComponent,
-              files.video_videoService,
-              files.video_videoItem,
-              files.apiService,
-              files.main
-            ],
-            test: [files.test],
-            bootstrap: [files.main]
-          },
-        }]
-    },
-
-    {
-      name: polyglot.t(`Pipes`),
+      name: polyglot.t(`Pipes (bonus)`),
       exercises: [{
         name: polyglot.t(`Create a pipe`),
         description: polyglot.t(`Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.`),
@@ -720,8 +721,9 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         slide: true,
         name: polyglot.t(`All done!`),
         description: `
-        <h1>${polyglot.t('Thanks for completing the codelab!')}</h1>
-        <p>${polyglot.t('Please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>')}
+        <h1>${polyglot.t('This is it for now!')}</h1>
+        <p>${polyglot.t(`This codelab is really new. We're working on adding more advanced and fun exercises. `)}
+        <p>${polyglot.t('Meanwhile please fill out <a href = "https://docs.google.com/forms/d/1lGPvmCftArLXVuJkO6L7sXZiqIDj-DtiPM0MQJXLJTA/edit">The survey</a>. This would help us to improve!')}
         <p>${polyglot.t('This codelab is written in Angular 2! <a href = "https://github.com/kirjs/ng2-codelab">Check out the code at this git repo</a>')}
         `
       }]

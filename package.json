@@ -44,6 +44,8 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "monaco": "^1.201612240510.0",
+    "monaco-editor": "^0.7.0",
     "node-polyglot": "^2.2.1",
     "node-ts": "^2.1.2",
     "protractor": "~4.0.13",

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FileConfig} from './file-config';
 
-const monacoLoaderCode = require('raw!../assets/monaco/vs/loader');
+const monacoLoaderCode = require('raw!../assets/monaco/min/vs/loader');
 
 const win = window as any;
 declare const monaco;
@@ -15,7 +15,8 @@ export class MonacoConfigService {
     script.innerHTML = monacoLoaderCode;
     document.head.appendChild(script);
 
-    win.require.config({paths: {'vs': 'assets/monaco/vs'}});
+    win.require.config({paths: {'vs': 'assets/monaco/min/vs'}});
+
     win.require(['vs/editor/editor.main'], () => {
       MonacoConfigService.configureMonaco();
       resolve(monaco);
