@@ -310,33 +310,33 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Let's explore Angular templates!</h1>
-          <p>As a result we'll see our cats displayed.</p>
+          description: `
+          <h1>${polyglot.t(`Exploring Angular templates!`)}</h1>
+          <p>${polyglot.t(`As a result we'll see our cats displayed.`)}</p>
 
           <div class = "inBrowser">
             <div class="smaller">
               <my-app><div>
-                <h1>CatTube</h1>
-                <button>Search!</button>
+                <h1>${polyglot.t(`CatTube`)}</h1>
+                <button>${polyglot.t(`Search!`)}</button>
                 <div>
-                  <h2>Cute kitten</h2>
+                  <h2>${polyglot.t(`Cute kitten`)}</h2>
                   <img src="/assets/images/cat-0.png">
                 </div><div>
-                  <h2>Kitten on the tree</h2>
+                  <h2>${polyglot.t(`Kitten on the tree`)}</h2>
                   <img src="/assets/images/cat-1.jpg">
                 </div><div>
-                  <h2>Serouis cat</h2>
+                  <h2>${polyglot.t(`Serouis cat`)}</h2>
                   <img src="/assets/images/cat-2.jpg">
                 </div>
               </div></my-app>
             </div>
           </div>
-        `)
+        `
         },
         {
           name: polyglot.t(`Set up the page`),
-          description: polyglot.t(`Let's setup a header, a search box, and a search button in the app component!`),
+          description: polyglot.t(`Setup a header, a search box, and a search button in the app component!`),
           stage: `templatePageSetup`,
           files: {
             exercise: [files.appHtml],
@@ -347,7 +347,6 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         }, {
           name: polyglot.t(`Add some action`),
           description: `
-              <p>${polyglot.t(`Let's do two things here:`)}</p>
               <ul>
                  <li>${polyglot.t(`Add a search method to the AppComponent`)}</li>
                  <li>${polyglot.t(`Display a message when there are no videos.`)}</li>
@@ -379,51 +378,46 @@ export const ng2tsConfig: CodelabConfigTemplate = {
       exercises: [{
         name: polyglot.t(`Intro`),
         slide: true,
-        description: polyglot.t(`
-          <h1>Let's inject a service.</h1>
-          <p>Using a service is way better than hardcoded data. As a result we get even more cats.</p>
+        description: `
+          <h1>${polyglot.t(`Let's inject a service.`)}</h1>
+          <p>${polyglot.t(`Using a service is way better than hardcoded data. As a result we get even more cats.`)}</p>
 
           <div class = "inBrowser">
             <div class="smaller">
               <my-app><div>
-                <h1>CatTube</h1>
+                <h1>${polyglot.t(`CatTube`)}</h1>
                 <input placeholder="video" type="text">
-                <button>Search!</button>
+                <button>${polyglot.t(`Search!`)}</button>
                 <div>
-                  <h2>Cute kitten</h2>
-                  <img  src="/assets/images/cat-0.png">
+                  <h2>${polyglot.t(`Cute kitten`)}</h2>
+                  <img src="/assets/images/cat-0.png">
                 </div><div>
-                  <h2>Kitten on the tree</h2>
-                  <img  src="/assets/images/cat-1.jpg">
+                  <h2>${polyglot.t(`Kitten on the tree`)}</h2>
+                  <img src="/assets/images/cat-1.jpg">
                 </div><div>
-                  <h2>More kitten</h2>
-                  <img  src="/assets/images/cat-2.jpg">
+                  <h2>${polyglot.t(`More kitten`)}</h2>
+                  <img src="/assets/images/cat-2.jpg">
                 </div><div>
-                  <h2>Another kitten</h2>
-                  <img  src="/assets/images/cat-3.jpg">
+                  <h2>${polyglot.t(`Another kitten`)}</h2>
+                  <img src="/assets/images/cat-3.jpg">
                 </div><div>
-                  <h2>Serouis cat</h2>
-                  <img  src="/assets/images/cat-4.jpg">
+                  <h2>${polyglot.t(`Serouis cat`)}</h2>
+                  <img src="/assets/images/cat-4.jpg">
                 </div><div>
-                  <h2>Serouis cat</h2>
+                  <h2>${polyglot.t(`Serouis cat`)}</h2>
                   <img  src="/assets/images/cat-5.jpg">
                 </div><div>
-                  <h2>Serouis cat</h2>
+                  <h2>${polyglot.t(`Serouis cat`)}</h2>
                   <img  src="/assets/images/cat-6.jpg">
                 </div>
               </div></my-app>
             </div>
           </div>
-
-        `),
-
+        `,
       }, {
         name: polyglot.t(`Service injection`),
         stage: `diInjectService`,
-
-        description: polyglot.t(`
-          Let's fetch the videos using a service, instead of having them hardcoded.
-        `),
+        description: polyglot.t(`Fetch the videos using a service, instead of having them hardcoded.`),
         files: {
           exercise: [files.video_videoService, files.appModule, files.appComponent],
           reference: [files.appHtml, files.apiService, files.video_videoItem, files.main],
@@ -438,24 +432,24 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Let's create a Video component!</h1>
-          <p>Create a separate component with the video information.</p>
-          <p>Add description, amount of views and likes. </p>
+          description: `
+          <h1>${polyglot.t(`Create a Video component!`)}</h1>
+          <p>${polyglot.t(`Create a separate component with the video information.`)}</p>
+          <p>${polyglot.t(`Add description, amount of views and likes.`)}</p>
 
             <div class = "inBrowser">
               <div class="smaller">
                 <div>
-                  <h2>Cute kitten</h2>
-                  <img  src="/assets/images/cat-0.png">
-                  <div>Date 2016-11-25</div>
-                  <div>Views 100</div>
-                  <div>Likes 20</div>
-                  <div>Description todo</div>
+                  <h2>${polyglot.t(`Cute kitten`)}</h2>
+                  <img src="/assets/images/cat-0.png">
+                  <div>${polyglot.t(`Date 2016-11-25`)}</div>
+                  <div>${polyglot.t(`Views 100`)}</div>
+                  <div>${polyglot.t(`Likes 20`)}</div>
+                  <div>${polyglot.t(`Description todo`)}</div>
                 </div>
               </div>
             </div>
-        `),
+        `,
         },
         {
           name: polyglot.t(`Create VideoComponent`),
@@ -493,25 +487,25 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Let's use custom events!</h1>
-          <p>Add a ThumbsComponent which will emit an 'onThumbs' event.  </p>
-          <p>In the video component listen to the event and change the amount of likes accordingly.</p>
+          description: `
+          <h1>${polyglot.t(`Let's use custom events!`)}</h1>
+          <p>${polyglot.t(`Add a ThumbsComponent which will emit an 'onThumbs' event.`)}</p>
+          <p>${polyglot.t(`In the video component listen to the event and change the amount of likes accordingly.`)}</p>
 
             <div class = "inBrowser">
               <div class="smaller">
                 <div>
-                  <h2>Cute kitten</h2>
-                  <img  src="/assets/images/cat-0.png">
-                  <div>Date 2016-11-25</div>
-                  <div>Views 100</div>
-                  <div>Likes 20</div>
-                  <div>Description todo</div>
-                  <button>Thumbs Up</button> <button>Thumbs Down</button>
+                  <h2>${polyglot.t(`Cute kitten`)}</h2>
+                  <img src="/assets/images/cat-0.png">
+                  <div>${polyglot.t(`Date 2016-11-25`)}</div>
+                  <div>${polyglot.t(`Views 100`)}</div>
+                  <div>${polyglot.t(`Likes 20`)}</div>
+                  <div>${polyglot.t(`Description todo`)}</div>
+                  <button>${polyglot.t(`Thumbs Up`)}</button> <button>${polyglot.t(`Thumbs Down`)}</button>
                 </div>
               </div>
             </div>
-        `),
+        `,
         },
         {
           name: polyglot.t(`Create ThumbsComponent`),
@@ -543,38 +537,38 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Intro`),
           slide: true,
-          description: polyglot.t(`
-          <h1>Let's project some content!</h1>
-          <p>In this milestone we'll create a component called 'TogglePanel'</p>
-          <p>It will actually take 2 divs, but only display one at a time. </p>
+          description: `
+          <h1>${polyglot.t(`Let's project some content!`)}</h1>
+          <p>${polyglot.t(`In this milestone we'll create a component called 'TogglePanel'`)}</p>
+          <p>${polyglot.t(`It will actually take 2 divs, but only display one at a time.`)}</p>
 
             <div class = "inBrowser">
               <div class="smaller">
                 <div>
-                  <h2>Cute kitten</h2>
+                  <h2>${polyglot.t(`Cute kitten`)}</h2>
                   <img src="/assets/images/cat-0.png">
-                  <div>This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)</div>
-                  <div>[Show meta]</div>
-                  <button>Thumbs Up</button> <button>Thumbs Down</button>
+                  <div>${polyglot.t(`This is the description. Once you click 'show meta' button it will be gone.  (please don't try clicking it here, I'm just a screenshot)`)}</div>
+                  <div>${polyglot.t(`Show meta`)}</div>
+                  <button>${polyglot.t(`Thumbs Up`)}</button> <button>${polyglot.t(`Thumbs Down`)}</button>
                 </div>
               </div>
             </div>
 
-            <p>So when you click the 'Show meta button', description is gone, likes and views are displayed instead.</p>
+            <p>${polyglot.t(`So when you click the 'Show meta button', description is gone, likes and views are displayed instead.`)}</p>
 
             <div class = "inBrowser">
               <div class="smaller">
                 <div>
-                  <h2>Cute kitten</h2>
-                  <img  src="/assets/images/cat-0.png">
-                  <div>Likes: 1000</div>
-                  <div>Views: 1000000</div>
-                  <div>[Show description]</div>
-                  <button>[Thumbs Up]</button> <button>[Thumbs Down]</button>
+                 <h2>${polyglot.t(`Cute kitten`)}</h2>
+                 <img  src="/assets/images/cat-0.png">
+                 <div>${polyglot.t(`Views 100`)}</div>
+                 <div>${polyglot.t(`Likes 20`)}</div>
+                 <div>${polyglot.t(`Show description`)}</div>
+                 <button>${polyglot.t(`Thumbs Up`)}</button> <button>${polyglot.t(`Thumbs Down`)}</button>
                 </div>
               </div>
             </div>
-        `)
+        `
         },
         {
           name: polyglot.t(`Add TogglePanelComponent`),
