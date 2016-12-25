@@ -1,4 +1,7 @@
-declare const polyglot: {t: (s)=>any};
+/**
+ * In the test it's possible to get access to sourcecode, as well as to the code AST.
+ */
+import {ts, typescript_intro_Codelab_ts_AST} from '../code';
 /**
  * This is a good sample sample of a codelab exercise.
  *
@@ -16,16 +19,30 @@ declare const polyglot: {t: (s)=>any};
  * will be loaded.
  */
 import {Codelab, evalJs} from '../typescript-intro/Codelab';
-/**
- * In the test we get the access to the actual sourcecode
- * I'd try not to overuse it
- */
-import * as code from '../code';
+declare const polyglot: {t: (s) => any};
+
 
 const guests = [
   {name: 'me', coming: true},
   {name: 'notme', coming: false},
 ];
+
+function getConstructorNode(code){
+  let constructorNode = undefined;
+
+  /**
+   * Fancy: Require the actual source code, and search in it.
+   */
+  function findConstructor(node) {
+    if (node.kind === ts.SyntaxKind.Constructor) {
+      constructorNode = node;
+    }
+    ts.forEachChild(node, findConstructor);
+  }
+
+  findConstructor(code);
+  return constructorNode;
+}
 
 describe('Component', () => {
   it(polyglot.t(`Create a class called 'Codelab'`), () => {
@@ -51,19 +68,44 @@ describe('Component', () => {
   });
 
   it(polyglot.t('Add a constructor'), () => {
+    let hasConstructor = false;
+
     /**
      * Fancy: Require the actual source code, and search in it.
      */
-    chai.expect(code.typescript_intro_Codelab_ts.indexOf('constructor') > -1, polyglot.t(`The codelab class doesn't have constuctor`)).is.true;
+    function findConstructor(node) {
+      if (node.kind === ts.SyntaxKind.Constructor) {
+        hasConstructor = true;
+      }
+      ts.forEachChild(node, findConstructor);
+    }
+
+    findConstructor(typescript_intro_Codelab_ts_AST);
+
+    chai.expect(hasConstructor, polyglot.t(`Codelab doesn't have a constuctor`)).is.true;
   });
 
   it(polyglot.t(`Make constructor take a parameter 'guests'`), () => {
-    chai.expect(Codelab.length, polyglot.t(`Codelab constructor should take one parameter called 'guests'`)).equals(1);
+    const constructorNode = getConstructorNode(typescript_intro_Codelab_ts_AST);
+
+    chai.expect(constructorNode, polyglot.t(`Codelab doesn't have a constuctor`)).to.be.ok;
+    chai.expect(constructorNode.parameters.length, polyglot.t(`Codelab's constructor should take a parameter`)).to.equal(1);
+    chai.expect(constructorNode.parameters[0].name.text, polyglot.t(`Codelab constructor's parameter should be called 'guests'`)).equals('guests');
+
+    let type = constructorNode.parameters[0].type;
+    const isArrayOfGuest = /* Array<Guest> */(type.kind === ts.SyntaxKind.TypeReference  && type.typeName.text === 'Array' &&
+      type.typeArguments.length === 1 && type.typeArguments[0].typeName.text === 'Guest') ||
+      /* Guest[] */ (type.kind === ts.SyntaxKind.ArrayType && type.elementType.kind === ts.SyntaxKind.TypeReference && type.elementType.typeName.text === 'Guest');
+
+    chai.expect(isArrayOfGuest, polyglot.t(`The type for guests should be Array of Guest (hint: Guest[] is one way of doing it.)`)).to.be.ok;
   });
 
-  it(polyglot.t('This parameter should be public'), () => {
-    const codelab = new Codelab(guests);
-    chai.expect(codelab.guests).equals(guests);
+  it(polyglot.t('Make the parameter public (note that now you can access it anywhere in the class using this.guests)'), () => {
+    const constructorNode = getConstructorNode(typescript_intro_Codelab_ts_AST);
+    let parameter = constructorNode.parameters[0];
+    chai.expect(parameter.modifiers.length === 1 && parameter.modifiers[0].kind === ts.SyntaxKind.PublicKeyword,
+      polyglot.t(`'guests' constructor parameter should have 'public' visibility.`)).to.be.ok;
+
   });
 
   it(polyglot.t(`Create new method 'getGuestsComing'`), () => {
@@ -89,3 +131,6 @@ describe('Component', () => {
    */
 });
 
+//{"pos":83,"end":91,"flags":0,"kind":160,"elementType":{"pos":83,"end":89,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Guest"}}}"
+//{"pos":83,"end":89,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Guest"}}
+//{"pos":83,"end":96,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Array"},"typeArguments":[{"pos":90,"end":95,"flags":0,"kind":155,"typeName":{"pos":90,"end":95,"flags":0,"text":"Guest"}}]}"

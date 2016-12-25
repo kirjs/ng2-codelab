@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {AngularFire, FirebaseListObservable} from "angularfire2";
+//import {AngularFire, FirebaseListObservable} from "angularfire2";
 import {StateService} from "../state.service";
 
 @Component({
@@ -8,14 +8,15 @@ import {StateService} from "../state.service";
   styleUrls: ['./feedback-page.component.css']
 })
 export class FeedbackPageComponent implements OnInit {
-  feedbackList: FirebaseListObservable<any[]>;
+  //feedbackList: FirebaseListObservable<any[]>;
 
-  constructor(public state: StateService, private angularFire: AngularFire) {
+  constructor(public state: StateService/*, private angularFire: AngularFire*/) {
   }
 
   listOfFeedbackers = [];
 
   ngOnInit() {
+    /*
     //TODO: use auth property in the state to skip authentication proccess
     this.angularFire.auth.login().then(authState => {
       this.state.setAuth(authState.auth);
@@ -40,6 +41,7 @@ export class FeedbackPageComponent implements OnInit {
         return b.numberOfFeedback - a.numberOfFeedback
       });
     });
+    */
   }
 
   simulate(state) {

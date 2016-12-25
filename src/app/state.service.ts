@@ -49,7 +49,7 @@ export class StateService {
     this.addMiddleware(testMiddleware(this, appConfig.config));
     this.appConfig = appConfig.config;
     this.update = this.dispatch
-      .mergeScan<AppState>((state: AppState, action: Action): any => {
+      .mergeScan<Action, AppState>((state: AppState, action: Action): any => {
         try {
           if (reducers[action.type]) {
             const result = this.applyMiddleware(reducers[action.type](state, action), action);
