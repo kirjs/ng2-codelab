@@ -3,11 +3,12 @@ import { StateService } from "./state.service";
 import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2';
 import {appConfig} from './app-config.service';
 
+//helper function to get #simulate_id parameter from URL
 const getSimulateId = (urlHash) => {
   let hashParts = urlHash.split('&');
-  let simulateIdParameter = hashParts.find(x => x.includes('simulate_id'));
+  let simulateIdParameter = hashParts.find(x => x.includes('simulate'));
   if(simulateIdParameter){
-   return simulateIdParameter.replace('#simulate_id=',''); 
+   return simulateIdParameter.replace('#simulate=',''); 
   }
 };
 
@@ -23,16 +24,20 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    //check if #simulate_id parameter was passed to url
     if(getSimulateId(window.location.hash)){
       let feedbackId = getSimulateId(window.location.hash);
-      console.log(feedbackId);
-      //TODO: write code to get the state of given feedback and simulate it.
-      //fetch the state from firebase from feedback with given id
-      let givenFeedback = this.angularFire.database.object('/feedback_test/' + feedbackId).subscribe(feedback => {
-        console.log('feedback received', feedbackId);
+      //log in using google account in order to check if user has rights to simulate feedback
+      this.angularFire.auth.login().then(authState => {
+        //fetch the state from firebase from feedback with given id
+        let givenFeedback = this.angularFire.database.object('/feedback/' + feedbackId).subscribe(feedback => {
+          console.log('simulating the state of feedback ', feedbackId);
+          //simulate the received state
+          this.state.simulateState(feedback.state);
+        });
       });
     }
-    if(appConfig.feedbackEnabled){
+    if(appConfig.feedbackEnabled && !appConfig.simulation){
         this.user_progresses = this.angularFire.database.list('/user_progress');
         this.auth = { uid: '' };
 

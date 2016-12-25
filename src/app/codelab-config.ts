@@ -8,7 +8,8 @@ export interface AppConfig {
   feedbackEnabled: boolean,
   preserveState: boolean,
   debug: boolean,
-  presentationMode: boolean
+  presentationMode: boolean,
+  simulation:boolean
 }
 
 export interface AppState {
