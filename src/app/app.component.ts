@@ -25,7 +25,12 @@ export class AppComponent {
   ngOnInit() {
     if(getSimulateId(window.location.hash)){
       let feedbackId = getSimulateId(window.location.hash);
+      console.log(feedbackId);
       //TODO: write code to get the state of given feedback and simulate it.
+      //fetch the state from firebase from feedback with given id
+      let givenFeedback = this.angularFire.database.object('/feedback_test/' + feedbackId).subscribe(feedback => {
+        console.log('feedback received', feedbackId);
+      });
     }
     if(appConfig.feedbackEnabled){
         this.user_progresses = this.angularFire.database.list('/user_progress');
