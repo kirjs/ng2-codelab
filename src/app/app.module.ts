@@ -20,6 +20,7 @@ import {AutorunComponent} from './autorun/autorun.component';
 import {MonacoConfigService} from './monaco-config.service';
 import {ResizeComponent} from './resize/resize.component';
 import {AppConfigService, appConfig} from './app-config.service';
+import {LoopProtectionService} from './loop-protection.service';
 
 let ngModuleConfig = {
   declarations: [
@@ -46,7 +47,8 @@ let ngModuleConfig = {
     ReducersService,
     CodelabConfigService,
     AppConfigService,
-    MonacoConfigService
+    MonacoConfigService,
+    LoopProtectionService
   ],
   bootstrap: [AppComponent]
 };

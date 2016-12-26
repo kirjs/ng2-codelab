@@ -7,19 +7,17 @@ export class LoopProtectionService {
   constructor() {
   }
 
-  public static loopBreaker = `
-        // Breaks out of infinite loops.
-        const loopBreaker = (function(){
-          const iterationsLeft = 100;
-          return function(){
-            iterationsLeft--;
-            if(iterationsLeft === 0){
-              throw new Error("Infinite loop detected
-              ");
-            }
-          }        
-        }());
-      
+  public static loopBreaker =
+    `// Breaks out of infinite loops.
+const loopBreaker = (function(){
+  let iterationsLeft = 100;
+  return function(){
+    iterationsLeft--;
+    if(iterationsLeft === 0){
+      throw new Error("Infinite loop detected");
+    }
+  }
+}()); 
       `;
 
   findAllLoops(source) {
@@ -47,7 +45,7 @@ export class LoopProtectionService {
     return messages;
   }
 
-  breakLoopsInNode(filename: string, code: string) {
+  protect(filename: string, code: string) {
     if (filename.indexOf('.ts') < 0) {
       return code;
     }

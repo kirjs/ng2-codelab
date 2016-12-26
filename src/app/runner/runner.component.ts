@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRe
 import * as ts from 'typescript';
 import {FileConfig} from '../file-config';
 import {StateService} from '../state.service';
+import {LoopProtectionService} from '../loop-protection.service';
 
 let cachedIframes = {};
 
@@ -37,7 +38,7 @@ function createIframe(config: IframeConfig) {
   return iframe;
 }
 
-function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Function, runMultipleFiles: Function}> {
+function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{setHtml: Function, runMultipleFiles: Function}> {
   if (cachedIframes[config.id]) {
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
@@ -111,6 +112,8 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             // Update module names
             let code = file.code;
 
+            code = runner.loopProtectionService.protect(file.path, code);
+
             if (file.before) {
               code = file.before + ';\n' + code;
             }
@@ -118,6 +121,7 @@ function injectIframe(element: any, config: IframeConfig): Promise<{setHtml: Fun
             if (file.after) {
               code = ';\n' + code + file.after;
             }
+
 
             const moduleName = file.moduleName;
 
@@ -167,7 +171,7 @@ export class RunnerComponent implements AfterViewInit {
   @ViewChild('runner') element: ElementRef;
 
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService) {
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService) {
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
         return;
@@ -191,14 +195,14 @@ export class RunnerComponent implements AfterViewInit {
   runCode() {
     injectIframe(this.element.nativeElement, {
       id: 'preview', 'url': 'assets/runner/index.html'
-    }).then((sandbox) => {
+    }, this).then((sandbox) => {
       sandbox.setHtml(this.html);
       sandbox.runMultipleFiles(this.files.filter(file => !file.test));
     });
 
     injectIframe(this.element.nativeElement, {
       id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
-    })
+    }, this)
       .then((sandbox) => {
 
         const testFiles = this.files
@@ -221,3 +225,5 @@ export class RunnerComponent implements AfterViewInit {
   }
 
 }
+
+
