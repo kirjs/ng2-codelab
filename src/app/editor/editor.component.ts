@@ -22,7 +22,7 @@ declare const require: any;
 })
 export class EditorComponent implements AfterViewInit {
   private _editor: any;
-  @Input() file: FileConfig;
+  @Input() public file: FileConfig;
   @ViewChild('editor') editorContent: ElementRef;
   @Output() onCodeChange = new EventEmitter();
   private editSub: Subject<String>;
@@ -49,9 +49,9 @@ export class EditorComponent implements AfterViewInit {
 
     const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
-    this._editor = monaco.editor.create(myDiv,
+    this._editor = this.monacoConfigService.monaco.editor.create(myDiv,
       {
-        model: monaco.editor.getModel(this.file.path),
+        model: this.monacoConfigService.monaco.editor.getModel(this.file.path),
         scrollBeyondLastLine: false,
         readOnly: this.file.readonly,
         tabCompletion: true,

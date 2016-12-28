@@ -9,6 +9,7 @@ declare const monaco;
 
 @Injectable()
 export class MonacoConfigService {
+
   public static monacoReady = new Promise((resolve) => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -22,6 +23,11 @@ export class MonacoConfigService {
       resolve(monaco);
     });
   });
+  public monaco: any;
+
+  constructor() {
+    this.monaco = monaco;
+  }
 
   static configureMonaco() {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
