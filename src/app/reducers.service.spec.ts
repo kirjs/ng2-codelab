@@ -8,7 +8,7 @@ describe('Service: Reducers', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ReducersService,
-        {provide: MonacoConfigService, useValue: {},
+        {provide: MonacoConfigService, useValue: {}},
         {provide: AppConfigService, useValue: {}}]
     });
   });
