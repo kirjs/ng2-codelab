@@ -66,10 +66,7 @@ export class EditorComponent implements AfterViewInit {
     });
 
     //Re-running the code on Ctrl + Enter
-    let _state = this.state;
-    this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, function(e) {
-      _state.run();
-    });
+    this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => this.state.run());
 
     this.updateHeight(this.file.code);
 
