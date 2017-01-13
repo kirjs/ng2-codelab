@@ -1,4 +1,5 @@
 import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from '@angular/core';
+import {StateService} from "../state.service";
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import {FileConfig} from '../file-config';
@@ -34,7 +35,7 @@ export class EditorComponent implements AfterViewInit {
   }
 
 
-  constructor(private monacoConfigService: MonacoConfigService) {
+  constructor(private monacoConfigService: MonacoConfigService, public state: StateService) {
     this.editSub = new Subject<String>();
     this.editSub.debounceTime(1000).subscribe((value) => {
       this.onCodeChange.emit(value);
@@ -64,6 +65,11 @@ export class EditorComponent implements AfterViewInit {
       this.updateValue(this._editor.getModel().getValue());
     });
 
+    //Re-running the code on Ctrl + Enter
+    let _state = this.state;
+    this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, function(e) {
+      _state.run();
+    });
 
     this.updateHeight(this.file.code);
 
