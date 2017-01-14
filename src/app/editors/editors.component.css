@@ -3,6 +3,7 @@
   overflow: scroll;
   height: 100%;
   max-width: 100%;
+  padding-right: 16px;
 }
 
 .filename {
@@ -15,8 +16,6 @@
 
 .editor {
   width: 100%;
-  padding-right: 1rem;
-  box-sizing: border-box;
 }
 
 .file {
