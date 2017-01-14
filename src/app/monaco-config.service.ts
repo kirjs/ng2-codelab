@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FileConfig} from './file-config';
 
-const monacoLoaderCode = require('raw!../assets/monaco/min/vs/loader');
+const monacoLoaderCode = require('!raw-loader!../assets/monaco/min/vs/loader');
 
 const win = window as any;
 declare const monaco;
