@@ -15,7 +15,7 @@
 
 .handle {
   height: 100%;
-  border-right: 1px dashed #888;
+  border-right: 1px dashed rgba(128, 128, 128, 0.5);
 }
 
 
