@@ -136,8 +136,6 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
 
 
             const moduleName = file.moduleName;
-            const time = (new Date()).getTime();
-            console.log('TRANSPILE START');
 
             // TODO(kirjs): Add source maps.
             const result =  ts.transpileModule(code, {
@@ -157,7 +155,6 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
               moduleName: moduleName,
               reportDiagnostics: true
             });
-            console.log('TRANSPILE DONE', (new Date()).getTime() - time);
 
             return result;
           }).map((compiled) => {
@@ -214,7 +211,7 @@ export class RunnerComponent implements AfterViewInit {
 
     const time = (new Date()).getTime();
     console.log('FRAME START');
-    if (this.runnerType === 'typescript') {
+    if (this.runnerType === 'TypeScript') {
       injectIframe(this.element.nativeElement, {
         id: 'preview', 'url': 'assets/runner/blank.html'
       }, this).then((sandbox) => {

@@ -229,7 +229,6 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           <p>${polyglot.t(`As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans,
           so only 3 people should be returned.`)}</p>
         `,
-          runner: 'typescript',
           files: {
             exercise: [
               files.typescript_intro_Codelab_ts,
