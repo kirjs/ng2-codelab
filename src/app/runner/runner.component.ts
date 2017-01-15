@@ -3,6 +3,7 @@ import * as ts from 'typescript';
 import {FileConfig} from '../file-config';
 import {StateService} from '../state.service';
 import {LoopProtectionService} from '../loop-protection.service';
+import {Subscription} from 'rxjs';
 
 let cachedIframes = {};
 
@@ -167,9 +168,10 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
 })
 export class RunnerComponent implements AfterViewInit {
   @Input() files: any;
+  @Input() runnerType: string;
   html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
-
+  private stateSubscription: Subscription;
 
   constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService) {
     window.addEventListener("message", (event) => {
@@ -204,25 +206,22 @@ export class RunnerComponent implements AfterViewInit {
       id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
     }, this)
       .then((sandbox) => {
-
         const testFiles = this.files
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
-
-
   }
 
-  ngAfterViewInit() {
-    this.state.update
-      .map(e => e.local.runId)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.runCode()
-      }, () => {
-        debugger
-      });
-  }
+ngAfterViewInit() {
+  this.state.update
+    .map(e => e.local.runId)
+    .distinctUntilChanged()
+    .subscribe(() => {
+      this.runCode()
+    }, () => {
+      debugger
+    });
+}
 
 }
 

@@ -20,7 +20,8 @@
 
 
     <div class="codelab-milestone" *ngIf="config.local.page === 'milestone'">
-      <app-milestone [config]="config.codelab.milestones[config.codelab.selectedMilestoneIndex]" [name]="config.codelab.name"></app-milestone>
+      <app-milestone [config]="config.codelab.milestones[config.codelab.selectedMilestoneIndex]"
+                     [name]="config.codelab.name"></app-milestone>
     </div>
     <div class="codelab-milestone" *ngIf="config.local.page === 'feedback'">
       <app-feedback-page></app-feedback-page>

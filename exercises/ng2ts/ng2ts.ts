@@ -175,6 +175,7 @@ export interface ExerciseConfigTemplate {
   name: string,
   skipTests?: boolean,
   description: string,
+  runner?: string,
   stage: string,
   files: {
     exercise?: string[]
@@ -219,6 +220,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`TypeScript`),
           stage: `codelab`,
+          runner: 'TypeScript',
           description: `
           <p>${polyglot.t(`We created a TypeScript file for you, now let's add our first TS class
            called Codelab.`)}</p>

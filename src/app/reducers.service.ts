@@ -149,16 +149,16 @@ export class ReducersService {
 
   [ActionTypes.SEND_FEEDBACK](state: AppState /*, feedback */) {
     /*
-    if (this.appConfig.config.feedbackEnabled) {
-      let items = this.angularFire.database.list('/feedback');
-      items.push({
-        comment: feedback.data.comment,
-        state: JSON.parse(JSON.stringify(state)),
-        name: feedback.data.username
-      });
-      state.local.user = feedback.data.username;
-    }
-    */
+     if (this.appConfig.config.feedbackEnabled) {
+     let items = this.angularFire.database.list('/feedback');
+     items.push({
+     comment: feedback.data.comment,
+     state: JSON.parse(JSON.stringify(state)),
+     name: feedback.data.username
+     });
+     state.local.user = feedback.data.username;
+     }
+     */
     return state;
   }
 
