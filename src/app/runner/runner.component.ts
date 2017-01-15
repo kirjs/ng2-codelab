@@ -138,7 +138,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
             const moduleName = file.moduleName;
 
             // TODO(kirjs): Add source maps.
-            const result =  ts.transpileModule(code, {
+            const result = ts.transpileModule(code, {
               compilerOptions: {
                 module: ts.ModuleKind.System,
                 target: ts.ScriptTarget.ES5,
@@ -252,8 +252,12 @@ export class RunnerComponent implements AfterViewInit {
     }
   }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
+
   ngAfterViewInit() {
-    this.state.update
+    this.stateSubscription = this.state.update
       .map(e => e.local.runId)
       .distinctUntilChanged()
       .subscribe(() => {
