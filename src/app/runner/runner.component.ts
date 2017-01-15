@@ -3,6 +3,7 @@ import * as ts from 'typescript';
 import {FileConfig} from '../file-config';
 import {StateService} from '../state.service';
 import {LoopProtectionService} from '../loop-protection.service';
+import {ScriptLoaderService} from '../script-loader.service';
 import {Subscription} from 'rxjs';
 import {AppConfigService} from '../app-config.service';
 
@@ -13,6 +14,15 @@ function jsInjector(iframe) {
     iframe.contentWindow.eval(script);
   }
 }
+function jsScriptInjector(iframe) {
+  return function (code) {
+    const script = document.createElement('script');
+    script.type = "text/javascript";
+    script.innerHTML = code;
+    iframe.contentWindow.document.head.appendChild(script);
+  }
+}
+
 
 function cssInjector(iframe) {
   return function (css) {
@@ -40,7 +50,7 @@ function createIframe(config: IframeConfig) {
   return iframe;
 }
 
-function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{setHtml: Function, runMultipleFiles: Function}> {
+function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{setHtml: Function, runMultipleFiles: Function, runSingleScriptFile: Function}> {
   if (cachedIframes[config.id]) {
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
@@ -80,12 +90,12 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         displayError(error, 'Angular Error');
       };
 
-
       resolve({
+        runSingleScriptFile: jsScriptInjector(iframe),
+        runSingleFile: runJs,
         setHtml: setHtml,
         runMultipleFiles: (files: Array<FileConfig>) => {
           index++;
-
 
           (iframe.contentWindow as any).System.register('code', [], function (exports) {
             return {
@@ -105,7 +115,6 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
               debugger
             }
           });
-
 
           files.filter(file => file.path.indexOf('index.html') >= 0).map((file => {
             setHtml(file.code)
@@ -127,10 +136,11 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
 
 
             const moduleName = file.moduleName;
-
+            const time = (new Date()).getTime();
+            console.log('TRANSPILE START');
 
             // TODO(kirjs): Add source maps.
-            return ts.transpileModule(code, {
+            const result =  ts.transpileModule(code, {
               compilerOptions: {
                 module: ts.ModuleKind.System,
                 target: ts.ScriptTarget.ES5,
@@ -147,6 +157,9 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
               moduleName: moduleName,
               reportDiagnostics: true
             });
+            console.log('TRANSPILE DONE', (new Date()).getTime() - time);
+
+            return result;
           }).map((compiled) => {
             runJs(compiled.outputText);
           });
@@ -169,13 +182,14 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
   styleUrls: ['./runner.component.css']
 })
 export class RunnerComponent implements AfterViewInit {
-  @Input() files: any;
+  @Input() files: Array<FileConfig>;
   @Input() runnerType: string;
   html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
   private stateSubscription: Subscription;
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public appConfig: AppConfigService) {
+
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public scriptLoaderService: ScriptLoaderService, public appConfig: AppConfigService) {
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
         return;
@@ -197,21 +211,48 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   runCode() {
-    injectIframe(this.element.nativeElement, {
-      id: 'preview', 'url': 'assets/runner/index.html'
-    }, this).then((sandbox) => {
-      sandbox.setHtml(this.html);
-      sandbox.runMultipleFiles(this.files.filter(file => !file.test));
-    });
 
-    injectIframe(this.element.nativeElement, {
-      id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
-    }, this)
-      .then((sandbox) => {
+    const time = (new Date()).getTime();
+    console.log('FRAME START');
+    if (this.runnerType === 'typescript') {
+      injectIframe(this.element.nativeElement, {
+        id: 'preview', 'url': 'assets/runner/blank.html'
+      }, this).then((sandbox) => {
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.runMultipleFiles(this.files.filter(file => !file.test));
+      });
+
+      injectIframe(this.element.nativeElement, {
+        id: 'testing', 'url': 'assets/runner/blank.html'
+      }, this).then((sandbox) => {
+        console.log('FRAME CREATED', (new Date()).getTime() - time);
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
+
         const testFiles = this.files
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
+    } else {
+      injectIframe(this.element.nativeElement, {
+        id: 'preview', 'url': 'assets/runner/index.html'
+      }, this).then((sandbox) => {
+        sandbox.setHtml(this.html);
+        sandbox.runMultipleFiles(this.files.filter(file => !file.test));
+      });
+
+      injectIframe(this.element.nativeElement, {
+        id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
+      }, this)
+        .then((sandbox) => {
+
+          const testFiles = this.files
+            .filter(file => !file.excludeFromTesting);
+          sandbox.runMultipleFiles(testFiles);
+        });
+    }
   }
 
   ngAfterViewInit() {

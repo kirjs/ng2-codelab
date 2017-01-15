@@ -33,7 +33,7 @@ export class ReducersService {
     // This is probably not the most intuitive way to do things.
     if (this.appConfig.config.debug) {
       state.local.debugTrackTime = (new Date()).getTime();
-      console.log('RUN START');
+      console.log('RUN START!');
     }
 
     state.local.runId++;
@@ -109,7 +109,6 @@ export class ReducersService {
   }
 
   [ActionTypes.SET_TEST_LIST](state: AppState, action: {data: Array<string>}) {
-
     selectedExercise(state).tests = action.data.map(test => ({title: test}));
     return state;
   }
