@@ -8,6 +8,7 @@ export interface AppConfig {
   feedbackEnabled: boolean,
   preserveState: boolean,
   debug: boolean,
+  noerrors: boolean,
   presentationMode: boolean
 }
 

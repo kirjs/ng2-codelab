@@ -6,6 +6,7 @@ const test = window.location.hash.includes('test');
 const presentationMode = window.location.hash.includes('present');
 const debug = test || window.location.hash.includes('debug');
 const reset = window.location.hash.includes('reset') || debug;
+const noerrors = test || window.location.hash.includes('noerrors');
 
 export const appConfig: AppConfig = {
   name: 'Codelab',
@@ -16,6 +17,7 @@ export const appConfig: AppConfig = {
   preserveState: !reset,
   debug,
   test,
+  noerrors,
   presentationMode
 };
 

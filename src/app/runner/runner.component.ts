@@ -4,6 +4,7 @@ import {FileConfig} from '../file-config';
 import {StateService} from '../state.service';
 import {LoopProtectionService} from '../loop-protection.service';
 import {Subscription} from 'rxjs';
+import {AppConfigService} from '../app-config.service';
 
 let cachedIframes = {};
 
@@ -64,7 +65,9 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         iframe.contentDocument.body.innerHTML = html;
       };
       const displayError = (error, info) => {
-        console.log(info, error);
+        if (!runner.appConfig.config.noerrors) {
+          console.log(info, error);
+        }
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
         setHtml(`
@@ -75,7 +78,6 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
       iframe.contentWindow.console.error = function (error, message) {
         // handle angular error 1/3
         displayError(error, 'Angular Error');
-        console.error.apply(console, arguments);
       };
 
 
@@ -173,7 +175,7 @@ export class RunnerComponent implements AfterViewInit {
   @ViewChild('runner') element: ElementRef;
   private stateSubscription: Subscription;
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService) {
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public appConfig: AppConfigService) {
     window.addEventListener("message", (event) => {
       if (!event.data || !event.data.type) {
         return;
@@ -212,16 +214,16 @@ export class RunnerComponent implements AfterViewInit {
       });
   }
 
-ngAfterViewInit() {
-  this.state.update
-    .map(e => e.local.runId)
-    .distinctUntilChanged()
-    .subscribe(() => {
-      this.runCode()
-    }, () => {
-      debugger
-    });
-}
+  ngAfterViewInit() {
+    this.state.update
+      .map(e => e.local.runId)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this.runCode()
+      }, () => {
+        debugger
+      });
+  }
 
 }
 

@@ -102,7 +102,6 @@ export class MonacoConfigService {
     if (models.length) {
       models.forEach(model => model.dispose());
     }
-    console.log(files);
 
     files.map(file => {
       monaco.editor.createModel(file.code, file.type, file.path);
