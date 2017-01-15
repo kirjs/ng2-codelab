@@ -184,27 +184,31 @@ export class RunnerComponent implements AfterViewInit {
   html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
   private stateSubscription: Subscription;
+  private handleMessageBound: any;
 
 
   constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public scriptLoaderService: ScriptLoaderService, public appConfig: AppConfigService) {
-    window.addEventListener("message", (event) => {
-      if (!event.data || !event.data.type) {
-        return;
-      }
+    this.handleMessageBound = this.handleMessage.bind(this);
+    window.addEventListener("message", this.handleMessageBound, false);
+  }
 
-      if (event.data.type === 'testList') {
-        state.setTestList(event.data.tests);
+  handleMessage(event) {
+    if (!event.data || !event.data.type) {
+      return;
+    }
 
-      }
-      if (event.data.type === 'testResult') {
-        state.updateSingleTestResult({
-          title: event.data.test.title,
-          pass: event.data.pass,
-          result: event.data.result
-        });
-      }
-      changeDetectionRef.detectChanges();
-    }, false);
+    if (event.data.type === 'testList') {
+      this.state.setTestList(event.data.tests);
+
+    }
+    if (event.data.type === 'testResult') {
+      this.state.updateSingleTestResult({
+        title: event.data.test.title,
+        pass: event.data.pass,
+        result: event.data.result
+      });
+    }
+    this.changeDetectionRef.detectChanges();
   }
 
   runCode() {
@@ -253,6 +257,8 @@ export class RunnerComponent implements AfterViewInit {
   }
 
   ngOnDestroy() {
+    Object.keys(cachedIframes).map(key => cachedIframes[key].remove());
+    window.removeEventListener("message", this.handleMessageBound, false);
     this.stateSubscription.unsubscribe();
   }
 
