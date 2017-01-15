@@ -170,9 +170,10 @@ export class ReducersService {
     if (exercise.files) {
       exercise.files.forEach(file => file.code = file.template);
       this.monacoConfig.createFileModels(exercise.files);
+      return this[ActionTypes.RUN_CODE](state);
+    } else {
+      return state;
     }
-
-    return this[ActionTypes.RUN_CODE](state);
   }
 
   constructor(/*protected angularFire: AngularFire,*/
