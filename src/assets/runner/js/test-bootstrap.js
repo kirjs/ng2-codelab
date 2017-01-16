@@ -2,6 +2,22 @@ function mochaBefore() {
   mocha.setup('bdd').reporter(function () {
   });
 }
+System.register("initTestBed", ['@angular/core/testing', '@angular/platform-browser-dynamic/testing'], function () {
+  "use strict";
+  var testing_1, testing_2;
+  return {
+    setters: [
+      function (testing_1_1) {
+        testing_1 = testing_1_1;
+      },
+      function (testing_2_1) {
+        testing_2 = testing_2_1;
+      }],
+    execute: function () {
+      testing_1.TestBed.initTestEnvironment(testing_2.BrowserDynamicTestingModule, testing_2.platformBrowserDynamicTesting());
+    }
+  }
+});
 
 function flattenTests(suite) {
   const result = [];

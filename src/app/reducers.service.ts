@@ -72,15 +72,15 @@ export class ReducersService {
   }
 
   [ActionTypes.LOAD_ALL_SOLUTIONS](state: AppState) {
-
     const exercise = selectedExercise(state) as ExerciseConfig;
-    return exercise.files.reduce((state, file) => {
+    state = exercise.files.reduce((state, file) => {
       if (file.solution) {
-
-        return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution}})
+        return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution, autorun: false}})
       }
       return state;
     }, state);
+
+    return this[ActionTypes.RUN_CODE](state);
   }
 
   [ActionTypes.LOAD_SOLUTION](state: AppState, {data}: {data: FileConfig}) {
@@ -96,8 +96,11 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string}}) {
+  [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string, autorun?: boolean}}) {
     const exercise = selectedExercise(state) as ExerciseConfig;
+    if (data.autorun === undefined) {
+      data.autorun = state.local.autorun;
+    }
 
     exercise.files.forEach((file) => {
       if (file === data.file) {
@@ -105,7 +108,7 @@ export class ReducersService {
       }
     });
 
-    return state.local.autorun ? this[ActionTypes.RUN_CODE](state) : state;
+    return data.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
   [ActionTypes.SET_TEST_LIST](state: AppState, action: {data: Array<string>}) {
@@ -169,6 +172,7 @@ export class ReducersService {
     if (exercise.files) {
       exercise.files.forEach(file => file.code = file.template);
       this.monacoConfig.createFileModels(exercise.files);
+      exercise.runner = exercise.runner || state.codelab.defaultRunner;
       return this[ActionTypes.RUN_CODE](state);
     } else {
       return state;

@@ -1,11 +1,12 @@
 import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
 import * as ts from 'typescript';
 import {FileConfig} from '../file-config';
-import {StateService} from '../state.service';
+import {StateService, selectedExercise} from '../state.service';
 import {LoopProtectionService} from '../loop-protection.service';
 import {ScriptLoaderService} from '../script-loader.service';
 import {Subscription} from 'rxjs';
 import {AppConfigService} from '../app-config.service';
+import {ExerciseConfig} from '../exercise-config';
 
 let cachedIframes = {};
 
@@ -50,7 +51,13 @@ function createIframe(config: IframeConfig) {
   return iframe;
 }
 
-function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{setHtml: Function, runMultipleFiles: Function, runSingleScriptFile: Function}> {
+function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{
+  setHtml: Function,
+  runMultipleFiles: Function,
+  runSingleFile: Function,
+  runSingleScriptFile: Function,
+  loadSystemJS: Function
+}> {
   if (cachedIframes[config.id]) {
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
@@ -70,6 +77,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
       iframe.contentWindow.console.log = function () {
         console.log.apply(console, arguments);
       };
+
 
       const setHtml = (html) => {
         iframe.contentDocument.body.innerHTML = html;
@@ -91,9 +99,19 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
       };
 
       resolve({
+        register: (name, deps, code) => {
+          (iframe.contentWindow as any).System.register(name, deps, code)
+        },
         runSingleScriptFile: jsScriptInjector(iframe),
         runSingleFile: runJs,
         setHtml: setHtml,
+        loadSystemJS: (name) => {
+          (iframe.contentWindow as any).define = (deps, callback) => {
+            (iframe.contentWindow as any).SystemJS.amdDefine(name, deps, callback)
+          };
+          (iframe.contentWindow as any).define.amd = true;
+          runJs(runner.scriptLoaderService.getScript(name));
+        },
         runMultipleFiles: (files: Array<FileConfig>) => {
           index++;
 
@@ -211,16 +229,64 @@ export class RunnerComponent implements AfterViewInit {
     this.changeDetectionRef.detectChanges();
   }
 
-  runCode() {
-
+  runCode(exercise: ExerciseConfig) {
     const time = (new Date()).getTime();
-    console.log('FRAME START');
-    if (this.runnerType === 'TypeScript') {
+    const runner = exercise.runner;
+    const files = exercise.files;
+
+    if (runner === 'Angular') {
+      injectIframe(this.element.nativeElement, {
+        id: 'preview', 'url': 'assets/runner/blank.html'
+      }, this).then((sandbox) => {
+        sandbox.setHtml(this.html);
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
+
+        sandbox.loadSystemJS('@angular/core');
+        sandbox.loadSystemJS('@angular/common');
+        sandbox.loadSystemJS('@angular/compiler');
+        sandbox.loadSystemJS('@angular/platform-browser');
+        sandbox.loadSystemJS('@angular/platform-browser-dynamic');
+
+        sandbox.runMultipleFiles(files.filter(file => !file.test));
+      });
+
+      injectIframe(this.element.nativeElement, {
+        id: 'testing', 'url': 'assets/runner/blank.html'
+      }, this).then((sandbox) => {
+        sandbox.setHtml(this.html);
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
+
+        sandbox.loadSystemJS('@angular/core/testing');
+        sandbox.loadSystemJS('@angular/compiler/testing');
+        sandbox.loadSystemJS('@angular/platform-browser/testing');
+        sandbox.loadSystemJS('@angular/platform-browser-dynamic/testing');
+        sandbox.loadSystemJS('@angular/core');
+        sandbox.loadSystemJS('@angular/common');
+        sandbox.loadSystemJS('@angular/compiler');
+        sandbox.loadSystemJS('@angular/platform-browser');
+        sandbox.loadSystemJS('@angular/platform-browser-dynamic');
+
+        const testFiles = files
+          .filter(file => !file.excludeFromTesting);
+        sandbox.runMultipleFiles(testFiles);
+      });
+    } else if (runner === 'TypeScript') {
       injectIframe(this.element.nativeElement, {
         id: 'preview', 'url': 'assets/runner/blank.html'
       }, this).then((sandbox) => {
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
-        sandbox.runMultipleFiles(this.files.filter(file => !file.test));
+        sandbox.runMultipleFiles(files.filter(file => !file.test));
       });
 
       injectIframe(this.element.nativeElement, {
@@ -232,7 +298,7 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
 
-        const testFiles = this.files
+        const testFiles = files
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
@@ -241,7 +307,7 @@ export class RunnerComponent implements AfterViewInit {
         id: 'preview', 'url': 'assets/runner/index.html'
       }, this).then((sandbox) => {
         sandbox.setHtml(this.html);
-        sandbox.runMultipleFiles(this.files.filter(file => !file.test));
+        sandbox.runMultipleFiles(files.filter(file => !file.test));
       });
 
       injectIframe(this.element.nativeElement, {
@@ -249,7 +315,7 @@ export class RunnerComponent implements AfterViewInit {
       }, this)
         .then((sandbox) => {
 
-          const testFiles = this.files
+          const testFiles = files
             .filter(file => !file.excludeFromTesting);
           sandbox.runMultipleFiles(testFiles);
         });
@@ -264,10 +330,9 @@ export class RunnerComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.stateSubscription = this.state.update
-      .map(e => e.local.runId)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.runCode()
+      .distinctUntilChanged((a, b) => a === b, e => e.local.runId)
+      .subscribe((state) => {
+        this.runCode(selectedExercise(state))
       }, () => {
         debugger
       });

@@ -39,8 +39,6 @@ export class EditorComponent implements AfterViewInit {
   constructor(private monacoConfigService: MonacoConfigService, public state: StateService) {
     this.editSub = new Subject<String>();
     this.runSubscription = this.editSub.debounceTime(1000).subscribe((value) => {
-      console.log('debounced');
-      console.log(value);
       this.onCodeChange.emit(value);
     });
   }

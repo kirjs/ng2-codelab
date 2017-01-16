@@ -161,6 +161,7 @@ export interface CodelabConfigTemplate {
     stage: {[key: string]: {[key: string]: string}},
   },
   stages: stage[],
+  defaultRunner: string,
   milestones: MilestoneConfigTemplate[]
 }
 
@@ -200,6 +201,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
     stage: stageOverrides
   },
   stages: stages,
+  defaultRunner: 'Angular',
   milestones: [
     {
       name: 'Intro to TypeScript',
@@ -270,7 +272,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         {
           name: polyglot.t(`Create a component`),
           stage: `createComponent`,
-          description: `<p>${polyglot.t(`Let's create our first component!`)}</p>`,
+          description: `<p>${polyglot.t(`Create first Angular component!`)}</p>`,
           files: {
             exercise: [files.appComponent],
             reference: [files.appModule, files.main],
