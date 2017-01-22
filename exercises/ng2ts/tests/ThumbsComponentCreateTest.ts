@@ -1,4 +1,4 @@
-declare const polyglot: {t: (s)=>any};
+declare const polyglot: {t: (s) => any};
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {thumbs_thumbs_html} from '../code';
@@ -8,26 +8,34 @@ const thumbs = Api.fetch('')[0];
 
 
 beforeEach(() => {
-  TestBed.resetTestingModule();
-  TestBed.configureTestingModule({
-    providers: [],
-    declarations: [ThumbsComponent]
-  });
+  try {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [],
+      declarations: [ThumbsComponent]
+    });
 
-  TestBed.overrideComponent(ThumbsComponent, {
-    set: {
-      template: thumbs_thumbs_html
-    }
-  });
-  TestBed.compileComponents();
+    TestBed.overrideComponent(ThumbsComponent, {
+      set: {
+        template: thumbs_thumbs_html
+      }
+    });
+    TestBed.compileComponents();
+  } catch (e) {
+
+  }
 });
 
 describe('Component tree', () => {
   describe('Make sure things are displayed properly', () => {
     let fixture;
     beforeEach(() => {
-      fixture = TestBed.createComponent(ThumbsComponent);
-      fixture.detectChanges();
+      try {
+        fixture = TestBed.createComponent(ThumbsComponent);
+        fixture.detectChanges();
+      } catch (e) {
+
+      }
     });
 
     it(polyglot.t(`thumbs.html: Add a button with a 'thumbs-up' CSS class.`), () => {
@@ -64,8 +72,12 @@ describe('Component tree', () => {
   describe('Make sure things are displayed properly', () => {
     let fixture;
     beforeEach(() => {
-      fixture = TestBed.createComponent(ThumbsComponent);
-      fixture.detectChanges();
+      try {
+        fixture = TestBed.createComponent(ThumbsComponent);
+        fixture.detectChanges();
+      } catch (e) {
+
+      }
     });
 
     it(polyglot.t(`thumbs.html: Make the 'thumbs-up' button emit the onThumbs event with the correct thumbs ENUM value.`), () => {

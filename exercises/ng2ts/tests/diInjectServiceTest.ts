@@ -25,7 +25,7 @@ describe('Blabla', () => {
   it(polyglot.t(`VideoService.ts: Add @Injectable() decorator to the classs`), () => {
     let metadata;
     try {
-      metadata = Reflect.getMetadata('parameters', VideoService);
+      metadata = Reflect.getMetadata('design:paramtypes', VideoService);
     } catch (e) {
       // Do nothing, we have assertions below for this case
     }

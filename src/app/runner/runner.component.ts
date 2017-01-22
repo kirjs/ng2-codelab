@@ -56,7 +56,8 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
   runMultipleFiles: Function,
   runSingleFile: Function,
   runSingleScriptFile: Function,
-  loadSystemJS: Function
+  loadSystemJS: Function,
+  injectSystemJs: Function
 }> {
   if (cachedIframes[config.id]) {
     cachedIframes[config.id].remove();
@@ -66,7 +67,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
   const iframe = createIframe(config);
   cachedIframes[config.id] = iframe;
   element.appendChild(iframe);
-  const runJs = jsInjector(iframe);
+  const runJs = jsScriptInjector(iframe);
   let index = 0;
 
   return new Promise((resolve, reject) => {
@@ -102,15 +103,29 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         register: (name, deps, code) => {
           (iframe.contentWindow as any).System.register(name, deps, code)
         },
+        injectSystemJs: () => {
+          const systemCode = runner.scriptLoaderService.getScript('SystemJS');
+          // SystemJS expects document.baseURI to be set on the document.
+          // Since it's a readonly property, I'm faking whole document property.
+          const wrappedSystemCode = `
+          (function(document){
+              ${systemCode}
+            }({
+              getElementsByTagName: document.getElementsByTagName.bind(document),
+              head:document.head,
+              body: document.body,
+              documentElement: document.documentElement,
+              createElement: document.createElement.bind(document),
+              baseURI: '${document.baseURI}'                        
+            }));
+          `;
+          jsScriptInjector(iframe)(wrappedSystemCode);
+        },
         runSingleScriptFile: jsScriptInjector(iframe),
         runSingleFile: runJs,
         setHtml: setHtml,
         loadSystemJS: (name) => {
-          (iframe.contentWindow as any).define = (deps, callback) => {
-            (iframe.contentWindow as any).SystemJS.amdDefine(name, deps, callback)
-          };
-          (iframe.contentWindow as any).define.amd = true;
-          runJs(runner.scriptLoaderService.getScript(name));
+          (iframe.contentWindow as any).loadSystemModule(name, runner.scriptLoaderService.getScript(name));
         },
         runMultipleFiles: (files: Array<FileConfig>) => {
           index++;
@@ -186,6 +201,10 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
           });
         }
       });
+    };
+
+    if (config.url === 'about:blank') {
+      iframe.contentWindow.onload({} as any);
     }
   });
 }
@@ -203,6 +222,7 @@ export class RunnerComponent implements AfterViewInit {
   @ViewChild('runner') element: ElementRef;
   private stateSubscription: Subscription;
   private handleMessageBound: any;
+  public System: any;
 
 
   constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public scriptLoaderService: ScriptLoaderService, public appConfig: AppConfigService) {
@@ -236,46 +256,34 @@ export class RunnerComponent implements AfterViewInit {
 
     if (runner === 'Angular') {
       injectIframe(this.element.nativeElement, {
-        id: 'preview', 'url': 'assets/runner/blank.html'
+        id: 'preview', 'url': 'about:blank'
       }, this).then((sandbox) => {
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
-        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
-
-        sandbox.loadSystemJS('@angular/core');
-        sandbox.loadSystemJS('@angular/common');
-        sandbox.loadSystemJS('@angular/compiler');
-        sandbox.loadSystemJS('@angular/platform-browser');
-        sandbox.loadSystemJS('@angular/platform-browser-dynamic');
-
+        sandbox.loadSystemJS('ng-bundle');
         sandbox.runMultipleFiles(files.filter(file => !file.test));
       });
 
       injectIframe(this.element.nativeElement, {
-        id: 'testing', 'url': 'assets/runner/blank.html'
+        id: 'testing', 'url': 'about:blank'
       }, this).then((sandbox) => {
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
-        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
-        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
 
-        sandbox.loadSystemJS('@angular/core/testing');
-        sandbox.loadSystemJS('@angular/compiler/testing');
-        sandbox.loadSystemJS('@angular/platform-browser/testing');
-        sandbox.loadSystemJS('@angular/platform-browser-dynamic/testing');
-        sandbox.loadSystemJS('@angular/core');
-        sandbox.loadSystemJS('@angular/common');
-        sandbox.loadSystemJS('@angular/compiler');
-        sandbox.loadSystemJS('@angular/platform-browser');
-        sandbox.loadSystemJS('@angular/platform-browser-dynamic');
+
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('test-bootstrap'));
+        sandbox.loadSystemJS('ng-bundle');
+
 
         const testFiles = files
           .filter(file => !file.excludeFromTesting);
@@ -283,17 +291,17 @@ export class RunnerComponent implements AfterViewInit {
       });
     } else if (runner === 'TypeScript') {
       injectIframe(this.element.nativeElement, {
-        id: 'preview', 'url': 'assets/runner/blank.html'
+        id: 'preview', 'url': 'about:blank'
       }, this).then((sandbox) => {
-        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.injectSystemJs();
         sandbox.runMultipleFiles(files.filter(file => !file.test));
       });
 
       injectIframe(this.element.nativeElement, {
-        id: 'testing', 'url': 'assets/runner/blank.html'
+        id: 'testing', 'url': 'about:blank'
       }, this).then((sandbox) => {
         console.log('FRAME CREATED', (new Date()).getTime() - time);
-        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('SystemJS'));
+        sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
@@ -302,23 +310,6 @@ export class RunnerComponent implements AfterViewInit {
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
-    } else {
-      injectIframe(this.element.nativeElement, {
-        id: 'preview', 'url': 'assets/runner/index.html'
-      }, this).then((sandbox) => {
-        sandbox.setHtml(this.html);
-        sandbox.runMultipleFiles(files.filter(file => !file.test));
-      });
-
-      injectIframe(this.element.nativeElement, {
-        id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
-      }, this)
-        .then((sandbox) => {
-
-          const testFiles = files
-            .filter(file => !file.excludeFromTesting);
-          sandbox.runMultipleFiles(testFiles);
-        });
     }
   }
 
