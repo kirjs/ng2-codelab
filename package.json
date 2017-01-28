@@ -35,7 +35,7 @@
     "@types/jasmine": "2.5.38",
     "@types/mocha": "^2.2.34",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.25.5",
+    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "firebase-tools": "^3.2.1",
     "jasmine-core": "2.5.2",
@@ -53,6 +53,6 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "^2.0.10"
+    "typescript": "~2.0.3"
   }
 }
