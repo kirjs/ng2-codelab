@@ -259,8 +259,6 @@ export class RunnerComponent implements AfterViewInit {
         id: 'preview', 'url': 'about:blank'
       }, this).then((sandbox) => {
         sandbox.setHtml(this.html);
-        sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
-        sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
         sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.loadSystemJS('ng-bundle');
@@ -270,6 +268,7 @@ export class RunnerComponent implements AfterViewInit {
       injectIframe(this.element.nativeElement, {
         id: 'testing', 'url': 'about:blank'
       }, this).then((sandbox) => {
+
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));

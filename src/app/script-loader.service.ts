@@ -7,7 +7,7 @@ import {assert} from './utils';
 export class ScriptLoaderService {
 
   scripts = {
-    SystemJS: require('!!raw-loader!../assets/runner/node_modules/systemjs/dist/system.src'),
+    SystemJS: require('!!raw-loader!systemjs/dist/system.src'),
     mocha: require('!!raw-loader!../assets/runner/js/mocha'),
     chai: require('!!raw-loader!../assets/runner/js/chai.min'),
     'test-bootstrap': require('!!raw-loader!../assets/runner/js/test-bootstrap'),
