@@ -13,6 +13,7 @@ export class ScriptLoaderService {
     'test-bootstrap': require('!!raw-loader!../assets/runner/js/test-bootstrap'),
     shim: require('!!raw-loader!../assets/runner/node_modules/core-js/client/shim.min.js'),
     zone: require('!!raw-loader!../assets/runner/node_modules/zone.js/dist/zone.js'),
+    reflect: require('!!raw-loader!reflect-metadata/Reflect'),
     'system-config': require('!!raw-loader!../assets/runner/js/system-config'),
     'ng-bundle': require('!!raw-loader!../assets/runner/ng2/ng-bundle')
   };

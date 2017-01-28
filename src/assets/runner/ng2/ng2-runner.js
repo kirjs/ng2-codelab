@@ -3,8 +3,8 @@ var Builder = require('systemjs-builder');
 const rel = "src/assets/runner/ng2/";
 
 const config = {
-  defaultJSExtensions: true,
   transpiler: "ts",
+  warnings: true,
   typescriptOptions: {
     "target": "es5",
     "module": "system",
