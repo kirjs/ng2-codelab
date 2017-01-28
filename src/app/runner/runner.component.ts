@@ -261,7 +261,6 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
-        sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
         sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.loadSystemJS('ng-bundle');
@@ -275,7 +274,6 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
-        sandbox.runSingleFile(this.scriptLoaderService.getScript('reflect'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
         sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
