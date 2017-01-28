@@ -7,7 +7,7 @@ const config = {
   transpiler: "ts",
   typescriptOptions: {
     "target": "es5",
-    "module": "commonjs",
+    "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
