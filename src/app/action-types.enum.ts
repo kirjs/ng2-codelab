@@ -1,4 +1,5 @@
 export enum ActionTypes {
+  END_TESTS,
   IGNORE,
   LOAD_ALL_SOLUTIONS,
   RUN_CODE,

@@ -51,7 +51,7 @@ function mochaAfter(runId) {
         result: result,
         pass: true,
         runId: runId
-      }, '*')
+      }, '*');
     })
     .on('fail', function (test, error) {
       window.top.postMessage({
@@ -62,6 +62,11 @@ function mochaAfter(runId) {
         result: error.message,
         pass: false,
         runId: runId
-      }, '*')
+      }, '*');
     })
+    .on('end', function () {
+      window.top.postMessage({
+        type: 'testEnd'
+      }, '*');
+    });
 }

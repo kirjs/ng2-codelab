@@ -69,6 +69,7 @@ export class StateService {
           runId: 0,
           page: 'milestone',
           autorun: false,
+          running: false,
           user: '',
           auth: {}
         },
@@ -152,5 +153,9 @@ export class StateService {
 
   loadSolutions() {
     this.dispatchAction(ActionTypes.LOAD_ALL_SOLUTIONS);
+  }
+
+  endTests() {
+    this.dispatchAction(ActionTypes.END_TESTS);
   }
 }

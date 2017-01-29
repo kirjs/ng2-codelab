@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
 export class AutorunComponent {
   autorun: boolean;
   private stateSubscription: Subscription;
+  private running: boolean;
 
   constructor(private state: StateService) {
 
@@ -22,6 +23,15 @@ export class AutorunComponent {
           this.autorun = autorun;
         }
       );
+
+    this.stateSubscription = this.state.update
+      .map(d => d.local.running)
+      .distinctUntilChanged().subscribe(running => {
+          this.running = running;
+        }
+      );
+
+
   }
 
   ngOnDestroy() {
@@ -29,11 +39,17 @@ export class AutorunComponent {
   }
 
 
+  endRun() {
+    this.state.endTests();
+  }
+
   toggleAutorun() {
     this.state.toggleAutorun();
   }
 
   run() {
-    this.state.run();
+    if (!this.running) {
+      this.state.run();
+    }
   }
 }

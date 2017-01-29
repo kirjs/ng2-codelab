@@ -29,12 +29,17 @@ export class ReducersService {
   }
 
   [ActionTypes.RUN_CODE](state: AppState) {
+    if (state.local.running) {
+      return state;
+    }
+
     // Runner watches for changes to runId, and reruns the code on update.
     // This is probably not the most intuitive way to do things.
     if (this.appConfig.config.debug) {
       state.local.debugTrackTime = (new Date()).getTime();
       console.log('RUN START!');
     }
+    state.local.running = true;
 
     state.local.runId++;
     return state;
@@ -116,6 +121,11 @@ export class ReducersService {
     return state;
   }
 
+  [ActionTypes.END_TESTS](state: AppState) {
+    state.local.running = false;
+    return state;
+  }
+
   [ActionTypes.UPDATE_SINGLE_TEST_RESULT](state: AppState, action: {data: TestInfo}) {
     selectedExercise(state).tests.forEach(test => {
       if (test.title === action.data.title) {
@@ -126,6 +136,7 @@ export class ReducersService {
 
     if (this.appConfig.config.debug) {
       if (!selectedExercise(state).tests.find(t => t.pass === undefined)) {
+        state = this[ActionTypes.END_TESTS](state);
         console.log('RUN COMPLETE', (new Date()).getTime() - state.local.debugTrackTime);
       }
     }

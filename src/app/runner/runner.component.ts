@@ -248,8 +248,12 @@ export class RunnerComponent implements AfterViewInit {
 
     if (event.data.type === 'testList') {
       this.state.setTestList(event.data.tests);
-
     }
+
+    if (event.data.type === 'testEnd') {
+      this.state.endTests();
+    }
+
     if (event.data.type === 'testResult') {
       this.state.updateSingleTestResult({
         title: event.data.test.title,

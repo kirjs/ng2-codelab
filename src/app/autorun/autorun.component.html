@@ -1,7 +1,6 @@
-<div class="autorun">
+<div class="autorun" [class.running]="running">
   <button
     type="submit"
-    class="autorun"
     *ngIf="!autorun"
     (click)="run()">Run
   </button>
@@ -14,4 +13,5 @@
       [(ngModel)]="autorun"
       (click)="toggleAutorun(autorun)">
   </label>
+  <span class = "stop" (click)="endRun()">(Running, click to stop)</span>
 </div>

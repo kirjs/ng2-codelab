@@ -17,9 +17,11 @@ export interface AppState {
   config: AppConfig,
   local: LocalState
 }
+
 export interface LocalState {
   debugTrackTime?: number;
   runId: number;
+  running: boolean,
   page: 'milestone'|'feedback',
   autorun: boolean,
   user: string,
