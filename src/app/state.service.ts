@@ -68,7 +68,7 @@ export class StateService {
         local: {
           runId: 0,
           page: 'milestone',
-          autorun: true,
+          autorun: false,
           user: '',
           auth: {}
         },

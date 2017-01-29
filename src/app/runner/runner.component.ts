@@ -53,6 +53,7 @@ function createIframe(config: IframeConfig) {
 
 function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{
   setHtml: Function,
+  register: Function,
   runMultipleFiles: Function,
   runSingleFile: Function,
   runSingleScriptFile: Function,
@@ -99,10 +100,19 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         displayError(error, 'Angular Error');
       };
 
+      function register(name, code){
+        (iframe.contentWindow as any).System.register(name, [], function (exports) {
+          return {
+            setters: [],
+            execute: function () {
+              exports(code);
+            }
+          }
+        });
+      }
+
       resolve({
-        register: (name, deps, code) => {
-          (iframe.contentWindow as any).System.register(name, deps, code)
-        },
+        register: register,
         injectSystemJs: () => {
           const systemCode = runner.scriptLoaderService.getScript('SystemJS');
           // SystemJS expects document.baseURI to be set on the document.
@@ -142,6 +152,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
               }
             }
           });
+
 
           files.map(file => {
             if (!file.path) {
@@ -264,13 +275,13 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.injectSystemJs();
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
         sandbox.loadSystemJS('ng-bundle');
+        sandbox.register('reflect-metadata', Reflect);
         sandbox.runMultipleFiles(files.filter(file => !file.test));
       });
 
       injectIframe(this.element.nativeElement, {
         id: 'testing', 'url': 'about:blank'
       }, this).then((sandbox) => {
-
         sandbox.setHtml(this.html);
         sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
@@ -280,6 +291,7 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
         sandbox.runSingleFile(this.scriptLoaderService.getScript('test-bootstrap'));
         sandbox.loadSystemJS('ng-bundle');
+        sandbox.register('reflect-metadata', Reflect);
 
 
         const testFiles = files
@@ -302,7 +314,6 @@ export class RunnerComponent implements AfterViewInit {
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
         sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
-
         const testFiles = files
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);

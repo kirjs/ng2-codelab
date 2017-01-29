@@ -1,5 +1,9 @@
-.autorun {
-  border-bottom: 1px #ddd solid;
-  padding-bottom: 4px;
+button.autorun {
+  border: 1px solid #000;
+  background-color: #5ccb5d;
+  color: #fff;
   cursor: pointer;
+  padding: 4px 20px;
+  margin-right: 20px;
+
 }

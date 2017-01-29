@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import 'rxjs/Subject';
 import '@angular/core';
 import '@angular/platform-browser-dynamic';
