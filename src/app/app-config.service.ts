@@ -18,7 +18,7 @@ export const appConfig: AppConfig = {
   preserveState: !reset,
   debug,
   test,
-  simulation
+  simulation,
   noerrors,
   presentationMode
 };
