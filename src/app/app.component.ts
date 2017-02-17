@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { StateService } from "./state.service";
-import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2'; //TODO remove firebase logic from the main component
 import {appConfig} from './app-config.service';
 
 //helper function to get #simulate_id parameter from URL
@@ -37,29 +37,31 @@ export class AppComponent {
         });
       });
     }
+
+    //retrieve user progress only if it's enabled
     if(appConfig.feedbackEnabled && !appConfig.simulation){
         this.user_progresses = this.angularFire.database.list('/user_progress');
         this.auth = { uid: '' };
 
         let authObservable = this.angularFire.auth.subscribe((authState) => {
           if (!authState) {
-            console.log('not authorized');
+            //not authorized
             this.angularFire.auth.login({
               provider: AuthProviders.Anonymous,
               method: AuthMethods.Anonymous
             }).then(authData => {
-              console.log(authData.uid);
               this.auth = authData;
             }).catch(() => {console.log('Authorization failed. Try refreshing the page.')});
           }
           else {
-            console.log('authorized');
+            //authorized
             this.auth = authState;
           }
 
-          this.state.update.debounceTime(500).subscribe((state) => {
+          //listen for state changes with 10 secs interval (to avoid sending state too often)
+          this.state.update.debounceTime(10000).subscribe((state) => {
             if (this.auth.uid) {
-              console.log('setting state to firebase', this.auth.uid);
+              //send state to firebase
               this.user_progresses.update(this.auth.uid, JSON.parse(JSON.stringify(state)));
             }
           });
