@@ -21,6 +21,7 @@ import {MonacoConfigService} from './monaco-config.service';
 import {ResizeComponent} from './resize/resize.component';
 import {AppConfigService, appConfig} from './app-config.service';
 import {LoopProtectionService} from './loop-protection.service';
+import {ScriptLoaderService} from './script-loader.service';
 
 let ngModuleConfig = {
   declarations: [
@@ -48,7 +49,8 @@ let ngModuleConfig = {
     CodelabConfigService,
     AppConfigService,
     MonacoConfigService,
-    LoopProtectionService
+    LoopProtectionService,
+    ScriptLoaderService
   ],
   bootstrap: [AppComponent]
 };

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FileConfig} from './file-config';
 
-const monacoLoaderCode = require('raw!../assets/monaco/min/vs/loader');
+const monacoLoaderCode = require('!raw-loader!../assets/monaco/min/vs/loader');
 
 const win = window as any;
 declare const monaco;
@@ -102,7 +102,6 @@ export class MonacoConfigService {
     if (models.length) {
       models.forEach(model => model.dispose());
     }
-    console.log(files);
 
     files.map(file => {
       monaco.editor.createModel(file.code, file.type, file.path);

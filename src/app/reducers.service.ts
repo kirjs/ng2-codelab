@@ -29,12 +29,17 @@ export class ReducersService {
   }
 
   [ActionTypes.RUN_CODE](state: AppState) {
+    if (state.local.running) {
+      return state;
+    }
+
     // Runner watches for changes to runId, and reruns the code on update.
     // This is probably not the most intuitive way to do things.
     if (this.appConfig.config.debug) {
       state.local.debugTrackTime = (new Date()).getTime();
-      console.log('RUN START');
+      console.log('RUN START!');
     }
+    state.local.running = true;
 
     state.local.runId++;
     return state;
@@ -72,15 +77,15 @@ export class ReducersService {
   }
 
   [ActionTypes.LOAD_ALL_SOLUTIONS](state: AppState) {
-
     const exercise = selectedExercise(state) as ExerciseConfig;
-    return exercise.files.reduce((state, file) => {
+    state = exercise.files.reduce((state, file) => {
       if (file.solution) {
-
-        return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution}})
+        return this[ActionTypes.UPDATE_CODE](state, {data: {file: file, code: file.solution, autorun: false}})
       }
       return state;
     }, state);
+
+    return this[ActionTypes.RUN_CODE](state);
   }
 
   [ActionTypes.LOAD_SOLUTION](state: AppState, {data}: {data: FileConfig}) {
@@ -96,8 +101,11 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string}}) {
+  [ActionTypes.UPDATE_CODE](state: AppState, {data}: {data: {file: FileConfig, code: string, autorun?: boolean}}) {
     const exercise = selectedExercise(state) as ExerciseConfig;
+    if (data.autorun === undefined) {
+      data.autorun = state.local.autorun;
+    }
 
     exercise.files.forEach((file) => {
       if (file === data.file) {
@@ -105,12 +113,16 @@ export class ReducersService {
       }
     });
 
-    return state.local.autorun ? this[ActionTypes.RUN_CODE](state) : state;
+    return data.autorun ? this[ActionTypes.RUN_CODE](state) : state;
   }
 
   [ActionTypes.SET_TEST_LIST](state: AppState, action: {data: Array<string>}) {
-
     selectedExercise(state).tests = action.data.map(test => ({title: test}));
+    return state;
+  }
+
+  [ActionTypes.END_TESTS](state: AppState) {
+    state.local.running = false;
     return state;
   }
 
@@ -124,6 +136,7 @@ export class ReducersService {
 
     if (this.appConfig.config.debug) {
       if (!selectedExercise(state).tests.find(t => t.pass === undefined)) {
+        state = this[ActionTypes.END_TESTS](state);
         console.log('RUN COMPLETE', (new Date()).getTime() - state.local.debugTrackTime);
       }
     }
@@ -171,9 +184,11 @@ export class ReducersService {
     if (exercise.files) {
       exercise.files.forEach(file => file.code = file.template);
       this.monacoConfig.createFileModels(exercise.files);
+      exercise.runner = exercise.runner || state.codelab.defaultRunner;
+      return this[ActionTypes.RUN_CODE](state);
+    } else {
+      return state;
     }
-
-    return this[ActionTypes.RUN_CODE](state);
   }
 
   constructor(/*protected angularFire: AngularFire,*/

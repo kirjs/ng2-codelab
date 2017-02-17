@@ -8,8 +8,9 @@ export interface AppConfig {
   feedbackEnabled: boolean,
   preserveState: boolean,
   debug: boolean,
-  presentationMode: boolean,
   simulation:boolean
+  noerrors: boolean,
+  presentationMode: boolean
 }
 
 export interface AppState {
@@ -17,9 +18,11 @@ export interface AppState {
   config: AppConfig,
   local: LocalState
 }
+
 export interface LocalState {
   debugTrackTime?: number;
   runId: number;
+  running: boolean,
   page: 'milestone'|'feedback',
   autorun: boolean,
   user: string,
@@ -28,6 +31,7 @@ export interface LocalState {
 
 export interface CodelabState {
   name: string,
+  defaultRunner: string,
   selectedMilestoneIndex: number,
   milestones: Array<MilestoneConfig>
 }

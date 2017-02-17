@@ -27,7 +27,7 @@ const guests = [
   {name: 'notme', coming: false},
 ];
 
-function getConstructorNode(code){
+function getConstructorNode(code) {
   let constructorNode = undefined;
 
   /**
@@ -93,7 +93,7 @@ describe('Component', () => {
     chai.expect(constructorNode.parameters[0].name.text, polyglot.t(`Codelab constructor's parameter should be called 'guests'`)).equals('guests');
 
     let type = constructorNode.parameters[0].type;
-    const isArrayOfGuest = /* Array<Guest> */(type.kind === ts.SyntaxKind.TypeReference  && type.typeName.text === 'Array' &&
+    const isArrayOfGuest = /* Array<Guest> */(type.kind === ts.SyntaxKind.TypeReference && type.typeName.text === 'Array' &&
       type.typeArguments.length === 1 && type.typeArguments[0].typeName.text === 'Guest') ||
       /* Guest[] */ (type.kind === ts.SyntaxKind.ArrayType && type.elementType.kind === ts.SyntaxKind.TypeReference && type.elementType.typeName.text === 'Guest');
 
@@ -112,9 +112,8 @@ describe('Component', () => {
     chai.expect(typeof (new Codelab(guests).getGuestsComing)).equals('function');
   });
 
-  it(polyglot.t(`Modify getGuestsComing to filter the guests array and only return guests with the 'coming' property set to true. 
-  (hint: please use Array.filter method, and NOT a for loop. Ask us for help if you don't know how to
-   (There's potential of getting into an infinite loop otherwise)`), () => {
+  it(polyglot.t(`Modify getGuestsComing to filter the guests array and only return guests with the 'coming' 
+      property set to true.`), () => {
     chai.expect(new Codelab(guests).getGuestsComing().length).equals(1);
   });
 

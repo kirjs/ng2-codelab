@@ -1,8 +1,9 @@
 import {Component, forwardRef, ViewChild, ElementRef, Input, EventEmitter, Output, AfterViewInit} from '@angular/core';
+import {StateService} from '../state.service';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import {FileConfig} from '../file-config';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {MonacoConfigService} from '../monaco-config.service';
 declare const monaco: any;
 declare const require: any;
@@ -28,15 +29,16 @@ export class EditorComponent implements AfterViewInit {
   private editSub: Subject<String>;
   height = 0;
   public code = '';
+  private runSubscription: Subscription;
 
   static calcHeight(lines) {
     return Math.max(lines * 18, 18 * 6);
   }
 
 
-  constructor(private monacoConfigService: MonacoConfigService) {
+  constructor(private monacoConfigService: MonacoConfigService, public state: StateService) {
     this.editSub = new Subject<String>();
-    this.editSub.debounceTime(1000).subscribe((value) => {
+    this.runSubscription = this.editSub.debounceTime(1000).subscribe((value) => {
       this.onCodeChange.emit(value);
     });
   }
@@ -64,6 +66,8 @@ export class EditorComponent implements AfterViewInit {
       this.updateValue(this._editor.getModel().getValue());
     });
 
+    //Re-running the code on Ctrl + Enter
+    this._editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => this.state.run());
 
     this.updateHeight(this.file.code);
 
@@ -77,6 +81,11 @@ export class EditorComponent implements AfterViewInit {
       this.editorContent.nativeElement.style.height = height + 'px';
       this._editor.layout();
     }
+  }
+
+  ngOnDestroy() {
+    this.onCodeChange.unsubscribe();
+    this.editSub.unsubscribe();
   }
 
   updateValue(value: string) {

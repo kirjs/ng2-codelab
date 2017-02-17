@@ -12,6 +12,11 @@ export function testMiddleware(stateService: StateService, appConfig: AppConfig)
   let expectedTests = 0;
   let testMode: TestMode = TestMode.BROKEN;
   let lastExercise = null;
+  const startTime = (new Date()).getTime();
+
+  if (appConfig.test) {
+    console.log('TEST START');
+  }
 
   return function test(state: AppState, action) {
     if (appConfig.test) {
@@ -28,6 +33,12 @@ export function testMiddleware(stateService: StateService, appConfig: AppConfig)
           lastExercise = exercise;
           // This is just info
           stateService.nextExercise();
+        }
+
+        if (state.codelab.selectedMilestoneIndex === state.codelab.milestones.length - 1) {
+          let result = (new Date()).getTime() - startTime;
+          console.log('TEST RUN COMPLETE', result);
+          alert(result);
         }
       }
 

@@ -1,4 +1,4 @@
-declare const polyglot: {t: (s)=>any};
+declare const polyglot: {t: (s) => any};
 import {TestBed} from '@angular/core/testing';
 import 'initTestBed';
 import {VideoService} from '../video/video.service';
@@ -51,9 +51,13 @@ describe('Component tree', () => {
   describe('Make sure things are displayed properly', () => {
     let fixture;
     beforeEach(() => {
-      fixture = TestBed.createComponent(VideoComponent);
-      fixture.componentInstance.video = video;
-      fixture.detectChanges();
+      try {
+        fixture = TestBed.createComponent(VideoComponent);
+        fixture.componentInstance.video = video;
+        fixture.detectChanges();
+      } catch (e) {
+
+      }
     });
 
     it(polyglot.t(`Video.html: Display the video title`), () => {
@@ -69,7 +73,6 @@ describe('Component tree', () => {
     it(polyglot.t(`Video.html: Display the video description`), () => {
       chai.expect(fixture.nativeElement.innerHTML, `can't find the video description`).contains(video.description);
     });
-
 
 
     it(polyglot.t(`Video.html: Display the video date`), () => {

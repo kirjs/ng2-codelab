@@ -19,8 +19,4 @@ export class ExerciseComponent {
   constructor(public state: StateService, private sanitizer: DomSanitizer) {
 
   }
-
-  onCodeChange(changedFile) {
-    this.state.updateCode(changedFile);
-  }
 }

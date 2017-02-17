@@ -29,7 +29,6 @@ export class EditorsComponent {
         child.ping();
       }
     });
-
   }
 
   constructor(private  state: StateService, appConfig: AppConfigService) {

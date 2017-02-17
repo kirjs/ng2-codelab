@@ -1,8 +1,12 @@
 import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
 import * as ts from 'typescript';
 import {FileConfig} from '../file-config';
-import {StateService} from '../state.service';
+import {StateService, selectedExercise} from '../state.service';
 import {LoopProtectionService} from '../loop-protection.service';
+import {ScriptLoaderService} from '../script-loader.service';
+import {Subscription} from 'rxjs';
+import {AppConfigService} from '../app-config.service';
+import {ExerciseConfig} from '../exercise-config';
 
 let cachedIframes = {};
 
@@ -11,6 +15,15 @@ function jsInjector(iframe) {
     iframe.contentWindow.eval(script);
   }
 }
+function jsScriptInjector(iframe) {
+  return function (code) {
+    const script = document.createElement('script');
+    script.type = "text/javascript";
+    script.innerHTML = code;
+    iframe.contentWindow.document.head.appendChild(script);
+  }
+}
+
 
 function cssInjector(iframe) {
   return function (css) {
@@ -38,7 +51,15 @@ function createIframe(config: IframeConfig) {
   return iframe;
 }
 
-function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{setHtml: Function, runMultipleFiles: Function}> {
+function injectIframe(element: any, config: IframeConfig, runner: RunnerComponent): Promise<{
+  setHtml: Function,
+  register: Function,
+  runMultipleFiles: Function,
+  runSingleFile: Function,
+  runSingleScriptFile: Function,
+  loadSystemJS: Function,
+  injectSystemJs: Function
+}> {
   if (cachedIframes[config.id]) {
     cachedIframes[config.id].remove();
     delete cachedIframes[config.id];
@@ -47,7 +68,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
   const iframe = createIframe(config);
   cachedIframes[config.id] = iframe;
   element.appendChild(iframe);
-  const runJs = jsInjector(iframe);
+  const runJs = jsScriptInjector(iframe);
   let index = 0;
 
   return new Promise((resolve, reject) => {
@@ -59,11 +80,14 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         console.log.apply(console, arguments);
       };
 
+
       const setHtml = (html) => {
         iframe.contentDocument.body.innerHTML = html;
       };
       const displayError = (error, info) => {
-        console.log(info, error);
+        if (!runner.appConfig.config.noerrors) {
+          console.log(info, error);
+        }
         const escaped = (document.createElement('a').appendChild(
           document.createTextNode(error)).parentNode as any).innerHTML;
         setHtml(`
@@ -74,15 +98,47 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
       iframe.contentWindow.console.error = function (error, message) {
         // handle angular error 1/3
         displayError(error, 'Angular Error');
-        console.error.apply(console, arguments);
       };
 
+      function register(name, code){
+        (iframe.contentWindow as any).System.register(name, [], function (exports) {
+          return {
+            setters: [],
+            execute: function () {
+              exports(code);
+            }
+          }
+        });
+      }
 
       resolve({
+        register: register,
+        injectSystemJs: () => {
+          const systemCode = runner.scriptLoaderService.getScript('SystemJS');
+          // SystemJS expects document.baseURI to be set on the document.
+          // Since it's a readonly property, I'm faking whole document property.
+          const wrappedSystemCode = `
+          (function(document){
+              ${systemCode}
+            }({
+              getElementsByTagName: document.getElementsByTagName.bind(document),
+              head:document.head,
+              body: document.body,
+              documentElement: document.documentElement,
+              createElement: document.createElement.bind(document),
+              baseURI: '${document.baseURI}'                        
+            }));
+          `;
+          jsScriptInjector(iframe)(wrappedSystemCode);
+        },
+        runSingleScriptFile: jsScriptInjector(iframe),
+        runSingleFile: runJs,
         setHtml: setHtml,
+        loadSystemJS: (name) => {
+          (iframe.contentWindow as any).loadSystemModule(name, runner.scriptLoaderService.getScript(name));
+        },
         runMultipleFiles: (files: Array<FileConfig>) => {
           index++;
-
 
           (iframe.contentWindow as any).System.register('code', [], function (exports) {
             return {
@@ -97,12 +153,12 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
             }
           });
 
+
           files.map(file => {
             if (!file.path) {
               debugger
             }
           });
-
 
           files.filter(file => file.path.indexOf('index.html') >= 0).map((file => {
             setHtml(file.code)
@@ -125,9 +181,8 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
 
             const moduleName = file.moduleName;
 
-
             // TODO(kirjs): Add source maps.
-            return ts.transpileModule(code, {
+            const result = ts.transpileModule(code, {
               compilerOptions: {
                 module: ts.ModuleKind.System,
                 target: ts.ScriptTarget.ES5,
@@ -144,6 +199,8 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
               moduleName: moduleName,
               reportDiagnostics: true
             });
+
+            return result;
           }).map((compiled) => {
             runJs(compiled.outputText);
           });
@@ -155,6 +212,10 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
           });
         }
       });
+    };
+
+    if (config.url === 'about:blank') {
+      iframe.contentWindow.onload({} as any);
     }
   });
 }
@@ -166,59 +227,115 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
   styleUrls: ['./runner.component.css']
 })
 export class RunnerComponent implements AfterViewInit {
-  @Input() files: any;
+  @Input() files: Array<FileConfig>;
+  @Input() runnerType: string;
   html = `<my-app></my-app>`;
   @ViewChild('runner') element: ElementRef;
+  private stateSubscription: Subscription;
+  private handleMessageBound: any;
+  public System: any;
 
 
-  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService) {
-    window.addEventListener("message", (event) => {
-      if (!event.data || !event.data.type) {
-        return;
-      }
-
-      if (event.data.type === 'testList') {
-        state.setTestList(event.data.tests);
-
-      }
-      if (event.data.type === 'testResult') {
-        state.updateSingleTestResult({
-          title: event.data.test.title,
-          pass: event.data.pass,
-          result: event.data.result
-        });
-      }
-      changeDetectionRef.detectChanges();
-    }, false);
+  constructor(private changeDetectionRef: ChangeDetectorRef, private state: StateService, public loopProtectionService: LoopProtectionService, public scriptLoaderService: ScriptLoaderService, public appConfig: AppConfigService) {
+    this.handleMessageBound = this.handleMessage.bind(this);
+    window.addEventListener("message", this.handleMessageBound, false);
   }
 
-  runCode() {
-    injectIframe(this.element.nativeElement, {
-      id: 'preview', 'url': 'assets/runner/index.html'
-    }, this).then((sandbox) => {
-      sandbox.setHtml(this.html);
-      sandbox.runMultipleFiles(this.files.filter(file => !file.test));
-    });
+  handleMessage(event) {
+    if (!event.data || !event.data.type) {
+      return;
+    }
 
-    injectIframe(this.element.nativeElement, {
-      id: 'testing', 'url': 'assets/runner/tests.html', restart: true, hidden: false
-    }, this)
-      .then((sandbox) => {
+    if (event.data.type === 'testList') {
+      this.state.setTestList(event.data.tests);
+    }
 
-        const testFiles = this.files
+    if (event.data.type === 'testEnd') {
+      this.state.endTests();
+    }
+
+    if (event.data.type === 'testResult') {
+      this.state.updateSingleTestResult({
+        title: event.data.test.title,
+        pass: event.data.pass,
+        result: event.data.result
+      });
+    }
+    this.changeDetectionRef.detectChanges();
+  }
+
+  runCode(exercise: ExerciseConfig) {
+    const time = (new Date()).getTime();
+    const runner = exercise.runner;
+    const files = exercise.files;
+
+    if (runner === 'Angular') {
+      injectIframe(this.element.nativeElement, {
+        id: 'preview', 'url': 'about:blank'
+      }, this).then((sandbox) => {
+        sandbox.setHtml(this.html);
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
+        sandbox.injectSystemJs();
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
+        sandbox.loadSystemJS('ng-bundle');
+        sandbox.register('reflect-metadata', Reflect);
+        sandbox.runMultipleFiles(files.filter(file => !file.test));
+      });
+
+      injectIframe(this.element.nativeElement, {
+        id: 'testing', 'url': 'about:blank'
+      }, this).then((sandbox) => {
+        sandbox.setHtml(this.html);
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('shim'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('zone'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
+        sandbox.injectSystemJs();
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('system-config'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
+        sandbox.runSingleFile(this.scriptLoaderService.getScript('test-bootstrap'));
+        sandbox.loadSystemJS('ng-bundle');
+        sandbox.register('reflect-metadata', Reflect);
+
+
+        const testFiles = files
           .filter(file => !file.excludeFromTesting);
         sandbox.runMultipleFiles(testFiles);
       });
+    } else if (runner === 'TypeScript') {
+      injectIframe(this.element.nativeElement, {
+        id: 'preview', 'url': 'about:blank'
+      }, this).then((sandbox) => {
+        sandbox.injectSystemJs();
+        sandbox.runMultipleFiles(files.filter(file => !file.test));
+      });
 
+      injectIframe(this.element.nativeElement, {
+        id: 'testing', 'url': 'about:blank'
+      }, this).then((sandbox) => {
+        console.log('FRAME CREATED', (new Date()).getTime() - time);
+        sandbox.injectSystemJs();
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('mocha'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('chai'));
+        sandbox.runSingleScriptFile(this.scriptLoaderService.getScript('test-bootstrap'));
+        const testFiles = files
+          .filter(file => !file.excludeFromTesting);
+        sandbox.runMultipleFiles(testFiles);
+      });
+    }
+  }
 
+  ngOnDestroy() {
+    Object.keys(cachedIframes).map(key => cachedIframes[key].remove());
+    window.removeEventListener("message", this.handleMessageBound, false);
+    this.stateSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
-    this.state.update
-      .map(e => e.local.runId)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.runCode()
+    this.stateSubscription = this.state.update
+      .distinctUntilChanged((a, b) => a === b, e => e.local.runId)
+      .subscribe((state) => {
+        this.runCode(selectedExercise(state))
       }, () => {
         debugger
       });
