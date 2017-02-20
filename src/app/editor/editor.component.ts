@@ -42,7 +42,6 @@ export class EditorComponent implements AfterViewInit {
 
     this.editSub.publish(A => autorun.switchMap(a => a ? A.debounceTime(1000) : A))
       .subscribe(value => {
-        console.log('emit');
         this.onCodeChange.emit(value);
       });
   }

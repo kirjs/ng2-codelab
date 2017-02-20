@@ -15,7 +15,8 @@ export interface AppConfig {
 export interface AppState {
   codelab: CodelabState,
   config: AppConfig,
-  local: LocalState
+  local: LocalState,
+  version: number
 }
 
 export interface LocalState {

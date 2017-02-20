@@ -28,6 +28,7 @@ export class StateService {
   public readonly update: Observable<AppState>;
   private readonly dispatch: BehaviorSubject<Action>;
   public appConfig: AppConfig;
+  public readonly version = 2;
 
   middleware: Middleware[] = [];
 
@@ -73,9 +74,11 @@ export class StateService {
           user: '',
           auth: {}
         },
-        config: appConfig.config
+        config: appConfig.config,
+        version: this.version
       })
       .map((state: AppState) => {
+        console.log('writing', state.version);
         localStorage.setItem('state', JSON.stringify(state));
         return state;
       })

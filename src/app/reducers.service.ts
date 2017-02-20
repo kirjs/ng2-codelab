@@ -13,8 +13,12 @@ import {ExerciseConfig} from './exercise-config';
 @Injectable()
 export class ReducersService {
   [ActionTypes.INIT_STATE](state: AppState) {
-    const localState = JSON.parse(localStorage.getItem('state'));
-    const actualState = (this.appConfig.config.preserveState && localState) ? localState : state;
+    const localState = JSON.parse(localStorage.getItem('state')) as AppState;
+
+    const actualState = (this.appConfig.config.preserveState
+    && localState
+    && localState.version === state.version) ? localState : state;
+
     return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
   }
 
@@ -181,7 +185,7 @@ export class ReducersService {
     const exercise = selectedExercise(state);
 
     if (exercise.files) {
-      exercise.files.forEach(file => file.code = file.template);
+      exercise.files.forEach(file => file.code = file.code || file.template);
       this.monacoConfig.createFileModels(exercise.files);
       exercise.runner = exercise.runner || state.codelab.defaultRunner;
       return this[ActionTypes.RUN_CODE](state);
