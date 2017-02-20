@@ -41,9 +41,7 @@ export class EditorComponent implements AfterViewInit {
     const autorun = state.update.map(a => a.local.autorun).distinctUntilChanged();
 
     this.editSub.publish(A => autorun.switchMap(a => a ? A.debounceTime(1000) : A))
-      .subscribe(value => {
-        this.onCodeChange.emit(value);
-      });
+      .subscribe(this.onCodeChange);
   }
 
   loadCode(code: string) {
@@ -51,7 +49,6 @@ export class EditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
     const myDiv: HTMLDivElement = this.editorContent.nativeElement;
 
     this._editor = this.monacoConfigService.monaco.editor.create(myDiv,

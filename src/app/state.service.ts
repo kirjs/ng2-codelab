@@ -78,7 +78,6 @@ export class StateService {
         version: this.version
       })
       .map((state: AppState) => {
-        console.log('writing', state.version);
         localStorage.setItem('state', JSON.stringify(state));
         return state;
       })
