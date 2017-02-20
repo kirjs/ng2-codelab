@@ -16,26 +16,21 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^2.3.1",
-    "@angular/compiler": "^2.3.1",
-    "@angular/core": "^2.3.1",
-    "@angular/forms": "^2.3.1",
-    "@angular/http": "^2.3.1",
-    "@angular/platform-browser": "^2.3.1",
-    "@angular/platform-browser-dynamic": "^2.3.1",
-    "@angular/router": "^3.3.1",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.0.1",
-    "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
+    "rxjs": "^5.0.1"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.0-beta.32.3",
+    "@angular/common": "^2.4.8",
     "@angular/compiler-cli": "^2.3.1",
+    "@angular/forms": "^2.4.8",
+    "@angular/http": "^2.4.8",
+    "@angular/platform-browser": "^2.4.8",
+    "@angular/platform-browser-dynamic": "^2.4.8",
+    "@angular/router": "^3.4.8",
     "@types/chai": "^3.4.34",
     "@types/jasmine": "2.5.38",
     "@types/mocha": "^2.2.34",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.0",
     "firebase-tools": "^3.2.1",
@@ -57,5 +52,17 @@
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "~2.0.3"
-  }
+  },
+  "description": "This is an codelab platform designed to simplify creating interactive exercises.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kirjs/ng2-codelab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/kirjs/ng2-codelab/issues"
+  },
+  "homepage": "https://github.com/kirjs/ng2-codelab#readme"
 }
