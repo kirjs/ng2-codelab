@@ -38,9 +38,13 @@ export class EditorComponent implements AfterViewInit {
 
   constructor(private monacoConfigService: MonacoConfigService, public state: StateService) {
     this.editSub = new Subject<String>();
-    this.runSubscription = this.editSub.debounceTime(1000).subscribe((value) => {
-      this.onCodeChange.emit(value);
-    });
+    const autorun = state.update.map(a => a.local.autorun).distinctUntilChanged();
+
+    this.editSub.publish(A => autorun.switchMap(a => a ? A.debounceTime(1000) : A))
+      .subscribe(value => {
+        console.log('emit');
+        this.onCodeChange.emit(value);
+      });
   }
 
   loadCode(code: string) {
