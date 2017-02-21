@@ -5,7 +5,6 @@ import {selectedMilestone, selectedExercise} from './state.service';
 import {FileConfig} from './file-config';
 import {TestInfo} from './test-info';
 import {Observable} from 'rxjs/Rx';
-//import {AngularFire} from 'angularfire2';
 import {MonacoConfigService} from './monaco-config.service';
 import {AppConfigService} from './app-config.service';
 import {ExerciseConfig} from './exercise-config';
@@ -160,22 +159,6 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.SEND_FEEDBACK](state: AppState /*, feedback */) {
-    /*
-    if (this.appConfig.config.feedbackEnabled) {
-      let items = this.angularFire.database.list('/feedback');
-      items.push({
-        comment: feedback.data.comment,
-        state: JSON.parse(JSON.stringify(state)),
-        name: feedback.data.username,
-        timestamp: new Date().getTime()
-      });
-      state.local.user = feedback.data.username;
-    }
-    */
-    return state;
-  }
-
   [ActionTypes.SELECT_EXERCISE](state: AppState, {data}: {data: number}): AppState | Observable<AppState> {
     const milestone = selectedMilestone(state);
     milestone.selectedExerciseIndex = data;
@@ -191,8 +174,7 @@ export class ReducersService {
     }
   }
 
-  constructor(/*protected angularFire: AngularFire,*/
-              protected monacoConfig: MonacoConfigService,
+  constructor(protected monacoConfig: MonacoConfigService,
               protected appConfig: AppConfigService) {
 
   }

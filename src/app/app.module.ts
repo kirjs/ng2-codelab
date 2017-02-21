@@ -10,10 +10,8 @@ import {EditorsComponent} from './editors/editors.component';
 import {CodelabComponent} from './codelab/codelab.component';
 import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from './state.service';
-import {AngularFireModule, AuthProviders, AuthMethods, AngularFire} from 'angularfire2';
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from './reducers.service';
-import {FeedbackWidgetComponent} from './feedback-widget/feedback-widget.component';
 import {FeedbackPageComponent} from './feedback-page/feedback-page.component';
 import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {AutorunComponent} from './autorun/autorun.component';
@@ -22,7 +20,7 @@ import {ResizeComponent} from './resize/resize.component';
 import {AppConfigService, appConfig} from './app-config.service';
 import {LoopProtectionService} from './loop-protection.service';
 import {ScriptLoaderService} from './script-loader.service';
-
+import {FeedbackModule} from './feedback/feedback.module';
 let ngModuleConfig = {
   declarations: [
     AppComponent,
@@ -33,7 +31,6 @@ let ngModuleConfig = {
     CodelabComponent,
     MilestoneComponent,
     TestsComponent,
-    FeedbackWidgetComponent,
     FeedbackPageComponent,
     AutorunComponent,
     ResizeComponent
@@ -42,6 +39,7 @@ let ngModuleConfig = {
     BrowserModule,
     FormsModule,
     HttpModule,
+    FeedbackModule
   ],
   providers: [
     StateService,
@@ -57,21 +55,9 @@ let ngModuleConfig = {
 
 // We use firebase for the feedback. If it's disabled, we should do no extra network requests.
 if (appConfig.feedbackEnabled) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyBDg_JEXDrn7iuvGR-xrcU1bmjWc-uxmgA",
-    authDomain: "ng2-codelab.firebaseapp.com",
-    databaseURL: "https://ng2-codelab.firebaseio.com",
-    storageBucket: "ng2-codelab.appspot.com"
-  };
-  const myFirebaseAuthConfig = {
-    provider: AuthProviders.Google,
-    method: AuthMethods.Popup
-  };
-
-  ngModuleConfig.imports.push(AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig) as any)
+  
 } else {
   @NgModule({
-    //providers: [{provide: AngularFire, useValue: {}}]
   })
   class FakeAngularFileModule {
   }
