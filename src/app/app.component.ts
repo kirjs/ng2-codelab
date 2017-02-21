@@ -18,7 +18,6 @@ const getSimulateId = (urlHash) => {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user_progresses;
   auth;
   constructor(private state: StateService, private angularFire: AngularFire) {
   }
@@ -40,7 +39,6 @@ export class AppComponent {
 
     //retrieve user progress only if it's enabled
     if(appConfig.feedbackEnabled && !appConfig.simulation){
-        this.user_progresses = this.angularFire.database.list('/user_progress');
         this.auth = { uid: '' };
 
         let authObservable = this.angularFire.auth.subscribe((authState) => {
@@ -62,7 +60,8 @@ export class AppComponent {
           this.state.update.debounceTime(10000).subscribe((state) => {
             if (this.auth.uid) {
               //send state to firebase
-              this.user_progresses.update(this.auth.uid, JSON.parse(JSON.stringify(state)));
+              let user_progress = this.angularFire.database.object('/user_progress/' + this.auth.uid);
+              user_progress.set(JSON.stringify(state));
             }
           });
           authObservable.unsubscribe();
