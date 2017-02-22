@@ -12,7 +12,6 @@ import {MilestoneComponent} from './milestone/milestone.component';
 import {StateService} from './state.service';
 import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from './reducers.service';
-import {FeedbackPageComponent} from './feedback-page/feedback-page.component';
 import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {AutorunComponent} from './autorun/autorun.component';
 import {MonacoConfigService} from './monaco-config.service';
@@ -21,6 +20,7 @@ import {AppConfigService, appConfig} from './app-config.service';
 import {LoopProtectionService} from './loop-protection.service';
 import {ScriptLoaderService} from './script-loader.service';
 import {FeedbackModule} from './feedback/feedback.module';
+import {FeedbackService} from './feedback/feedback.service';
 let ngModuleConfig = {
   declarations: [
     AppComponent,
@@ -31,7 +31,6 @@ let ngModuleConfig = {
     CodelabComponent,
     MilestoneComponent,
     TestsComponent,
-    FeedbackPageComponent,
     AutorunComponent,
     ResizeComponent
   ],
@@ -48,7 +47,8 @@ let ngModuleConfig = {
     AppConfigService,
     MonacoConfigService,
     LoopProtectionService,
-    ScriptLoaderService
+    ScriptLoaderService,
+    FeedbackService
   ],
   bootstrap: [AppComponent]
 };

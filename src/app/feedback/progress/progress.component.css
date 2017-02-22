@@ -1,0 +1,20 @@
+.green-ball, .red-ball{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 1px;
+    border-radius: 100%;
+}
+.green-ball{
+    background: #4CD450;
+}
+.red-ball{
+    background: #D91E18;
+}
+td{
+    min-width: 50px;
+}
+table{
+    text-align: center;
+    font-size: 25px;
+}

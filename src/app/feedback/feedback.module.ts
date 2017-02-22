@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
+import { ProgressComponent } from './progress/progress.component';
 import { AngularFireModule, AuthProviders, AuthMethods, AngularFire } from 'angularfire2';
 import {StateService} from '../state.service';
 import {FormsModule} from '@angular/forms';
@@ -23,7 +25,7 @@ const myFirebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   providers:[AngularFire,StateService],
-  declarations: [FeedbackWidgetComponent],
-  exports: [FeedbackWidgetComponent]
+  declarations: [FeedbackWidgetComponent, FeedbackListComponent, ProgressComponent],
+  exports: [FeedbackWidgetComponent, FeedbackListComponent, ProgressComponent]
 })
 export class FeedbackModule { }

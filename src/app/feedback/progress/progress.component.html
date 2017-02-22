@@ -1,0 +1,14 @@
+<table border="1">
+  <tr  *ngIf="users.length > 0">
+    <td></td>
+    <td *ngFor="let milestone of users[0].milestones">
+      {{milestone.id}}
+    </td>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{user.uid}}</td>
+    <td *ngFor="let milestone of user.milestones">
+      <div *ngFor="let test of milestone.tests" [ngClass]="{'green-ball': test.pass, 'red-ball':!test.pass }"></div>
+    </td>
+  </tr>
+</table>

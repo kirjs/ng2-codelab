@@ -23,8 +23,8 @@ export class FeedbackWidgetComponent implements OnInit {
     if (this.comment && this.username) {
       let comment = this.comment;
       let username = this.username;      
-      this.state.update.subscribe(state => {
-        let items = this.angularFire.database.list('/feedback-test1');
+      let observable = this.state.update.subscribe(state => {
+        let items = this.angularFire.database.list('/feedback');
         items.push({
           comment,
           state: JSON.stringify(state),
@@ -33,6 +33,7 @@ export class FeedbackWidgetComponent implements OnInit {
         });
         this.comment = '';
         //TODO set username in state.local.user
+        observable.unsubscribe();
       });
     }
   }
