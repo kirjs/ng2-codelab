@@ -216,7 +216,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           <p>${polyglot.t(`This codelab is very new and only covers the basics of Angular. Please leave your feedback (in the end) and come back for more advanced exercises later.`)}</p>
           <p>${polyglot.t(`We're using Angular version 2.3.0`)}</p>
           <p>${polyglot.t(`The slides for the codelab are available using
-          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">here</a>.`)}</p>                 
+          <a href = "https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing">this link</a>.`)}</p>                 
         `
         },
         {

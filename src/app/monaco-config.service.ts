@@ -99,6 +99,7 @@ export class MonacoConfigService {
 
   createFileModels(files: FileConfig[]) {
     const models = monaco.editor.getModels();
+    
     if (models.length) {
       models.forEach(model => model.dispose());
     }

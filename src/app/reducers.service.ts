@@ -199,6 +199,4 @@ export class ReducersService {
               protected appConfig: AppConfigService) {
 
   }
-
-
 }

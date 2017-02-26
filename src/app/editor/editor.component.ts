@@ -29,7 +29,6 @@ export class EditorComponent implements AfterViewInit {
   private editSub: Subject<String>;
   height = 0;
   public code = '';
-  private runSubscription: Subscription;
 
   static calcHeight(lines) {
     return Math.max(lines * 18, 18 * 6);
