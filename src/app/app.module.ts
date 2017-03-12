@@ -23,6 +23,7 @@ import {LoopProtectionService} from './loop-protection.service';
 import {ScriptLoaderService} from './script-loader.service';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AppRoutingModule} from './app-routing.module';
+import {CodelabsComponent} from './codelabs/codelabs.component';
 
 
 let ngModuleConfig = {
@@ -33,6 +34,7 @@ let ngModuleConfig = {
     RunnerComponent,
     EditorsComponent,
     CodelabComponent,
+    CodelabsComponent,
     MilestoneComponent,
     TestsComponent,
     FeedbackWidgetComponent,
