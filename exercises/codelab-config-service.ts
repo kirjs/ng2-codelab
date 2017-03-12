@@ -1,5 +1,5 @@
-import {CodelabState} from '../src/app/codelab-config';
-import {FileConfig} from '../src/app/file-config';
+import {CodelabState} from '../src/app/codelab/codelab-config';
+import {FileConfig} from '../src/app/codelab/file-config';
 import {differ} from '../src/app/differ/differ';
 import {Injectable} from '@angular/core';
 import {ng2tsConfig} from './ng2ts/ng2ts';

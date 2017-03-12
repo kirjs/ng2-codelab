@@ -5,8 +5,8 @@ import {StateService} from '../state.service';
 
 @Component({
   selector: 'app-codelab',
-  templateUrl: './codelab.component.html',
-  styleUrls: ['./codelab.component.css']
+  templateUrl: 'codelab.component.html',
+  styleUrls: ['codelab.component.css']
 })
 export class CodelabComponent implements OnInit {
   config: AppState;

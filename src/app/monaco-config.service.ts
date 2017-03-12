@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FileConfig} from './file-config';
+import {FileConfig} from './codelab/file-config';
 
 const monacoLoaderCode = require('!raw-loader!../assets/monaco/min/vs/loader');
 
@@ -99,7 +99,7 @@ export class MonacoConfigService {
 
   createFileModels(files: FileConfig[]) {
     const models = monaco.editor.getModels();
-    
+
     if (models.length) {
       models.forEach(model => model.dispose());
     }

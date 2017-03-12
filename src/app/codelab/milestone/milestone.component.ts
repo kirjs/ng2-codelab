@@ -5,8 +5,8 @@ import {StateService} from "../state.service";
 
 @Component({
   selector: 'app-milestone',
-  templateUrl: './milestone.component.html',
-  styleUrls: ['./milestone.component.css']
+  templateUrl: 'milestone.component.html',
+  styleUrls: ['milestone.component.css']
 })
 export class MilestoneComponent {
   @Input() config: MilestoneConfig;

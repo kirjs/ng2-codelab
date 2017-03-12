@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {RunnerComponent} from "./runner.component";
-import {StateService} from "../state.service";
+import {StateService} from "../codelab/state.service";
 import {Subject} from "rxjs";
 
 describe('RunnerComponent', () => {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 //import {AngularFire, FirebaseListObservable} from "angularfire2";
-import {StateService} from "../state.service";
+import {StateService} from "../codelab/state.service";
 
 @Component({
   selector: 'app-feedback-page',

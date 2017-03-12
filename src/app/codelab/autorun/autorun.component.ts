@@ -4,8 +4,8 @@ import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-autorun',
-  templateUrl: './autorun.component.html',
-  styleUrls: ['./autorun.component.css']
+  templateUrl: 'autorun.component.html',
+  styleUrls: ['autorun.component.css']
 })
 export class AutorunComponent {
   autorun: boolean;

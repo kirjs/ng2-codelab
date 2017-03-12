@@ -6,8 +6,8 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-exercise',
-  templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.css']
+  templateUrl: 'exercise.component.html',
+  styleUrls: ['exercise.component.css']
 })
 export class ExerciseComponent {
   @Input() public config: ExerciseConfig;

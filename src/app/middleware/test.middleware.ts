@@ -1,6 +1,6 @@
-import {AppState, AppConfig} from '../codelab-config';
+import {AppState, AppConfig} from '../codelab/codelab-config';
 import {ActionTypes} from '../action-types.enum';
-import {selectedExercise, StateService} from '../state.service';
+import {selectedExercise, StateService} from '../codelab/state.service';
 
 
 enum TestMode {

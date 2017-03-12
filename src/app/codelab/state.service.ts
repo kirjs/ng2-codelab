@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import {AppState, AppConfig} from './codelab-config';
-import {Action} from './action';
-import {ActionTypes} from './action-types.enum';
+import {Action} from '../action';
+import {ActionTypes} from '../action-types.enum';
 import {ExerciseConfig} from './exercise-config';
 import {MilestoneConfig} from './milestone-config';
-import {ReducersService} from './reducers.service';
-import {assert} from './utils';
+import {ReducersService} from '../reducers.service';
+import {assert} from '../utils';
 import {FileConfig} from './file-config';
-import {CodelabConfigService} from '../../exercises/codelab-config-service';
-import {testMiddleware} from './middleware/test.middleware';
-import {AppConfigService} from './app-config.service';
+import {CodelabConfigService} from '../../../exercises/codelab-config-service';
+import {testMiddleware} from '../middleware/test.middleware';
+import {AppConfigService} from '../app-config.service';
 
 
 export function selectedMilestone(state: AppState): MilestoneConfig {

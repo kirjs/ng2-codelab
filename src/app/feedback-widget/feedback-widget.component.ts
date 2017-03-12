@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StateService} from '../state.service';
+import {StateService} from '../codelab/state.service';
 
 @Component({
   selector: 'app-feedback-widget',

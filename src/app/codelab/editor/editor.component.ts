@@ -4,7 +4,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import {FileConfig} from '../file-config';
 import {Subject, Subscription} from 'rxjs';
-import {MonacoConfigService} from '../monaco-config.service';
+import {MonacoConfigService} from '../../monaco-config.service';
 declare const monaco: any;
 declare const require: any;
 
@@ -12,7 +12,7 @@ declare const require: any;
 @Component({
   selector: 'app-editor',
   template: `<div #editor class="monaco-editor"></div>`,
-  styleUrls: ['./editor.component.css'],
+  styleUrls: ['editor.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

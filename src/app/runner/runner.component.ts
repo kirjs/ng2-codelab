@@ -1,12 +1,12 @@
 import {Component, ElementRef, ViewChild, AfterViewInit, Input, ChangeDetectorRef} from '@angular/core';
 import * as ts from 'typescript';
-import {FileConfig} from '../file-config';
-import {StateService, selectedExercise} from '../state.service';
+import {FileConfig} from '../codelab/file-config';
+import {StateService, selectedExercise} from '../codelab/state.service';
 import {LoopProtectionService} from '../loop-protection.service';
 import {ScriptLoaderService} from '../script-loader.service';
 import {Subscription} from 'rxjs';
 import {AppConfigService} from '../app-config.service';
-import {ExerciseConfig} from '../exercise-config';
+import {ExerciseConfig} from '../codelab/exercise-config';
 
 let cachedIframes = {};
 
