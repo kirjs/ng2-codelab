@@ -1,4 +1,6 @@
 export enum ActionTypes {
+  ADD_CODELAB,
+  SELECT_CODELAB,
   END_TESTS,
   IGNORE,
   LOAD_ALL_SOLUTIONS,

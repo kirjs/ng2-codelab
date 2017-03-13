@@ -4,8 +4,9 @@
     <div class="milestone-title exercise">{{config.name}}</div>
 
     <div *ngFor="let item of config.exercises; let i = index"
-         class="exercise {{config.selectedExerciseIndex === i ? 'selected' : ''}}"
-         (click)="state.selectExercise(i)"
+         routerLink="../{{i}}"
+         routerLinkActive="selected"
+         class="exercise"
     >
       {{item.name}}
     </div>

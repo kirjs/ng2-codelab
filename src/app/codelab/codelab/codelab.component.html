@@ -1,14 +1,17 @@
-<div class="codelab">
+<div *ngIf="!config.codelab">
+  No codelab selected
+</div>
+<div class="codelab" *ngIf="config.codelab">
   <div class="content">
     <div class="milestones {{collapsePanel ? 'collapsed': ''}}">
       <div (click)="collapsePanel = !collapsePanel" class="collapse">
         {{collapsePanel ? '▶': '◀'}}
       </div>
       <div
-        class="milestone {{config.codelab.selectedMilestoneIndex === i ?'selected':''}}"
-        *ngFor="let item of config.codelab.milestones; let i = index;"
-        (click)="state.selectMilestone(i)"
-      >
+        routerLink="../../{{i}}/0"
+        routerLinkActive="selected"
+        class="milestone"
+        *ngFor="let item of config.codelab.milestones; let i = index;">
         <div class="index">{{i + 1}}</div>
         <div class="title">{{item.name}}</div>
       </div>

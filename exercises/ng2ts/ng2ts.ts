@@ -154,6 +154,7 @@ const stages: stage[] = [
 
 export interface CodelabConfigTemplate {
   name: string;
+  id: string,
   files: {[key: string]: string},
   preloadedFiles: {[key: string]: string},
   overrides: {
@@ -194,6 +195,7 @@ export interface MilestoneConfigTemplate {
 
 export const ng2tsConfig: CodelabConfigTemplate = {
   name: 'Angular 101 Codelab (beta)',
+  id: 'ng2ts',
   files,
   preloadedFiles,
   overrides: {

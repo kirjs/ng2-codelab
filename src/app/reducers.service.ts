@@ -15,16 +15,19 @@ export class ReducersService {
   [ActionTypes.INIT_STATE](state: AppState) {
     const localState = JSON.parse(localStorage.getItem('state')) as AppState;
 
-    const actualState = (this.appConfig.config.preserveState
+    return (this.appConfig.config.preserveState
     && localState
     && localState.version === state.version) ? localState : state;
-
-    return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
   }
 
   [ActionTypes.TOGGLE_AUTORUN](state: AppState) {
     state.local.autorun = !state.local.autorun;
     return state;
+  }
+
+  [ActionTypes.SELECT_CODELAB](state: AppState) {
+    state.codelab = state.codelabs[0];
+    return this[ActionTypes.SELECT_MILESTONE](state, {data: 0});
   }
 
   [ActionTypes.OPEN_FEEDBACK](state: AppState) {
@@ -62,7 +65,7 @@ export class ReducersService {
   [ActionTypes.SELECT_MILESTONE](state: AppState, {data}: {data: number}) {
     state.local.page = 'milestone';
     state.codelab.selectedMilestoneIndex = data;
-    const nextIndex = selectedMilestone(state).selectedExerciseIndex;
+    const nextIndex = selectedMilestone(state).selectedExerciseIndex || 0;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
   }
 

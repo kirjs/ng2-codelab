@@ -24,6 +24,7 @@ import {ScriptLoaderService} from './script-loader.service';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AppRoutingModule} from './app-routing.module';
 import {CodelabsComponent} from './codelabs/codelabs.component';
+import {CodelabsService} from './codelabs.service';
 
 
 let ngModuleConfig = {
@@ -56,7 +57,8 @@ let ngModuleConfig = {
     AppConfigService,
     MonacoConfigService,
     LoopProtectionService,
-    ScriptLoaderService
+    ScriptLoaderService,
+    CodelabsService
   ],
   bootstrap: [AppComponent]
 };

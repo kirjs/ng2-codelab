@@ -11,6 +11,7 @@ import {FileConfig} from './file-config';
 import {CodelabConfigService} from '../../../exercises/codelab-config-service';
 import {testMiddleware} from '../middleware/test.middleware';
 import {AppConfigService} from '../app-config.service';
+import {CodelabConfigTemplate} from '../../../exercises/ng2ts/ng2ts';
 
 
 export function selectedMilestone(state: AppState): MilestoneConfig {
@@ -28,7 +29,7 @@ export class StateService {
   public readonly update: Observable<AppState>;
   private readonly dispatch: BehaviorSubject<Action>;
   public appConfig: AppConfig;
-  public readonly version = 2;
+  public readonly version = 4;
 
   middleware: Middleware[] = [];
 
@@ -37,7 +38,6 @@ export class StateService {
   }
 
   constructor(private reducers: ReducersService, codelabConfig: CodelabConfigService, appConfig: AppConfigService) {
-
     this.dispatch = new BehaviorSubject<Action>({
       type: ActionTypes.IGNORE,
       data: {}
@@ -47,6 +47,7 @@ export class StateService {
       type: ActionTypes.INIT_STATE,
       data: {}
     });
+
     this.addMiddleware(testMiddleware(this, appConfig.config));
     this.appConfig = appConfig.config;
     this.update = this.dispatch
@@ -65,7 +66,8 @@ export class StateService {
         }
         return this.applyMiddleware(state, action);
       }, {
-        codelab: codelabConfig.config,
+        codelab: undefined,
+        codelabs: [codelabConfig.config],
         local: {
           runId: 0,
           page: 'milestone',
@@ -159,5 +161,9 @@ export class StateService {
 
   endTests() {
     this.dispatchAction(ActionTypes.END_TESTS);
+  }
+
+  selectCodelab(codelabId: string) {
+    this.dispatchAction(ActionTypes.SELECT_CODELAB, codelabId);
   }
 }
