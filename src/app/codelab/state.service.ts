@@ -11,7 +11,6 @@ import {FileConfig} from './file-config';
 import {CodelabConfigService} from '../../../exercises/codelab-config-service';
 import {testMiddleware} from '../middleware/test.middleware';
 import {AppConfigService} from '../app-config.service';
-import {CodelabConfigTemplate} from '../../../exercises/ng2ts/ng2ts';
 
 
 export function selectedMilestone(state: AppState): MilestoneConfig {
@@ -67,7 +66,7 @@ export class StateService {
         return this.applyMiddleware(state, action);
       }, {
         codelab: undefined,
-        codelabs: [codelabConfig.config],
+        codelabs: codelabConfig.codelabs,
         local: {
           runId: 0,
           page: 'milestone',

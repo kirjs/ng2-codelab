@@ -110,27 +110,7 @@ const stageOverrides = {
 };
 
 
-export type stage = 'codelab'|
-  'createComponent'|
-  'createModule'|
-  'bootstrap'|
-  'templatePageSetup'|
-  'templateAddAction'|
-  'templateAllVideos'|
-  'diInjectService'|
-  'dataBinding'|
-  'videoComponentCreate'|
-  'videoComponentUse'|
-  'thumbsComponentCreate'|
-  'thumbsComponentUse'|
-  'togglePanelComponentCreate'|
-  'togglePanelComponentUse'|
-  'contextComponentUse'|
-  'fuzzyPipeCreate'|
-  'fuzzyPipeUse'|
-  'neverShow';
-
-const stages: stage[] = [
+const stages: string[] = [
   'codelab',
   'createComponent',
   'createModule',
@@ -161,7 +141,7 @@ export interface CodelabConfigTemplate {
     file: {[key: string]: {[key: string]: string}},
     stage: {[key: string]: {[key: string]: string}},
   },
-  stages: stage[],
+  stages: string[],
   defaultRunner: string,
   milestones: MilestoneConfigTemplate[]
 }
@@ -206,7 +186,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
   defaultRunner: 'Angular',
   milestones: [
     {
-      name: 'Intro to TypeScript',
+      name: polyglot.t('Intro to TypeScript'),
       exercises: [
         {
           name: polyglot.t(`Intro`),

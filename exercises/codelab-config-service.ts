@@ -4,6 +4,7 @@ import {differ} from '../src/app/differ/differ';
 import {Injectable} from '@angular/core';
 import {ng2tsConfig} from './ng2ts/ng2ts';
 import {i18n} from '../src/i18n/i18n';
+import {testCodelabConfig} from './test-codelab/test-codelab';
 
 declare const require;
 
@@ -17,7 +18,7 @@ function getFileByPath(path) {
 
 @Injectable()
 export class CodelabConfigService {
-  public config: CodelabState;
+  public codelabs: [CodelabState];
 
   constructor() {
 
@@ -50,9 +51,6 @@ export class CodelabConfigService {
         }
       }
     }
-
-    const config = Object.assign(ng2tsConfig, {selectedMilestoneIndex: 0});
-    let codelabConfig = ng2tsConfig;
 
     function preprocessCodelab(config) {
 
@@ -94,7 +92,7 @@ export class CodelabConfigService {
         });
       }
 
-      config.milestones = codelabConfig.milestones.map(milestone => {
+      config.milestones = config.milestones.map(milestone => {
         (milestone as any).selectedExerciseIndex = 0;
         milestone.exercises = milestone.exercises.map(exercise => {
           const files: FileConfig[] = [];
@@ -137,7 +135,9 @@ export class CodelabConfigService {
       return config;
     }
 
-
-    this.config = preprocessCodelab(config);
+    this.codelabs = [
+      preprocessCodelab(Object.assign(ng2tsConfig, {selectedMilestoneIndex: 0})),
+      preprocessCodelab(Object.assign(testCodelabConfig, {selectedMilestoneIndex: 0}))
+    ]
   }
 }

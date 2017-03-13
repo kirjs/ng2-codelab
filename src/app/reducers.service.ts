@@ -25,8 +25,8 @@ export class ReducersService {
     return state;
   }
 
-  [ActionTypes.SELECT_CODELAB](state: AppState) {
-    state.codelab = state.codelabs[0];
+  [ActionTypes.SELECT_CODELAB](state: AppState, data) {
+    state.codelab = state.codelabs.find(codelab => codelab.id == data.data);
     return this[ActionTypes.SELECT_MILESTONE](state, {data: 0});
   }
 

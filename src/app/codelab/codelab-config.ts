@@ -31,6 +31,7 @@ export interface LocalState {
 }
 
 export interface CodelabState {
+  id: string,
   name: string,
   defaultRunner: string,
   selectedMilestoneIndex: number,
