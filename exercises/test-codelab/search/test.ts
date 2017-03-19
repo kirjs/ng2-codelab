@@ -1,7 +1,6 @@
 import {search} from './search';
 import {generateItForFunction} from '../common';
 
-
 const createIt = generateItForFunction(search);
 describe('first thing', () => {
   createIt([42], true);

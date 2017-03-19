@@ -1,5 +1,4 @@
 import {CodelabConfigTemplate} from '../ng2ts/ng2ts';
-import {polyglot} from '../../src/i18n/polyglot';
 import {FileConfig} from '../../src/app/codelab/file-config';
 
 
@@ -44,10 +43,10 @@ export const testCodelabConfig: CodelabConfigTemplate = {
     name: 'Intro to TypeScript',
     exercises: [
       {
-        name: polyglot.t(`1`),
+        name: "1",
         description: `
-          <h1>${polyglot.t('Maximum value')}</h1>
-          <p>${polyglot.t('Write a function which takes an array of numbers, and return the largest number.')}</p>
+          <h1>Get maximum value</h1>
+          <p>Write a function which takes an array of numbers, and return the largest number.</p>
           `,
         files: [
           exercise('max', require('!raw-loader!./max/template.ts'), require('!raw-loader!./max/max.ts')),
@@ -56,14 +55,26 @@ export const testCodelabConfig: CodelabConfigTemplate = {
         ]
       },
       {
-        name: polyglot.t(`2`),
+        name: "2",
         description: `
-          <h1>${polyglot.t('Searching for 42')}</h1>
-          <p>${polyglot.t('Write a function which takes an array of numbers, and returns true if it contains number 42')}</p>
+          <h1>Searching for 42</h1>
+          <p>Write a function which takes an array of numbers, and returns true if it contains number 42</p>
           `,
         files: [
           exercise('search', require('!raw-loader!./search/template.ts'), require('!raw-loader!./search/search.ts')),
           test('search', require('!raw-loader!./search/test.ts')),
+          common()
+        ]
+      },
+      {
+        name: "3",
+        description: `
+          <h1>Less than 7</h1>
+          <p>Write a function which takes an array of numbers, and returns all numbers that are less than 7</p>
+          `,
+        files: [
+          exercise('lessThan7', require('!raw-loader!./lessThan7/template.ts'), require('!raw-loader!./lessThan7/lessThan7.ts')),
+          test('lessThan7', require('!raw-loader!./lessThan7/test.ts')),
           common()
         ]
       }
