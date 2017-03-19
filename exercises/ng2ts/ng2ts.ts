@@ -133,7 +133,10 @@ const stages: string[] = [
   'neverShow'
 ];
 
-const diffFilesResolver = new DiffFilesResolver();
+const diffFilesResolver = new DiffFilesResolver(preloadedFiles, stages, {
+  file: fileOverrides,
+  stage: stageOverrides
+});
 
 export interface CodelabConfigTemplate {
   name: string;
@@ -141,22 +144,17 @@ export interface CodelabConfigTemplate {
   files: {[key: string]: string}
   ,
   preloadedFiles: {
-    [key: string
-      ]: string
+    [key: string ]: string
   },
   overrides: {
     file: {
-      [key: string
-        ]: {
-        [key: string
-          ]: string
+      [key: string ]: {
+        [key: string ]: string
       }
     },
     stage: {
-      [key: string
-        ]: {
-        [key: string
-          ]: string
+      [key: string ]: {
+        [key: string ]: string
       }
     },
   },
