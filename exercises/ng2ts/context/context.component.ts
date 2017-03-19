@@ -4,7 +4,7 @@ import {VideoComponent} from '../video/video.component';
 
 @Component({
   selector: 'my-ad',
-  templateUrl: './context.html'
+  templateUrl: 'context.html'
 })
 export class ContextComponent {
   text: string;

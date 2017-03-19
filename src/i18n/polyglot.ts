@@ -10,5 +10,4 @@ if (environment.language === 'zh') {
 }
 
 
-
 export {polyglot};

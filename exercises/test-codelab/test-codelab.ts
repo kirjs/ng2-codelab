@@ -36,21 +36,34 @@ function test(moduleName, template): FileConfig {
 
 
 export const testCodelabConfig: CodelabConfigTemplate = {
-  name: 'Test codelab',
-  id: 'test',
+  name: 'Loops test',
+  id: 'scripted',
   defaultRunner: 'Angular',
   milestones: [{
     name: 'Intro to TypeScript',
     exercises: [
       {
+        name: "Hello",
+        description: `
+          <h1>Hi, welcome to Doogle!</h1>
+          <h2>We write some serious software here!</h2>
+          <p>Welcome to Doogle engineering rotation program, here you'll have an opportunity to solve problems best dog minds have been working on.</p>
+          <p>Hit the "1" tab above to get to your first assignment.</p>
+          <img src="/assets/images/dogs/puppy-coding.jpg" alt="Puppy coding">
+    `,
+        slide: true
+      },
+      {
         name: "1",
         description: `
-          <h1>Get maximum value</h1>
-          <p>Write a function which takes an array of numbers, and return the largest number.</p>
+          <h1>Get minimum value</h1>
+          <p>So we've just had a running competition, and timed ourselves, but since we are dogs we don't know which of us is the fastest.</p>
+          <p>Write a <b>function</b> which takes an array of numbers (in seconds) and returns <b>the smallest number.</b></p>
+          <img src="/assets/images/dogs/running.jpg" style="width:300px"  alt="Puppies">
           `,
         files: [
-          exercise('max', require('!raw-loader!./max/template.ts'), require('!raw-loader!./max/max.ts')),
-          test('max', require('!raw-loader!./max/test.ts')),
+          exercise('min', require('!raw-loader!./min/template.ts'), require('!raw-loader!./min/min.ts')),
+          test('min', require('!raw-loader!./min/test.ts')),
           common()
         ]
       },
