@@ -1,4 +1,5 @@
 import {polyglot} from '../../src/i18n/polyglot';
+import {DiffFilesResolver} from '../../src/app/common/diffFilesResolver';
 
 //  TODO: This should be done using require.context
 const preloadedFiles = {
@@ -132,14 +133,32 @@ const stages: string[] = [
   'neverShow'
 ];
 
+const diffFilesResolver = new DiffFilesResolver();
+
 export interface CodelabConfigTemplate {
   name: string;
   id: string,
-  files: {[key: string]: string},
-  preloadedFiles: {[key: string]: string},
+  files: {[key: string]: string}
+  ,
+  preloadedFiles: {
+    [key: string
+      ]: string
+  },
   overrides: {
-    file: {[key: string]: {[key: string]: string}},
-    stage: {[key: string]: {[key: string]: string}},
+    file: {
+      [key: string
+        ]: {
+        [key: string
+          ]: string
+      }
+    },
+    stage: {
+      [key: string
+        ]: {
+        [key: string
+          ]: string
+      }
+    },
   },
   stages: string[],
   defaultRunner: string,
@@ -172,6 +191,7 @@ export interface MilestoneConfigTemplate {
   name: string,
   exercises: Array<ExerciseConfigTemplate|SlideTemplate>
 }
+
 
 export const ng2tsConfig: CodelabConfigTemplate = {
   name: 'Angular 101 Codelab (beta)',
@@ -213,7 +233,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           <p>${polyglot.t(`As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans,
           so only 3 people should be returned.`)}</p>
         `,
-          files: {
+          files: diffFilesResolver.resolve('codelab', {
             exercise: [
               files.typescript_intro_Codelab_ts,
               files.typescript_intro_Guest_ts,
@@ -223,7 +243,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
             bootstrap: [
               files.typescript_intro_Main_ts
             ]
-          },
+          }),
         }
       ]
     },
@@ -255,24 +275,24 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Create a component`),
           stage: `createComponent`,
           description: `<p>${polyglot.t(`Create first Angular component!`)}</p>`,
-          files: {
+          files: diffFilesResolver.resolve('createComponent', {
             exercise: [files.appComponent],
             reference: [files.appModule, files.main],
             bootstrap: [files.main],
             test: [files.test],
-          }
+          })
         },
         {
           name: polyglot.t(`Create a NgModule`),
           stage: `createModule`,
           description: polyglot.t(`Now we got the component, we need to pass it to a NgModule.`),
-          files: {
+          files: diffFilesResolver.resolve('createModule', {
             exercise: [files.appModule],
             reference: [files.appComponent],
             hidden: [files.main],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         },
         {
           name: polyglot.t(`Bootstrap the module`),
@@ -281,12 +301,12 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           description: `
           <p>${polyglot.t(`Now we got both NgModule and component ready, let's bootstrap the app!`)}</p>
           <p>${polyglot.t(`There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'`)}</p>`,
-          files: {
+          files: diffFilesResolver.resolve('bootstrap', {
             exercise: [files.main],
             reference: [files.appComponent, files.appModule],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }
       ]
     },
@@ -324,12 +344,12 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Set up the page`),
           description: polyglot.t(`Setup a header, a search box, and a search button in the app component!`),
           stage: `templatePageSetup`,
-          files: {
+          files: diffFilesResolver.resolve('templatePageSetup', {
             exercise: [files.appHtml],
             reference: [files.appComponent, files.appModule, files.main],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }, {
           name: polyglot.t(`Add some action`),
           description: `
@@ -339,23 +359,23 @@ export const ng2tsConfig: CodelabConfigTemplate = {
                </ul>
             `,
           stage: `templateAddAction`,
-          files: {
+          files: diffFilesResolver.resolve('templateAddAction', {
             exercise: [files.appComponent, files.appHtml],
             reference: [files.appModule, files.main, files.video_videoItem],
             test: [files.test],
             bootstrap: [files.main],
-          }
+          })
         },
         {
           name: polyglot.t(`Display all videos`),
           description: polyglot.t(`Finally let's iterate over the videos.`),
           stage: `templateAllVideos`,
-          files: {
+          files: diffFilesResolver.resolve('templateAllVideos', {
             exercise: [files.appComponent, files.appHtml],
             reference: [files.appModule, files.main, files.video_videoItem],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }
       ]
     },
@@ -404,12 +424,12 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         name: polyglot.t(`Service injection`),
         stage: `diInjectService`,
         description: polyglot.t(`Fetch the videos using a service, instead of having them hardcoded.`),
-        files: {
+        files: diffFilesResolver.resolve('diInjectService', {
           exercise: [files.video_videoService, files.appModule, files.appComponent],
           reference: [files.appHtml, files.apiService, files.video_videoItem, files.main],
           test: [files.test],
           bootstrap: [files.main]
-        }
+        })
       }]
     },
     {
@@ -441,7 +461,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Create VideoComponent`),
           description: polyglot.t(`Create a video component.`),
           stage: `videoComponentCreate`,
-          files: {
+          files: diffFilesResolver.resolve('videoComponentCreate', {
             exercise: [files.video_video_component, files.video_video_html],
             reference: [
               files.appModule,
@@ -451,13 +471,13 @@ export const ng2tsConfig: CodelabConfigTemplate = {
             ],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         },
         {
           name: polyglot.t(`Use VideoComponent`),
           description: polyglot.t(`Use the VideoComponent in the app.`),
           stage: `videoComponentUse`,
-          files: {
+          files: diffFilesResolver.resolve('videoComponentUse', {
             exercise: [files.appModule, files.appHtml,],
             reference: [
               files.video_video_html,
@@ -465,7 +485,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
             ],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }]
     }, {
       name: polyglot.t(`Custom events`),
@@ -497,25 +517,25 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Create ThumbsComponent`),
           description: polyglot.t(`Create ThumbsComponent.`),
           stage: `thumbsComponentCreate`,
-          files: {
+          files: diffFilesResolver.resolve('thumbsComponentCreate', {
             exercise: [files.thumbs_thumbs_component, files.thumbs_thumbs_html],
             reference: [files.apiService, files.appModule, files.main, files.indexHtml],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         },
         {
           name: polyglot.t(`Use ThumbsComponent`),
           description: polyglot.t(`Use the 'ThumbsComponent' in the app.`),
           stage: `thumbsComponentUse`,
-          files: {
+          files: diffFilesResolver.resolve('thumbsComponentUse', {
             exercise: [files.video_video_component, files.video_video_html, files.appModule,],
             reference: [
               files.thumbs_thumbs_component, files.thumbs_thumbs_html, files.appHtml, files.appComponent, files.video_videoService, files.video_videoItem, files.apiService, files.main
             ],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }]
     }, {
       name: polyglot.t(`Content projection`),
@@ -560,18 +580,18 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           name: polyglot.t(`Add TogglePanelComponent`),
           description: polyglot.t(`Let's create a component which will use content projection to toggle between description and meta information. `),
           stage: `togglePanelComponentCreate`,
-          files: {
+          files: diffFilesResolver.resolve('togglePanelComponentCreate', {
             exercise: [files.toggle_panel_toggle_panel, files.toggle_panel_toggle_panel_html],
             reference: [files.wrapperComponent, files.apiService, files.appModule, files.main, files.indexHtml],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         },
         {
           name: polyglot.t(`Use TogglePanelComponent`),
           description: polyglot.t(`Now let's use the component.`),
           stage: `togglePanelComponentUse`,
-          files: {
+          files: diffFilesResolver.resolve('togglePanelComponentUse', {
             exercise: [files.video_video_html, files.appModule],
             reference: [
               files.video_video_component,
@@ -588,7 +608,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
             ],
             test: [files.test],
             bootstrap: [files.main]
-          }
+          })
         }]
     },
     /*
@@ -635,7 +655,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
      <p>Which will inject it's parent component, see what thedescription, and display the value accordingly.</p>
      <p>Note: We had to get rid of the 'Ad' part of the component, because AdBlock blocked the template.</p>`),
      stage: `contextComponentUse`,
-     files: {
+     files: diffFilesResolver.resolve('bootstrap', {
      exercise: [files.contextComponent, files.context_context_html],
      reference: [
 
@@ -656,7 +676,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
      ],
      test: [files.test],
      bootstrap: [files.main]
-     },
+     }),
      }]
      },
      */
@@ -666,17 +686,17 @@ export const ng2tsConfig: CodelabConfigTemplate = {
         name: polyglot.t(`Create a pipe`),
         description: polyglot.t(`Create a fuzzy pipe, which takes a date in YYYY-MM-DD format, and returns how many days ago this was.`),
         stage: `fuzzyPipeCreate`,
-        files: {
+        files: diffFilesResolver.resolve('fuzzyPipeCreate', {
           exercise: [files.fuzzyPipe_fuzzyPipe],
           test: [files.test],
           bootstrap: [files.main]
-        }
+        })
       }, {
 
         name: polyglot.t(`Use the pipe`),
         stage: `fuzzyPipeUse`,
         description: polyglot.t(`Now include the app in the module and use in the app.`),
-        files: {
+        files: diffFilesResolver.resolve('fuzzyPipeUse', {
           exercise: [files.appModule, files.video_video_html],
           reference: [files.fuzzyPipe_fuzzyPipe,
             files.contextService,
@@ -696,7 +716,7 @@ export const ng2tsConfig: CodelabConfigTemplate = {
           ],
           test: [files.test],
           bootstrap: [files.main]
-        }
+        })
       }]
     },
     {
