@@ -1,0 +1,9 @@
+.tabs {
+  display: flex;
+}
+
+.tab {
+  padding: 10px;
+}
+
+

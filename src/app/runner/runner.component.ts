@@ -100,7 +100,7 @@ function injectIframe(element: any, config: IframeConfig, runner: RunnerComponen
         displayError(error, 'Angular Error');
       };
 
-      function register(name, code){
+      function register(name, code) {
         (iframe.contentWindow as any).System.register(name, [], function (exports) {
           return {
             setters: [],

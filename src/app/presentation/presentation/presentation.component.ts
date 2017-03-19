@@ -1,20 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {MilestoneConfig} from '../milestone-config';
-import {AppState} from '../codelab-config';
-import {StateService} from '../state.service';
+import {Component} from '@angular/core';
+import {AppState} from '../../codelab/codelab-config';
+import {MilestoneConfig} from '../../codelab/milestone-config';
+import {StateService, selectedExercise} from '../../codelab/state.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-codelab',
-  templateUrl: 'codelab.component.html',
-  styleUrls: ['codelab.component.css']
+  selector: 'app-presentation',
+  templateUrl: './presentation.component.html',
+  styleUrls: ['./presentation.component.css']
 })
-export class CodelabComponent implements OnInit {
+export class PresentationComponent {
   config: AppState;
-  public collapsePanel = true;
   milestone: MilestoneConfig;
   section: 'milestone';
   codelab: string = '';
+
+  get exercise() {
+    return selectedExercise(this.config);
+  }
 
   constructor(public state: StateService, private route: ActivatedRoute) {
     state.update.subscribe((config) => {
@@ -38,9 +41,5 @@ export class CodelabComponent implements OnInit {
       .subscribe((exercise = 0) => {
         state.selectExercise(+exercise);
       })
-  }
-
-  ngOnInit() {
-
   }
 }

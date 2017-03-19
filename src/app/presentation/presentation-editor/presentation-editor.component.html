@@ -1,0 +1,10 @@
+<div class="tabs">
+  <div class="tab" [class.selected]="file==fileItem"
+       (click)="selectFile(fileItem)" *ngFor="let fileItem of files">{{fileItem.path}}
+  </div>
+</div>
+<div *ngFor="let fileItem of files">
+  <app-editor *ngIf="fileItem == file" [fontSize]="24" [file]="file"
+              (onCodeChange)="onCodeChange({file: file, code: $event})">
+  </app-editor>
+</div>

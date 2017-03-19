@@ -3,7 +3,7 @@ import {StateService} from '../state.service';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import {FileConfig} from '../file-config';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {MonacoConfigService} from '../../monaco-config.service';
 declare const monaco: any;
 declare const require: any;
@@ -24,14 +24,16 @@ declare const require: any;
 export class EditorComponent implements AfterViewInit {
   private _editor: any;
   @Input() public file: FileConfig;
+  @Input() fontSize = 12;
   @ViewChild('editor') editorContent: ElementRef;
   @Output() onCodeChange = new EventEmitter();
   private editSub: Subject<String>;
   height = 0;
   public code = '';
 
-  static calcHeight(lines) {
-    return Math.max(lines * 18, 18 * 6);
+  calcHeight(lines) {
+    let lineHeight = this.fontSize + 6;
+    return Math.max(lines * lineHeight, lineHeight * 6);
   }
 
 
@@ -59,6 +61,7 @@ export class EditorComponent implements AfterViewInit {
         wordBasedSuggestions: true,
         lineNumbersMinChars: 3,
         automaticLayout: true,
+        fontSize: this.fontSize
       });
 
     this._editor.getModel().onDidChangeContent(() => {
@@ -73,7 +76,7 @@ export class EditorComponent implements AfterViewInit {
   }
 
   updateHeight(value: string) {
-    const height = EditorComponent.calcHeight(value.split('\n').length);
+    const height = this.calcHeight(value.split('\n').length);
 
     if (this.height != height) {
       this.height = height;

@@ -24,7 +24,8 @@ import {ScriptLoaderService} from './script-loader.service';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AppRoutingModule} from './app-routing.module';
 import {CodelabsComponent} from './codelabs/codelabs.component';
-import {CodelabsService} from './codelabs.service';
+import {PresentationComponent} from './presentation/presentation/presentation.component';
+import {PresentationEditorComponent} from './presentation/presentation-editor/presentation-editor.component';
 
 
 let ngModuleConfig = {
@@ -42,7 +43,9 @@ let ngModuleConfig = {
     FeedbackPageComponent,
     AutorunComponent,
     ResizeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PresentationComponent,
+    PresentationEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -58,11 +61,11 @@ let ngModuleConfig = {
     MonacoConfigService,
     LoopProtectionService,
     ScriptLoaderService,
-    CodelabsService
   ],
   bootstrap: [AppComponent]
 };
 
 @NgModule(ngModuleConfig)
 export class AppModule {
+
 }

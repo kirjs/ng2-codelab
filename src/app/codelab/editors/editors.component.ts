@@ -21,14 +21,6 @@ export class EditorsComponent {
 
   onCodeChange(change) {
     this.state.updateCode(change);
-
-    // TODO(kirjs): This is needed to update typings in the editor. There should be a better way.
-    this.children.forEach(child => {
-      if (change.code != child.code) {
-        // TODO: Find a better way
-        child.ping();
-      }
-    });
   }
 
   constructor(private  state: StateService, appConfig: AppConfigService) {
