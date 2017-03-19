@@ -77,6 +77,42 @@ export const testCodelabConfig: CodelabConfigTemplate = {
           test('lessThan7', require('!raw-loader!./lessThan7/test.ts')),
           common()
         ]
+      },
+      {
+        name: "4",
+        description: `
+          <h1>Anyone with temperature higher than 97</h1>
+          <p>Write a function which takes an array of numbers, and returns true if ANY ONE of the numbers is greater than 97</p>
+          `,
+        files: [
+          exercise('some', require('!raw-loader!./some/template.ts'), require('!raw-loader!./some/some.ts')),
+          test('some', require('!raw-loader!./some/test.ts')),
+          common()
+        ]
+      },
+      {
+        name: "5",
+        description: `
+          <h1>Anyone with temperature higher than 97</h1>
+          <p>Write a function which takes an array of numbers, and returns true if ANY ONE of the numbers is greater than 97</p>
+          `,
+        files: [
+          exercise('every', require('!raw-loader!./every/template.ts'), require('!raw-loader!./every/every.ts')),
+          test('every', require('!raw-loader!./every/test.ts')),
+          common()
+        ]
+      },
+      {
+        name: "6",
+        description: `
+          <h1>Reverse an array</h1>
+          <p>Write a function which takes an array of numbers, and returns the same array reverved.</p>
+          `,
+        files: [
+          exercise('reverse', require('!raw-loader!./reverse/template.ts'), require('!raw-loader!./reverse/reverse.ts')),
+          test('reverse', require('!raw-loader!./reverse/test.ts')),
+          common()
+        ]
       }
     ]
   }]
