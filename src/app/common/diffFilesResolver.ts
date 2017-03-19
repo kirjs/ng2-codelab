@@ -1,27 +1,12 @@
 import {i18n} from '../../i18n/i18n';
 import {FileConfig} from '../codelab/file-config';
 import {differ} from '../differ/differ';
+import {evaled, justForReference, hidden, test} from './fileHelpers';
 
 type Override = {[key: string]: {[key: string]: string}};
 interface Overrides {
   file: Override,
   stage: Override,
-}
-
-function hidden(...files: FileConfig[]): FileConfig[] {
-  return files.map(file => Object.assign({}, file, {hidden: true}))
-}
-
-function readOnly(...files: FileConfig[]): FileConfig[] {
-  return files.map(file => Object.assign({}, file, {readonly: true}))
-}
-
-function justForReference(...files: FileConfig[]): FileConfig[] {
-  return collapsed(...readOnly(...files));
-}
-
-function collapsed(...files: FileConfig[]): FileConfig[] {
-  return files.map(file => Object.assign({}, file, {collapsed: true}))
 }
 
 
@@ -32,22 +17,7 @@ export class DiffFilesResolver {
   }
 
   resolve(stage: string, files) {
-    function test(...files: FileConfig[]): FileConfig[] {
-      return files.map(file => Object.assign({}, file, {
-        excludeFromTesting: false,
-        test: true,
-        bootstrap: true,
-        before: 'mochaBefore();',
-        after: 'mochaAfter();',
-        hidden: true,
-      }))
-    }
 
-    function evaled(file) {
-      return Object.assign(file, {
-        after: `export function evalJs( js ){ return eval(js);}`
-      });
-    }
 
     const result = [];
     const bootstrap = (files.bootstrap || []) as Array<string>;
