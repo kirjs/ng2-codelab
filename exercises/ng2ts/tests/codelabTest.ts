@@ -129,7 +129,3 @@ describe('Component', () => {
    });
    */
 });
-
-//{"pos":83,"end":91,"flags":0,"kind":160,"elementType":{"pos":83,"end":89,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Guest"}}}"
-//{"pos":83,"end":89,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Guest"}}
-//{"pos":83,"end":96,"flags":0,"kind":155,"typeName":{"pos":83,"end":89,"flags":0,"text":"Array"},"typeArguments":[{"pos":90,"end":95,"flags":0,"kind":155,"typeName":{"pos":90,"end":95,"flags":0,"text":"Guest"}}]}"

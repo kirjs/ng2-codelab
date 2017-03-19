@@ -8,7 +8,7 @@ const appRoutes: Routes = [
   {path: 'codelabs', component: CodelabsComponent},
   {path: 'codelab/:codelab/:milestone/:exercise', component: CodelabComponent},
   {path: 'edit', component: CodelabComponent},
-  {path: '', redirectTo: '/codelab/ng2ts/0/0', pathMatch: 'full'},
+  {path: '', redirectTo: '/codelab/test/0/0', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
 
