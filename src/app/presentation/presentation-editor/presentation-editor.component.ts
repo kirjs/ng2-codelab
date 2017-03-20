@@ -23,7 +23,7 @@ export class PresentationEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.file = this.files[0];
+    this.file = this.files && this.files[0];
   }
 
 }

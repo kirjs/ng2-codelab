@@ -46,7 +46,8 @@ export class ReducersService {
       state.local.debugTrackTime = (new Date()).getTime();
       console.log('RUN START!');
     }
-    state.local.running = true;
+    // TODO: Enable back
+    //state.local.running = true;
 
     state.local.runId++;
     return state;
