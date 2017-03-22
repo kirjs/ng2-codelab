@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EditorComponent} from './editor.component';
-import {MonacoConfigService} from '../monaco-config.service';
+import {MonacoConfigService} from '../../monaco-config.service';
 
 describe('EditorComponent', () => {
   let component: EditorComponent;
