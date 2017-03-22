@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   {path: 'codelab/:codelab/:milestone/:exercise', component: CodelabComponent},
   {path: 'present/:codelab/:milestone/:exercise', component: PresentationComponent},
   {path: 'edit', component: CodelabComponent},
-  {path: '', redirectTo: '/present/ng2ts/0/0', pathMatch: 'full'},
+  {path: '', redirectTo: '/codelab/ng2ts/0/0', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
 
