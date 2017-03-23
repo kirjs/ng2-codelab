@@ -2,8 +2,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {EditorsComponent} from './editors.component';
 import {StateService} from '../state.service';
-import {MockStateService} from '../../mocks/stateService';
-import {AppConfigService} from '../app-config.service';
+
+import {MockStateService} from '../../../mocks/stateService';
+import {AppConfigService} from '../../app-config.service';
 
 describe('EditorsComponent', () => {
   let component: EditorsComponent;
