@@ -1,5 +1,5 @@
 import {CodelabConfigTemplate} from '../ng2ts/ng2ts';
-import {FileConfig} from '../../src/app/codelab/file-config';
+import {FileConfig} from '../../app/codelab/file-config';
 
 
 function exercise(moduleName, template, solution): FileConfig {
