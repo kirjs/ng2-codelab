@@ -4,7 +4,7 @@ import {RunnerComponent} from "./runner.component";
 import {StateService} from "../codelab/state.service";
 import {Subject} from "rxjs";
 
-describe('RunnerComponent', () => {
+xdescribe('RunnerComponent', () => {
   let component: RunnerComponent;
   let fixture: ComponentFixture<RunnerComponent>;
 
