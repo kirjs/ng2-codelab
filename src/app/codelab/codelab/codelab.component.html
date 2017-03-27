@@ -1,0 +1,34 @@
+<div *ngIf="!config.codelab">
+  No codelab selected
+</div>
+<div class="codelab" *ngIf="config.codelab">
+  <div class="content">
+    <div class="milestones {{collapsePanel ? 'collapsed': ''}}">
+      <div (click)="collapsePanel = !collapsePanel" class="collapse">
+        {{collapsePanel ? '▶': '◀'}}
+      </div>
+      <div
+        routerLink="../../{{i}}/0"
+        routerLinkActive="selected"
+        class="milestone"
+        *ngFor="let item of config.codelab.milestones; let i = index;">
+        <div class="index">{{i + 1}}</div>
+        <div class="title">{{item.name}}</div>
+      </div>
+      <!--<div (click)="state.openFeedback()">
+        <div class="index">✐</div>
+        <div class="title">Feedback</div>
+      </div>-->
+    </div>
+
+
+    <div class="codelab-milestone" *ngIf="config.local.page === 'milestone'">
+      <app-milestone [config]="config.codelab.milestones[config.codelab.selectedMilestoneIndex]"
+                     [name]="config.codelab.name"></app-milestone>
+    </div>
+    <div class="codelab-milestone" *ngIf="config.local.page === 'feedback'">
+      <app-feedback-list></app-feedback-list>
+    </div>
+
+  </div>
+</div>

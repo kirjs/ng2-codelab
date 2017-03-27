@@ -1,4 +1,4 @@
-import {StateService} from "../app/state.service";
+import {StateService} from "../app/codelab/state.service";
 export class MockStateService {
   update;
 

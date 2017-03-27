@@ -1,25 +1,32 @@
 import {Injectable} from '@angular/core';
-import {AppState} from './codelab-config';
+import {AppState} from './codelab/codelab-config';
 import {ActionTypes} from './action-types.enum';
-import {selectedMilestone, selectedExercise} from './state.service';
-import {FileConfig} from './file-config';
+import {selectedMilestone, selectedExercise} from './codelab/state.service';
+import {FileConfig} from './codelab/file-config';
 import {TestInfo} from './test-info';
 import {Observable} from 'rxjs/Rx';
 import {MonacoConfigService} from './monaco-config.service';
 import {AppConfigService} from './app-config.service';
-import {ExerciseConfig} from './exercise-config';
+import {ExerciseConfig} from './codelab/exercise-config';
 
 @Injectable()
 export class ReducersService {
   [ActionTypes.INIT_STATE](state: AppState) {
-    const localState = JSON.parse(localStorage.getItem('state'));
-    const actualState = (this.appConfig.config.preserveState && localState) ? localState : state;
-    return this[ActionTypes.SELECT_EXERCISE](actualState, {data: selectedMilestone(actualState).selectedExerciseIndex});
+    const localState = JSON.parse(localStorage.getItem('state')) as AppState;
+
+    return (this.appConfig.config.preserveState
+    && localState
+    && localState.version === state.version) ? localState : state;
   }
 
   [ActionTypes.TOGGLE_AUTORUN](state: AppState) {
     state.local.autorun = !state.local.autorun;
     return state;
+  }
+
+  [ActionTypes.SELECT_CODELAB](state: AppState, data) {
+    state.codelab = state.codelabs.find(codelab => codelab.id == data.data);
+    return this[ActionTypes.SELECT_MILESTONE](state, {data: 0});
   }
 
   [ActionTypes.OPEN_FEEDBACK](state: AppState) {
@@ -38,7 +45,8 @@ export class ReducersService {
       state.local.debugTrackTime = (new Date()).getTime();
       console.log('RUN START!');
     }
-    state.local.running = true;
+    // TODO: Enable back
+    //state.local.running = true;
 
     state.local.runId++;
     return state;
@@ -57,7 +65,7 @@ export class ReducersService {
   [ActionTypes.SELECT_MILESTONE](state: AppState, {data}: {data: number}) {
     state.local.page = 'milestone';
     state.codelab.selectedMilestoneIndex = data;
-    const nextIndex = selectedMilestone(state).selectedExerciseIndex;
+    const nextIndex = selectedMilestone(state).selectedExerciseIndex || 0;
     return this[ActionTypes.SELECT_EXERCISE](state, Object.assign({}, data, {data: nextIndex}));
   }
 
@@ -165,7 +173,7 @@ export class ReducersService {
     const exercise = selectedExercise(state);
 
     if (exercise.files) {
-      exercise.files.forEach(file => file.code = file.template);
+      exercise.files.forEach(file => file.code = file.code || file.template);
       this.monacoConfig.createFileModels(exercise.files);
       exercise.runner = exercise.runner || state.codelab.defaultRunner;
       return this[ActionTypes.RUN_CODE](state);
@@ -178,6 +186,4 @@ export class ReducersService {
               protected appConfig: AppConfigService) {
 
   }
-
-
 }

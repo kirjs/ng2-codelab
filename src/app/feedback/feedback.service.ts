@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthProviders, AuthMethods, AngularFire } from 'angularfire2';
-import { StateService } from '../state.service';
+import { StateService } from '../codelab/state.service';
 
 @Injectable()
 export class FeedbackService {

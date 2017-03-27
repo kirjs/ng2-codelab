@@ -11,7 +11,7 @@ export enum Thumbs {
 /*d:thumbsComponentCreateSolved/trimTrailing*/
 @Component({
   selector: 'my-thumbs',
-  templateUrl: './thumbs.html'
+  templateUrl: 'thumbs.html'
 })
 /*/d*/
 export class ThumbsComponent {

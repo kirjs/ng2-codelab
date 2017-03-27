@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { StateService } from "./state.service";
-import {appConfig} from './app-config.service';
+import { StateService } from './codelab/state.service';
 import {FeedbackService} from './feedback/feedback.service';
 
 
@@ -16,10 +15,5 @@ export class AppComponent {
 
   ngOnInit() {
     this.feedbackService.simulateState();
-
-    //retrieve user progress only if it's enabled
-    if(appConfig.feedbackEnabled && !appConfig.simulation){
-        
-    }
   }
 }

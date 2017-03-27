@@ -1,6 +1,6 @@
-import {AppState, AppConfig} from '../codelab-config';
+import {AppState, AppConfig} from '../codelab/codelab-config';
 import {ActionTypes} from '../action-types.enum';
-import {selectedExercise, StateService} from '../state.service';
+import {selectedExercise, StateService} from '../codelab/state.service';
 
 
 enum TestMode {
@@ -9,6 +9,7 @@ enum TestMode {
 
 
 export function testMiddleware(stateService: StateService, appConfig: AppConfig) {
+
   let expectedTests = 0;
   let testMode: TestMode = TestMode.BROKEN;
   let lastExercise = null;
@@ -20,7 +21,7 @@ export function testMiddleware(stateService: StateService, appConfig: AppConfig)
 
   return function test(state: AppState, action) {
     if (appConfig.test) {
-      if (ActionTypes.INIT_STATE === action.type) {
+      if (ActionTypes.SELECT_CODELAB === action.type) {
         stateService.nextExercise();
         testMode = TestMode.BROKEN;
         return state;

@@ -4,7 +4,7 @@ import { FeedbackWidgetComponent } from './feedback-widget/feedback-widget.compo
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { ProgressComponent } from './progress/progress.component';
 import { AngularFireModule, AuthProviders, AuthMethods, AngularFire } from 'angularfire2';
-import {StateService} from '../state.service';
+import {StateService} from '../codelab/state.service';
 import {FormsModule} from '@angular/forms';
 
 const firebaseConfig = {

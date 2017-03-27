@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AppConfig} from './codelab-config';
+import {AppConfig} from './codelab/codelab-config';
 
 
 const test = window.location.hash.includes('test');
