@@ -36,7 +36,7 @@ export class FeedbackService {
       }
 
       //listen for state changes with 10 secs interval (to avoid sending state too often)
-      this.state.update.debounceTime(1000).subscribe((state) => {
+      this.state.update.debounceTime(10000).subscribe((state) => {
         if (auth.uid) {
           //send state to firebase
           let user_progress = this.angularFire.database.object('/user_progress/' + auth.uid);
