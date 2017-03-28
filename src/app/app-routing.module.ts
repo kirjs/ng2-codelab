@@ -8,6 +8,7 @@ import {PresentationComponent} from './presentation/presentation/presentation.co
 const appRoutes: Routes = [
   {path: 'codelabs', component: CodelabsComponent},
   {path: 'codelab/:codelab/:milestone/:exercise', component: CodelabComponent},
+  {path: 'codelab/:codelab/:milestone', redirectTo: 'codelab/:codelab/:milestone/0'},
   {path: 'present/:codelab/:milestone/:exercise', component: PresentationComponent},
   {path: 'edit', component: CodelabComponent},
   {path: '', redirectTo: '/codelab/ng2ts/0/0', pathMatch: 'full'},
