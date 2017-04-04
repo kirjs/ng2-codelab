@@ -1,21 +1,30 @@
-import {extractMessages} from './i18n';
-const fs = require('fs');
-const glob = require('glob');
+import * as ts from 'typescript';
 
-const files = glob.sync('./exercises/ng2ts/**/*.ts');
+export function extractMessages(filename: string, code: string) {
+  const source = ts.createSourceFile(filename, code, ts.ScriptTarget.ES5);
+  return extractMessagesFromSourceFile(source).map(message => message.text);
+}
 
+export function extractMessagesFromSourceFile(source: ts.SourceFile) {
+  const messages = [];
 
-const messages = files.reduce((result, file) => {
-  const code = fs.readFileSync(file, 'UTF-8');
-  const messages = extractMessages(file, code);
+  function extractMessagesFromNode(node) {
+    if (node.kind === ts.SyntaxKind.CallExpression
+      && node.expression.expression
+      && node.expression.expression.text === 'polyglot'
+      && node.expression.name.text === 't'
+    ) {
+      messages.push({
+        end: node.getEnd(),
+        start: node.getStart(source),
+        text: source.text.substring(node.getStart(source) + 11, node.getEnd() - 1)
+      });
+    }
 
-  return (messages).reduce((result, message) => {
-    const text = message.substr(1, message.length - 2);
-    result[text] = text;
-    return result;
-  }, result);
-}, {});
+    ts.forEachChild(node, extractMessagesFromNode);
+  }
 
-console.log(Object.keys(messages).length + ' messages extracted');
-fs.writeFileSync('./exercises/ng2ts/i18n/en.json', JSON.stringify(messages, null, '  '));
+  extractMessagesFromNode(source);
 
+  return messages;
+}
