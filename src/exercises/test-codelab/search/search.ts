@@ -1,3 +1,3 @@
 export function search(numbers: Array<number>) {
-  return numbers.includes(42);
+  return numbers.indexOf(42) > -1;
 }

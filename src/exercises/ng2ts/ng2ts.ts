@@ -1,5 +1,5 @@
-import {polyglot} from '../../src/i18n/polyglot';
-import {DiffFilesResolver} from '../../src/app/common/diffFilesResolver';
+import {polyglot} from '../../i18n/polyglot';
+import {DiffFilesResolver} from '../../app/common/diffFilesResolver';
 
 //  TODO: This should be done using require.context
 const preloadedFiles = {
