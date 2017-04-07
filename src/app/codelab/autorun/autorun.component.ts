@@ -9,8 +9,8 @@ import {Subscription} from 'rxjs';
 })
 export class AutorunComponent {
   autorun: boolean;
+  running: boolean;
   private stateSubscription: Subscription;
-  private running: boolean;
 
   constructor(private state: StateService) {
 

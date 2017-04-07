@@ -7,7 +7,7 @@ import {StateService} from '../codelab/state.service';
   styleUrls: ['./feedback-widget.component.css']
 })
 export class FeedbackWidgetComponent implements OnInit {
-  open: false;
+  open = false;
   username: string = "";
   comment: string = "";
 

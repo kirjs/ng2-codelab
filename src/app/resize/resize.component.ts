@@ -6,11 +6,11 @@ import {Component, ElementRef, HostListener} from '@angular/core';
   styleUrls: ['./resize.component.css']
 })
 export class ResizeComponent {
-  private initOffsetX;
-  private initWidth;
-  private isMouseDown: boolean;
-  private width;
+  private initOffsetX: number;
+  private initWidth: number;
   private minWidth = 400;
+  isMouseDown: boolean;
+  width: number;
 
   constructor(private elementRef: ElementRef) {
   }
