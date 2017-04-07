@@ -4,7 +4,6 @@ import {RunnerComponent} from "./runner.component";
 import {StateService} from "../codelab/state.service";
 import {Subject} from "rxjs";
 
-// TODO: Fix this failing test suite.
 xdescribe('RunnerComponent', () => {
   let component: RunnerComponent;
   let fixture: ComponentFixture<RunnerComponent>;

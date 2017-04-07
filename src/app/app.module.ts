@@ -14,7 +14,7 @@ import {TestsComponent} from './tests/tests.component';
 import {ReducersService} from './reducers.service';
 import {FeedbackWidgetComponent} from './feedback-widget/feedback-widget.component';
 import {FeedbackPageComponent} from './feedback-page/feedback-page.component';
-import {CodelabConfigService} from '../exercises/codelab-config-service';
+import {CodelabConfigService} from '../../exercises/codelab-config-service';
 import {AutorunComponent} from './codelab/autorun/autorun.component';
 import {MonacoConfigService} from './monaco-config.service';
 import {ResizeComponent} from './resize/resize.component';

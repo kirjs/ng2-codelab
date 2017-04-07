@@ -1,4 +1,4 @@
-import {CodelabState} from '../app/codelab/codelab-config';
+import {CodelabState} from '../src/app/codelab/codelab-config';
 import {Injectable} from '@angular/core';
 import {ng2tsConfig} from './ng2ts/ng2ts';
 import {testCodelabConfig} from './test-codelab/test-codelab';

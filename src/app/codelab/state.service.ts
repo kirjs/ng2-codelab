@@ -8,7 +8,7 @@ import {MilestoneConfig} from './milestone-config';
 import {ReducersService} from '../reducers.service';
 import {assert} from '../utils';
 import {FileConfig} from './file-config';
-import {CodelabConfigService} from '../../exercises/codelab-config-service';
+import {CodelabConfigService} from '../../../exercises/codelab-config-service';
 import {testMiddleware} from '../middleware/test.middleware';
 import {AppConfigService} from '../app-config.service';
 
