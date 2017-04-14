@@ -127,7 +127,6 @@
     "This is a beta version of the codelab with limited access, please don't share it publically (yet).": "This is a beta version of the codelab with limited access, please don't share it publically (yet).",
     "This codelab is very new and only covers the basics of Angular. Please leave your feedback (in the end) and come back for more advanced exercises later.": "This codelab is very new and only covers the basics of Angular. Please leave your feedback (in the end) and come back for more advanced exercises later.",
     "We're using Angular version 2.3.0": "We're using Angular version 2.3.0",
-    "The slides for the codelab are available using\n          <a href = \"https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing\">here</a>.": "The slides for the codelab are available using\n          <a href = \"https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing\">here</a>.",
     "We created a TypeScript file for you, now let's add our first TS class\n           called Codelab.": "We created a TypeScript file for you, now let's add our first TS class\n           called Codelab.",
     "It will take a list of guests, and will have a 'getGuestsComing' method, which will only return people who're coming.": "It will take a list of guests, and will have a 'getGuestsComing' method, which will only return people who're coming.",
     "As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans,\n          so only 3 people should be returned.": "As you can see in the 'Main.ts' file we have 4 people signed up, but Charles Darwin had a last minute change of plans,\n          so only 3 people should be returned.",
@@ -136,7 +135,6 @@
     "3 simple steps:": "3 simple steps:",
     "Create a Component": "Create a Component",
     "Bootstrap the NgModule": "Bootstrap the NgModule",
-    "Let's create our first component!": "Let's create our first component!",
     "Now we got both NgModule and component ready, let's bootstrap the app!": "Now we got both NgModule and component ready, let's bootstrap the app!",
     "There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'": "There's no  simple way to test it,  make sure your app displays: 'Hello CatTube!'",
     "Add a search method to the AppComponent": "Add a search method to the AppComponent",
@@ -179,5 +177,8 @@
     "Show meta": "Show meta",
     "So when you click the 'Show meta button', description is gone, likes and views are displayed instead.": "So when you click the 'Show meta button', description is gone, likes and views are displayed instead.",
     "Show description": "Show description",
-    "Modify getGuestsComing to filter the guests array and only return guests with the 'coming' \n      property set to true.": "Modify getGuestsComing to filter the guests array and only return guests with the 'coming' \n      property set to true."
+    "Modify getGuestsComing to filter the guests array and only return guests with the 'coming' \n      property set to true.": "Modify getGuestsComing to filter the guests array and only return guests with the 'coming' \n      property set to true.",
+    "Intro to TypeScript": "Intro to TypeScript",
+    "The slides for the codelab are available using\n          <a href = \"https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing\">this link</a>.": "The slides for the codelab are available using\n          <a href = \"https://docs.google.com/presentation/d/1Wh4ZwTKG1h66f3mTD4GQO8rKwGDEJeBSvUDJ3udU1LA/edit?usp=sharing\">this link</a>.",
+    "Create first Angular component!": "Create first Angular component!"
 }
